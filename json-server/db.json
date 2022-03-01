@@ -1,0 +1,79 @@
+{
+  "transactions": [
+    {
+      "id": "33",
+      "externalId": "3",
+      "provider": "webmoney",
+      "amount": {
+        "amount": 14,
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": 1,
+        "currency": "USD"
+      },
+      "username": "Andrey",
+      "additionalData": "{}"
+    },
+    {
+      "id": "44",
+      "externalId": "4",
+      "provider": "webmoney",
+      "amount": {
+        "amount": 1000,
+        "currency": "RUB"
+      },
+      "comissionAmount": {
+        "amount": 100,
+        "currency": "RUB"
+      },
+      "username": "Anna",
+      "additionalData": "{}"
+    },
+    {
+      "id": "55",
+      "externalId": "5",
+      "provider": "qiwi",
+      "amount": {
+        "amount": 170,
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": 17,
+        "currency": "USD"
+      },
+      "username": "Svetlana",
+      "additionalData": "{}"
+    },
+    {
+      "id": "66",
+      "externalId": "6",
+      "provider": "qiwi",
+      "amount": {
+        "amount": 978,
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": 97,
+        "currency": "USD"
+      },
+      "username": "Vladimir",
+      "additionalData": "{}"
+    },
+    {
+      "id": "77",
+      "externalId": "7",
+      "provider": "qiwi",
+      "amount": {
+        "amount": 455,
+        "currency": "RUB"
+      },
+      "comissionAmount": {
+        "amount": 45,
+        "currency": "RUB"
+      },
+      "username": "Valeria",
+      "additionalData": "{}"
+    }
+  ]
+}

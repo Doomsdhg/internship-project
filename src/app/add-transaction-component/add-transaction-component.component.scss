@@ -1,0 +1,13 @@
+.display-none {
+    display: none;
+}
+
+.form-group {
+    display: flexbox;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.form-group__element {
+    flex: 1;
+}

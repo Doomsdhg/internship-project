@@ -1,19 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild, Input } from '@angular/core';
-import transactions from './transactions.json';
 import { DataSource } from '@angular/cdk/table';
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-transactions-table',
+  templateUrl: './transactions-table.component.html',
+  styleUrls: ['./transactions-table.component.scss']
 })
-
-
-
-export class AppComponent implements OnInit {
+export class TransactionsTableComponent implements OnInit {
 
   transactionsArray: any;
   
@@ -31,8 +26,14 @@ export class AppComponent implements OnInit {
   }
 
 
-  showTransactions = () => {
+  showTransactions = (e: any,) => {
     console.log(this.transactionsArray)
+  }
+
+  addTransaction = (e: any) => {
+    console.log(e.currentTarget)
+    this.http.post(`http://localhost:3000/transactions`, {})
+      .subscribe(() => console.log('Transaction added successfuly'));
   }
 
   deleteTransaction = (e: any, elem: any) => {
@@ -70,6 +71,4 @@ export class AppComponent implements OnInit {
       id: 'actions',
       value: 'Actions'
     }];
-
-    
 }

@@ -1,0 +1,39 @@
+<button (click)="toggleForm()">{{status?'Close form':'Open form of adding new transaction'}}</button>
+<div ngModel #addition_form [ngClass]="status ? 'form-group' : 'display-none'">
+    <form class="example-form">
+      <mat-form-field class="form-group__element" appearance="fill">
+        <mat-label>External id</mat-label>
+        <input matInput placeholder="eg 155">
+      </mat-form-field>
+      <mat-form-field class="form-group__element" appearance="fill">
+        <mat-label>Provider</mat-label>
+        <input matInput placeholder="eg webmoney">
+      </mat-form-field>
+      <mat-form-field class="form-group__element" appearance="fill">
+        <mat-label>Amount</mat-label>
+        <input matInput placeholder="eg 1000">
+      </mat-form-field>
+      <mat-form-field class="form-group__element" appearance="fill">
+        <mat-label>Currency</mat-label>
+        <input matInput placeholder="eg USD">
+      </mat-form-field>
+      <mat-form-field class="form-group__element" appearance="fill">
+        <mat-label>Comission amount</mat-label>
+        <input matInput placeholder="eg 100">
+      </mat-form-field>
+      <mat-form-field class="form-group__element" appearance="fill">
+        <mat-label>Comission currency</mat-label>
+        <input matInput placeholder="eg USD">
+      </mat-form-field>
+      <mat-form-field class="form-group__element" appearance="fill">
+        <mat-label>User</mat-label>
+        <input matInput placeholder="eg testUser">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Additional data</mat-label>
+        <textarea matInput placeholder="Some more info"></textarea>
+      </mat-form-field>
+      <button (click)="addTransaction($event)">Add new transaction</button>
+    </form>
+      
+</div>

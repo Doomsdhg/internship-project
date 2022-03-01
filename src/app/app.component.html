@@ -1,18 +1,4 @@
-<table mat-table [dataSource]="transactionsArray" class="transactions-table">
-  <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <div *ngIf="column.id === 'actions'">
-      <button attr.data-id="{{element.externalId}}" (click)="deleteTransaction($event)"><mat-icon>delete</mat-icon></button>
-      <button attr.data-id="{{element.externalId}}" (click)="editTransaction($event)"><mat-icon>edit</mat-icon></button>
-      </div> {{element[column.id]}}
-    </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</table>
-<button (click)="showTransactions($event)">show transactions</button>
-
+<app-add-transaction-component></app-add-transaction-component>
+<app-transactions-table></app-transactions-table>
 
 <router-outlet></router-outlet>

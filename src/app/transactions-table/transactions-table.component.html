@@ -1,0 +1,32 @@
+<table mat-table [dataSource]="transactionsArray" class="transactions-table">
+    <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div *ngIf="column.id === 'actions'">
+        <button 
+        attr.data-id="{{element.id}}" 
+        attr.data-provider="{{element.provider}}"
+        (click)="deleteTransaction($event, element)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button 
+        attr.data-id="{{element.id}}" 
+        attr.data-provider="{{element.provider}}"
+        (click)="editTransaction($event)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        </div> 
+        <div *ngIf="column.id === 'amount' || column.id === 'comissionAmount';then thenBlock else elseBlock">
+        </div>
+        <ng-template #thenBlock>
+          {{element[column.id].amount}}
+          {{element[column.id].currency}}
+        </ng-template>
+        <ng-template #elseBlock>{{element[column.id]}}</ng-template>
+      </mat-cell>
+    </ng-container>
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+  <button (click)="showTransactions($event)">show transactions</button>
