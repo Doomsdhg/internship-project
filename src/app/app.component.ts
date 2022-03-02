@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild, Input } from '@angular/cor
 import { DataSource } from '@angular/cdk/table';
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { TransactionsTableComponent } from './transactions-table/transactions-table.component'
 
 @Component({
   selector: 'app-root',
@@ -15,6 +15,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class AppComponent implements OnInit {
 
   transactionsArray: any;
+  getTransactions: ()=>void = ()=>{};
+
+  @ViewChild(TransactionsTableComponent) TransactionTableComponent: any;
   
   constructor(
     private http: HttpClient,

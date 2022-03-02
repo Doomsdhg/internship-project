@@ -1,6 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, Input } from '@angular/core';
-import { DataSource } from '@angular/cdk/table';
-import {MatIconModule} from '@angular/material/icon';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({

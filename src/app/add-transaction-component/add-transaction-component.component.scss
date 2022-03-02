@@ -3,12 +3,16 @@
 }
 
 .form-group {
-    width: 90%;
+    width: 80%;
     border: 1px solid #000;
     border-radius: 5px;
     box-shadow: 3px 1px 3px #000;
     margin: 0 auto;
     padding: 5px;
+}
+
+.mat-form-field {
+    max-width: 12.5%;
 }
 
 .example-form {
@@ -18,4 +22,10 @@
 
 .form-group__element {
     flex: 1;
+}
+
+.toggle-transaction-forms{
+    margin-left: 10%;
+    margin-top: 5%;
+    margin-bottom: 2rem;
 }

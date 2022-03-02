@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { HttpHeaders } from '@angular/common/http';
-
+import {TransactionsTableComponent} from '../transactions-table/transactions-table.component';
 
 
 @Component({
@@ -12,7 +12,7 @@ import { HttpHeaders } from '@angular/common/http';
   styleUrls: ['./add-transaction-component.component.scss']
 })
 export class AddTransactionComponentComponent implements OnInit {
-
+  @Input() TransactionTableComponent: any = '';
   constructor(
     private http: HttpClient,
    ) {
@@ -20,6 +20,22 @@ export class AddTransactionComponentComponent implements OnInit {
 
   @ViewChild('addition_form', {static: false})
   additionForm: ElementRef | undefined;
+  @ViewChild('externalId', {static: false})
+  externalId: ElementRef | undefined;
+  @ViewChild('provider', {static: false})
+  provider: ElementRef | undefined;
+  @ViewChild('amount', {static: false})
+  amount: ElementRef | undefined;
+  @ViewChild('currency', {static: false})
+  currency: ElementRef | undefined;
+  @ViewChild('comissionAmount', {static: false})
+  comissionAmount: ElementRef | undefined;
+  @ViewChild('comissionCurrency', {static: false})
+  comissionCurrency: ElementRef | undefined;
+  @ViewChild('username', {static: false})
+  username: ElementRef | undefined;
+  @ViewChild('additionalData', {static: false})
+  additionalData: ElementRef | undefined;
   status: boolean = false;
 
   ngOnInit(): void {
@@ -40,18 +56,18 @@ export class AddTransactionComponentComponent implements OnInit {
       formValues.push(e.currentTarget.parentNode.children[0][i].value);
     }
     const transactionObj = {
-      "externalId": formValues[0] || '',
-      "provider": formValues[1] || '',
+      "externalId": this.externalId!.nativeElement.value,
+      "provider": this.provider!.nativeElement.value,
       "amount": {
-        "amount": formValues[2] || '',
-        "currency": formValues[3] || ''
+        "amount": this.amount!.nativeElement.value,
+        "currency": this.currency!.nativeElement.value
       },
       "comissionAmount": {
-        "amount": formValues[4] || '',
-        "currency": formValues[5] || ''
+        "amount": this.comissionAmount!.nativeElement.value,
+        "currency": this.comissionCurrency!.nativeElement.value
       },
-      "username": formValues[6] || '',
-      "additionalData": formValues[7] || ''
+      "username": this.username!.nativeElement.value,
+      "additionalData": this.additionalData!.nativeElement.value
     }
     const httpOptions = {
       headers: new HttpHeaders({
@@ -59,6 +75,8 @@ export class AddTransactionComponentComponent implements OnInit {
       })
     }
     this.http.post('http://localhost:3000/transactions', transactionObj, httpOptions)
-      .subscribe((resp)=>{console.log(resp)});
+      .subscribe((resp)=>{
+        this.TransactionTableComponent.getTransactions();
+      });
   }
 }
