@@ -48,11 +48,8 @@ export class AddTransactionComponentComponent implements OnInit {
 
   addTransaction = (e: any) => {
     e.preventDefault();
-    console.log(e.currentTarget.parentNode.children[0]);
-    console.log(e.currentTarget.parentNode)
     const formValues = [];
     for (let i = 0; i <= 7; i++) {
-      console.log(e.currentTarget.parentNode.children[0][i].value);
       formValues.push(e.currentTarget.parentNode.children[0][i].value);
     }
     const transactionObj = {

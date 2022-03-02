@@ -1,9 +1,9 @@
 <table mat-table [dataSource]="transactionsArray" class="transactions-table">
     <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
       
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
+      <mat-header-cell class="transactions-table__header-cell" *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
       
-      <mat-cell *matCellDef="let element" [ngClass]="column.id === 'amount' || column.id === 'comissionAmount' ? 'amount-form-container' : ''">
+      <mat-cell class="transactions-table__body-cell" *matCellDef="let element" [ngClass]="column.id === 'amount' || column.id === 'comissionAmount' ? 'amount-form-container' : ''">
         <div *ngIf="element.displayForms && column.id !== 'actions';then editForms else cellContent"></div>
         <ng-template #cellContent>
           <ng-template *ngIf="column.id === 'actions'; then actionButtons else transactionData"></ng-template>
