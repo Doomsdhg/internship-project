@@ -18,13 +18,15 @@ export class TransactionsTableComponent implements OnInit {
      }
 
   ngOnInit() {
+    this.getTransactions()
+  }
+
+  getTransactions = () => {
     this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
       .subscribe((response)=>{
-        console.log(response);
         this.transactionsArray = response});
     this.transactionsArray = this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
   }
-
 
   showTransactions = (e: any,) => {
     console.log(this.transactionsArray)
@@ -34,17 +36,62 @@ export class TransactionsTableComponent implements OnInit {
     console.log(e.currentTarget)
     this.http.post(`http://localhost:3000/transactions`, {})
       .subscribe(() => console.log('Transaction added successfuly'));
+    setTimeout(()=>{
+      this.getTransactions()
+    }, 100)
   }
 
   deleteTransaction = (e: any, elem: any) => {
     this.http.delete(`http://localhost:3000/transactions/${e.currentTarget.dataset.id}`)
       .subscribe(() => console.log('Transaction deleted successfuly'));
+    setTimeout(()=>{
+      this.getTransactions()
+    }, 100)
   }
 
-  editTransaction = function (e: any) {
-    console.log(e.currentTarget.dataset.id)
+  toggleForms = (element: any) => {
+    element.displayForms = !element.displayForms;
   }
 
+  updateTransaction = (e: any) => {
+    const formValues = [];
+    for (let i = 0; i <= 4; i++) {
+      if (i === 2 || i === 3) {
+        formValues.push(e.currentTarget.parentNode.parentNode.children[i].children[0].children[0].children[0].children[0].children[0].value)
+        formValues.push(e.currentTarget.parentNode.parentNode.children[i].children[1].children[0].children[0].children[0].children[0].value)
+      } else {
+        formValues.push(e.currentTarget.parentNode.parentNode.children[i].children[0].children[0].children[0].children[0].children[0].value);
+      }
+    }
+    console.log(formValues);
+    const updateObj = {
+      "externalId": formValues[0],
+      "username": formValues[1],
+      "amount": {
+        "amount": formValues[2],
+        "currency": formValues[3]
+      },
+      "comissionAmount": {
+        "amount": formValues[4],
+        "currency": formValues[5]
+      },
+      "provider": formValues[6],
+      "additionalData": formValues[7]
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    }
+    this.http.patch(`http://localhost:3000/transactions/${e.currentTarget.dataset.id}`, updateObj, httpOptions)
+      .subscribe((resp)=>{console.log(resp)});
+    setTimeout(()=>{
+      this.getTransactions()
+    }, 100)
+    
+  }
+
+  displayEditForms = false;
   title = 'internship-project';
   displayedColumns: string[] = ['externalId', 'username', 'amount', 'comissionAmount', 'provider', 'actions'];
   columnNames = [{

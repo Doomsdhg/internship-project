@@ -3,9 +3,17 @@
 }
 
 .form-group {
-    display: flexbox;
     width: 90%;
+    border: 1px solid #000;
+    border-radius: 5px;
+    box-shadow: 3px 1px 3px #000;
     margin: 0 auto;
+    padding: 5px;
+}
+
+.example-form {
+    display: flex;
+    width: 100%;
 }
 
 .form-group__element {

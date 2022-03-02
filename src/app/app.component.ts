@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, OnInit, ViewChild, Input } from '@angular/core';
-import transactions from './transactions.json';
 import { DataSource } from '@angular/cdk/table';
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -23,11 +22,7 @@ export class AppComponent implements OnInit {
      }
 
   ngOnInit() {
-    this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
-      .subscribe((response)=>{
-        console.log(response);
-        this.transactionsArray = response});
-    this.transactionsArray = this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
+
   }
 
 

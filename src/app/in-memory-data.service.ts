@@ -1,5 +1,4 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import transactions,* as transactionsData from './transactions.json';
 
 
 export class InMemoryDataService implements InMemoryDbService {

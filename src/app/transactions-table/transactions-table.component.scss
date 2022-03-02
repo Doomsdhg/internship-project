@@ -2,20 +2,69 @@
     margin: 0 auto;
     margin-top: 3rem;
     width: 80%;
+    border-collapse: collapse;
 }
 
 .mat-cell {
+    padding-left: 5px;
+    justify-content: center;
+    height: 100%;
+}
+
+.mat-row {
+    height: 100%;
     border: 1px solid #000;
+}
+
+.mat-column-externalId {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.mat-column-username {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.mat-column-amount {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.mat-column-comissionAmount {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.mat-column-provider {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.mat-column-actions {
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+
+.mat-header-cell {
     padding-left: 5px;
     justify-content: center;
 }
 
-.mat-header-cell {
-    border: 1px solid #000;
-    padding-left: 5px;
-    justify-content: center;
+.mat-header-row {
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
 }
 
 .display-none {
     display: none;
+}
+
+.amount-form-container{
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.amount-form-container__element {
+    flex-direction: column;
 }

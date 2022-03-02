@@ -1,48 +1,18 @@
 {
   "transactions": [
     {
-      "id": "33",
-      "externalId": "3",
-      "provider": "webmoney",
-      "amount": {
-        "amount": 14,
-        "currency": "USD"
-      },
-      "comissionAmount": {
-        "amount": 1,
-        "currency": "USD"
-      },
-      "username": "Andrey",
-      "additionalData": "{}"
-    },
-    {
-      "id": "44",
-      "externalId": "4",
-      "provider": "webmoney",
-      "amount": {
-        "amount": 1000,
-        "currency": "RUB"
-      },
-      "comissionAmount": {
-        "amount": 100,
-        "currency": "RUB"
-      },
-      "username": "Anna",
-      "additionalData": "{}"
-    },
-    {
       "id": "55",
-      "externalId": "5",
-      "provider": "qiwi",
+      "externalId": "5523",
+      "provider": "paypal",
       "amount": {
-        "amount": 170,
+        "amount": "1700",
         "currency": "USD"
       },
       "comissionAmount": {
-        "amount": 17,
+        "amount": "17",
         "currency": "USD"
       },
-      "username": "Svetlana",
+      "username": "Yuri",
       "additionalData": "{}"
     },
     {
@@ -74,6 +44,51 @@
       },
       "username": "Valeria",
       "additionalData": "{}"
+    },
+    {
+      "id": "133",
+      "externalId": "34",
+      "provider": "webmoney",
+      "amount": {
+        "amount": 14,
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": 1,
+        "currency": "USD"
+      },
+      "username": "Nikolay",
+      "additionalData": "{}"
+    },
+    {
+      "externalId": "343",
+      "provider": "webmoney",
+      "amount": {
+        "amount": "14",
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": "1",
+        "currency": "USD"
+      },
+      "username": "Nikolay",
+      "additionalData": "{}",
+      "id": "qZzyKpp"
+    },
+    {
+      "externalId": "1557",
+      "provider": "paypal",
+      "amount": {
+        "amount": "199",
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": "19",
+        "currency": "USD"
+      },
+      "username": "test",
+      "additionalData": "some additional data",
+      "id": "ItM2cXd"
     }
   ]
 }
