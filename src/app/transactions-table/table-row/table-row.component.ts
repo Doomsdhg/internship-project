@@ -1,51 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
-  selector: 'app-transactions-table',
-  templateUrl: './transactions-table.component.html',
-  styleUrls: ['./transactions-table.component.scss']
+  selector: 'app-table-row',
+  templateUrl: './table-row.component.html',
+  styleUrls: ['./table-row.component.scss']
 })
-export class TransactionsTableComponent implements OnInit {
+export class TableRowComponent implements OnInit {
+
+  transactionId = '';
+
+  @Input() column: any;
+  // @Input() getTransactions: ()=>void = ()=>{};
+  @Input() displayedColumns: any;
+  @Input() columnNames: any;
 
   
 
-  
-  
-  constructor(
-    private http: HttpClient,
-   ) {
-     }
+  constructor(private http: HttpClient) { }
 
-  ngOnInit() {
-    
-  }
-
-  getTransactions = () => {
-    this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
-      .subscribe((response)=>{
-        this.transactionsArray = response});
-    this.transactionsArray = this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
-  }
-
-  showTransactions = (e: any,) => {
-    console.log(this.transactionsArray)
-  }
-
-  addTransaction = (e: any) => {
-    console.log(e.currentTarget)
-    this.http.post(`http://localhost:3000/transactions`, {})
-      .subscribe(() => console.log('Transaction added successfuly'));
-    setTimeout(()=>{
-      this.getTransactions()
-    }, 100)
+  ngOnInit(): void {
   }
 
   deleteTransaction = (e: any, elem: any) => {
     this.http.delete(`http://localhost:3000/transactions/${e.currentTarget.dataset.id}`)
       .subscribe(() => console.log('Transaction deleted successfuly'));
     setTimeout(()=>{
-      this.getTransactions()
+      // this.getTransactions()
     }, 100)
   }
 
@@ -54,6 +35,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   updateTransaction = (e: any) => {
+    this.transactionId = e.currentTarget.dataset.id;
     const formValues = [];
     for (let i = 0; i <= 4; i++) {
       if (i === 2 || i === 3) {
@@ -64,7 +46,6 @@ export class TransactionsTableComponent implements OnInit {
       }
     }
     console.log(formValues);
-    
     const updateObj = {
       "externalId": formValues[0],
       "username": formValues[1],
@@ -87,36 +68,9 @@ export class TransactionsTableComponent implements OnInit {
     this.http.patch(`http://localhost:3000/transactions/${e.currentTarget.dataset.id}`, updateObj, httpOptions)
       .subscribe((resp)=>{console.log(resp)});
     setTimeout(()=>{
-      this.getTransactions()
+      // this.getTransactions()
     }, 100)
     
   }
-  transactionsArray: any = this.getTransactions();
-  displayEditForms = false;
-  title = 'internship-project';
-  displayedColumns: string[] = ['externalId', 'username', 'amount', 'comissionAmount', 'provider', 'actions'];
-  columnNames = [{
-      id: 'externalId',
-      value: 'No.',
-    }, 
-    {
-      id: 'username',
-      value: 'Username',
-    },
-    {
-      id: 'amount',
-      value: 'Amount',
-    },
-    {
-      id: 'comissionAmount',
-      value: 'Comission amount',
-    },
-    {
-      id: 'provider',
-      value: 'Provider',
-    },
-    {
-      id: 'actions',
-      value: 'Actions'
-    }];
+
 }

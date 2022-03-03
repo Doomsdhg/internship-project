@@ -14,13 +14,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { AddTransactionComponentComponent } from './add-transaction-component/add-transaction-component.component';
 import { TransactionsTableComponent } from './transactions-table/transactions-table.component';
-import {MatInputModule} from '@angular/material/input'; 
+import {MatInputModule} from '@angular/material/input';
+import { TableRowComponent } from './transactions-table/table-row/table-row.component'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     AddTransactionComponentComponent,
-    TransactionsTableComponent
+    TransactionsTableComponent,
+    TableRowComponent
   ],
   imports: [
     MatInputModule,

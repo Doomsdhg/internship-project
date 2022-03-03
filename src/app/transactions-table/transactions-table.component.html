@@ -1,9 +1,12 @@
 <table mat-table [dataSource]="transactionsArray" class="transactions-table">
+  
     <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
       
       <mat-header-cell class="transactions-table__header-cell" *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
+      <!-- <app-table-row [columnNames]="columnNames" [displayedColumns]="displayedColumns" (getTransactions)="getTransactions()"></app-table-row> -->
       
-      <mat-cell class="transactions-table__body-cell" *matCellDef="let element" [ngClass]="column.id === 'amount' || column.id === 'comissionAmount' ? 'amount-form-container' : ''">
+      <mat-cell class="transactions-table__body-cell" *matCellDef="let element" 
+      [ngClass]="column.id === 'amount' || column.id === 'comissionAmount' ? 'amount-form-container' : ''">
         <div *ngIf="element.displayForms && column.id !== 'actions';then editForms else cellContent"></div>
         <ng-template #cellContent>
           <ng-template *ngIf="column.id === 'actions'; then actionButtons else transactionData"></ng-template>
@@ -37,24 +40,25 @@
         </ng-template> 
         <ng-template #editForms>
           <div *ngIf="column.id === 'amount' || column.id === 'comissionAmount';then amountForms else regularForm"></div>
-          <ng-template #amountForms class="amount-form-container">
-            <mat-form-field class="amount-form-container__element" appearance="fill">
+          <ng-template #amountForms class="amount-form-container__form-group">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
               <mat-label>Amount</mat-label>
               <input matInput value="{{element[column.id].amount}}" placeholder="eg 155">
             </mat-form-field>
-            <mat-form-field class="amount-form-container__element" appearance="fill">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
               <mat-label>Currency</mat-label>
               <input matInput value="{{element[column.id].currency}}" placeholder="eg USD">
             </mat-form-field>
           </ng-template>
           <ng-template #regularForm>
-            <mat-form-field class="form-group__element" appearance="fill">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
               <mat-label>{{column.value}}</mat-label>
               <input matInput value="{{element[column.id]}}">
             </mat-form-field>
           </ng-template>
         </ng-template>
       </mat-cell>
+      
       
     </ng-container>
   
