@@ -91,7 +91,7 @@
       "id": "eDWtKQu"
     },
     {
-      "externalId": "12121",
+      "externalId": "121211",
       "provider": "dsadsa",
       "amount": {
         "amount": "12311",
@@ -104,21 +104,6 @@
       "username": "dsada",
       "additionalData": "awdwa",
       "id": "Pc_1gzA"
-    },
-    {
-      "externalId": "12333324",
-      "provider": "йцуйцвй",
-      "amount": {
-        "amount": "123",
-        "currency": "гыв"
-      },
-      "comissionAmount": {
-        "amount": "12",
-        "currency": "гыв"
-      },
-      "username": "вйцвйц",
-      "additionalData": "йцвйц",
-      "id": "gktS8zd"
     }
   ]
 }

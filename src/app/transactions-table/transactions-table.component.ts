@@ -1,55 +1,43 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import { WebService, transactionInterface } from '../web.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-transactions-table',
   templateUrl: './transactions-table.component.html',
   styleUrls: ['./transactions-table.component.scss']
 })
-export class TransactionsTableComponent implements OnInit {
+export class TransactionsTableComponent implements OnInit{
 
-  
-
-  
-  
+  public transactionsArray: any;
   constructor(
-    private http: HttpClient,
+    private http: HttpClient, private web: WebService
    ) {
-     }
+   }
 
-  ngOnInit() {
-    
+  ngOnInit(): void {
+    this.web.getTransactions()
+      .subscribe((resp: any)=>{this.transactionsArray = resp})
+
   }
 
-  getTransactions = () => {
-    this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
-      .subscribe((response)=>{
-        this.transactionsArray = response});
-    this.transactionsArray = this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
-  }
-
-  showTransactions = (e: any,) => {
-    console.log(this.transactionsArray)
-  }
-
-  addTransaction = (e: any) => {
-    console.log(e.currentTarget)
-    this.http.post(`http://localhost:3000/transactions`, {})
-      .subscribe(() => console.log('Transaction added successfuly'));
+  refreshTransactions = () => {
     setTimeout(()=>{
-      this.getTransactions()
-    }, 100)
+      this.web.getTransactions()
+      .subscribe((resp:any)=>{this.transactionsArray = resp})
+    },100)
   }
 
-  deleteTransaction = (e: any, elem: any) => {
-    this.http.delete(`http://localhost:3000/transactions/${e.currentTarget.dataset.id}`)
-      .subscribe(() => console.log('Transaction deleted successfuly'));
-    setTimeout(()=>{
-      this.getTransactions()
-    }, 100)
+  deleteTransaction = (e: any) => {
+    const id = e.currentTarget.dataset.id;
+    this.web.deleteTransaction(id)
+      .subscribe(()=>{console.log('transaction deleted successfully')})
+    this.refreshTransactions()
   }
 
   toggleForms = (element: any) => {
+    
     element.displayForms = !element.displayForms;
   }
 
@@ -63,8 +51,7 @@ export class TransactionsTableComponent implements OnInit {
         formValues.push(e.currentTarget.parentNode.parentNode.children[i].children[0].children[0].children[0].children[0].children[0].value);
       }
     }
-    console.log(formValues);
-    
+    const id = e.currentTarget.dataset.id;
     const updateObj = {
       "externalId": formValues[0],
       "username": formValues[1],
@@ -79,19 +66,11 @@ export class TransactionsTableComponent implements OnInit {
       "provider": formValues[6],
       "additionalData": formValues[7]
     }
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    }
-    this.http.patch(`http://localhost:3000/transactions/${e.currentTarget.dataset.id}`, updateObj, httpOptions)
-      .subscribe((resp)=>{console.log(resp)});
-    setTimeout(()=>{
-      this.getTransactions()
-    }, 100)
-    
+    this.web.patchTransaction(id, updateObj)
+      .subscribe(()=>{console.log('updated successfully')})
+    this.refreshTransactions()
   }
-  transactionsArray: any = this.getTransactions();
+  
   displayEditForms = false;
   title = 'internship-project';
   displayedColumns: string[] = ['externalId', 'username', 'amount', 'comissionAmount', 'provider', 'actions'];
