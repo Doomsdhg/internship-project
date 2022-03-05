@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="transactionsArray" class="transactions-table">
+<table mat-table [dataSource]="transactionsArray.data" class="transactions-table">
   
     <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
       

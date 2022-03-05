@@ -4,7 +4,7 @@ import { WebService, transactionInterface } from '../web.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-transactions-table',
@@ -15,10 +15,11 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TransactionsTableComponent implements OnInit{
 
   formsToggled: boolean = false;
+  private cdr!: ChangeDetectorRef;
 
-  public transactionsArray!: any;
+  public transactionsArray!: MatTableDataSource<transactionInterface>;
   constructor(
-    private web: WebService
+    private web: WebService, cdr: ChangeDetectorRef
    ) {
    }
 
@@ -34,15 +35,14 @@ export class TransactionsTableComponent implements OnInit{
   });
 
   ngOnInit(): void {
-    this.web.getTransactions()
-        .subscribe((resp: any)=>{this.transactionsArray = resp;console.log(this.transactionsArray)})
+    this.web.getTransactions().subscribe((resp:transactionInterface[])=>{this.transactionsArray = new MatTableDataSource(resp)})
   }
 
-  refreshTransactions = async () => {
-    // setTimeout(()=>{
+  refreshTransactions = () => {
+    setTimeout(async()=>{
       this.web.getTransactions()
-        .subscribe((resp: any)=>{this.transactionsArray = resp})
-    // },100)
+      .subscribe((resp:transactionInterface[])=>{this.transactionsArray.data = resp})
+    },100)
   }
 
   deleteTransaction = (e: any) => {

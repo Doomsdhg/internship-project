@@ -30,22 +30,6 @@ export class AddTransactionComponentComponent{
 
   @ViewChild('addition_form', {static: false})
   additionForm: ElementRef | undefined;
-  // @ViewChild('externalId', {static: false})
-  // externalId: ElementRef | undefined;
-  // @ViewChild('provider', {static: false})
-  // provider: ElementRef | undefined;
-  // @ViewChild('amount', {static: false})
-  // amount: ElementRef | undefined;
-  // @ViewChild('currency', {static: false})
-  // currency: ElementRef | undefined;
-  // @ViewChild('comissionAmount', {static: false})
-  // comissionAmount: ElementRef | undefined;
-  // @ViewChild('comissionCurrency', {static: false})
-  // comissionCurrency: ElementRef | undefined;
-  // @ViewChild('username', {static: false})
-  // username: ElementRef | undefined;
-  // @ViewChild('additionalData', {static: false})
-  // additionalData: ElementRef | undefined;
   status = false;
 
   toggleForm =  () => {
