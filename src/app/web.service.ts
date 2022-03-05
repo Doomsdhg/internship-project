@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {TransactionsTableComponent} from './transactions-table/transactions-table.component';
+import { take, first } from 'rxjs/operators';
 
 export interface amountInterface {
   amount: number,

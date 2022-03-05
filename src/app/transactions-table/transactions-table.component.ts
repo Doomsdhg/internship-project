@@ -2,31 +2,48 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { WebService, transactionInterface } from '../web.service';
 import { Observable } from 'rxjs';
+import { FormGroup, FormControl } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
+import { ChangeDetectionStrategy } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-transactions-table',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transactions-table.component.html',
-  styleUrls: ['./transactions-table.component.scss']
+  styleUrls: ['./transactions-table.component.scss'],
 })
 export class TransactionsTableComponent implements OnInit{
 
-  public transactionsArray: any;
+  formsToggled: boolean = false;
+
+  public transactionsArray!: any;
   constructor(
     private http: HttpClient, private web: WebService
    ) {
    }
 
+  transactionUpdateForm = new FormGroup({
+    provider: new FormControl(''),
+    username: new FormControl(''),
+    externalId: new FormControl(''),
+    amount: new FormControl(''),
+    currency: new FormControl(''),
+    comissionAmount: new FormControl(''),
+    comissionCurrency: new FormControl(''),
+    additionalData: new FormControl('')
+  });
+
   ngOnInit(): void {
     this.web.getTransactions()
-      .subscribe((resp: any)=>{this.transactionsArray = resp})
-
+        .subscribe((resp: any)=>{this.transactionsArray = new MatTableDataSource(resp)})
   }
 
-  refreshTransactions = () => {
-    setTimeout(()=>{
+  refreshTransactions = async () => {
+    // setTimeout(()=>{
       this.web.getTransactions()
-      .subscribe((resp:any)=>{this.transactionsArray = resp})
-    },100)
+        .subscribe((resp: any)=>{this.transactionsArray = new MatTableDataSource(resp)})
+    // },100)
   }
 
   deleteTransaction = (e: any) => {
@@ -37,38 +54,30 @@ export class TransactionsTableComponent implements OnInit{
   }
 
   toggleForms = (element: any) => {
-    
+    this.formsToggled = !this.formsToggled;
     element.displayForms = !element.displayForms;
   }
 
-  updateTransaction = (e: any) => {
-    const formValues = [];
-    for (let i = 0; i <= 4; i++) {
-      if (i === 2 || i === 3) {
-        formValues.push(e.currentTarget.parentNode.parentNode.children[i].children[0].children[0].children[0].children[0].children[0].value)
-        formValues.push(e.currentTarget.parentNode.parentNode.children[i].children[1].children[0].children[0].children[0].children[0].value)
-      } else {
-        formValues.push(e.currentTarget.parentNode.parentNode.children[i].children[0].children[0].children[0].children[0].children[0].value);
-      }
-    }
+  updateTransaction = (e: any, element: any) => {
     const id = e.currentTarget.dataset.id;
     const updateObj = {
-      "externalId": formValues[0],
-      "username": formValues[1],
+      "externalId": this.transactionUpdateForm.value.externalId,
+      "username": this.transactionUpdateForm.value.username,
       "amount": {
-        "amount": formValues[2],
-        "currency": formValues[3]
+        "amount": this.transactionUpdateForm.value.amount,
+        "currency": this.transactionUpdateForm.value.currency
       },
       "comissionAmount": {
-        "amount": formValues[4],
-        "currency": formValues[5]
+        "amount": this.transactionUpdateForm.value.comissionAmount,
+        "currency": this.transactionUpdateForm.value.comissionCurrency
       },
-      "provider": formValues[6],
-      "additionalData": formValues[7]
+      "provider": this.transactionUpdateForm.value.provider,
+      "additionalData": this.transactionUpdateForm.value.additionalData
     }
     this.web.patchTransaction(id, updateObj)
       .subscribe(()=>{console.log('updated successfully')})
     this.refreshTransactions()
+    this.toggleForms(element)
   }
   
   displayEditForms = false;

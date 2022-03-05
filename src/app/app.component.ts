@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TransactionsTableComponent } from './transactions-table/transactions-table.component'
+import { TransactionsTableComponent } from './transactions-table/transactions-table.component';
+import { ChangeDetectionStrategy } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',

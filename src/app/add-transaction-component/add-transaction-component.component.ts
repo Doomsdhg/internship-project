@@ -3,7 +3,7 @@ import {ElementRef} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {TransactionsTableComponent} from '../transactions-table/transactions-table.component';
 import {WebService} from '../web.service';
-
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-transaction-component',
@@ -17,24 +17,35 @@ export class AddTransactionComponentComponent{
    ) {
      }
 
+   transactionUpdateForm = new FormGroup({
+    provider: new FormControl(''),
+    username: new FormControl(''),
+    externalId: new FormControl(''),
+    amount: new FormControl(''),
+    currency: new FormControl(''),
+    comissionAmount: new FormControl(''),
+    comissionCurrency: new FormControl(''),
+    additionalData: new FormControl('')
+  });
+
   @ViewChild('addition_form', {static: false})
   additionForm: ElementRef | undefined;
-  @ViewChild('externalId', {static: false})
-  externalId: ElementRef | undefined;
-  @ViewChild('provider', {static: false})
-  provider: ElementRef | undefined;
-  @ViewChild('amount', {static: false})
-  amount: ElementRef | undefined;
-  @ViewChild('currency', {static: false})
-  currency: ElementRef | undefined;
-  @ViewChild('comissionAmount', {static: false})
-  comissionAmount: ElementRef | undefined;
-  @ViewChild('comissionCurrency', {static: false})
-  comissionCurrency: ElementRef | undefined;
-  @ViewChild('username', {static: false})
-  username: ElementRef | undefined;
-  @ViewChild('additionalData', {static: false})
-  additionalData: ElementRef | undefined;
+  // @ViewChild('externalId', {static: false})
+  // externalId: ElementRef | undefined;
+  // @ViewChild('provider', {static: false})
+  // provider: ElementRef | undefined;
+  // @ViewChild('amount', {static: false})
+  // amount: ElementRef | undefined;
+  // @ViewChild('currency', {static: false})
+  // currency: ElementRef | undefined;
+  // @ViewChild('comissionAmount', {static: false})
+  // comissionAmount: ElementRef | undefined;
+  // @ViewChild('comissionCurrency', {static: false})
+  // comissionCurrency: ElementRef | undefined;
+  // @ViewChild('username', {static: false})
+  // username: ElementRef | undefined;
+  // @ViewChild('additionalData', {static: false})
+  // additionalData: ElementRef | undefined;
   status = false;
 
   toggleForm =  () => {
@@ -45,18 +56,18 @@ export class AddTransactionComponentComponent{
   addTransaction = (e: any) => {
     e.preventDefault();
     const transactionObj = {
-      "externalId": this.externalId!.nativeElement.value,
-      "provider": this.provider!.nativeElement.value,
+      "externalId": this.transactionUpdateForm.value.externalId,
+      "provider": this.transactionUpdateForm.value.provider,
       "amount": {
-        "amount": this.amount!.nativeElement.value,
-        "currency": this.currency!.nativeElement.value
+        "amount": this.transactionUpdateForm.value.amount,
+        "currency": this.transactionUpdateForm.value.currency
       },
       "comissionAmount": {
-        "amount": this.comissionAmount!.nativeElement.value,
-        "currency": this.comissionCurrency!.nativeElement.value
+        "amount": this.transactionUpdateForm.value.comissionAmount,
+        "currency": this.transactionUpdateForm.value.comissionCurrency
       },
-      "username": this.username!.nativeElement.value,
-      "additionalData": this.additionalData!.nativeElement.value
+      "username": this.transactionUpdateForm.value.username,
+      "additionalData": this.transactionUpdateForm.value.additionalData
     }
     this.web.uploadTransaction(transactionObj);
     this.TransactionsTableComponent.refreshTransactions();

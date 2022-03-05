@@ -89,21 +89,6 @@
       "username": "dsadsa",
       "additionalData": "",
       "id": "eDWtKQu"
-    },
-    {
-      "externalId": "121211",
-      "provider": "dsadsa",
-      "amount": {
-        "amount": "12311",
-        "currency": "sdadsa"
-      },
-      "comissionAmount": {
-        "amount": "123123",
-        "currency": "qwdqw"
-      },
-      "username": "dsada",
-      "additionalData": "awdwa",
-      "id": "Pc_1gzA"
     }
   ]
 }

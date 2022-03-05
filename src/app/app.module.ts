@@ -15,7 +15,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AddTransactionComponentComponent } from './add-transaction-component/add-transaction-component.component';
 import { TransactionsTableComponent } from './transactions-table/transactions-table.component';
 import {MatInputModule} from '@angular/material/input';
-import { TableRowComponent } from './transactions-table/table-row/table-row.component'; 
+import { TableRowComponent } from './transactions-table/table-row/table-row.component';             
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TableRowComponent } from './transactions-table/table-row/table-row.comp
     TableRowComponent
   ],
   imports: [
+    ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -37,6 +39,6 @@ import { TableRowComponent } from './transactions-table/table-row/table-row.comp
   ],
   providers: [
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
