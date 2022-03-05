@@ -89,6 +89,21 @@
       "username": "dsadsa",
       "additionalData": "",
       "id": "eDWtKQu"
+    },
+    {
+      "externalId": "",
+      "provider": "",
+      "amount": {
+        "amount": "",
+        "currency": ""
+      },
+      "comissionAmount": {
+        "amount": "",
+        "currency": ""
+      },
+      "username": "",
+      "additionalData": "",
+      "id": "rsP3BUa"
     }
   ]
 }

@@ -1,17 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { WebService, transactionInterface } from '../web.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
-import { ChangeDetectionStrategy } from '@angular/compiler';
 
 
 @Component({
   selector: 'app-transactions-table',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './transactions-table.component.html',
   styleUrls: ['./transactions-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionsTableComponent implements OnInit{
 
@@ -19,7 +18,7 @@ export class TransactionsTableComponent implements OnInit{
 
   public transactionsArray!: any;
   constructor(
-    private http: HttpClient, private web: WebService
+    private web: WebService
    ) {
    }
 
@@ -36,13 +35,13 @@ export class TransactionsTableComponent implements OnInit{
 
   ngOnInit(): void {
     this.web.getTransactions()
-        .subscribe((resp: any)=>{this.transactionsArray = new MatTableDataSource(resp)})
+        .subscribe((resp: any)=>{this.transactionsArray = resp;console.log(this.transactionsArray)})
   }
 
   refreshTransactions = async () => {
     // setTimeout(()=>{
       this.web.getTransactions()
-        .subscribe((resp: any)=>{this.transactionsArray = new MatTableDataSource(resp)})
+        .subscribe((resp: any)=>{this.transactionsArray = resp})
     // },100)
   }
 
