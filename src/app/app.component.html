@@ -1,4 +1,4 @@
-<app-add-transaction-component [TransactionsTableComponent]="TransactionsTableComponent"></app-add-transaction-component>
-<app-transactions-table></app-transactions-table>
+<app-add-transaction-component (refreshTransactions)="refreshTransactions()"></app-add-transaction-component>
+<app-transactions-table [transactionsArray]="transactionsArray" (getRefreshedTransactions)="refreshTransactions"></app-transactions-table>
 
 <router-outlet></router-outlet>

@@ -14,6 +14,7 @@
             <button 
             attr.data-id="{{element.id}}" 
             attr.data-provider="{{element.provider}}"
+            [disabled]="formsToggled"
             (click)="deleteTransaction($event)">
               <mat-icon>delete</mat-icon>
             </button>

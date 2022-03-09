@@ -1,5 +1,5 @@
-import {Component, ViewChild, Input} from '@angular/core';
-import {ElementRef} from '@angular/core';
+import {Component, ViewChild, Input, Output} from '@angular/core';
+import {ElementRef, EventEmitter} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {TransactionsTableComponent} from '../transactions-table/transactions-table.component';
 import {WebService} from '../web.service';
@@ -11,13 +11,14 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./add-transaction-component.component.scss']
 })
 export class AddTransactionComponentComponent{
+  @Output() refreshTransactions: EventEmitter<any> = new EventEmitter();
   @Input() TransactionsTableComponent!: TransactionsTableComponent;
   constructor(
     private http: HttpClient, private web: WebService
    ) {
      }
 
-   transactionUpdateForm = new FormGroup({
+   transactionUpdateForm: FormGroup = new FormGroup({
     provider: new FormControl(''),
     username: new FormControl(''),
     externalId: new FormControl(''),
@@ -30,16 +31,16 @@ export class AddTransactionComponentComponent{
 
   @ViewChild('addition_form', {static: false})
   additionForm: ElementRef | undefined;
-  status = false;
+  status: boolean = false;
 
-  toggleForm =  () => {
+  toggleForm = (): void => {
     this.additionForm?.nativeElement;
     this.status = !this.status
   }
 
-  addTransaction = (e: any) => {
+  addTransaction = async (e: MouseEvent): Promise<void> => {
     e.preventDefault();
-    const transactionObj = {
+    const transactionObj:Object = {
       "externalId": this.transactionUpdateForm.value.externalId,
       "provider": this.transactionUpdateForm.value.provider,
       "amount": {
@@ -54,6 +55,6 @@ export class AddTransactionComponentComponent{
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
     this.web.uploadTransaction(transactionObj);
-    this.TransactionsTableComponent.refreshTransactions();
+    this.refreshTransactions.emit();
   }
 }

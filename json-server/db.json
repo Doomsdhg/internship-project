@@ -1,21 +1,6 @@
 {
   "transactions": [
     {
-      "id": "55",
-      "externalId": "5523",
-      "provider": "paypal",
-      "amount": {
-        "amount": "1700",
-        "currency": "USD"
-      },
-      "comissionAmount": {
-        "amount": "17",
-        "currency": "USD"
-      },
-      "username": "Yuri",
-      "additionalData": "{}"
-    },
-    {
       "id": "77",
       "externalId": "7",
       "provider": "qiwi",
@@ -42,7 +27,7 @@
         "amount": 1,
         "currency": "USD"
       },
-      "username": "Nikolay",
+      "username": "Vladislav",
       "additionalData": "{}"
     },
     {
@@ -61,34 +46,64 @@
       "id": "qZzyKpp"
     },
     {
-      "externalId": "1557",
+      "externalId": "123",
       "provider": "paypal",
       "amount": {
-        "amount": "199",
+        "amount": "1000",
         "currency": "USD"
       },
       "comissionAmount": {
-        "amount": "19",
+        "amount": "100",
         "currency": "USD"
       },
-      "username": "test",
-      "additionalData": "some additional data",
-      "id": "ItM2cXd"
+      "username": "Vladimir",
+      "additionalData": "",
+      "id": "tQbthb4"
     },
     {
-      "externalId": "3123",
+      "externalId": "1003",
       "provider": "qiwi",
       "amount": {
-        "amount": "122",
+        "amount": "544",
+        "currency": "EUR"
+      },
+      "comissionAmount": {
+        "amount": "54",
+        "currency": "EUR"
+      },
+      "username": "Svetlana",
+      "additionalData": "",
+      "id": "Xb9gAxI"
+    },
+    {
+      "externalId": "",
+      "provider": "",
+      "amount": {
+        "amount": "123123",
+        "currency": ""
+      },
+      "comissionAmount": {
+        "amount": "",
+        "currency": ""
+      },
+      "username": "",
+      "additionalData": "",
+      "id": "BN_lQD_"
+    },
+    {
+      "externalId": "",
+      "provider": "qwe",
+      "amount": {
+        "amount": "123",
         "currency": "usd"
       },
       "comissionAmount": {
-        "amount": "12",
-        "currency": "usd"
+        "amount": "",
+        "currency": ""
       },
-      "username": "dsadsa",
+      "username": "qqqwe",
       "additionalData": "",
-      "id": "eDWtKQu"
+      "id": "Iw5IDlk"
     }
   ]
 }

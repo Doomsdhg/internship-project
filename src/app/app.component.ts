@@ -1,28 +1,50 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TransactionsTableComponent } from './transactions-table/transactions-table.component';
-import { ChangeDetectionStrategy } from '@angular/compiler';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { transactionInterface, WebService } from './web.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { ChangeDetectorRef } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
 
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   @ViewChild(TransactionsTableComponent) TransactionsTableComponent!: TransactionsTableComponent;
-  
+  transactionsArray!: MatTableDataSource<transactionInterface[]>;
+
   constructor(
-    private http: HttpClient,
+    public http: HttpClient,
+    public web: WebService,
+    public cdr: ChangeDetectorRef
    ) {
      }
 
-  title = 'internship-project';
+  ngOnInit(): void {
+    const transactions: any = this.web.getTransactionsPromise();
+    transactions.subscribe();
+    this.transactionsArray = new MatTableDataSource(transactions);
+    this.cdr.detectChanges()
+  }
+
+  refreshTransactions(): void {
+    const transactions: any = this.web.getTransactionsPromise();
+    transactions.subscribe();
+    this.transactionsArray = new MatTableDataSource(transactions);
+    this.cdr.detectChanges()
+  }
+
+  title: string = 'internship-project';
   displayedColumns: string[] = ['externalId', 'username', 'amount', 'comissionAmount', 'provider', 'actions'];
-  columnNames = [{
+  columnNames: Object[] = [{
       id: 'externalId',
       value: 'No.',
     }, 

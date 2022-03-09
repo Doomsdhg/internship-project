@@ -1,10 +1,40 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy, OnChanges, SimpleChanges, Input, EventEmitter, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { WebService, transactionInterface } from '../web.service';
+import { WebService, transactionInterface, amountInterface } from '../web.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ChangeDetectorRef } from '@angular/core';
+import _ from "lodash";
+
+// interface currentTarget {
+//   dataset: dataset
+// }
+
+// interface dataset {
+//   id: string
+// }
+
+// interface mouseClick extends MouseEvent {
+//   currentTarget: currentTarget
+// }
+
+interface column extends Object {
+  id: string,
+  value: string
+}
+
+interface element extends Object {
+  displayForms: boolean,
+  provider: string,
+  username: string,
+  externalId: string,
+  amount: amountInterface,
+  comissionAmount: amountInterface,
+  additionalData: string,
+  id: string
+}
+
 
 @Component({
   selector: 'app-transactions-table',
@@ -12,18 +42,22 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./transactions-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class TransactionsTableComponent implements OnInit{
 
-  formsToggled: boolean = false;
-  private cdr!: ChangeDetectorRef;
+  @Input() transactionsArray!: MatTableDataSource<transactionInterface[]>;
+  @Output() getRefreshedTransactions: EventEmitter<any> = new EventEmitter();
 
-  public transactionsArray!: MatTableDataSource<transactionInterface>;
+  formsToggled: boolean = false;
+  public cdr!: ChangeDetectorRef;
+
+  // public transactionsArray: any = this.web.getTransactionsPromise();
   constructor(
-    private web: WebService, cdr: ChangeDetectorRef
+    public web: WebService, cdr: ChangeDetectorRef
    ) {
    }
 
-  transactionUpdateForm = new FormGroup({
+  transactionUpdateForm: FormGroup = new FormGroup({
     provider: new FormControl(''),
     username: new FormControl(''),
     externalId: new FormControl(''),
@@ -34,32 +68,73 @@ export class TransactionsTableComponent implements OnInit{
     additionalData: new FormControl('')
   });
 
-  ngOnInit(): void {
-    this.web.getTransactions().subscribe((resp:transactionInterface[])=>{this.transactionsArray = new MatTableDataSource(resp)})
+  async ngOnInit(): Promise<void> {
+    // this.web.getTransactions().subscribe((resp:transactionInterface[])=>{this.transactionsArray = new MatTableDataSource(resp)})
+    this.getRefreshedTransactions.emit()
+    
   }
 
-  refreshTransactions = () => {
-    setTimeout(async()=>{
-      this.web.getTransactions()
-      .subscribe((resp:transactionInterface[])=>{this.transactionsArray.data = resp})
-    },100)
+  refreshTransactions = (): void => {
+    // this.getRefreshedTransactions.emit()
+    // setTimeout(async ()=>{
+      const transactions: any = this.web.getTransactionsPromise();
+      transactions.subscribe();
+      this.transactionsArray = new MatTableDataSource(transactions);
+      this.cdr.detectChanges()
+      // this.getRefreshedTransactions.emit()
+    // },100)
+    
+    
+    // this.transactionsArray = this.web.getTransactions();
+    // setTimeout(async()=>{
+    //   this.web.getTransactions()
+    //   .subscribe((resp:transactionInterface[])=>{
+    //     this.transactionsArray = new MatTableDataSource(resp);
+        // if (_.isEqual(this.transactionsArray.data,resp)) {
+        //   this.refreshTransactions();
+        //   return null
+        // }
+        // this.transactionsArray = new MatTableDataSource(resp)
+        // return null
+      // })
+      // if (this.compareArrays(this.transactionsArray.data, this.oldTransactionsArray.data)) {
+      //   this.refreshTransactions()
+      // } else {
+      //   this.oldTransactionsArray.data = this.transactionsArray.data;
+      // }
+    // },100)
   }
 
-  deleteTransaction = (e: any) => {
-    const id = e.currentTarget.dataset.id;
+  // compareArrays = (firstArray:any, secondArray:any) => {
+  //   return _.isEqual(firstArray, secondArray)
+  // }
+
+  deleteTransaction = (e: any): void => {
+    const id: string = e.currentTarget.dataset.id;
     this.web.deleteTransaction(id)
       .subscribe(()=>{console.log('transaction deleted successfully')})
     this.refreshTransactions()
   }
 
-  toggleForms = (element: any) => {
+  toggleForms = (element: element): void => {
+    this.transactionUpdateForm = new FormGroup({
+      provider: new FormControl(element.provider),
+      username: new FormControl(element.username),
+      externalId: new FormControl(element.externalId),
+      amount: new FormControl(element.amount.amount),
+      currency: new FormControl(element.amount.currency),
+      comissionAmount: new FormControl(element.comissionAmount.amount),
+      comissionCurrency: new FormControl(element.comissionAmount.currency),
+      additionalData: new FormControl(element.additionalData)
+    })
     this.formsToggled = !this.formsToggled;
     element.displayForms = !element.displayForms;
+    this.cdr.detectChanges()
   }
 
-  updateTransaction = (e: any, element: any) => {
-    const id = e.currentTarget.dataset.id;
-    const updateObj = {
+  updateTransaction = (e: any, element: element): void => {
+    const id: string = e.currentTarget.dataset.id;
+    const updateObj: Object = {
       "externalId": this.transactionUpdateForm.value.externalId,
       "username": this.transactionUpdateForm.value.username,
       "amount": {
@@ -75,14 +150,15 @@ export class TransactionsTableComponent implements OnInit{
     }
     this.web.patchTransaction(id, updateObj)
       .subscribe(()=>{console.log('updated successfully')})
-    this.refreshTransactions()
     this.toggleForms(element)
+    this.refreshTransactions()
+    
   }
   
-  displayEditForms = false;
-  title = 'internship-project';
+  displayEditForms: boolean = false;
+  title: string = 'internship-project';
   displayedColumns: string[] = ['externalId', 'username', 'amount', 'comissionAmount', 'provider', 'actions'];
-  columnNames = [{
+  columnNames : column[] = [{
       id: 'externalId',
       value: 'No.',
     }, 

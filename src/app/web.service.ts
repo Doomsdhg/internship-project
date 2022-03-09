@@ -2,7 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {TransactionsTableComponent} from './transactions-table/transactions-table.component';
-import { take, first } from 'rxjs/operators';
+import { take, first, map } from 'rxjs/operators';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface amountInterface {
   amount: number,
@@ -27,17 +28,31 @@ export class WebService {
 
   constructor(private http: HttpClient){}
   
-  transactionsArray!: transactionInterface[];
+  transactionsArray!: Observable<Object>;
 
-  getTransactions(): any {
-    return this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
+  getTransactions(): Observable<Object> {
+    const transactions: Observable<Object> = this.getTransactionsPromise();
+    this.transactionsArray = transactions;
+    return transactions
   }
 
-  deleteTransaction(id: string): any {
+  getTransactionsPromise(): Observable<Object> {
+    const response =  this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
+    // .toPromise()
+    // .subscribe((resp: any)=>{
+    //   console.log(resp)
+    //   return new MatTableDataSource(resp); 
+    // })
+    // .map((transactions)=>{return transactions})
+    console.log(response)
+    return response
+  }
+
+  deleteTransaction(id: string): Observable<Object> {
     return this.http.delete(`http://localhost:3000/transactions/${id}`)
   }
 
-  patchTransaction(id: string, updateObj: Record<string, unknown>): any{
+  patchTransaction(id: string, updateObj: Object): Observable<Object>{
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
@@ -46,7 +61,7 @@ export class WebService {
     return this.http.patch(`http://localhost:3000/transactions/${id}`, updateObj, httpOptions)
   }
 
-  uploadTransaction(transactionData: Record<string, unknown>):void{
+  uploadTransaction(transactionData: Object):void{
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'

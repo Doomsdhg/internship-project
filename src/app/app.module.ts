@@ -17,6 +17,7 @@ import { TransactionsTableComponent } from './transactions-table/transactions-ta
 import {MatInputModule} from '@angular/material/input';
 import { TableRowComponent } from './transactions-table/table-row/table-row.component';             
 import { ReactiveFormsModule } from '@angular/forms';
+import { WebService } from './web.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     StoreModule.forRoot({ example: fromReducer.reducer })
   ],
-  providers: [
+  providers: [WebService
   ],
   bootstrap: [AppComponent],
 })
