@@ -1,0 +1,12 @@
+{
+    "selectLanguage": "Select language",
+    "displayedColumns":{
+        "externalId": "externalId",
+        "username": "username",
+        "amount": "amount",
+        "comissionAmount": "amount",
+        "provider": "provider",
+        "actions": "actions"
+    }
+
+}

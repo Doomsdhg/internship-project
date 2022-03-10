@@ -18,6 +18,13 @@ import {MatInputModule} from '@angular/material/input';
 import { TableRowComponent } from './transactions-table/table-row/table-row.component';             
 import { ReactiveFormsModule } from '@angular/forms';
 import { WebService } from './web.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
 
 @NgModule({
   declarations: [
@@ -36,9 +43,17 @@ import { WebService } from './web.service';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ example: fromReducer.reducer })
+    StoreModule.forRoot({ example: fromReducer.reducer }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
-  providers: [WebService
+  providers: [WebService,
+    HttpClient
   ],
   bootstrap: [AppComponent],
 })

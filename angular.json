@@ -16,6 +16,14 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "ru": "src/i18n/messages.ru.xlf",
+          "ua": "src/i18n/messages.ua.xlf",
+          "by": "src/i18n/messages.by.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -37,6 +45,15 @@
             "scripts": []
           },
           "configurations": {
+            "ru": {
+              "localize": ["ru"]
+            },
+            "ua": {
+              "localize": ["ua"]
+            },
+            "by": {
+              "localize": ["by"]
+            },
             "production": {
               "budgets": [
                 {
@@ -77,6 +94,15 @@
             },
             "development": {
               "browserTarget": "internship-project:build:development"
+            },
+            "ru": {
+              "browserTarget": "internship-project:build:ru"
+            },
+            "ua": {
+              "browserTarget": "internship-project:build:ua"
+            },
+            "by": {
+              "browserTarget": "internship-project:build:by"
             }
           },
           "defaultConfiguration": "development"

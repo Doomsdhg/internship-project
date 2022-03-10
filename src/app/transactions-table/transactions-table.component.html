@@ -1,4 +1,6 @@
 <table mat-table [dataSource]="transactionsArray.data" class="transactions-table">
+
+  
   
     <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
       
@@ -16,16 +18,16 @@
             attr.data-provider="{{element.provider}}"
             [disabled]="formsToggled"
             (click)="deleteTransaction($event)">
-              <mat-icon>delete</mat-icon>
+              <mat-icon>{{'amount' | translate}}</mat-icon>
             </button>
             <button [disabled]="formsToggled"
             (click)="toggleForms(element)">
-              <mat-icon>edit</mat-icon>
+              <mat-icon>{{'button.edit' | translate}}</mat-icon>
             </button>
             <button 
-            attr.data-id="{{element.id}}" 
+            attr.data-id="{{element.id}}"
             (click)="updateTransaction($event, element)" *ngIf="element.displayForms">
-              save changes
+            {{'button.saveChanges' | translate}}
             </button>
           </ng-template>
           <ng-template #transactionData>
@@ -44,11 +46,11 @@
             <div *ngIf="column.id === 'amount' || column.id === 'comissionAmount';then amountForms else regularForm"></div>
             <ng-template #amountForms class="amount-form-container__form-group">
               <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>Amount</mat-label>
+                <mat-label>{{'amount' | translate}}</mat-label>
                 <input matInput value="{{element[column.id].amount}}" formControlName="{{column.id}}" placeholder="eg 155">
               </mat-form-field>
               <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>Currency</mat-label>
+                <mat-label>{{'currency' | translate}}</mat-label>
                 <input matInput value="{{element[column.id].currency}}" formControlName="{{column.id === 'amount'?'currency':'comissionCurrency'}}" placeholder="eg USD">
               </mat-form-field>
             </ng-template>
@@ -67,4 +69,6 @@
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+
   </table>

@@ -1,0 +1,19 @@
+{
+    "selectLanguage": "Выберите язык",
+    "amount": "количество",
+    "currency": "валюта",
+    "displayedColumns":{
+        "externalId": "внешний идентификатор",
+        "username": "имя пользователя",
+        "amount": "количество",
+        "comissionAmount": "комиссия",
+        "provider": "провайдер",
+        "actions": "действия"
+    },
+    "button":{
+        "delete": "удалить",
+        "edit": "редактировать",
+        "saveChanges": "сохранить изменения"
+    }
+
+}

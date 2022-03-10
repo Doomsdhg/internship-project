@@ -77,21 +77,6 @@
     },
     {
       "externalId": "",
-      "provider": "",
-      "amount": {
-        "amount": "123123",
-        "currency": ""
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "",
-      "additionalData": "",
-      "id": "BN_lQD_"
-    },
-    {
-      "externalId": "",
       "provider": "qwe",
       "amount": {
         "amount": "123",

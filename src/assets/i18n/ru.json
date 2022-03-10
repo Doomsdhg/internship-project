@@ -1,0 +1,12 @@
+{
+    "selectLanguage": "Выберите язык",
+    "displayedColumns":{
+        "externalId": "внешний идентификатор",
+        "username": "имя пользователя",
+        "amount": "количество",
+        "comissionAmount": "комиссия",
+        "provider": "провайдер",
+        "actions": "действия"
+    }
+
+}

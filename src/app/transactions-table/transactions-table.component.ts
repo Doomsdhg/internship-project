@@ -55,6 +55,7 @@ export class TransactionsTableComponent implements OnInit{
   constructor(
     public web: WebService, cdr: ChangeDetectorRef
    ) {
+
    }
 
   transactionUpdateForm: FormGroup = new FormGroup({
@@ -68,7 +69,8 @@ export class TransactionsTableComponent implements OnInit{
     additionalData: new FormControl('')
   });
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
+    console.log(localStorage.getItem('language'))
     // this.web.getTransactions().subscribe((resp:transactionInterface[])=>{this.transactionsArray = new MatTableDataSource(resp)})
     this.getRefreshedTransactions.emit()
     

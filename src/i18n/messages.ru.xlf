@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" target-language="ru" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="language-select" datatype="html">
+        <source>Select language</source>
+        <target>Выбрать язык</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="externalId" datatype="html">
+        <source>externalId</source>
+        <target>внешний идентификатор</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="username" datatype="html">
+        <source>username</source>
+        <target>имя пользователя</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="amount" datatype="html">
+        <source>amount</source>
+        <target>количество</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="comissionAmount" datatype="html">
+        <source>comissionAmount</source>
+        <target>размер комиссии</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="provider" datatype="html">
+        <source>provider</source>
+        <target>провайдер</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="actions" datatype="html">
+        <source>actions</source>
+        <target>действия</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.ts</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="delete-button" datatype="html">
+        <source>delete</source>
+        <target>удалить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">19,20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="edit-button" datatype="html">
+        <source>edit</source>
+        <target>редактировать</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">23,24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="save-changes-button" datatype="html">
+        <source> save changes </source>
+        <target> сохранить изменения</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">28,29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="amount-label" datatype="html">
+        <source>Amount</source>
+        <target>количество</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">47,48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="currency-label" datatype="html">
+        <source>Currency</source>
+        <target>Валюта</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">51,52</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
