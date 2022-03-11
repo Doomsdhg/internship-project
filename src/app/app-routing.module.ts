@@ -12,4 +12,5 @@ const routes: Routes = [];
   exports: [RouterModule, MatTableModule, TranslatePipe],
   providers: [TranslateModule]
 })
+
 export class AppRoutingModule { }

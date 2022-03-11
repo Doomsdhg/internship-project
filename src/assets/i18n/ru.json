@@ -1,12 +1,26 @@
 {
     "selectLanguage": "Выберите язык",
+    "amount": "количество",
+    "currency": "валюта",
     "displayedColumns":{
-        "externalId": "внешний идентификатор",
-        "username": "имя пользователя",
-        "amount": "количество",
-        "comissionAmount": "комиссия",
-        "provider": "провайдер",
-        "actions": "действия"
-    }
+        "externalId": "Номер",
+        "username": "Имя пользователя",
+        "amount": "Количество",
+        "comissionAmount": "Комиссия",
+        "provider": "Провайдер",
+        "actions": "Действия",
+        "currency": "Валюта",
+        "comissionCurrency": "Валюта комиссии",
+        "additionalData": "Дополнительная информация"
+    },
+    "buttons":{
+        "delete": "удалить",
+        "edit": "редактировать",
+        "saveChanges": "сохранить изменения",
+        "transactionOpenForms": "Открыть форму добавления новой транзакции",
+        "transactionCloseForms": "Закрыть форму добавления новой транзакции",
+        "uploadTransaction": "Добавить транзакцию"
+    },
+    "transactionOpenForms":"Открыть форму добавления новой транзакции"
 
 }

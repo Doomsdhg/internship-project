@@ -7,9 +7,6 @@ import { StoreModule } from "@ngrx/store";
 import * as fromReducer from "./store/example.reducer";
 import {MatIconModule} from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {InMemoryDataService} from './in-memory-data.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { AddTransactionComponentComponent } from './add-transaction-component/add-transaction-component.component';
@@ -23,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http)
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json')
 }
 
 @NgModule({
@@ -49,7 +46,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-      }
+      },
+      useDefaultLang: false,
     })
   ],
   providers: [WebService,
@@ -57,4 +55,5 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
 })
+
 export class AppModule { }

@@ -1,0 +1,25 @@
+{
+    "selectLanguage": "Выбраць мову",
+    "amount": "Сума",
+    "currency": "Валюта",
+    "displayedColumns":{
+        "externalId": "Нумар",
+        "username": "імя карыстальніка",
+        "amount": "Сума",
+        "comissionAmount": "Сума камісіі",
+        "provider": "Правайдэр",
+        "actions": "Дзеянні",
+        "currency": "Валюта",
+        "comissionCurrency": "Камісійная валюта",
+        "additionalData": "Дадатковыя дадзеныя"
+    },
+    "buttons":{
+        "delete": "Выдаліць",
+        "edit": "Рэдагаваць",
+        "saveChanges": "Захаваць змены",
+        "transactionOpenForms": "Адкрыць форму дадання новай транзакцыі",
+        "transactionCloseForms": "Закрыць форму дадання новай транзакцыі",
+        "uploadTransaction": "Дадаць транзакцыю"
+    }
+
+}

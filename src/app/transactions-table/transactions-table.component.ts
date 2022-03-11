@@ -1,23 +1,9 @@
-import {Component, OnInit, ChangeDetectionStrategy, OnChanges, SimpleChanges, Input, EventEmitter, Output} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output} from '@angular/core';
 import { WebService, transactionInterface, amountInterface } from '../web.service';
-import { Observable } from 'rxjs';
 import { FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ChangeDetectorRef } from '@angular/core';
-import _ from "lodash";
-
-// interface currentTarget {
-//   dataset: dataset
-// }
-
-// interface dataset {
-//   id: string
-// }
-
-// interface mouseClick extends MouseEvent {
-//   currentTarget: currentTarget
-// }
+import { TranslateService } from '@ngx-translate/core';
 
 interface column extends Object {
   id: string,
@@ -35,7 +21,6 @@ interface element extends Object {
   id: string
 }
 
-
 @Component({
   selector: 'app-transactions-table',
   templateUrl: './transactions-table.component.html',
@@ -46,120 +31,15 @@ interface element extends Object {
 export class TransactionsTableComponent implements OnInit{
 
   @Input() transactionsArray!: MatTableDataSource<transactionInterface[]>;
+
   @Output() getRefreshedTransactions: EventEmitter<any> = new EventEmitter();
 
   formsToggled: boolean = false;
-  public cdr!: ChangeDetectorRef;
 
-  // public transactionsArray: any = this.web.getTransactionsPromise();
-  constructor(
-    public web: WebService, cdr: ChangeDetectorRef
-   ) {
-
-   }
-
-  transactionUpdateForm: FormGroup = new FormGroup({
-    provider: new FormControl(''),
-    username: new FormControl(''),
-    externalId: new FormControl(''),
-    amount: new FormControl(''),
-    currency: new FormControl(''),
-    comissionAmount: new FormControl(''),
-    comissionCurrency: new FormControl(''),
-    additionalData: new FormControl('')
-  });
-
-  ngOnInit(): void {
-    console.log(localStorage.getItem('language'))
-    // this.web.getTransactions().subscribe((resp:transactionInterface[])=>{this.transactionsArray = new MatTableDataSource(resp)})
-    this.getRefreshedTransactions.emit()
-    
-  }
-
-  refreshTransactions = (): void => {
-    // this.getRefreshedTransactions.emit()
-    // setTimeout(async ()=>{
-      const transactions: any = this.web.getTransactionsPromise();
-      transactions.subscribe();
-      this.transactionsArray = new MatTableDataSource(transactions);
-      this.cdr.detectChanges()
-      // this.getRefreshedTransactions.emit()
-    // },100)
-    
-    
-    // this.transactionsArray = this.web.getTransactions();
-    // setTimeout(async()=>{
-    //   this.web.getTransactions()
-    //   .subscribe((resp:transactionInterface[])=>{
-    //     this.transactionsArray = new MatTableDataSource(resp);
-        // if (_.isEqual(this.transactionsArray.data,resp)) {
-        //   this.refreshTransactions();
-        //   return null
-        // }
-        // this.transactionsArray = new MatTableDataSource(resp)
-        // return null
-      // })
-      // if (this.compareArrays(this.transactionsArray.data, this.oldTransactionsArray.data)) {
-      //   this.refreshTransactions()
-      // } else {
-      //   this.oldTransactionsArray.data = this.transactionsArray.data;
-      // }
-    // },100)
-  }
-
-  // compareArrays = (firstArray:any, secondArray:any) => {
-  //   return _.isEqual(firstArray, secondArray)
-  // }
-
-  deleteTransaction = (e: any): void => {
-    const id: string = e.currentTarget.dataset.id;
-    this.web.deleteTransaction(id)
-      .subscribe(()=>{console.log('transaction deleted successfully')})
-    this.refreshTransactions()
-  }
-
-  toggleForms = (element: element): void => {
-    this.transactionUpdateForm = new FormGroup({
-      provider: new FormControl(element.provider),
-      username: new FormControl(element.username),
-      externalId: new FormControl(element.externalId),
-      amount: new FormControl(element.amount.amount),
-      currency: new FormControl(element.amount.currency),
-      comissionAmount: new FormControl(element.comissionAmount.amount),
-      comissionCurrency: new FormControl(element.comissionAmount.currency),
-      additionalData: new FormControl(element.additionalData)
-    })
-    this.formsToggled = !this.formsToggled;
-    element.displayForms = !element.displayForms;
-    this.cdr.detectChanges()
-  }
-
-  updateTransaction = (e: any, element: element): void => {
-    const id: string = e.currentTarget.dataset.id;
-    const updateObj: Object = {
-      "externalId": this.transactionUpdateForm.value.externalId,
-      "username": this.transactionUpdateForm.value.username,
-      "amount": {
-        "amount": this.transactionUpdateForm.value.amount,
-        "currency": this.transactionUpdateForm.value.currency
-      },
-      "comissionAmount": {
-        "amount": this.transactionUpdateForm.value.comissionAmount,
-        "currency": this.transactionUpdateForm.value.comissionCurrency
-      },
-      "provider": this.transactionUpdateForm.value.provider,
-      "additionalData": this.transactionUpdateForm.value.additionalData
-    }
-    this.web.patchTransaction(id, updateObj)
-      .subscribe(()=>{console.log('updated successfully')})
-    this.toggleForms(element)
-    this.refreshTransactions()
-    
-  }
-  
   displayEditForms: boolean = false;
-  title: string = 'internship-project';
-  displayedColumns: string[] = ['externalId', 'username', 'amount', 'comissionAmount', 'provider', 'actions'];
+
+  displayedColumns: string[] = ['externalId', 'provider', 'amount', 'comissionAmount', 'username', 'actions'];
+
   columnNames : column[] = [{
       id: 'externalId',
       value: 'No.',
@@ -184,4 +64,89 @@ export class TransactionsTableComponent implements OnInit{
       id: 'actions',
       value: 'Actions'
     }];
+
+  constructor(
+    public web: WebService, 
+    private cdr: ChangeDetectorRef, 
+    private translateService: TranslateService
+   ) {}
+
+  transactionUpdateForm: FormGroup = new FormGroup({
+    provider: new FormControl(''),
+    username: new FormControl(''),
+    externalId: new FormControl(''),
+    amount: new FormControl(''),
+    currency: new FormControl(''),
+    comissionAmount: new FormControl(''),
+    comissionCurrency: new FormControl(''),
+    additionalData: new FormControl('')
+  });
+
+  ngOnInit(): void {
+    this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
+    'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
+      .subscribe(translations => {
+        this.columnNames[0].value = (translations['displayedColumns.externalId']);
+        this.columnNames[4].value = (translations['displayedColumns.provider']);
+        this.columnNames[2].value = (translations['displayedColumns.amount']);
+        this.columnNames[3].value = (translations['displayedColumns.comissionAmount']);
+        this.columnNames[1].value = (translations['displayedColumns.username']);
+        this.columnNames[5].value = (translations['displayedColumns.actions']);
+      });
+    this.getRefreshedTransactions.emit()
+  }
+
+  refreshTransactions = (): void => {
+    const transactions: any = this.web.getTransactionsObservable();
+    transactions.subscribe();
+    this.transactionsArray = new MatTableDataSource(transactions);
+    this.cdr.detectChanges()
+  }
+
+  deleteTransaction = (e: Event): void => {
+    const currentTarget = e.currentTarget as HTMLButtonElement;
+    const id: string | undefined = currentTarget.dataset['id'];
+    this.web.deleteTransaction(id)
+      .subscribe(()=>{console.log('transaction deleted successfully')})
+    this.refreshTransactions()
+  }
+
+  toggleForms = (element: element): void => {
+    this.transactionUpdateForm = new FormGroup({
+      provider: new FormControl(element.provider),
+      username: new FormControl(element.username),
+      externalId: new FormControl(element.externalId),
+      amount: new FormControl(element.amount.amount),
+      currency: new FormControl(element.amount.currency),
+      comissionAmount: new FormControl(element.comissionAmount.amount),
+      comissionCurrency: new FormControl(element.comissionAmount.currency),
+      additionalData: new FormControl(element.additionalData)
+    })
+    this.formsToggled = !this.formsToggled;
+    element.displayForms = !element.displayForms;
+    this.cdr.detectChanges()
+  }
+
+  updateTransaction = (e: Event, element: element): void => {
+    const currentTarget = e.currentTarget as HTMLButtonElement;
+    const id: string | undefined = currentTarget.dataset['id'];
+    const updateObj: Object = {
+      "externalId": this.transactionUpdateForm.value.externalId,
+      "username": this.transactionUpdateForm.value.username,
+      "amount": {
+        "amount": this.transactionUpdateForm.value.amount,
+        "currency": this.transactionUpdateForm.value.currency
+      },
+      "comissionAmount": {
+        "amount": this.transactionUpdateForm.value.comissionAmount,
+        "currency": this.transactionUpdateForm.value.comissionCurrency
+      },
+      "provider": this.transactionUpdateForm.value.provider,
+      "additionalData": this.transactionUpdateForm.value.additionalData
+    }
+    this.web.patchTransaction(id, updateObj)
+      .subscribe(()=>{console.log('updated successfully')})
+    this.toggleForms(element)
+    this.refreshTransactions()
+  }
 }

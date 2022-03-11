@@ -1,9 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {TransactionsTableComponent} from './transactions-table/transactions-table.component';
-import { take, first, map } from 'rxjs/operators';
-import { MatTableDataSource } from '@angular/material/table';
 
 export interface amountInterface {
   amount: number,
@@ -27,47 +24,28 @@ export interface transactionInterface {
 export class WebService {
 
   constructor(private http: HttpClient){}
-  
-  transactionsArray!: Observable<Object>;
 
-  getTransactions(): Observable<Object> {
-    const transactions: Observable<Object> = this.getTransactionsPromise();
-    this.transactionsArray = transactions;
-    return transactions
+  httpOptions : Object = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'
+    })
   }
 
-  getTransactionsPromise(): Observable<Object> {
+  getTransactionsObservable(): Observable<Object> {
     const response =  this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
-    // .toPromise()
-    // .subscribe((resp: any)=>{
-    //   console.log(resp)
-    //   return new MatTableDataSource(resp); 
-    // })
-    // .map((transactions)=>{return transactions})
-    console.log(response)
     return response
   }
 
-  deleteTransaction(id: string): Observable<Object> {
+  deleteTransaction(id: string | undefined): Observable<Object> {
     return this.http.delete(`http://localhost:3000/transactions/${id}`)
   }
 
-  patchTransaction(id: string, updateObj: Object): Observable<Object>{
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    }
-    return this.http.patch(`http://localhost:3000/transactions/${id}`, updateObj, httpOptions)
+  patchTransaction(id: string | undefined, updateObj: Object): Observable<Object>{
+    return this.http.patch(`http://localhost:3000/transactions/${id}`, updateObj, this.httpOptions)
   }
 
   uploadTransaction(transactionData: Object):void{
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json'
-      })
-    }
-    this.http.post('http://localhost:3000/transactions', transactionData, httpOptions)
+    this.http.post('http://localhost:3000/transactions', transactionData, this.httpOptions)
       .subscribe();
   }
 }

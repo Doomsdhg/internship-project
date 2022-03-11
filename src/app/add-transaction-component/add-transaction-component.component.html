@@ -1,39 +1,39 @@
-<button (click)="toggleForm()" class="toggle-transaction-forms">{{status?'Close form':'Open form of adding new transaction'}}</button>
+<button (click)="toggleForm()" class="toggle-transaction-forms">{{status?('buttons.transactionCloseForms' | translate):('buttons.transactionOpenForms' | translate)}}</button>
 <div #addition_form [ngClass]="status ? 'form-group' : 'display-none'">
       <form class="form-group__form" [formGroup]="transactionUpdateForm">
       <mat-form-field class="form-group__form-input" appearance="fill">
-        <mat-label>External id</mat-label>
+        <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
         <input formControlName="externalId" matInput placeholder="eg 155">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
-        <mat-label>Provider</mat-label>
+        <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
         <input formControlName="provider" matInput placeholder="eg webmoney">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
-        <mat-label>Amount</mat-label>
+        <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
         <input formControlName="amount" matInput placeholder="eg 1000">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
-        <mat-label>Currency</mat-label>
+        <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
         <input formControlName="currency" matInput placeholder="eg USD">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
-        <mat-label>Comission amount</mat-label>
+        <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
         <input formControlName="comissionAmount" matInput placeholder="eg 100">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
-        <mat-label>Comission currency</mat-label>
+        <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
         <input formControlName="comissionCurrency" matInput placeholder="eg USD">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
-        <mat-label>User</mat-label>
+        <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
         <input formControlName="username" matInput placeholder="eg testUser">
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <mat-label>Additional data</mat-label>
+        <mat-label>{{'displayedColumns.additionalData' | translate}}</mat-label>
         <textarea formControlName="additionalData" matInput placeholder="Some more info"></textarea>
       </mat-form-field>
       
     </form>
-    <button (click)="addTransaction($event)">Add new transaction</button>
+    <button (click)="addTransaction($event)">{{'buttons.uploadTransaction' | translate}}</button>
 </div>

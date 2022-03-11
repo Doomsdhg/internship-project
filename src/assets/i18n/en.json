@@ -1,12 +1,26 @@
 {
     "selectLanguage": "Select language",
+    "amount": "amount",
+    "currency": "currency",
     "displayedColumns":{
-        "externalId": "externalId",
-        "username": "username",
-        "amount": "amount",
-        "comissionAmount": "amount",
-        "provider": "provider",
-        "actions": "actions"
-    }
+        "externalId": "No.",
+        "username": "Username",
+        "amount": "Amount",
+        "comissionAmount": "Comission amount",
+        "provider": "Provider",
+        "actions": "Actions",
+        "currency": "currency",
+        "comissionCurrency": "Comission amount",
+        "additionalData": "additional data"
+    },
+    "buttons":{
+        "delete": "delete",
+        "edit": "edit",
+        "saveChanges": "saveChanges",
+        "transactionOpenForms": "Open form of adding new transaction",
+        "transactionCloseForms": "Close form of adding new transaction",
+        "uploadTransaction": "Upload transaction"
+    },
+    "transactionOpenForms": "Open form of adding new transaction"
 
 }
