@@ -32,7 +32,7 @@ export class WebService {
     })
   }
 
-  async getTransactionsObservable(): Promise<any> {
+  async getTransactionsPromise(): Promise<Object> {
     const response =  this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
     const output = await lastValueFrom(response)
     return output

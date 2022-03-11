@@ -98,8 +98,7 @@ export class TransactionsTableComponent implements OnInit{
   }
 
   refreshTransactions = async (): Promise<void> => {
-    const transactions: Observable<Object> | any = await this.web.getTransactionsObservable();
-    
+    const transactions: Observable<Object> | any = await this.web.getTransactionsPromise();
     this.transactionsArray = new MatTableDataSource(transactions);
     this.cdr.detectChanges()
   }
