@@ -74,36 +74,6 @@
       "username": "Svetlana",
       "additionalData": "",
       "id": "Xb9gAxI"
-    },
-    {
-      "externalId": "",
-      "provider": "qwe",
-      "amount": {
-        "amount": "123",
-        "currency": "usd"
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "qqqwe",
-      "additionalData": "",
-      "id": "Iw5IDlk"
-    },
-    {
-      "externalId": "",
-      "provider": "qwdqw",
-      "amount": {
-        "amount": "",
-        "currency": ""
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "",
-      "additionalData": "",
-      "id": "DmUTQvR"
     }
   ]
 }

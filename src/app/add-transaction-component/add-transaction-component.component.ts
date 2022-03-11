@@ -43,7 +43,7 @@ export class AddTransactionComponentComponent{
     this.status = !this.status
   }
 
-  addTransaction = (e: MouseEvent): void => {
+  addTransaction = async (e: MouseEvent): Promise<void> => {
     e.preventDefault();
     const transactionObj: Object = {
       "externalId": this.transactionUpdateForm.value.externalId,
@@ -59,7 +59,7 @@ export class AddTransactionComponentComponent{
       "username": this.transactionUpdateForm.value.username,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.web.uploadTransaction(transactionObj)
+    await this.web.uploadTransaction(transactionObj)
     this.refreshTransactions.emit();
   }
 }

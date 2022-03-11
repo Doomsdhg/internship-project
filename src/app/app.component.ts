@@ -37,12 +37,11 @@ export class AppComponent implements OnInit {
      this.translateService.use(localStorage.getItem('language') || 'en');
      }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.language = localStorage.getItem('language') || environment.defaultLocale;
-    const transactions: any = this.web.getTransactionsObservable();
-    transactions.subscribe();
+    const transactions: any = await this.web.getTransactionsObservable();
+    console.log(transactions)
     this.transactionsArray = new MatTableDataSource(transactions);
-    this.cdr.detectChanges()
   }
 
   changeLanguage(e: Event): void {
@@ -51,9 +50,8 @@ export class AppComponent implements OnInit {
     window.location.reload()
   }
 
-  refreshTransactions(): void {
-    const transactions: any = this.web.getTransactionsObservable();
-    transactions.subscribe();
+  async refreshTransactions(): Promise<void> {
+    const transactions: any = await this.web.getTransactionsObservable();
     this.transactionsArray = new MatTableDataSource(transactions);
     this.cdr.detectChanges()
   }

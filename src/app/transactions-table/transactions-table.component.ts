@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 interface column extends Object {
   id: string,
@@ -96,18 +97,17 @@ export class TransactionsTableComponent implements OnInit{
     this.getRefreshedTransactions.emit()
   }
 
-  refreshTransactions = (): void => {
-    const transactions: any = this.web.getTransactionsObservable();
-    transactions.subscribe();
+  refreshTransactions = async (): Promise<void> => {
+    const transactions: Observable<Object> | any = await this.web.getTransactionsObservable();
+    
     this.transactionsArray = new MatTableDataSource(transactions);
     this.cdr.detectChanges()
   }
 
-  deleteTransaction = (e: Event): void => {
+  deleteTransaction = async (e: Event): Promise<void> => {
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
-    this.web.deleteTransaction(id)
-      .subscribe(()=>{console.log('transaction deleted successfully')})
+    await this.web.deleteTransaction(id)
     this.refreshTransactions()
   }
 
@@ -124,10 +124,9 @@ export class TransactionsTableComponent implements OnInit{
     })
     this.formsToggled = !this.formsToggled;
     element.displayForms = !element.displayForms;
-    this.cdr.detectChanges()
   }
 
-  updateTransaction = (e: Event, element: element): void => {
+  updateTransaction = async (e: Event, element: element): Promise<void> => {
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
     const updateObj: Object = {
@@ -144,8 +143,7 @@ export class TransactionsTableComponent implements OnInit{
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.web.patchTransaction(id, updateObj)
-      .subscribe(()=>{console.log('updated successfully')})
+    await this.web.patchTransaction(id, updateObj)
     this.toggleForms(element)
     this.refreshTransactions()
   }
