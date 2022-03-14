@@ -3,10 +3,12 @@
     <select class="language-picker" (change)="changeLanguage($event)">
         <option value="en" [selected]="language==='en'">English</option>
         <option value="ru" [selected]="language==='ru'">Русский</option>
-        <option value="ua" [selected]="language==='ua'">Український</option>
+        <option value="ua" [selected]="language==='ua'">Українська</option>
         <option value="by" [selected]="language==='by'">Білоруська</option>
     </select>
 </div>
-<app-add-transaction-component (refreshTransactions)="refreshTransactions()"></app-add-transaction-component>
-<app-transactions-table [transactionsArray]="transactionsArray" (getRefreshedTransactions)="refreshTransactions"></app-transactions-table>
+<app-add-transaction-component [TransactionsTableComponent]="TransactionsTableComponent"></app-add-transaction-component>
+<app-transactions-table 
+
+ (getRefreshedTransactions)="refreshTransactions"></app-transactions-table>
 <router-outlet></router-outlet>

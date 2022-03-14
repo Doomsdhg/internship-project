@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { lastValueFrom, firstValueFrom } from 'rxjs';
 
 export interface amountInterface {
   amount: number,
@@ -18,6 +17,8 @@ export interface transactionInterface {
   additionalData?: string
 }
 
+const transactionsEndpoint = "http://localhost:3000/transactions";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -32,24 +33,19 @@ export class WebService {
     })
   }
 
-  async getTransactionsPromise(): Promise<Object> {
-    const response =  this.http.get(`http://localhost:3000/transactions`, {observe: 'body', responseType: 'json'})
-    const output = await lastValueFrom(response)
-    return output
+  getTransactions(): Observable<any> {
+    return this.http.get(transactionsEndpoint, {observe: 'body', responseType: 'json'})
   }
 
-  async deleteTransaction(id: string | undefined): Promise<void> {
-    const response =  this.http.delete(`http://localhost:3000/transactions/${id}`)
-    await lastValueFrom(response)
+  deleteTransaction(id: string | undefined): Observable<Object> {
+    return this.http.delete(`${transactionsEndpoint}/${id}`)
   }
 
-  async patchTransaction(id: string | undefined, updateObj: Object): Promise<void>{
-    const response =  this.http.patch(`http://localhost:3000/transactions/${id}`, updateObj, this.httpOptions)
-    await lastValueFrom(response)
+  patchTransaction(id: string | undefined, updateObj: Object): Observable<Object>{
+    return this.http.patch(`${transactionsEndpoint}/${id}`, updateObj, this.httpOptions)
   }
 
-  async uploadTransaction(transactionData: Object):Promise<void>{
-    const response = this.http.post('http://localhost:3000/transactions', transactionData, this.httpOptions)
-    await lastValueFrom(response);
+  uploadTransaction(transactionData: Object):Observable<Object>{
+    return this.http.post(transactionsEndpoint, transactionData, this.httpOptions)
   }
 }

@@ -1,8 +1,10 @@
-import {Component, ViewChild, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import {Component, ViewChild, Input, Output, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import {ElementRef, EventEmitter} from '@angular/core';
 import {TransactionsTableComponent} from '../transactions-table/transactions-table.component';
 import {WebService} from '../web.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { TransactionsDataSource } from '../transactions-data-source.service';
 
 @Component({
   selector: 'app-add-transaction-component',
@@ -27,6 +29,8 @@ export class AddTransactionComponentComponent{
 
   status: boolean = false;
 
+  dataSource!: TransactionsDataSource;
+
   transactionUpdateForm: FormGroup = new FormGroup({
     provider: new FormControl(''),
     username: new FormControl(''),
@@ -38,12 +42,13 @@ export class AddTransactionComponentComponent{
     additionalData: new FormControl('')
   });
 
+
   toggleForm = (): void => {
     this.additionForm?.nativeElement;
     this.status = !this.status
   }
 
-  addTransaction = async (e: MouseEvent): Promise<void> => {
+  addTransaction = (e: MouseEvent): void => {
     e.preventDefault();
     const transactionObj: Object = {
       "externalId": this.transactionUpdateForm.value.externalId,
@@ -59,7 +64,8 @@ export class AddTransactionComponentComponent{
       "username": this.transactionUpdateForm.value.username,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    await this.web.uploadTransaction(transactionObj)
-    this.refreshTransactions.emit();
+    this.web.uploadTransaction(transactionObj).subscribe(()=>
+      this.TransactionsTableComponent.dataSource.loadTransactions()
+    )
   }
 }

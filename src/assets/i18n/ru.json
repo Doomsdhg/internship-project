@@ -11,7 +11,8 @@
         "actions": "Действия",
         "currency": "Валюта",
         "comissionCurrency": "Валюта комиссии",
-        "additionalData": "Дополнительная информация"
+        "additionalData": "Дополнительная информация",
+        "tools": "Действия"
     },
     "buttons":{
         "delete": "удалить",
@@ -21,6 +22,15 @@
         "transactionCloseForms": "Закрыть форму добавления новой транзакции",
         "uploadTransaction": "Добавить транзакцию"
     },
-    "transactionOpenForms":"Открыть форму добавления новой транзакции"
+    "placeholders":{
+        "externalId": "например, '123'",
+        "provider": "например, 'qiwi'",
+        "amount": "например, '100'",
+        "currency": "например, 'RUB'",
+        "comissionAmount": "например, '10'",
+        "comissionCurrency": "например, 'RUB'",
+        "username": "например, 'любитель кефира'",
+        "additionalData": "например, 'какая-то дополнительная информация'"
+    }
 
 }

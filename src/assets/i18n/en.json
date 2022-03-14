@@ -9,9 +9,10 @@
         "comissionAmount": "Comission amount",
         "provider": "Provider",
         "actions": "Actions",
-        "currency": "currency",
+        "currency": "Currency",
         "comissionCurrency": "Comission amount",
-        "additionalData": "additional data"
+        "additionalData": "Additional data",
+        "tools": "Tools"
     },
     "buttons":{
         "delete": "delete",
@@ -21,6 +22,15 @@
         "transactionCloseForms": "Close form of adding new transaction",
         "uploadTransaction": "Upload transaction"
     },
-    "transactionOpenForms": "Open form of adding new transaction"
+    "placeholders":{
+        "externalId": "e.g. '123'",
+        "provider": "e.g. 'webmoney'",
+        "amount": "e.g. '100'",
+        "currency": "e.g. 'USD'",
+        "comissionAmount": "e.g. '10'",
+        "comissionCurrency": "e.g. 'USD'",
+        "username": "e.g. 'foobar'",
+        "additionalData": "e.g. 'some additional data'"
+    }
 
 }

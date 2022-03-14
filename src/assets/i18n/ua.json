@@ -11,7 +11,8 @@
         "actions": "Дії",
         "currency": "Валюта",
         "comissionCurrency": "Комісійна валюта",
-        "additionalData": "Додаткові дані"
+        "additionalData": "Додаткові дані",
+        "tools": "Дії"
     },
     "buttons":{
         "delete": "видалити",
@@ -20,6 +21,15 @@
         "transactionOpenForms": "Відкрити форму додавання нової транзакції",
         "transactionCloseForms": "Закрито форму додавання нової транзакції",
         "uploadTransaction": "Додати транзакцію"
+    },
+    "placeholders":{
+        "externalId": "Наприклад '123'",
+        "provider": "Наприклад 'paypal'",
+        "amount": "Наприклад '100'",
+        "currency": "Наприклад 'UAH'",
+        "comissionAmount": "Наприклад '10'",
+        "comissionCurrency": "Наприклад 'UAH'",
+        "username": "Наприклад 'Дмитро Гордон'",
+        "additionalData":"Наприклад 'Додаткові дані'"
     }
-
 }

@@ -1,6 +1,165 @@
-<table mat-table [dataSource]="transactionsArray.data" class="transactions-table">
+<!-- <table mat-table [dataSource]="dataSource" class="transactions-table"> -->
 
-    <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+  <table mat-table [dataSource]="dataSource" class="transactions-table">
+
+    <!-- Foo Column -->
+    <ng-container cdkColumnDef="externalId">
+      <mat-header-cell *cdkHeaderCellDef>
+        <span class="column-header">
+          {{ 'displayedColumns.externalId' | translate }}
+        </span>
+      </mat-header-cell>
+      <mat-cell *cdkCellDef="let row">
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+          <ng-template #editForms>
+              <form [formGroup]="transactionUpdateForm">
+                  <mat-form-field class="amount-form-container__input" appearance="fill">
+                    <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
+                    <input matInput formControlName="externalId" value="{{row.externalId}}" placeholder="{{ 'placeholders.externalId' | translate }}">
+                  </mat-form-field>
+              </form>
+          </ng-template>
+          <ng-template #rowData>
+            {{row.externalId}}
+          </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="provider">
+      <mat-header-cell *cdkHeaderCellDef>
+        <span class="column-header">
+          {{ 'displayedColumns.provider' | translate }}
+        </span>
+      </mat-header-cell>
+      <mat-cell *cdkCellDef="let row" >
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+          <ng-template #editForms>
+              <form [formGroup]="transactionUpdateForm">
+                  <mat-form-field class="amount-form-container__input" appearance="fill">
+                    <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
+                    <input matInput formControlName="provider" value="{{row.provider}}" placeholder="{{ 'placeholders.provider' | translate }}">
+                  </mat-form-field>
+              </form>
+          </ng-template>
+          <ng-template #rowData>
+            {{row.provider}}
+          </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="amount">
+      <mat-header-cell *cdkHeaderCellDef>
+        <span class="column-header">
+          {{ 'displayedColumns.amount' | translate }}
+        </span>
+      </mat-header-cell>
+      <mat-cell *cdkCellDef="let row" >
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+          <ng-template #editForms >
+            <div class="amount-form-container">
+              <form [formGroup]="transactionUpdateForm">
+                  <mat-form-field class="amount-form-container__input" appearance="fill">
+                    <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
+                    <input matInput formControlName="amount" value="{{row.amount.amount}}" placeholder="{{ 'placeholders.amount' | translate }}">
+                  </mat-form-field>
+              </form>
+              <form [formGroup]="transactionUpdateForm">
+                <mat-form-field class="amount-form-container__input" appearance="fill">
+                  <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
+                  <input matInput formControlName="currency" value="{{row.amount.currency}}" placeholder="{{ 'placeholders.currency' | translate }}">
+                </mat-form-field>
+              </form>
+            </div>
+          </ng-template>
+          <ng-template #rowData>
+            {{row.amount.amount + ' ' + row.amount.currency}}
+          </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="comissionAmount">
+      <mat-header-cell *cdkHeaderCellDef>
+        <span class="column-header">
+          {{ 'displayedColumns.comissionAmount' | translate }}
+        </span>
+      </mat-header-cell>
+      <mat-cell *cdkCellDef="let row" >
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+          <ng-template #editForms>
+            <div class="amount-form-container">
+              <form [formGroup]="transactionUpdateForm">
+                  <mat-form-field class="amount-form-container__input" appearance="fill">
+                    <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
+                    <input matInput formControlName="comissionAmount" value="{{row.comissionAmount.amount}}" placeholder="{{ 'placeholders.comissionAmount' | translate }}">
+                  </mat-form-field>
+              </form>
+              <form [formGroup]="transactionUpdateForm">
+                <mat-form-field class="amount-form-container__input" appearance="fill">
+                  <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
+                  <input matInput formControlName="comissionCurrency" value="{{row.comissionAmount.currency}}" placeholder="{{ 'placeholders.comissionCurrency' | translate }}">
+                </mat-form-field>
+              </form>
+            </div>
+          </ng-template>
+          <ng-template #rowData>
+            {{row.comissionAmount.amount + ' ' + row.comissionAmount.currency}}
+          </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="username">
+      <mat-header-cell *cdkHeaderCellDef>
+        <span class="column-header">
+          {{ 'displayedColumns.username' | translate }}
+        </span>
+      </mat-header-cell>
+      <mat-cell *cdkCellDef="let row" >
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+          <ng-template #editForms>
+              <form [formGroup]="transactionUpdateForm">
+                  <mat-form-field class="amount-form-container__input" appearance="fill">
+                    <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
+                    <input matInput formControlName="username" value="{{row.username}}" placeholder="{{ 'placeholders.username' | translate }}">
+                  </mat-form-field>
+              </form>
+          </ng-template>
+          <ng-template #rowData>
+            {{row.username}}
+          </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="actions">
+      <mat-header-cell *cdkHeaderCellDef>
+        <span class="column-header">
+          {{ 'displayedColumns.tools' | translate }}
+        </span>
+      </mat-header-cell>
+      <mat-cell *cdkCellDef="let row" >
+          <button 
+          attr.data-id="{{row.id}}" 
+          attr.data-provider="{{row.provider}}"
+          [disabled]="formsToggled"
+          (click)="deleteTransaction($event)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button [disabled]="formsToggled"
+          (click)="toggleForms(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button 
+          attr.data-id="{{row.id}}"
+          (click)="updateTransaction($event, row)" *ngIf="row.displayForms">
+          {{'buttons.saveChanges' | translate}}
+          </button>
+      </mat-cell>
+    </ng-container>
+  
+    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+
+    <!-- <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
       
       <mat-header-cell class="transactions-table__header-cell" *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
       
@@ -63,6 +222,6 @@
     </ng-container>
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
 
-  </table>
+  <!-- </table> -->

@@ -11,7 +11,8 @@
         "actions": "Дзеянні",
         "currency": "Валюта",
         "comissionCurrency": "Камісійная валюта",
-        "additionalData": "Дадатковыя дадзеныя"
+        "additionalData": "Дадатковыя дадзеныя",
+        "tools": "Дзеянні"
     },
     "buttons":{
         "delete": "Выдаліць",
@@ -20,6 +21,16 @@
         "transactionOpenForms": "Адкрыць форму дадання новай транзакцыі",
         "transactionCloseForms": "Закрыць форму дадання новай транзакцыі",
         "uploadTransaction": "Дадаць транзакцыю"
+    },
+    "placeholders":{
+        "externalId": "Напрыклад '123'",
+        "provider": "Напрыклад 'paypal'",
+        "amount": "Напрыклад '100'",
+        "currency": "Напрыклад 'BYN'",
+        "comissionAmount": "Напрыклад '10'",
+        "comissionCurrency": "Напрыклад 'BYN'",
+        "username": "Напрыклад 'Слава Комиссаренко'",
+        "additionalData": "Напрыклад 'Дадатковыя дадзеныя'"
     }
 
 }

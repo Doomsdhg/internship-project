@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.language = localStorage.getItem('language') || environment.defaultLocale;
-    const transactions: any = await this.web.getTransactionsPromise();
+    const transactions: any = await this.web.getTransactions();
     console.log(transactions)
     this.transactionsArray = new MatTableDataSource(transactions);
   }
@@ -50,9 +50,9 @@ export class AppComponent implements OnInit {
     window.location.reload()
   }
 
-  async refreshTransactions(): Promise<void> {
-    const transactions: any = await this.web.getTransactionsPromise();
-    this.transactionsArray = new MatTableDataSource(transactions);
-    this.cdr.detectChanges()
+  refreshTransactions(): void {
+    // const transactions: any = await this.web.getTransactions();
+    // this.transactionsArray = new MatTableDataSource(transactions);
+    this.TransactionsTableComponent.refreshTransactions()
   }
 }
