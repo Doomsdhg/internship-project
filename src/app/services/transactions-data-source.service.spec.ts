@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TransactionsDataSourceService } from './transactions-data-source.service';
+import { TransactionsDataSource } from './transactions-data-source.service';
 
 describe('TransactionsDataSourceService', () => {
-  let service: TransactionsDataSourceService;
+  let service: TransactionsDataSource;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TransactionsDataSourceService);
+    service = TestBed.inject(TransactionsDataSource);
   });
 
   it('should be created', () => {

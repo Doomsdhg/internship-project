@@ -1,22 +1,21 @@
-import {Component, ViewChild, Input, Output, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import {ElementRef, EventEmitter} from '@angular/core';
-import {TransactionsTableComponent} from '../transactions-table/transactions-table.component';
-import {WebService} from '../web.service';
+import { Component, ViewChild, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { ElementRef, EventEmitter } from '@angular/core';
+import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
+import { WebPostService } from '../../services/web-services/web-post.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { TransactionsDataSource } from '../transactions-data-source.service';
+import { TransactionsDataSource } from '../../services/transactions-data-source.service';
 
 @Component({
-  selector: 'app-add-transaction-component',
-  templateUrl: './add-transaction-component.component.html',
-  styleUrls: ['./add-transaction-component.component.scss'],
+  selector: 'app-add-transaction',
+  templateUrl: './add-transaction.component.html',
+  styleUrls: ['./add-transaction.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AddTransactionComponentComponent{
+export class AddTransactionComponent{
 
   constructor(
-    private web: WebService
+    private webPost: WebPostService
    ) {}
 
   @Output() refreshTransactions: EventEmitter<any> = new EventEmitter();
@@ -64,7 +63,7 @@ export class AddTransactionComponentComponent{
       "username": this.transactionUpdateForm.value.username,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.web.uploadTransaction(transactionObj).subscribe(()=>
+    this.webPost.uploadTransaction(transactionObj).subscribe(()=>
       this.TransactionsTableComponent.dataSource.loadTransactions()
     )
   }

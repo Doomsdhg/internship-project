@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {CollectionViewer, DataSource} from "@angular/cdk/collections";
-import {Observable, BehaviorSubject, of} from "rxjs";
-import {transactionInterface} from "./web.service";
-import {WebService} from "./web.service";
-import {catchError} from "rxjs/operators";
+import { CollectionViewer, DataSource } from "@angular/cdk/collections";
+import { Observable, BehaviorSubject, of } from "rxjs";
+import { transactionInterface } from "../models/interfaces/transaction.interface";
+import { WebGetService } from "../services/web-services/web-get.service";
+import { catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +11,15 @@ import {catchError} from "rxjs/operators";
 
 export class TransactionsDataSource implements DataSource<transactionInterface>{
 
-  constructor(private web: WebService) { }
+  constructor(private webGet: WebGetService) { }
 
   private transactionsSubject = new BehaviorSubject<transactionInterface[]>([]);
 
   loadTransactions() {
-    this.web.getTransactions().pipe(
+    this.webGet.getTransactions().pipe(
         catchError(() => of([])),
     )
-    .subscribe(transactions => this.transactionsSubject.next(transactions));
+    .subscribe((transactions: transactionInterface[]) => this.transactionsSubject.next(transactions));
   }
 
   connect(collectionViewer: CollectionViewer): Observable<transactionInterface[]> {

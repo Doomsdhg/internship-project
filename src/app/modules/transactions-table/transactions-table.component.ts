@@ -1,12 +1,12 @@
-import {Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output} from '@angular/core';
-import { WebService, transactionInterface, amountInterface } from '../web.service';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
+import { WebGetService } from '../../services/web-services/web-get.service';
+import { WebDeleteService } from 'src/app/services/web-services/web-delete.service';
+import { WebPatchService } from 'src/app/services/web-services/web-patch.service';
+import { transactionInterface, amountInterface } from 'src/app/models/interfaces/transaction.interface';
 import { FormGroup, FormControl } from '@angular/forms';
-import { MatTableDataSource } from '@angular/material/table';
-import { ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import {CollectionViewer, DataSource} from "@angular/cdk/collections";
-import {TransactionsDataSource} from '../transactions-data-source.service';
+import { BehaviorSubject } from 'rxjs';
+import { TransactionsDataSource } from '../../services/transactions-data-source.service';
 
 interface column extends Object {
   id: string,
@@ -73,15 +73,16 @@ export class TransactionsTableComponent implements OnInit{
     }];
 
   constructor(
-    public web: WebService, 
-    private cdr: ChangeDetectorRef, 
+    public webGet: WebGetService, 
+    public webDelete: WebDeleteService,
+    public webPatch: WebPatchService,
     private translateService: TranslateService
    ) {}
 
   
 
   ngOnInit(): void {
-    this.dataSource = new TransactionsDataSource(this.web);
+    this.dataSource = new TransactionsDataSource(this.webGet);
     this.dataSource.loadTransactions();
     this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
     'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
@@ -102,7 +103,7 @@ export class TransactionsTableComponent implements OnInit{
   deleteTransaction = async (e: Event): Promise<void> => {
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
-    this.web.deleteTransaction(id).subscribe(success=>{
+    this.webDelete.deleteTransaction(id).subscribe((success: Object)=>{
       this.refreshTransactions()
     })
   }
@@ -121,7 +122,6 @@ export class TransactionsTableComponent implements OnInit{
       comissionCurrency: new FormControl(row.comissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     })
-    // this.cdr.detectChanges()
   }
 
   updateTransaction = (e: Event, row: row): void => {
@@ -141,7 +141,7 @@ export class TransactionsTableComponent implements OnInit{
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.web.patchTransaction(id, updateObj).subscribe(success=>{
+    this.webPatch.patchTransaction(id, updateObj).subscribe((success: Object)=>{
       this.toggleForms(row)
       this.refreshTransactions()
     })

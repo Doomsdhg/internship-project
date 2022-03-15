@@ -1,8 +1,6 @@
-<!-- <table mat-table [dataSource]="dataSource" class="transactions-table"> -->
-
   <table mat-table [dataSource]="dataSource" class="transactions-table">
 
-    <!-- Foo Column -->
+    <!-- External id Column -->
     <ng-container cdkColumnDef="externalId">
       <mat-header-cell *cdkHeaderCellDef>
         <span class="column-header">
@@ -25,6 +23,7 @@
       </mat-cell>
     </ng-container>
 
+      <!-- Provider Column -->
     <ng-container cdkColumnDef="provider">
       <mat-header-cell *cdkHeaderCellDef>
         <span class="column-header">
@@ -47,6 +46,7 @@
       </mat-cell>
     </ng-container>
 
+      <!-- Amount Column -->
     <ng-container cdkColumnDef="amount">
       <mat-header-cell *cdkHeaderCellDef>
         <span class="column-header">
@@ -77,6 +77,7 @@
       </mat-cell>
     </ng-container>
 
+      <!-- Comission amount Column -->
     <ng-container cdkColumnDef="comissionAmount">
       <mat-header-cell *cdkHeaderCellDef>
         <span class="column-header">
@@ -107,6 +108,7 @@
       </mat-cell>
     </ng-container>
 
+      <!-- Username Column -->
     <ng-container cdkColumnDef="username">
       <mat-header-cell *cdkHeaderCellDef>
         <span class="column-header">
@@ -129,6 +131,7 @@
       </mat-cell>
     </ng-container>
 
+      <!-- Actions Column -->
     <ng-container cdkColumnDef="actions">
       <mat-header-cell *cdkHeaderCellDef>
         <span class="column-header">
@@ -158,70 +161,3 @@
     <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
   </table>
-
-    <!-- <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
-      
-      <mat-header-cell class="transactions-table__header-cell" *matHeaderCellDef mat-sort-header> {{column.value}}</mat-header-cell>
-      
-      <mat-cell class="transactions-table__body-cell" *matCellDef="let element" 
-      [ngClass]="column.id === 'amount' || column.id === 'comissionAmount' ? 'amount-form-container' : ''">
-        <div *ngIf="element.displayForms && column.id !== 'actions';then editForms else cellContent"></div>
-        <ng-template #cellContent>
-          <ng-template *ngIf="column.id === 'actions'; then actionButtons else transactionData"></ng-template>
-          <ng-template #actionButtons>
-            <button 
-            attr.data-id="{{element.id}}" 
-            attr.data-provider="{{element.provider}}"
-            [disabled]="formsToggled"
-            (click)="deleteTransaction($event)">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <button [disabled]="formsToggled"
-            (click)="toggleForms(element)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button 
-            attr.data-id="{{element.id}}"
-            (click)="updateTransaction($event, element)" *ngIf="element.displayForms">
-            {{'buttons.saveChanges' | translate}}
-            </button>
-          </ng-template>
-          <ng-template #transactionData>
-          <div *ngIf="column.id === 'amount' || column.id === 'comissionAmount';then amountInfo else transactionInfo">
-          </div>
-          <ng-template #amountInfo>
-            {{element[column.id].amount}}
-            {{element[column.id].currency}}
-          </ng-template>
-          <ng-template #transactionInfo>{{element[column.id]}}</ng-template>
-          </ng-template>
-        
-        </ng-template> 
-        <ng-template #editForms>
-          <form [formGroup]="transactionUpdateForm">
-            <div *ngIf="column.id === 'amount' || column.id === 'comissionAmount';then amountForms else regularForm"></div>
-            <ng-template #amountForms class="amount-form-container__form-group">
-              <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{'amount' | translate}}</mat-label>
-                <input matInput value="{{element[column.id].amount}}" formControlName="{{column.id}}" placeholder="eg 155">
-              </mat-form-field>
-              <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{'currency' | translate}}</mat-label>
-                <input matInput value="{{element[column.id].currency}}" formControlName="{{column.id === 'amount'?'currency':'comissionCurrency'}}" placeholder="eg USD">
-              </mat-form-field>
-            </ng-template>
-            <ng-template #regularForm>
-              <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{column.value}}</mat-label>
-                <input matInput formControlName="{{column.id}}" value="{{element[column.id]}}">
-              </mat-form-field>
-            </ng-template>
-          </form>
-        </ng-template>
-      </mat-cell>
-    </ng-container>
-  
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
-
-  <!-- </table> -->

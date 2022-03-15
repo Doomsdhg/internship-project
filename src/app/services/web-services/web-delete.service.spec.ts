@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WebService } from './web.service';
+import { WebDeleteService } from './web-delete.service';
 
-describe('WebService', () => {
-  let service: WebService;
+describe('WebDeleteService', () => {
+  let service: WebDeleteService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WebService);
+    service = TestBed.inject(WebDeleteService);
   });
 
   it('should be created', () => {

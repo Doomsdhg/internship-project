@@ -3,34 +3,33 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StoreModule } from "@ngrx/store";
-import * as fromReducer from "./store/example.reducer";
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { AddTransactionComponentComponent } from './add-transaction-component/add-transaction-component.component';
+import { AddTransactionComponent } from './add-transaction/add-transaction.component';
 import { TransactionsTableComponent } from './transactions-table/transactions-table.component';
-import {MatInputModule} from '@angular/material/input';
-import { TableRowComponent } from './transactions-table/table-row/table-row.component';             
+import { MatInputModule } from '@angular/material/input';           
 import { ReactiveFormsModule } from '@angular/forms';
-import { WebService } from './web.service';
+import { WebGetService } from '../services/web-services/web-get.service';
+import { WebPatchService } from '../services/web-services/web-patch.service';
+import { WebDeleteService } from '../services/web-services/web-delete.service';
+import { WebPostService } from '../services/web-services/web-post.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatTableModule } from '@angular/material/table';
-import {CdkTableModule} from '@angular/cdk/table'; 
+import { CdkTableModule } from '@angular/cdk/table'; 
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json')
+  return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
 }
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddTransactionComponentComponent,
-    TransactionsTableComponent,
-    TableRowComponent
+    AddTransactionComponent,
+    TransactionsTableComponent
   ],
   imports: [
     CdkTableModule,
@@ -44,7 +43,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ example: fromReducer.reducer }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -55,7 +53,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
-    WebService,
+    WebGetService,
+    WebPatchService,
+    WebDeleteService,
+    WebPostService,
     HttpClient
   ],
   bootstrap: [AppComponent],

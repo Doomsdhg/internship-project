@@ -7,8 +7,6 @@
         <option value="by" [selected]="language==='by'">Білоруська</option>
     </select>
 </div>
-<app-add-transaction-component [TransactionsTableComponent]="TransactionsTableComponent"></app-add-transaction-component>
-<app-transactions-table 
-
- (getRefreshedTransactions)="refreshTransactions"></app-transactions-table>
+<app-add-transaction [TransactionsTableComponent]="TransactionsTableComponent"></app-add-transaction>
+<app-transactions-table></app-transactions-table>
 <router-outlet></router-outlet>
