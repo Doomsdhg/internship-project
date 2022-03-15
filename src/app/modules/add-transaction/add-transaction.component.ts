@@ -63,8 +63,12 @@ export class AddTransactionComponent{
       "username": this.transactionUpdateForm.value.username,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.webPost.uploadTransaction(transactionObj).subscribe(()=>
-      this.TransactionsTableComponent.dataSource.loadTransactions()
-    )
+    this.webPost.uploadTransaction(transactionObj).subscribe({
+      next: ()=>
+      this.TransactionsTableComponent.dataSource.loadTransactions(),
+      error: (error: Object) => {
+        console.log(error)
+      }
+    })
   }
 }

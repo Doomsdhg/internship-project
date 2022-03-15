@@ -86,14 +86,19 @@ export class TransactionsTableComponent implements OnInit{
     this.dataSource.loadTransactions();
     this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
     'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
-      .subscribe(translations => {
+      .subscribe({
+        next: (translations: any) => {
         this.columnNames[0].value = (translations['displayedColumns.externalId']);
         this.columnNames[1].value = (translations['displayedColumns.provider']);
         this.columnNames[2].value = (translations['displayedColumns.amount']);
         this.columnNames[3].value = (translations['displayedColumns.comissionAmount']);
         this.columnNames[4].value = (translations['displayedColumns.username']);
         this.columnNames[5].value = (translations['displayedColumns.actions']);
-      });
+        },
+        error: (error: Object) => {
+          console.log(error)
+        }
+    });
   }
 
   refreshTransactions = (): void => {
@@ -103,9 +108,14 @@ export class TransactionsTableComponent implements OnInit{
   deleteTransaction = async (e: Event): Promise<void> => {
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
-    this.webDelete.deleteTransaction(id).subscribe((success: Object)=>{
+    this.webDelete.deleteTransaction(id).subscribe({
+      next: (success: Object)=>{
       this.refreshTransactions()
-    })
+      },
+      error: (error: Object) => {
+        console.log(error)
+      }
+  })
   }
 
   toggleForms = (row: row): void => {
@@ -141,9 +151,14 @@ export class TransactionsTableComponent implements OnInit{
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.webPatch.patchTransaction(id, updateObj).subscribe((success: Object)=>{
+    this.webPatch.patchTransaction(id, updateObj).subscribe({
+      next: (success: Object)=>{
       this.toggleForms(row)
       this.refreshTransactions()
+      },
+      error: (error: Object) => {
+        console.log(error)
+      }
     })
   }
 }
