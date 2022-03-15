@@ -161,3 +161,4 @@
     <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
   </table>
+  <mat-paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" aria-label="Select page"></mat-paginator>

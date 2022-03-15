@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { WebGetService } from '../../services/web-services/web-get.service';
 import { WebDeleteService } from 'src/app/services/web-services/web-delete.service';
 import { WebPatchService } from 'src/app/services/web-services/web-patch.service';
@@ -7,6 +7,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { TransactionsDataSource } from '../../services/transactions-data-source.service';
+import { NotifyService } from '../../services/notify.service';
+import { TransactionCrudResponseError } from '../../models/interfaces/transaction-crud-response-error.interface';
+import { MatPaginator } from '@angular/material/paginator';
 
 interface column extends Object {
   id: string,
@@ -31,19 +34,23 @@ interface row extends Object {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TransactionsTableComponent implements OnInit{
+export class TransactionsTableComponent implements OnInit, AfterViewInit{
 
   @Input() transactionsArray: BehaviorSubject<transactionInterface[]> = new BehaviorSubject<transactionInterface[]>([]);
   
   @Input() transactionUpdateForm!: FormGroup;
 
+  @Input() dataSource!: TransactionsDataSource;
+
   @Output() getRefreshedTransactions: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   formsToggled: boolean = false;
 
   displayEditForms: boolean = false;
 
-  dataSource!: TransactionsDataSource;
+  pageSizeArray: number[] = [5, 10, 20];
 
   displayedColumns: string[] = ['externalId', 'provider', 'amount', 'comissionAmount', 'username', 'actions'];
 
@@ -76,14 +83,21 @@ export class TransactionsTableComponent implements OnInit{
     public webGet: WebGetService, 
     public webDelete: WebDeleteService,
     public webPatch: WebPatchService,
-    private translateService: TranslateService
+    public notify: NotifyService,
+    private translateService: TranslateService,
+    private cdr: ChangeDetectorRef
    ) {}
 
-  
+  ngAfterViewInit(): void {
+    console.log(this.paginator)
+    this.dataSource.paginator = this.paginator
+    console.log(this.dataSource.paginator)
+  }
 
   ngOnInit(): void {
-    this.dataSource = new TransactionsDataSource(this.webGet);
+    this.dataSource = new TransactionsDataSource(this.webGet, this.notify);
     this.dataSource.loadTransactions();
+    console.log(this.dataSource.length)
     this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
     'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
       .subscribe({
@@ -95,7 +109,7 @@ export class TransactionsTableComponent implements OnInit{
         this.columnNames[4].value = (translations['displayedColumns.username']);
         this.columnNames[5].value = (translations['displayedColumns.actions']);
         },
-        error: (error: Object) => {
+        error: (error: any) => {
           console.log(error)
         }
     });
@@ -110,10 +124,11 @@ export class TransactionsTableComponent implements OnInit{
     const id: string | undefined = currentTarget.dataset['id'];
     this.webDelete.deleteTransaction(id).subscribe({
       next: (success: Object)=>{
-      this.refreshTransactions()
+        this.refreshTransactions()
+        this.notify.showMessage('transaction deleted succesfully', false)
       },
-      error: (error: Object) => {
-        console.log(error)
+      error: (error: TransactionCrudResponseError) => {
+        this.notify.showMessage(error.error, true)
       }
   })
   }
@@ -153,11 +168,12 @@ export class TransactionsTableComponent implements OnInit{
     }
     this.webPatch.patchTransaction(id, updateObj).subscribe({
       next: (success: Object)=>{
-      this.toggleForms(row)
-      this.refreshTransactions()
+        this.toggleForms(row)
+        this.refreshTransactions()
+        this.notify.showMessage('transaction data updated succesfully', false)
       },
-      error: (error: Object) => {
-        console.log(error)
+      error: (error: TransactionCrudResponseError) => {
+        this.notify.showMessage(error.error, true)
       }
     })
   }

@@ -4,6 +4,9 @@ import { Observable, BehaviorSubject, of } from "rxjs";
 import { transactionInterface } from "../models/interfaces/transaction.interface";
 import { WebGetService } from "../services/web-services/web-get.service";
 import { catchError } from "rxjs/operators";
+import { TransactionCrudResponseError } from '../models/interfaces/transaction-crud-response-error.interface';
+import { NotifyService } from './notify.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +14,11 @@ import { catchError } from "rxjs/operators";
 
 export class TransactionsDataSource implements DataSource<transactionInterface>{
 
-  constructor(private webGet: WebGetService) { }
+  public length!: number;
+  public paginator! : MatPaginator;
+
+  constructor(private webGet: WebGetService, private notify: NotifyService) {
+   }
 
   private transactionsSubject = new BehaviorSubject<transactionInterface[]>([]);
 
@@ -20,8 +27,12 @@ export class TransactionsDataSource implements DataSource<transactionInterface>{
         catchError(() => of([])),
     )
     .subscribe({
-      next: (transactions: transactionInterface[]) => this.transactionsSubject.next(transactions),
-      error: (error: Object) => { console.log(error) }
+      next: (transactions: transactionInterface[]) => {
+        this.length = transactions.length;
+        this.transactionsSubject.next(transactions)
+        console.log(this.transactionsSubject)
+      },
+      error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, true)
     });
   }
 

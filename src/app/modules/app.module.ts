@@ -20,6 +20,9 @@ import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotifyService } from '../services/notify.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -32,6 +35,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionsTableComponent
   ],
   imports: [
+    MatPaginatorModule,
+    MatSnackBarModule,
     CdkTableModule,
     MatTableModule,
     ReactiveFormsModule,
@@ -53,6 +58,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     })
   ],
   providers: [
+    NotifyService,
     WebGetService,
     WebPatchService,
     WebDeleteService,

@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { NotifyService } from '../services/notify.service';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
   displayedColumns: string[] = [];
 
   constructor(
-    private translateService: TranslateService
+    private translateService: TranslateService, private notify: NotifyService
    ) {
      this.translateService.use(localStorage.getItem('language') || 'en');
      }

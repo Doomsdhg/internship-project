@@ -4,6 +4,8 @@ import { TransactionsTableComponent } from '../transactions-table/transactions-t
 import { WebPostService } from '../../services/web-services/web-post.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionsDataSource } from '../../services/transactions-data-source.service';
+import { NotifyService } from 'src/app/services/notify.service';
+import { TransactionCrudResponseError } from '../../models/interfaces/transaction-crud-response-error.interface';
 
 @Component({
   selector: 'app-add-transaction',
@@ -15,7 +17,7 @@ import { TransactionsDataSource } from '../../services/transactions-data-source.
 export class AddTransactionComponent{
 
   constructor(
-    private webPost: WebPostService
+    private webPost: WebPostService, private notify: NotifyService
    ) {}
 
   @Output() refreshTransactions: EventEmitter<any> = new EventEmitter();
@@ -64,10 +66,11 @@ export class AddTransactionComponent{
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
     this.webPost.uploadTransaction(transactionObj).subscribe({
-      next: ()=>
-      this.TransactionsTableComponent.dataSource.loadTransactions(),
-      error: (error: Object) => {
-        console.log(error)
+      next: (success: any)=>{
+        this.notify.showMessage('transaction added successfully', false)
+        this.TransactionsTableComponent.dataSource.loadTransactions()},
+      error: (error: TransactionCrudResponseError) => {
+        this.notify.showMessage(error.status + '' + error.error, true)
       }
     })
   }

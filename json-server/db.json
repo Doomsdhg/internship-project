@@ -74,6 +74,21 @@
       "username": "Svetlana",
       "additionalData": "",
       "id": "Xb9gAxI"
+    },
+    {
+      "externalId": "",
+      "provider": "qwdqw",
+      "amount": {
+        "amount": "",
+        "currency": ""
+      },
+      "comissionAmount": {
+        "amount": "",
+        "currency": ""
+      },
+      "username": "",
+      "additionalData": "",
+      "id": "fwVPw1B"
     }
   ]
 }
