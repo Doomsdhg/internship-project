@@ -30,7 +30,8 @@
         "comissionAmount": "e.g. '10'",
         "comissionCurrency": "e.g. 'USD'",
         "username": "e.g. 'foobar'",
-        "additionalData": "e.g. 'some additional data'"
+        "additionalData": "e.g. 'some additional data'",
+        "search": "search"
     }
 
 }

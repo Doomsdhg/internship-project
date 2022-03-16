@@ -1,13 +1,18 @@
-  <table mat-table [dataSource]="dataSource" class="transactions-table">
+  <div class="ms-10-percents mt-10-pixels">
+    <mat-form-field>
+      <input matInput placeholder="{{'placeholders.search' | translate}}" (keyup)="search($event)">
+    </mat-form-field>
+  </div>
+  <table mat-table matSort [dataSource]="dataSource" class="transactions-table">
 
     <!-- External id Column -->
-    <ng-container cdkColumnDef="externalId">
-      <mat-header-cell *cdkHeaderCellDef>
+    <ng-container matColumnDef="externalId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
         <span class="column-header">
           {{ 'displayedColumns.externalId' | translate }}
         </span>
       </mat-header-cell>
-      <mat-cell *cdkCellDef="let row">
+      <mat-cell *matCellDef="let row">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms>
               <form [formGroup]="transactionUpdateForm">
@@ -24,13 +29,13 @@
     </ng-container>
 
       <!-- Provider Column -->
-    <ng-container cdkColumnDef="provider">
-      <mat-header-cell *cdkHeaderCellDef>
+    <ng-container matColumnDef="provider">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
         <span class="column-header">
           {{ 'displayedColumns.provider' | translate }}
         </span>
       </mat-header-cell>
-      <mat-cell *cdkCellDef="let row" >
+      <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms>
               <form [formGroup]="transactionUpdateForm">
@@ -47,13 +52,13 @@
     </ng-container>
 
       <!-- Amount Column -->
-    <ng-container cdkColumnDef="amount">
-      <mat-header-cell *cdkHeaderCellDef>
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
         <span class="column-header">
           {{ 'displayedColumns.amount' | translate }}
         </span>
       </mat-header-cell>
-      <mat-cell *cdkCellDef="let row" >
+      <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms >
             <div class="amount-form-container">
@@ -78,13 +83,13 @@
     </ng-container>
 
       <!-- Comission amount Column -->
-    <ng-container cdkColumnDef="comissionAmount">
-      <mat-header-cell *cdkHeaderCellDef>
+    <ng-container matColumnDef="comissionAmount">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
         <span class="column-header">
           {{ 'displayedColumns.comissionAmount' | translate }}
         </span>
       </mat-header-cell>
-      <mat-cell *cdkCellDef="let row" >
+      <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms>
             <div class="amount-form-container">
@@ -109,13 +114,13 @@
     </ng-container>
 
       <!-- Username Column -->
-    <ng-container cdkColumnDef="username">
-      <mat-header-cell *cdkHeaderCellDef>
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
         <span class="column-header">
           {{ 'displayedColumns.username' | translate }}
         </span>
       </mat-header-cell>
-      <mat-cell *cdkCellDef="let row" >
+      <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms>
               <form [formGroup]="transactionUpdateForm">
@@ -132,13 +137,13 @@
     </ng-container>
 
       <!-- Actions Column -->
-    <ng-container cdkColumnDef="actions">
-      <mat-header-cell *cdkHeaderCellDef>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
         <span class="column-header">
           {{ 'displayedColumns.tools' | translate }}
         </span>
       </mat-header-cell>
-      <mat-cell *cdkCellDef="let row" >
+      <mat-cell *matCellDef="let row" >
           <button 
           attr.data-id="{{row.id}}" 
           attr.data-provider="{{row.provider}}"
@@ -158,7 +163,7 @@
       </mat-cell>
     </ng-container>
   
-    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </table>
-  <mat-paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="pageSize" [pageSizeOptions]="pageSizeArray" aria-label="Select page"></mat-paginator>
+  <mat-paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="pageSizeArray" aria-label="Select page"></mat-paginator>

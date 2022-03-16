@@ -24,6 +24,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotifyService } from '../services/notify.service';
 import { FormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionsTableComponent
   ],
   imports: [
+    MatSortModule,
     FormsModule,
     MatPaginatorModule,
     MatSnackBarModule,

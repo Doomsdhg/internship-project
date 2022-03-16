@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CollectionViewer, DataSource } from "@angular/cdk/collections";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { transactionInterface } from "../models/interfaces/transaction.interface";
 import { WebGetService } from "../services/web-services/web-get.service";
 import { catchError } from "rxjs/operators";
 import { TransactionCrudResponseError } from '../models/interfaces/transaction-crud-response-error.interface';
 import { NotifyService } from './notify.service';
-import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Injectable({

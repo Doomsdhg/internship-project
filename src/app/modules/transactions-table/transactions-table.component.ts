@@ -10,6 +10,7 @@ import { TransactionsDataSource } from '../../services/transactions-data-source.
 import { NotifyService } from '../../services/notify.service';
 import { TransactionCrudResponseError } from '../../models/interfaces/transaction-crud-response-error.interface';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 interface column extends Object {
   id: string,
@@ -46,13 +47,13 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  @ViewChild(MatSort) sort!: MatSort;
+
   formsToggled: boolean = false;
 
   displayEditForms: boolean = false;
 
   pageSizeArray: number[] = [5, 10, 20];
-
-  pageSize: number = Number(localStorage.getItem('pageSize')) || 5;
 
   displayedColumns: string[] = ['externalId', 'provider', 'amount', 'comissionAmount', 'username', 'actions'];
 
@@ -91,16 +92,17 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
    ) {}
 
   ngAfterViewInit(): void {
-    console.log(this.paginator.pageSize)
+    console.log(this.paginator)
+    console.log(this.sort)
+    console.log(this.dataSource.sort)
     this.dataSource.paginator = this.paginator
-    console.log(this.dataSource.paginator)
+    this.dataSource.sort = this.sort
+    this.cdr.markForCheck()
   }
 
   ngOnInit(): void {
     this.dataSource = new TransactionsDataSource(this.webGet, this.notify);
     this.dataSource.loadTransactions();
-    console.log(this.dataSource)
-    console.log(this.dataSource.transactionsSubject.value)
     this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
     'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
       .subscribe({
@@ -118,11 +120,12 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
     });
   }
 
-  paginatorChangeHandler = (): void => {
-    console.log(this.paginator)
+  search = (e: any): void => {
+    this.dataSource.filter = e.target.value
   }
 
   refreshTransactions = (): void => {
+    console.log(this.sort)
     this.dataSource.loadTransactions();
   }
 
