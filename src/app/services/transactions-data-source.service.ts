@@ -7,20 +7,24 @@ import { catchError } from "rxjs/operators";
 import { TransactionCrudResponseError } from '../models/interfaces/transaction-crud-response-error.interface';
 import { NotifyService } from './notify.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class TransactionsDataSource implements DataSource<transactionInterface>{
+export class TransactionsDataSource extends 
+// DataSource<transactionInterface>, 
+MatTableDataSource<transactionInterface[]>{
 
   public length!: number;
-  public paginator! : MatPaginator;
+  // public paginator! : MatPaginator;
 
   constructor(private webGet: WebGetService, private notify: NotifyService) {
+    super()
    }
 
-  private transactionsSubject = new BehaviorSubject<transactionInterface[]>([]);
+  public transactionsSubject = new BehaviorSubject<transactionInterface[]>([]);
 
   loadTransactions() {
     this.webGet.getTransactions().pipe(
@@ -29,20 +33,24 @@ export class TransactionsDataSource implements DataSource<transactionInterface>{
     .subscribe({
       next: (transactions: transactionInterface[]) => {
         this.length = transactions.length;
+        // transactions.splice(this.paginator.pageSize)
         this.transactionsSubject.next(transactions)
+        this.transactionsSubject.asObservable().subscribe((success: any) => this.data = success)
+        console.log(transactions)
         console.log(this.transactionsSubject)
       },
       error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, true)
     });
   }
 
-  connect(collectionViewer: CollectionViewer): Observable<transactionInterface[]> {
-    console.log("Connecting data source");
-    return this.transactionsSubject.asObservable();
-  }
+  // connect(collectionViewer: CollectionViewer): Observable<transactionInterface[]> {
+  //   console.log("Connecting data source");
+  //   console.log(this.transactionsSubject.value)
+  //   return this.transactionsSubject.asObservable();
+  // }
 
-  disconnect(collectionViewer: CollectionViewer): void {
-    this.transactionsSubject.complete();
-  }
+  // disconnect(collectionViewer: CollectionViewer): void {
+  //   this.transactionsSubject.complete();
+  // }
 
 }

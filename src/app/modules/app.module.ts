@@ -23,6 +23,7 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotifyService } from '../services/notify.service';
+import { FormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -35,6 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionsTableComponent
   ],
   imports: [
+    FormsModule,
     MatPaginatorModule,
     MatSnackBarModule,
     CdkTableModule,

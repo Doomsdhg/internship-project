@@ -52,6 +52,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
 
   pageSizeArray: number[] = [5, 10, 20];
 
+  pageSize: number = Number(localStorage.getItem('pageSize')) || 5;
+
   displayedColumns: string[] = ['externalId', 'provider', 'amount', 'comissionAmount', 'username', 'actions'];
 
   columnNames : column[] = [{
@@ -89,7 +91,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
    ) {}
 
   ngAfterViewInit(): void {
-    console.log(this.paginator)
+    console.log(this.paginator.pageSize)
     this.dataSource.paginator = this.paginator
     console.log(this.dataSource.paginator)
   }
@@ -97,7 +99,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   ngOnInit(): void {
     this.dataSource = new TransactionsDataSource(this.webGet, this.notify);
     this.dataSource.loadTransactions();
-    console.log(this.dataSource.length)
+    console.log(this.dataSource)
+    console.log(this.dataSource.transactionsSubject.value)
     this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
     'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
       .subscribe({
@@ -113,6 +116,10 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
           console.log(error)
         }
     });
+  }
+
+  paginatorChangeHandler = (): void => {
+    console.log(this.paginator)
   }
 
   refreshTransactions = (): void => {
