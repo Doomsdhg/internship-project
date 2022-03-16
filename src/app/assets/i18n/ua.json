@@ -30,6 +30,7 @@
         "comissionAmount": "Наприклад '10'",
         "comissionCurrency": "Наприклад 'UAH'",
         "username": "Наприклад 'Дмитро Гордон'",
-        "additionalData":"Наприклад 'Додаткові дані'"
+        "additionalData":"Наприклад 'Додаткові дані'",
+        "search": "пошук"
     }
 }

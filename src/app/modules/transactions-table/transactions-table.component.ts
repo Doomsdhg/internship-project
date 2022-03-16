@@ -49,6 +49,19 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  idFilter = new FormControl('');
+  providerFilter = new FormControl('');
+  amountFilter = new FormControl('');
+  comissionAmountFilter = new FormControl('');
+  usernameFilter = new FormControl('');
+  filterValues = {
+    id: '',
+    provider: '',
+    amount: '',
+    comissionAmount: '',
+    username: ''
+  };
+
   formsToggled: boolean = false;
 
   displayEditForms: boolean = false;
@@ -89,7 +102,9 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
     public notify: NotifyService,
     private translateService: TranslateService,
     private cdr: ChangeDetectorRef
-   ) {}
+   ) {
+    
+   }
 
   ngAfterViewInit(): void {
     console.log(this.paginator)
@@ -101,6 +116,41 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   ngOnInit(): void {
+    this.idFilter.valueChanges
+      .subscribe(
+        id => {
+          this.filterValues.id = id;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
+    this.providerFilter.valueChanges
+      .subscribe(
+        provider => {
+          this.filterValues.provider = provider;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
+    this.amountFilter.valueChanges
+      .subscribe(
+        amount => {
+          this.filterValues.amount = amount;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
+    this.comissionAmountFilter.valueChanges
+      .subscribe(
+        comissionAmount => {
+          this.filterValues.comissionAmount = comissionAmount;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
+      this.usernameFilter.valueChanges
+      .subscribe(
+        username => {
+          this.filterValues.username = username;
+          this.dataSource.filter = JSON.stringify(this.filterValues);
+        }
+      )
     this.dataSource = new TransactionsDataSource(this.webGet, this.notify);
     this.dataSource.loadTransactions();
     this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
@@ -118,9 +168,11 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
           console.log(error)
         }
     });
+    this.dataSource.filterPredicate = this.createFilter();
   }
 
   search = (e: any): void => {
+    console.log(this.dataSource)
     this.dataSource.filter = e.target.value
   }
 
@@ -186,5 +238,19 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
         this.notify.showMessage(error.error, true)
       }
     })
+  }
+
+  createFilter(): (data: any, filter: string) => boolean {
+    let filterFunction = function(data: any, filter: any): boolean {
+      let searchTerms = JSON.parse(filter);
+      console.log(data)
+      console.log(filter)
+      return data.externalId.indexOf(searchTerms.id) !== -1
+        && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
+        && String(data.amount.amount).indexOf(searchTerms.amount) !== -1
+        && String(data.comissionAmount.amount).indexOf(searchTerms.comissionAmount) !== -1
+        && data.username.toLowerCase().indexOf(searchTerms.username) !== -1;
+    }
+    return filterFunction;
   }
 }

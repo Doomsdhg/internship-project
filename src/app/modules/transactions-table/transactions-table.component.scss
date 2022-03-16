@@ -1,13 +1,18 @@
 .transactions-table {
     margin: 0 auto;
-    margin-top: 3rem;
     margin-bottom: 3rem;
     width: 80%;
     border-collapse: collapse;
     border: 1px solid #000;
+    padding: 0 !important;
+}
+
+.mat-header-cell {
+    padding: 0 !important;
 }
 
 .mat-cell {
+    padding: 0 !important;
     min-height: 140px;
     justify-content: center;
     height: 100% !important;
@@ -81,4 +86,32 @@
 
 .mt-10-pixels {
     margin-top: 1rem;
+}
+
+.mat-sort-header-content {
+    flex-direction: column !important;
+}
+
+.flex-container {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: flex;
+    border: 1px solid #000;
+}
+
+.flex-element {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    border-right: 1px solid #000;
+}
+
+.w-80-percents {
+    width: 80%;
+}
+
+#toolsHeader {
+    height: 80px;
+    
 }

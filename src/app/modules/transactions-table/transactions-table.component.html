@@ -1,7 +1,43 @@
-  <div class="ms-10-percents mt-10-pixels">
+  <div class="ms-10-percents mt-10-pixels w-80-percents">
     <mat-form-field>
       <input matInput placeholder="{{'placeholders.search' | translate}}" (keyup)="search($event)">
     </mat-form-field>
+  </div>
+  <div class="flex-container ms-10-percents w-80-percents">
+    <div class="flex-element">
+      <mat-form-field class="filter" floatLabel="never">
+          <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
+          <input matInput [formControl]="idFilter">
+      </mat-form-field>
+    </div>
+    <div class="flex-element">
+      <mat-form-field class="filter" floatLabel="never">
+          <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
+          <input matInput [formControl]="providerFilter">
+      </mat-form-field>
+    </div>
+    <div class="flex-element">
+      <mat-form-field class="filter" floatLabel="never">
+          <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
+          <input matInput [formControl]="amountFilter">
+      </mat-form-field>
+    </div>
+    <div class="flex-element">
+      <mat-form-field class="filter" floatLabel="never">
+          <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
+          <input matInput [formControl]="comissionAmountFilter">
+      </mat-form-field>
+    </div>
+    <div class="flex-element">
+      <mat-form-field class="filter" floatLabel="never">
+          <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
+          <input matInput [formControl]="usernameFilter">
+      </mat-form-field>
+    </div>
+    <div class="flex-element">
+
+    </div>
+
   </div>
   <table mat-table matSort [dataSource]="dataSource" class="transactions-table">
 
@@ -11,6 +47,12 @@
         <span class="column-header">
           {{ 'displayedColumns.externalId' | translate }}
         </span>
+        <!-- <div>
+          <mat-form-field class="filter" floatLabel="never">
+              <mat-label>Search</mat-label>
+              <input matInput [formControl]="idFilter">
+          </mat-form-field>
+        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -34,6 +76,12 @@
         <span class="column-header">
           {{ 'displayedColumns.provider' | translate }}
         </span>
+        <!-- <div>
+          <mat-form-field class="filter" floatLabel="never">
+              <mat-label>Search</mat-label>
+              <input matInput [formControl]="providerFilter">
+          </mat-form-field>
+        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -57,6 +105,12 @@
         <span class="column-header">
           {{ 'displayedColumns.amount' | translate }}
         </span>
+        <!-- <div>
+          <mat-form-field class="filter" floatLabel="never">
+              <mat-label>Search</mat-label>
+              <input matInput [formControl]="amountFilter">
+          </mat-form-field>
+        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -88,6 +142,12 @@
         <span class="column-header">
           {{ 'displayedColumns.comissionAmount' | translate }}
         </span>
+        <!-- <div>
+          <mat-form-field class="filter" floatLabel="never">
+              <mat-label>Search</mat-label>
+              <input matInput [formControl]="comissionAmountFilter">
+          </mat-form-field>
+        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -119,6 +179,12 @@
         <span class="column-header">
           {{ 'displayedColumns.username' | translate }}
         </span>
+        <!-- <div>
+          <mat-form-field class="filter" floatLabel="never">
+              <mat-label>Search</mat-label>
+              <input matInput [formControl]="usernameFilter">
+          </mat-form-field>
+        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -138,7 +204,7 @@
 
       <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
+      <mat-header-cell id="toolsHeader" *matHeaderCellDef>
         <span class="column-header">
           {{ 'displayedColumns.tools' | translate }}
         </span>
