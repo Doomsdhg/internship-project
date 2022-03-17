@@ -47,12 +47,6 @@
         <span class="column-header">
           {{ 'displayedColumns.externalId' | translate }}
         </span>
-        <!-- <div>
-          <mat-form-field class="filter" floatLabel="never">
-              <mat-label>Search</mat-label>
-              <input matInput [formControl]="idFilter">
-          </mat-form-field>
-        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -76,12 +70,6 @@
         <span class="column-header">
           {{ 'displayedColumns.provider' | translate }}
         </span>
-        <!-- <div>
-          <mat-form-field class="filter" floatLabel="never">
-              <mat-label>Search</mat-label>
-              <input matInput [formControl]="providerFilter">
-          </mat-form-field>
-        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -105,12 +93,6 @@
         <span class="column-header">
           {{ 'displayedColumns.amount' | translate }}
         </span>
-        <!-- <div>
-          <mat-form-field class="filter" floatLabel="never">
-              <mat-label>Search</mat-label>
-              <input matInput [formControl]="amountFilter">
-          </mat-form-field>
-        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -142,12 +124,6 @@
         <span class="column-header">
           {{ 'displayedColumns.comissionAmount' | translate }}
         </span>
-        <!-- <div>
-          <mat-form-field class="filter" floatLabel="never">
-              <mat-label>Search</mat-label>
-              <input matInput [formControl]="comissionAmountFilter">
-          </mat-form-field>
-        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -179,12 +155,6 @@
         <span class="column-header">
           {{ 'displayedColumns.username' | translate }}
         </span>
-        <!-- <div>
-          <mat-form-field class="filter" floatLabel="never">
-              <mat-label>Search</mat-label>
-              <input matInput [formControl]="usernameFilter">
-          </mat-form-field>
-        </div> -->
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
@@ -230,6 +200,6 @@
     </ng-container>
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="transactionRedirect(row)"></mat-row>
   </table>
   <mat-paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="pageSizeArray" aria-label="Select page"></mat-paginator>

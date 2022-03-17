@@ -11,6 +11,7 @@ import { TransactionCrudResponseError } from '../../../models/interfaces/transac
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { target } from '../../../models/interfaces/browser-event.interface'
+import { Router } from '@angular/router';
 
 interface column extends Object {
   id: string,
@@ -97,7 +98,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
     public webPatch: WebPatchService,
     public notify: NotifyService,
     private translateService: TranslateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
    ) {}
 
   ngAfterViewInit(): void {
@@ -210,6 +212,10 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
       comissionCurrency: new FormControl(row.comissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     })
+  }
+
+  transactionRedirect (row: row): void {
+    this.router.navigate(['transactions/', row.id])
   }
 
   updateTransaction = (e: Event, row: row): void => {
