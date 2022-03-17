@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, of } from "rxjs";
 import { transactionInterface } from "../models/interfaces/transaction.interface";
-import { WebGetService } from "../services/web-services/web-get.service";
+import { TransactionApiService } from "../services/web-services/transaction-api.service";
 import { catchError } from "rxjs/operators";
 import { TransactionCrudResponseError } from '../models/interfaces/transaction-crud-response-error.interface';
 import { NotifyService } from './notify.service';
@@ -16,14 +16,14 @@ MatTableDataSource<transactionInterface[]>{
 
   public length!: number;
 
-  constructor(private webGet: WebGetService, private notify: NotifyService) {
+  constructor(private transactionApiService: TransactionApiService, private notify: NotifyService) {
     super()
    }
 
   public transactionsSubject = new BehaviorSubject<transactionInterface[]>([]);
 
   loadTransactions() {
-    this.webGet.getTransactions().pipe(
+    this.transactionApiService.getTransactions().pipe(
         catchError(() => of([])),
     )
     .subscribe({

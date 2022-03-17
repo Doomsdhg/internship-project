@@ -17,10 +17,20 @@
     "buttons":{
         "delete": "видалити",
         "edit": "редагувати",
+        "cancel": "скасувати",
         "saveChanges": "зберегти зміни",
         "transactionOpenForms": "Відкрити форму додавання нової транзакції",
         "transactionCloseForms": "Закрито форму додавання нової транзакції",
         "uploadTransaction": "Додати транзакцію"
+    },
+    "required": {
+        "externalId": "Потрібно ввести номер",
+        "username": "Потрібно ввести ім'я користувача",
+        "amount": "Потрібно ввести кількість",
+        "comissionAmount": "Потрібно запровадити комісію",
+        "provider": "Потрібно ввести провайдера",
+        "currency": "Потрібно ввести валюту",
+        "comissionCurrency": "Потрібно запровадити валюту комісії"
     },
     "placeholders":{
         "externalId": "Наприклад '123'",

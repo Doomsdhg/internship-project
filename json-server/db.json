@@ -17,18 +17,18 @@
     },
     {
       "id": "133",
-      "externalId": "34",
-      "provider": "webmoney",
+      "externalId": "12312",
+      "provider": "asd",
       "amount": {
-        "amount": 14,
-        "currency": "USD"
+        "amount": 0,
+        "currency": ""
       },
       "comissionAmount": {
-        "amount": 1,
-        "currency": "USD"
+        "amount": 0,
+        "currency": ""
       },
-      "username": "Vladislav",
-      "additionalData": "{}"
+      "username": "",
+      "additionalData": ""
     },
     {
       "externalId": "343",
@@ -164,36 +164,6 @@
       "username": "",
       "additionalData": "",
       "id": "6ijLdN0"
-    },
-    {
-      "externalId": "",
-      "provider": "",
-      "amount": {
-        "amount": "",
-        "currency": ""
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "",
-      "additionalData": "",
-      "id": "PPHktP_"
-    },
-    {
-      "externalId": "",
-      "provider": "",
-      "amount": {
-        "amount": "",
-        "currency": ""
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "",
-      "additionalData": "",
-      "id": "AR61GGc"
     }
   ]
 }

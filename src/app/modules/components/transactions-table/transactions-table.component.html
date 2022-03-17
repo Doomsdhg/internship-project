@@ -51,7 +51,7 @@
       <mat-cell *matCellDef="let row">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms>
-              <form [formGroup]="transactionUpdateForm">
+              <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
                   <mat-form-field class="amount-form-container__input" appearance="fill">
                     <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
                     <input matInput formControlName="externalId" value="{{row.externalId}}" placeholder="{{ 'placeholders.externalId' | translate }}">
@@ -74,7 +74,7 @@
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms>
-              <form [formGroup]="transactionUpdateForm">
+              <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
                   <mat-form-field class="amount-form-container__input" appearance="fill">
                     <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
                     <input matInput formControlName="provider" value="{{row.provider}}" placeholder="{{ 'placeholders.provider' | translate }}">
@@ -98,13 +98,13 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms >
             <div class="amount-form-container">
-              <form [formGroup]="transactionUpdateForm">
+              <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
                   <mat-form-field class="amount-form-container__input" appearance="fill">
                     <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
                     <input matInput formControlName="amount" value="{{row.amount.amount}}" placeholder="{{ 'placeholders.amount' | translate }}">
                   </mat-form-field>
               </form>
-              <form [formGroup]="transactionUpdateForm">
+              <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
                 <mat-form-field class="amount-form-container__input" appearance="fill">
                   <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
                   <input matInput formControlName="currency" value="{{row.amount.currency}}" placeholder="{{ 'placeholders.currency' | translate }}">
@@ -129,13 +129,13 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
           <ng-template #editForms>
             <div class="amount-form-container">
-              <form [formGroup]="transactionUpdateForm">
+              <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
                   <mat-form-field class="amount-form-container__input" appearance="fill">
                     <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
                     <input matInput formControlName="comissionAmount" value="{{row.comissionAmount.amount}}" placeholder="{{ 'placeholders.comissionAmount' | translate }}">
                   </mat-form-field>
               </form>
-              <form [formGroup]="transactionUpdateForm">
+              <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
                 <mat-form-field class="amount-form-container__input" appearance="fill">
                   <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
                   <input matInput formControlName="comissionCurrency" value="{{row.comissionAmount.currency}}" placeholder="{{ 'placeholders.comissionCurrency' | translate }}">
@@ -158,8 +158,8 @@
       </mat-header-cell>
       <mat-cell *matCellDef="let row" >
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
-          <ng-template #editForms>
-              <form [formGroup]="transactionUpdateForm">
+          <ng-template #editForms >
+              <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
                   <mat-form-field class="amount-form-container__input" appearance="fill">
                     <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
                     <input matInput formControlName="username" value="{{row.username}}" placeholder="{{ 'placeholders.username' | translate }}">
@@ -188,7 +188,7 @@
             <mat-icon>delete</mat-icon>
           </button>
           <button [disabled]="formsToggled"
-          (click)="toggleForms(row)">
+          (click)="toggleForms($event, row)">
             <mat-icon>edit</mat-icon>
           </button>
           <button 
@@ -200,6 +200,6 @@
     </ng-container>
   
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="transactionRedirect(row)"></mat-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="transactionRedirect(row)" class="onhover-pointer"></mat-row>
   </table>
   <mat-paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="pageSizeArray" aria-label="Select page"></mat-paginator>

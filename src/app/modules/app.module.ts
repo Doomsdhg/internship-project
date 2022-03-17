@@ -11,10 +11,7 @@ import { AddTransactionComponent } from './components/add-transaction/add-transa
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { MatInputModule } from '@angular/material/input';           
 import { ReactiveFormsModule } from '@angular/forms';
-import { WebGetService } from '../services/web-services/web-get.service';
-import { WebPatchService } from '../services/web-services/web-patch.service';
-import { WebDeleteService } from '../services/web-services/web-delete.service';
-import { WebPostService } from '../services/web-services/web-post.service';
+import { TransactionApiService } from '../services/web-services/transaction-api.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -67,10 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     NotifyService,
-    WebGetService,
-    WebPatchService,
-    WebDeleteService,
-    WebPostService,
+    TransactionApiService,
     HttpClient
   ],
   bootstrap: [AppComponent],

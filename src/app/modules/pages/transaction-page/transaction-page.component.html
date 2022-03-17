@@ -1,27 +1,132 @@
 <div class="container w-80-percents ms-10-percents mt-100-pixels">
     <h1 class="w-100-percents center-header">{{'transactionInfo' | translate}}</h1>
+    <button (click)="toggleForms()">{{'buttons.edit' | translate}}</button>
+    <button class="{{formsToggled ? '' : 'display-none'}}" (click)="saveChanges()">{{'buttons.saveChanges' | translate}}</button>
+    <button class="{{formsToggled ? '' : 'display-none'}}" (click)="cancelChanges()">{{'buttons.cancel' | translate}}</button>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.externalId' | translate}}</h2>
         <p>{{transactionInfo.externalId}}</p>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
+              <input required matInput formControlName="externalId" value="{{transactionInfo.externalId}}" placeholder="{{ 'placeholders.externalId' | translate }}">
+            </mat-form-field>
+            <div *ngIf="transactionUpdateForm.controls['externalId'].invalid && (transactionUpdateForm.controls['externalId'].dirty 
+            || transactionUpdateForm.controls['externalId'].touched)"
+            class="alert alert-danger">
+                <div *ngIf="transactionUpdateForm.controls['externalId'].errors?.['required']">
+                    {{'required.externalId' | translate}}
+                </div>
+            </div>
+        </form>
+        
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.provider' | translate}}</h2>
         <p>{{transactionInfo.provider}}</p>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
+              <input required matInput formControlName="provider" value="{{transactionInfo.provider}}" placeholder="{{ 'placeholders.provider' | translate }}">
+            </mat-form-field>
+            <div *ngIf="transactionUpdateForm.controls['provider'].invalid && (transactionUpdateForm.controls['provider'].dirty 
+            || transactionUpdateForm.controls['externalId'].touched)"
+            class="alert alert-danger">
+                <div *ngIf="transactionUpdateForm.controls['provider'].errors?.['required']">
+                    {{'required.provider' | translate}}
+                </div>
+            </div>
+        </form>
+        
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.amount' | translate}}</h2>
         <p>{{transactionInfo.amount.amount}} {{transactionInfo.amount.currency}}</p>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
+              <input required matInput formControlName="amount" value="{{transactionInfo.amount.amount}}" placeholder="{{ 'placeholders.amount' | translate }}">
+            </mat-form-field>
+            <div *ngIf="transactionUpdateForm.controls['amount'].invalid && (transactionUpdateForm.controls['amount'].dirty
+            || transactionUpdateForm.controls['amount'].touched)"
+            class="alert alert-danger">
+                <div *ngIf="transactionUpdateForm.controls['amount'].errors?.['required']">
+                    {{'required.amount' | translate}}
+                </div>
+            </div>
+        </form>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
+              <input required matInput formControlName="currency" value="{{transactionInfo.amount.currency}}" placeholder="{{ 'placeholders.currency' | translate }}">
+            </mat-form-field>
+            <div *ngIf="transactionUpdateForm.controls['currency'].invalid && (transactionUpdateForm.controls['currency'].dirty
+            || transactionUpdateForm.controls['currency'].touched)"
+            class="alert alert-danger">
+                <div *ngIf="transactionUpdateForm.controls['currency'].errors?.['required']">
+                    {{'required.currency' | translate}}
+                </div>
+                <div *ngIf="transactionUpdateForm.controls['currency'].errors?.['required']">
+                    {{'required.currency' | translate}}
+                </div>
+            </div>
+        </form>
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.comissionAmount' | translate}}</h2>
         <p>{{transactionInfo.comissionAmount.amount}} {{transactionInfo.comissionAmount.currency}}</p>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
+              <input required matInput formControlName="comissionAmount" value="{{transactionInfo.comissionAmount.amount}}" placeholder="{{ 'placeholders.comissionAmount' | translate }}">
+            </mat-form-field>
+            <div *ngIf="transactionUpdateForm.controls['comissionAmount'].invalid && (transactionUpdateForm.controls['comissionAmount'].dirty 
+            || transactionUpdateForm.controls['comissionAmount'].touched)"
+            class="alert alert-danger">
+                <div *ngIf="transactionUpdateForm.controls['comissionAmount'].errors?.['required']">
+                    {{'required.comissionAmount' | translate}}
+                </div>
+            </div>
+        </form>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
+              <input required matInput formControlName="comissionCurrency" value="{{transactionInfo.comissionAmount.currency}}" placeholder="{{ 'placeholders.comissionCurrency' | translate }}">
+            </mat-form-field>
+            <div *ngIf="transactionUpdateForm.controls['comissionCurrency'].invalid && (transactionUpdateForm.controls['comissionCurrency'].dirty 
+            || transactionUpdateForm.controls['comissionCurrency'].touched)"
+            class="alert alert-danger">
+                <div *ngIf="transactionUpdateForm.controls['comissionCurrency'].errors?.['required']">
+                    {{'required.comissionCurrency' | translate}}
+                </div>
+            </div>
+        </form>
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.username' | translate}}</h2>
         <p>{{transactionInfo.username}}</p>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+                  <mat-form-field class="amount-form-container__input" appearance="fill">
+                    <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
+                    <input required matInput formControlName="username" value="{{transactionInfo.username}}" placeholder="{{ 'placeholders.username' | translate }}">
+                  </mat-form-field>
+                    <div *ngIf="transactionUpdateForm.controls['username'].invalid && (transactionUpdateForm.controls['username'].dirty 
+                    || transactionUpdateForm.controls['username'].touched)"
+                    class="alert alert-danger">
+                        <div *ngIf="transactionUpdateForm.controls['username'].errors?.['required']">
+                          {{'required.username' | translate}}
+                        </div>
+                    </div>
+              </form>
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.additionalData' | translate}}</h2>
         <p>{{transactionInfo.additionalData}}</p>
+        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+                  <mat-form-field class="amount-form-container__input" appearance="fill">
+                    <mat-label>{{'displayedColumns.additionalData' | translate}}</mat-label>
+                    <input matInput formControlName="additionalData" value="{{transactionInfo.additionalData}}" placeholder="{{ 'placeholders.additionalData' | translate }}">
+                  </mat-form-field>
+              </form>
     </div>
 </div>

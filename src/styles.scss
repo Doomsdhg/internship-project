@@ -48,12 +48,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text-decoration: underline;
 }
 
+.onhover-pointer:hover {
+    cursor: pointer;
+}
+
 .container {
     display: block;
+    margin-bottom: 50px;
 }
 
 .wrapper {
     border: 1px solid #000;
     margin-top: 10px;
     padding: 7px;
+}
+
+.display-none {
+    display: none;
 }

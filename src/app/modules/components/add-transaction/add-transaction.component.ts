@@ -1,7 +1,7 @@
-import { Component, ViewChild, Input, Output, ChangeDetectionStrategy } from '@angular/core';
-import { ElementRef, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
-import { WebPostService } from '../../../services/web-services/web-post.service';
+import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -17,7 +17,7 @@ import { TransactionCrudResponseError } from '../../../models/interfaces/transac
 export class AddTransactionComponent{
 
   constructor(
-    private webPost: WebPostService, private notify: NotifyService
+    private transactionApiService: TransactionApiService, private notify: NotifyService
    ) {}
 
   @Input() 
@@ -62,8 +62,8 @@ export class AddTransactionComponent{
       "username": this.transactionUpdateForm.value.username,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.webPost.uploadTransaction(transactionObj).subscribe({
-      next: (success: any)=>{
+    this.transactionApiService.uploadTransaction(transactionObj).subscribe({
+      next: ()=>{
         this.notify.showMessage('transaction added successfully', false)
         this.TransactionsTableComponent.dataSource.loadTransactions()},
       error: (error: TransactionCrudResponseError) => {

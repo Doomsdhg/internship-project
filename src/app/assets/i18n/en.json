@@ -10,13 +10,24 @@
         "provider": "Provider",
         "actions": "Actions",
         "currency": "Currency",
-        "comissionCurrency": "Comission amount",
+        "comissionCurrency": "Comission currency",
         "additionalData": "Additional data",
         "tools": "Tools"
+    },
+    "required": {
+        "externalId": "No. is required",
+        "username": "Username is required",
+        "amount": "Amount is required",
+        "comissionAmount": "Comission amount is required",
+        "provider": "Provider is required",
+        "currency": "Currency is required",
+        "comissionCurrency": "Comission currency is required",
+        "additionalData": "Additional data"
     },
     "buttons":{
         "delete": "delete",
         "edit": "edit",
+        "cancel": "cancel",
         "saveChanges": "saveChanges",
         "transactionOpenForms": "Open form of adding new transaction",
         "transactionCloseForms": "Close form of adding new transaction",

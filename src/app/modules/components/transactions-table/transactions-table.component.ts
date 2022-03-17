@@ -1,7 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { WebGetService } from '../../../services/web-services/web-get.service';
-import { WebDeleteService } from 'src/app/services/web-services/web-delete.service';
-import { WebPatchService } from 'src/app/services/web-services/web-patch.service';
+import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { transactionInterface, amountInterface } from 'src/app/models/interfaces/transaction.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -93,10 +91,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
     }];
 
   constructor(
-    public webGet: WebGetService, 
-    public webDelete: WebDeleteService,
-    public webPatch: WebPatchService,
-    public notify: NotifyService,
+    public transactionApiService: TransactionApiService, 
+    private notify: NotifyService,
     private translateService: TranslateService,
     private cdr: ChangeDetectorRef,
     private router: Router
@@ -116,7 +112,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   loadData(): void {
-    this.dataSource = new TransactionsDataSource(this.webGet, this.notify);
+    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify);
     this.dataSource.loadTransactions();
   }
 
@@ -186,9 +182,10 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   deleteTransaction = async (e: Event): Promise<void> => {
+    e.stopPropagation()
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
-    this.webDelete.deleteTransaction(id).subscribe({
+    this.transactionApiService.deleteTransaction(id).subscribe({
       next: (success: Object)=>{
         this.refreshTransactions()
         this.notify.showMessage('transaction deleted succesfully', false)
@@ -199,7 +196,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   })
   }
 
-  toggleForms = (row: row): void => {
+  toggleForms = (e: Event, row: row): void => {
+    e.stopPropagation()
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
     this.transactionUpdateForm = new FormGroup({
@@ -219,6 +217,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   updateTransaction = (e: Event, row: row): void => {
+    e.stopPropagation()
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
     const updateObj: Object = {
@@ -235,9 +234,9 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
-    this.webPatch.patchTransaction(id, updateObj).subscribe({
+    this.transactionApiService.patchTransaction(id, updateObj).subscribe({
       next: (success: Object)=>{
-        this.toggleForms(row)
+        this.toggleForms(e, row)
         this.refreshTransactions()
         this.notify.showMessage('transaction data updated succesfully', false)
       },
