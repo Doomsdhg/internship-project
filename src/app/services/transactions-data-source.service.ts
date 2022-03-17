@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, of } from "rxjs";
+import { BehaviorSubject, of } from "rxjs";
 import { transactionInterface } from "../models/interfaces/transaction.interface";
 import { WebGetService } from "../services/web-services/web-get.service";
 import { catchError } from "rxjs/operators";
@@ -12,11 +12,9 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class TransactionsDataSource extends 
-// DataSource<transactionInterface>, 
 MatTableDataSource<transactionInterface[]>{
 
   public length!: number;
-  // public paginator! : MatPaginator;
 
   constructor(private webGet: WebGetService, private notify: NotifyService) {
     super()
@@ -31,7 +29,6 @@ MatTableDataSource<transactionInterface[]>{
     .subscribe({
       next: (transactions: transactionInterface[]) => {
         this.length = transactions.length;
-        // transactions.splice(this.paginator.pageSize)
         this.transactionsSubject.next(transactions)
         this.transactionsSubject.asObservable().subscribe((success: any) => this.data = success)
         console.log(transactions)
@@ -40,15 +37,5 @@ MatTableDataSource<transactionInterface[]>{
       error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, true)
     });
   }
-
-  // connect(collectionViewer: CollectionViewer): Observable<transactionInterface[]> {
-  //   console.log("Connecting data source");
-  //   console.log(this.transactionsSubject.value)
-  //   return this.transactionsSubject.asObservable();
-  // }
-
-  // disconnect(collectionViewer: CollectionViewer): void {
-  //   this.transactionsSubject.complete();
-  // }
 
 }

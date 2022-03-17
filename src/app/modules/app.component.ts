@@ -1,12 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { TransactionsTableComponent } from './transactions-table/transactions-table.component';
+import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { ChangeDetectionStrategy } from '@angular/core';
-import { transactionInterface } from '../models/interfaces/transaction.interface';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
-import { NotifyService } from '../services/notify.service';
 
 @Component({
   selector: 'app-root',
@@ -19,18 +15,12 @@ export class AppComponent implements OnInit {
 
   @ViewChild(TransactionsTableComponent) TransactionsTableComponent!: TransactionsTableComponent;
 
-  transactionsArray!: MatTableDataSource<transactionInterface[]>;
-
-  public router!: Router;
-
   public title: string = 'internship-project';
 
   language!: string | null;
 
-  displayedColumns: string[] = [];
-
   constructor(
-    private translateService: TranslateService, private notify: NotifyService
+    private translateService: TranslateService
    ) {
      this.translateService.use(localStorage.getItem('language') || 'en');
      }

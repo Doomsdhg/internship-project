@@ -5,10 +5,10 @@ export interface amountInterface {
   
   export interface transactionInterface {
     id: string,
-    externalId: number,
+    externalId: string,
     provider: string,
     amount: amountInterface,
-    currencyAmount: amountInterface,
+    comissionAmount: amountInterface,
     username: string,
     additionalData?: string
   }

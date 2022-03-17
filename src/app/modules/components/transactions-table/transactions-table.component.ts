@@ -1,16 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, EventEmitter, Output, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { WebGetService } from '../../services/web-services/web-get.service';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { WebGetService } from '../../../services/web-services/web-get.service';
 import { WebDeleteService } from 'src/app/services/web-services/web-delete.service';
 import { WebPatchService } from 'src/app/services/web-services/web-patch.service';
 import { transactionInterface, amountInterface } from 'src/app/models/interfaces/transaction.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject } from 'rxjs';
-import { TransactionsDataSource } from '../../services/transactions-data-source.service';
-import { NotifyService } from '../../services/notify.service';
-import { TransactionCrudResponseError } from '../../models/interfaces/transaction-crud-response-error.interface';
+import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
+import { NotifyService } from '../../../services/notify.service';
+import { TransactionCrudResponseError } from '../../../models/interfaces/transaction-crud-response-error.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { target } from '../../../models/interfaces/browser-event.interface'
 
 interface column extends Object {
   id: string,
@@ -36,14 +36,10 @@ interface row extends Object {
 })
 
 export class TransactionsTableComponent implements OnInit, AfterViewInit{
-
-  @Input() transactionsArray: BehaviorSubject<transactionInterface[]> = new BehaviorSubject<transactionInterface[]>([]);
   
   @Input() transactionUpdateForm!: FormGroup;
 
   @Input() dataSource!: TransactionsDataSource;
-
-  @Output() getRefreshedTransactions: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -102,20 +98,45 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
     public notify: NotifyService,
     private translateService: TranslateService,
     private cdr: ChangeDetectorRef
-   ) {
-    
-   }
+   ) {}
 
   ngAfterViewInit(): void {
-    console.log(this.paginator)
-    console.log(this.sort)
-    console.log(this.dataSource.sort)
     this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
     this.cdr.markForCheck()
   }
 
   ngOnInit(): void {
+    this.subscribeToFilterFormsChanges()
+    this.loadData()
+    this.translateColumnsNames()
+    this.dataSource.filterPredicate = this.createFilter();
+  }
+
+  loadData(): void {
+    this.dataSource = new TransactionsDataSource(this.webGet, this.notify);
+    this.dataSource.loadTransactions();
+  }
+
+  translateColumnsNames(): void {
+    this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
+    'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
+      .subscribe({
+        next: (translations: any) => {
+        this.columnNames[0].value = (translations['displayedColumns.externalId']);
+        this.columnNames[1].value = (translations['displayedColumns.provider']);
+        this.columnNames[2].value = (translations['displayedColumns.amount']);
+        this.columnNames[3].value = (translations['displayedColumns.comissionAmount']);
+        this.columnNames[4].value = (translations['displayedColumns.username']);
+        this.columnNames[5].value = (translations['displayedColumns.actions']);
+        },
+        error: (error: Object) => {
+          console.log(error)
+        }
+    });
+  }
+
+  subscribeToFilterFormsChanges(): void {
     this.idFilter.valueChanges
       .subscribe(
         id => {
@@ -151,33 +172,14 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
           this.dataSource.filter = JSON.stringify(this.filterValues);
         }
       )
-    this.dataSource = new TransactionsDataSource(this.webGet, this.notify);
-    this.dataSource.loadTransactions();
-    this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
-    'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
-      .subscribe({
-        next: (translations: any) => {
-        this.columnNames[0].value = (translations['displayedColumns.externalId']);
-        this.columnNames[1].value = (translations['displayedColumns.provider']);
-        this.columnNames[2].value = (translations['displayedColumns.amount']);
-        this.columnNames[3].value = (translations['displayedColumns.comissionAmount']);
-        this.columnNames[4].value = (translations['displayedColumns.username']);
-        this.columnNames[5].value = (translations['displayedColumns.actions']);
-        },
-        error: (error: any) => {
-          console.log(error)
-        }
-    });
-    this.dataSource.filterPredicate = this.createFilter();
   }
 
-  search = (e: any): void => {
-    console.log(this.dataSource)
-    this.dataSource.filter = e.target.value
+  search = (e: Event): void => {
+    const target = e.target as target | null;
+    this.dataSource.filter = target!.value 
   }
 
   refreshTransactions = (): void => {
-    console.log(this.sort)
     this.dataSource.loadTransactions();
   }
 
@@ -196,7 +198,6 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   toggleForms = (row: row): void => {
-    console.log(row)
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
     this.transactionUpdateForm = new FormGroup({
@@ -241,10 +242,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   createFilter(): (data: any, filter: string) => boolean {
-    let filterFunction = function(data: any, filter: any): boolean {
+    let filterFunction = function(data: transactionInterface, filter: any): boolean {
       let searchTerms = JSON.parse(filter);
-      console.log(data)
-      console.log(filter)
       return data.externalId.indexOf(searchTerms.id) !== -1
         && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
         && String(data.amount.amount).indexOf(searchTerms.amount) !== -1

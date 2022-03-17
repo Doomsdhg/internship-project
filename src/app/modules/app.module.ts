@@ -7,8 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { AddTransactionComponent } from './add-transaction/add-transaction.component';
-import { TransactionsTableComponent } from './transactions-table/transactions-table.component';
+import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
+import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { MatInputModule } from '@angular/material/input';           
 import { ReactiveFormsModule } from '@angular/forms';
 import { WebGetService } from '../services/web-services/web-get.service';
@@ -25,6 +25,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotifyService } from '../services/notify.service';
 import { FormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
+import { TransactionPageComponent } from './pages/transaction-page/transaction-page.component';
+import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -34,7 +36,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     AddTransactionComponent,
-    TransactionsTableComponent
+    TransactionsTableComponent,
+    TransactionPageComponent,
+    TransactionsTablePageComponent
   ],
   imports: [
     MatSortModule,

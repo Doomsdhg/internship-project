@@ -15,3 +15,45 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-sort-header-content {
     height: 80px;
 }
+
+.ms-10-percents {
+    margin-left: 10%;
+}
+
+.mt-10-pixels {
+    margin-top: 10px;
+}
+
+.mt-100-pixels {
+    margin-top: 100px;
+}
+
+.mt-200-pixels {
+    margin-top: 200px;
+}
+
+.w-80-percents {
+    width: 80%;
+}
+
+.w-100-percents {
+    width: 100%;
+}
+
+.center-header {
+    text-align: center;
+}
+
+.text-underline {
+    text-decoration: underline;
+}
+
+.container {
+    display: block;
+}
+
+.wrapper {
+    border: 1px solid #000;
+    margin-top: 10px;
+    padding: 7px;
+}

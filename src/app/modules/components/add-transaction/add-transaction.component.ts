@@ -1,11 +1,11 @@
 import { Component, ViewChild, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { ElementRef, EventEmitter } from '@angular/core';
 import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
-import { WebPostService } from '../../services/web-services/web-post.service';
+import { WebPostService } from '../../../services/web-services/web-post.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TransactionsDataSource } from '../../services/transactions-data-source.service';
+import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { TransactionCrudResponseError } from '../../models/interfaces/transaction-crud-response-error.interface';
+import { TransactionCrudResponseError } from '../../../models/interfaces/transaction-crud-response-error.interface';
 
 @Component({
   selector: 'app-add-transaction',
@@ -20,12 +20,10 @@ export class AddTransactionComponent{
     private webPost: WebPostService, private notify: NotifyService
    ) {}
 
-  @Output() refreshTransactions: EventEmitter<any> = new EventEmitter();
-
-  @Input() TransactionsTableComponent!: TransactionsTableComponent;
+  @Input() 
+  TransactionsTableComponent!: TransactionsTableComponent;
 
   @ViewChild('addition_form', {static: false})
-
   additionForm: ElementRef | undefined;
 
   status: boolean = false;
@@ -42,7 +40,6 @@ export class AddTransactionComponent{
     comissionCurrency: new FormControl(''),
     additionalData: new FormControl('')
   });
-
 
   toggleForm = (): void => {
     this.additionForm?.nativeElement;

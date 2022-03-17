@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TransactionPageComponent } from './pages/transaction-page/transaction-page.component';
+import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
 
-
-const routes: Routes = [];
+const routes: Routes = [
+  {path: 'transactions', component: TransactionsTablePageComponent},
+  {path: 'transactions/:id', component: TransactionPageComponent}
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), MatTableModule, TranslateModule],
-  exports: [RouterModule, MatTableModule, TranslatePipe],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
   providers: [TranslateModule]
 })
 

@@ -1,0 +1,27 @@
+<div class="container w-80-percents ms-10-percents mt-100-pixels">
+    <h1 class="w-100-percents center-header">{{'transactionInfo' | translate}}</h1>
+    <div class="wrapper">
+        <h2 class="text-underline">{{'displayedColumns.externalId' | translate}}</h2>
+        <p>{{transactionInfo.externalId}}</p>
+    </div>
+    <div class="wrapper">
+        <h2 class="text-underline">{{'displayedColumns.provider' | translate}}</h2>
+        <p>{{transactionInfo.provider}}</p>
+    </div>
+    <div class="wrapper">
+        <h2 class="text-underline">{{'displayedColumns.amount' | translate}}</h2>
+        <p>{{transactionInfo.amount.amount}}{{transactionInfo.amount.currency}}</p>
+    </div>
+    <div class="wrapper">
+        <h2 class="text-underline">{{'displayedColumns.comissionAmount' | translate}}</h2>
+        <p>{{transactionInfo.comissionAmount.amount}}{{transactionInfo.comissionAmount.currency}}</p>
+    </div>
+    <div class="wrapper">
+        <h2 class="text-underline">{{'displayedColumns.username' | translate}}</h2>
+        <p>{{transactionInfo.username}}</p>
+    </div>
+    <div class="wrapper">
+        <h2 class="text-underline">{{'displayedColumns.additionalData' | translate}}</h2>
+        <p>{{transactionInfo.additionalData}}</p>
+    </div>
+</div>

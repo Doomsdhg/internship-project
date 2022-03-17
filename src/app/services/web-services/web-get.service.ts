@@ -13,4 +13,8 @@ export class WebGetService {
   getTransactions(): Observable<any> {
     return this.http.get(ApiEndpoints.TRANSACTIONS)
   }
+
+  getDefiniteTransaction(id: string | null): Observable<any> {
+    return this.http.get(`${ApiEndpoints.TRANSACTIONS}/${id}`)
+  }
 }
