@@ -21,7 +21,10 @@
         "saveChanges": "зберегти зміни",
         "transactionOpenForms": "Відкрити форму додавання нової транзакції",
         "transactionCloseForms": "Закрито форму додавання нової транзакції",
-        "uploadTransaction": "Додати транзакцію"
+        "uploadTransaction": "Додати транзакцію",
+        "transactions": "транзакції",
+        "leave": "продовжити",
+        "stay": "залишитися"
     },
     "required": {
         "externalId": "Потрібно ввести номер",
@@ -42,6 +45,9 @@
         "username": "Наприклад 'Дмитро Гордон'",
         "additionalData":"Наприклад 'Додаткові дані'",
         "search": "пошук"
+    },
+    "warnings" : {
+        "leaveWithoutSave": "Ви впевнені, що хочете продовжити без збереження змін?"
     },
     "transactionInfo": "Дані транзакції"
 }

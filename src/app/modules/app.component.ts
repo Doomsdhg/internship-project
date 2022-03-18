@@ -3,6 +3,7 @@ import { TransactionsTableComponent } from './components/transactions-table/tran
 import { ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -20,13 +21,19 @@ export class AppComponent implements OnInit {
   language!: string | null;
 
   constructor(
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    public router: Router,
+    public route: ActivatedRoute
    ) {
      this.translateService.use(localStorage.getItem('language') || 'en');
      }
 
   async ngOnInit(): Promise<void> {
     this.language = localStorage.getItem('language') || environment.defaultLocale;
+  }
+
+  transactionsRedirect(): void {
+    this.router.navigate(['transactions'], { relativeTo: this.route })
   }
 
   changeLanguage(e: Event): void {

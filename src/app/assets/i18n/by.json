@@ -21,7 +21,10 @@
         "saveChanges": "Захаваць змены",
         "transactionOpenForms": "Адкрыць форму дадання новай транзакцыі",
         "transactionCloseForms": "Закрыць форму дадання новай транзакцыі",
-        "uploadTransaction": "Дадаць транзакцыю"
+        "uploadTransaction": "Дадаць транзакцыю",
+        "transactions": "транзакцыі",
+        "leave": "працягнуць",
+        "stay": "застацца"
     },
     "required": {
         "externalId": "Патрабуецца ўвесці нумар",
@@ -42,6 +45,9 @@
         "username": "Напрыклад 'Слава Комиссаренко'",
         "additionalData": "Напрыклад 'Дадатковыя дадзеныя'",
         "search": "пошук"
+    },
+    "warnings" : {
+        "leaveWithoutSave": "Вы ўпэўненыя што хочаце працягнуць без захавання змен?"
     },
     "transactionInfo": "Дадзеныя транзакцыі"
 

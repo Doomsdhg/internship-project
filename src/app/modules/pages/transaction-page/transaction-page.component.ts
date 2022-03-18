@@ -7,7 +7,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionCrudResponseError } from 'src/app/models/interfaces/transaction-crud-response-error.interface';
-import { Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transaction-page',
@@ -19,6 +19,9 @@ export class TransactionPageComponent implements OnInit {
 
   @Input() 
   transactionUpdateForm!: FormGroup;
+
+  @Input() 
+  initialFormValues!: any;
 
   @Input()
   transactionInfo: transactionInterface = 
@@ -40,9 +43,12 @@ export class TransactionPageComponent implements OnInit {
 
   private id!: string | null;
 
+  public leavePage: boolean = false;
+
   public formsToggled: boolean = false;
 
   constructor(
+    private dialog: MatDialog,
     private route: ActivatedRoute, 
     private transactionApiService: TransactionApiService, 
     private cdr: ChangeDetectorRef, 
@@ -50,25 +56,48 @@ export class TransactionPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTransactionInfo()
-    this.createFormGroup()
-    
   }
 
   createFormGroup(): void {
     this.transactionUpdateForm = new FormGroup({
-      provider: new FormControl(this.transactionInfo.provider, Validators.required),
-      username: new FormControl(this.transactionInfo.username, Validators.required),
-      externalId: new FormControl(this.transactionInfo.externalId, [Validators.pattern(/^\d+$/), Validators.required]),
-      amount: new FormControl(this.transactionInfo.amount.amount, [Validators.pattern(/^\d+$/), Validators.required]),
-      currency: new FormControl(this.transactionInfo.amount.currency, Validators.required),
-      comissionAmount: new FormControl(this.transactionInfo.comissionAmount.amount, Validators.pattern(/^\d+$/)),
-      comissionCurrency: new FormControl(this.transactionInfo.comissionAmount.currency, Validators.required),
+      provider: new FormControl(this.transactionInfo.provider),
+      username: new FormControl(this.transactionInfo.username),
+      externalId: new FormControl(this.transactionInfo.externalId),
+      amount: new FormControl(this.transactionInfo.amount.amount),
+      currency: new FormControl(this.transactionInfo.amount.currency),
+      comissionAmount: new FormControl(this.transactionInfo.comissionAmount.amount),
+      comissionCurrency: new FormControl(this.transactionInfo.comissionAmount.currency),
       additionalData: new FormControl(this.transactionInfo.additionalData)
     })
+    
   }
+
+  // uniqueIdValidator(id: any): AsyncValidatorFn {
+  //   return async (control: AbstractControl): Promise<ValidationErrors | null> => {
+  //     let unique = true;
+  //     const request = this.transactionApiService.getTransactions();
+  //     const response = await lastValueFrom(request)
+  //     response.map((transaction: transactionInterface)=>{
+  //       if (transaction.externalId === id) {
+  //         unique = false;
+  //       }
+  //     })
+  //     return unique ?  null : {unique: {value: control.value}};
+  //   };
+  // }
 
   toggleForms = (): void => {
     this.formsToggled = !this.formsToggled;
+  }
+
+  compareFormValues = (): boolean => {
+    let inputsChanged = false;
+    for (let key in this.transactionUpdateForm.controls) {
+      if (this.transactionUpdateForm.controls[key]!.value !== this.initialFormValues[key]) { 
+        inputsChanged = true
+      }
+    }
+    return inputsChanged
   }
 
   saveChanges = (): void => {
@@ -102,6 +131,17 @@ export class TransactionPageComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id')
     this.transactionApiService.getDefiniteTransaction(this.id).subscribe((success: transactionInterface)=>{
       this.transactionInfo = new Transaction(success);
+      this.createFormGroup()
+      this.initialFormValues = {
+        externalId: success.externalId,
+        username: success.username,
+        amount: success.amount.amount,
+        currency: success.amount.currency,
+        comissionAmount: success.comissionAmount.amount,
+        comissionCurrency: success.comissionAmount.currency,
+        provider: success.provider,
+        additionalData: success.additionalData
+      } 
       this.cdr.detectChanges()
     })
   }

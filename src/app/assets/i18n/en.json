@@ -31,7 +31,10 @@
         "saveChanges": "saveChanges",
         "transactionOpenForms": "Open form of adding new transaction",
         "transactionCloseForms": "Close form of adding new transaction",
-        "uploadTransaction": "Upload transaction"
+        "uploadTransaction": "Upload transaction",
+        "transactions": "transactions",
+        "leave": "leave",
+        "stay": "stay"
     },
     "placeholders":{
         "externalId": "e.g. '123'",
@@ -43,6 +46,9 @@
         "username": "e.g. 'foobar'",
         "additionalData": "e.g. 'some additional data'",
         "search": "search"
+    },
+    "warnings" : {
+        "leaveWithoutSave": "Are you sure you wanna leave without saving changes?"
     },
     "transactionInfo": "Transaction info"
 

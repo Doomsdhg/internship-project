@@ -24,6 +24,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { TransactionPageComponent } from './pages/transaction-page/transaction-page.component';
 import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
+import { GuardDialogContentComponent } from './components/guard-dialog-content/guard-dialog-content.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -35,9 +37,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddTransactionComponent,
     TransactionsTableComponent,
     TransactionPageComponent,
-    TransactionsTablePageComponent
+    TransactionsTablePageComponent,
+    GuardDialogContentComponent
   ],
   imports: [
+    MatDialogModule,
     MatSortModule,
     FormsModule,
     MatPaginatorModule,

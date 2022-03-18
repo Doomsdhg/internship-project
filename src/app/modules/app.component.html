@@ -1,4 +1,5 @@
 <div class="select-language-form">
+    <button (click)="transactionsRedirect()">{{'buttons.transactions' | translate}}</button>
     <p>{{'selectLanguage' | translate}}</p>
     <select class="language-picker" (change)="changeLanguage($event)">
         <option value="en" [selected]="language==='en'">English</option>
@@ -7,6 +8,7 @@
         <option value="by" [selected]="language==='by'">Білоруська</option>
     </select>
 </div>
+
 <!-- <app-add-transaction [TransactionsTableComponent]="TransactionsTableComponent"></app-add-transaction>
 <app-transactions-table></app-transactions-table> -->
 <router-outlet></router-outlet>

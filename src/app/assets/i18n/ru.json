@@ -21,7 +21,10 @@
         "saveChanges": "сохранить изменения",
         "transactionOpenForms": "Открыть форму добавления новой транзакции",
         "transactionCloseForms": "Закрыть форму добавления новой транзакции",
-        "uploadTransaction": "Добавить транзакцию"
+        "uploadTransaction": "Добавить транзакцию",
+        "transactions": "транзакции",
+        "leave": "продолжить",
+        "stay": "остаться"
     },
     "required": {
         "externalId": "Требуется ввести номер",
@@ -42,6 +45,9 @@
         "username": "например, 'любитель кефира'",
         "additionalData": "например, 'какая-то дополнительная информация'",
         "search": "поиск"
+    },
+    "warnings" : {
+        "leaveWithoutSave": "Вы уверены что хотите продолжить без сохранения изменений?"
     },
     "transactionInfo": "Данные транзакции"
 
