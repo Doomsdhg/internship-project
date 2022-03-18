@@ -179,6 +179,21 @@
       "username": "qdqwdqw",
       "additionalData": "",
       "id": "6TQyOuw"
+    },
+    {
+      "externalId": "",
+      "provider": "",
+      "amount": {
+        "amount": "",
+        "currency": ""
+      },
+      "comissionAmount": {
+        "amount": "",
+        "currency": ""
+      },
+      "username": "",
+      "additionalData": "",
+      "id": "uslDULA"
     }
   ]
 }

@@ -49,6 +49,7 @@
     "warnings" : {
         "leaveWithoutSave": "Вы уверены что хотите продолжить без сохранения изменений?"
     },
-    "transactionInfo": "Данные транзакции"
+    "transactionInfo": "Данные транзакции",
+    "noData": "Нет данных"
 
 }

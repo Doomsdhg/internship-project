@@ -50,6 +50,7 @@
     "warnings" : {
         "leaveWithoutSave": "Are you sure you wanna leave without saving changes?"
     },
-    "transactionInfo": "Transaction info"
+    "transactionInfo": "Transaction info",
+    "noData": "No data"
 
 }
