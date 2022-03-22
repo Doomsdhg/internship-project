@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
-import { transactionInterface, amountInterface } from 'src/app/models/interfaces/transaction.interface';
+import { Transaction, Amount, TransactionUpdateData } from 'src/app/models/interfaces/transaction.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
@@ -8,21 +8,22 @@ import { NotifyService } from '../../../services/notify.service';
 import { TransactionCrudResponseError } from '../../../models/interfaces/transaction-crud-response-error.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { target } from '../../../models/interfaces/browser-event.interface'
+import { Target } from '../../../models/interfaces/browser-event.interface'
 import { Router } from '@angular/router';
+import { Translations } from 'src/app/models/interfaces/translations.interface';
 
-interface column extends Object {
+interface Column {
   id: string,
   value: string
 }
 
-interface row extends Object {
+interface Row {
   displayForms: boolean,
   provider: string,
   username: string,
   externalId: string,
-  amount: amountInterface,
-  comissionAmount: amountInterface,
+  amount: Amount,
+  comissionAmount: Amount,
   additionalData: string,
   id: string
 }
@@ -34,8 +35,8 @@ interface row extends Object {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TransactionsTableComponent implements OnInit, AfterViewInit{
-  
+export class TransactionsTableComponent implements OnInit, AfterViewInit {
+
   @Input() transactionUpdateForm!: FormGroup;
 
   @Input() dataSource!: TransactionsDataSource;
@@ -57,46 +58,46 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
     username: ''
   };
 
-  formsToggled: boolean = false;
+  formsToggled = false;
 
-  displayEditForms: boolean = false;
+  displayEditForms = false;
 
   pageSizeArray: number[] = [5, 10, 20];
 
   displayedColumns: string[] = ['externalId', 'provider', 'amount', 'comissionAmount', 'username', 'actions'];
 
-  columnNames : column[] = [{
-      id: 'externalId',
-      value: 'No.',
-    }, 
-    {
-      id: 'provider',
-      value: 'Provider',
-    },
-    {
-      id: 'amount',
-      value: 'Amount',
-    },
-    {
-      id: 'comissionAmount',
-      value: 'Comission amount',
-    },
-    {
-      id: 'username',
-      value: 'Username',
-    },
-    {
-      id: 'actions',
-      value: 'Actions'
-    }];
+  columnNames: Column[] = [{
+    id: 'externalId',
+    value: 'No.',
+  },
+  {
+    id: 'provider',
+    value: 'Provider',
+  },
+  {
+    id: 'amount',
+    value: 'Amount',
+  },
+  {
+    id: 'comissionAmount',
+    value: 'Comission amount',
+  },
+  {
+    id: 'username',
+    value: 'Username',
+  },
+  {
+    id: 'actions',
+    value: 'Actions'
+  }];
 
   constructor(
-    public transactionApiService: TransactionApiService, 
+    public transactionApiService: TransactionApiService,
     private notify: NotifyService,
     private translateService: TranslateService,
     private cdr: ChangeDetectorRef,
     private router: Router
-   ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator
@@ -117,21 +118,16 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   translateColumnsNames(): void {
-    this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username', 
-    'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
-      .subscribe({
-        next: (translations: any) => {
-        this.columnNames[0].value = (translations['displayedColumns.externalId']);
-        this.columnNames[1].value = (translations['displayedColumns.provider']);
-        this.columnNames[2].value = (translations['displayedColumns.amount']);
-        this.columnNames[3].value = (translations['displayedColumns.comissionAmount']);
-        this.columnNames[4].value = (translations['displayedColumns.username']);
-        this.columnNames[5].value = (translations['displayedColumns.actions']);
-        },
-        error: (error: Object) => {
-          console.log(error)
-        }
-    });
+    this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username',
+      'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
+      .subscribe((translations: Translations) => {
+          this.columnNames[0].value = translations['displayedColumns.externalId'];
+          this.columnNames[1].value = translations['displayedColumns.provider'];
+          this.columnNames[2].value = translations['displayedColumns.amount'];
+          this.columnNames[3].value = translations['displayedColumns.comissionAmount'];
+          this.columnNames[4].value = translations['displayedColumns.username'];
+          this.columnNames[5].value = translations['displayedColumns.actions'];
+      });
   }
 
   subscribeToFilterFormsChanges(): void {
@@ -163,7 +159,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
           this.dataSource.filter = JSON.stringify(this.filterValues);
         }
       )
-      this.usernameFilter.valueChanges
+    this.usernameFilter.valueChanges
       .subscribe(
         username => {
           this.filterValues.username = username;
@@ -173,30 +169,31 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
   }
 
   search = (e: Event): void => {
-    const target = e.target as target | null;
-    this.dataSource.filter = target!.value 
+    const target = e.target as Target | null;
+    this.dataSource.filter = target!.value
   }
 
   refreshTransactions = (): void => {
     this.dataSource.loadTransactions();
   }
 
-  deleteTransaction = async (e: Event): Promise<void> => {
+  deleteTransaction = (e: Event): void => {
     e.stopPropagation()
     const currentTarget = e.currentTarget as HTMLButtonElement;
+    console.log(currentTarget.textContent)
     const id: string | undefined = currentTarget.dataset['id'];
     this.transactionApiService.deleteTransaction(id).subscribe({
-      next: (success: Object)=>{
+      next: () => {
         this.refreshTransactions()
-        this.notify.showMessage('transaction deleted succesfully', false)
+        this.notify.showMessage('transaction deleted succesfully', 'success')
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, true)
+        this.notify.showMessage(error.error, 'error')
       }
-  })
+    })
   }
 
-  toggleForms = (e: Event, row: row): void => {
+  toggleForms = (e: Event, row: Row): void => {
     e.stopPropagation()
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
@@ -212,15 +209,15 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
     })
   }
 
-  transactionRedirect (row: row): void {
+  transactionRedirect(row: Row): void {
     this.router.navigate(['transactions/', row.id])
   }
 
-  updateTransaction = (e: Event, row: row): void => {
+  updateTransaction = (e: Event, row: Row): void => {
     e.stopPropagation()
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
-    const updateObj: Object = {
+    const updateObj: TransactionUpdateData = {
       "externalId": this.transactionUpdateForm.value.externalId,
       "username": this.transactionUpdateForm.value.username,
       "amount": {
@@ -235,25 +232,36 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit{
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
     this.transactionApiService.patchTransaction(id, updateObj).subscribe({
-      next: (success: Object)=>{
+      next: () => {
         this.toggleForms(e, row)
         this.refreshTransactions()
-        this.notify.showMessage('transaction data updated succesfully', false)
+        this.notify.showMessage('transaction data updated succesfully', 'success')
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, true)
+        this.notify.showMessage(error.error, 'error')
       }
     })
   }
 
   createFilter(): (data: any, filter: string) => boolean {
-    let filterFunction = function(data: transactionInterface, filter: any): boolean {
-      let searchTerms = JSON.parse(filter);
-      return data.externalId.indexOf(searchTerms.id) !== -1
+    const filterFunction = function (data: Transaction, filter: string): boolean {
+      try {
+        const searchTerms = JSON.parse(filter);
+        if (typeof searchTerms !== 'object') {
+          throw new Error('')
+        }
+        return data.externalId.indexOf(searchTerms.id) !== -1
         && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
         && String(data.amount.amount).indexOf(searchTerms.amount) !== -1
         && String(data.comissionAmount.amount).indexOf(searchTerms.comissionAmount) !== -1
         && data.username.toLowerCase().indexOf(searchTerms.username) !== -1;
+      } catch (e) {
+        return data.externalId.indexOf(filter) !== -1
+        || data.provider.toString().toLowerCase().indexOf(filter) !== -1
+        || String(data.amount.amount).indexOf(filter) !== -1
+        || String(data.comissionAmount.amount).indexOf(filter) !== -1
+        || data.username.toLowerCase().indexOf(filter) !== -1;
+      }
     }
     return filterFunction;
   }

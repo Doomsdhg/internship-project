@@ -2,7 +2,7 @@
     "selectLanguage": "Выбраць мову",
     "amount": "Сума",
     "currency": "Валюта",
-    "displayedColumns":{
+    "displayedColumns": {
         "externalId": "Нумар",
         "username": "імя карыстальніка",
         "amount": "Сума",
@@ -14,7 +14,7 @@
         "additionalData": "Дадатковыя дадзеныя",
         "tools": "Дзеянні"
     },
-    "buttons":{
+    "buttons": {
         "delete": "Выдаліць",
         "edit": "Рэдагаваць",
         "cancel": "адмяніць",
@@ -35,7 +35,7 @@
         "currency": "Патрабуецца ўвесці валюту",
         "comissionCurrency": "Патрабуецца ўвесці валюту камісіі"
     },
-    "placeholders":{
+    "placeholders": {
         "externalId": "Напрыклад '123'",
         "provider": "Напрыклад 'paypal'",
         "amount": "Напрыклад '100'",
@@ -46,10 +46,9 @@
         "additionalData": "Напрыклад 'Дадатковыя дадзеныя'",
         "search": "пошук"
     },
-    "warnings" : {
+    "warnings": {
         "leaveWithoutSave": "Вы ўпэўненыя што хочаце працягнуць без захавання змен?"
     },
     "transactionInfo": "Дадзеныя транзакцыі",
     "noData": "Няма дадзеных"
-
 }

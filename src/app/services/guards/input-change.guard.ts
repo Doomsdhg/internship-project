@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanDeactivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { GuardDialogContentComponent } from 'src/app/modules/components/guard-dialog-content/guard-dialog-content.component';
 import { TransactionPageComponent } from 'src/app/modules/pages/transaction-page/transaction-page.component';
 
+interface ComponentWithInput {
+  checkIfInputsChanged: () => boolean
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class InputChangeGuard implements CanDeactivate<any> {
+export class InputChangeGuard implements CanDeactivate<ComponentWithInput> {
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
-  canDeactivate(
-    component: TransactionPageComponent,
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (component.compareFormValues()) {
-        const dialogRef = this.dialog.open(GuardDialogContentComponent);
-        return dialogRef.afterClosed()
-      }
+  canDeactivate(component: TransactionPageComponent): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (component.transactionUpdateForm.dirty) {
+      return this.dialog.open(GuardDialogContentComponent).afterClosed()
+    }
     return true
   }
-  
+
 }

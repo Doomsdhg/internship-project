@@ -2,7 +2,7 @@
   "transactions": [
     {
       "id": "77",
-      "externalId": "7123",
+      "externalId": "7123123",
       "provider": "qiwiйцу",
       "amount": {
         "amount": 456,
@@ -12,7 +12,7 @@
         "amount": 46,
         "currency": "RUBй"
       },
-      "username": "Valeriaцй",
+      "username": "Valeriaцйasd",
       "additionalData": ""
     },
     {
@@ -103,37 +103,7 @@
       },
       "username": "",
       "additionalData": "",
-      "id": "OVfIQuD"
-    },
-    {
-      "externalId": "",
-      "provider": "",
-      "amount": {
-        "amount": "",
-        "currency": ""
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "",
-      "additionalData": "",
       "id": "S98iADA"
-    },
-    {
-      "externalId": "",
-      "provider": "",
-      "amount": {
-        "amount": "",
-        "currency": ""
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "",
-      "additionalData": "",
-      "id": "58VKg6t"
     },
     {
       "externalId": "",
@@ -181,19 +151,19 @@
       "id": "6TQyOuw"
     },
     {
-      "externalId": "",
-      "provider": "",
+      "externalId": "123123e",
+      "provider": "dasdaqwe",
       "amount": {
-        "amount": "",
-        "currency": ""
+        "amount": 1234,
+        "currency": "zxc"
       },
       "comissionAmount": {
-        "amount": "",
-        "currency": ""
+        "amount": 123,
+        "currency": "zxc"
       },
-      "username": "",
-      "additionalData": "",
-      "id": "uslDULA"
+      "username": "qweqwdqqwdzxc",
+      "additionalData": "qwdqwd",
+      "id": "Ht2eXVn"
     }
   ]
 }

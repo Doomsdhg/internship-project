@@ -1,16 +1,21 @@
-export interface browserEvent {
-    target: target,
-    currentTarget: currentTarget
+export interface BrowserEvent {
+    target: Target,
+    currentTarget: CurrentTarget
 }
 
-export interface target {
+export interface Target {
     value: string
 }
 
-export interface currentTarget {
-    dataset: dataset
+export interface CurrentTarget {
+    dataset: Dataset
 }
 
-export interface dataset {
+export interface Dataset {
     id: string
 }
+
+
+export interface El {
+    value: string
+  }

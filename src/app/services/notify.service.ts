@@ -4,18 +4,15 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
+
 export class NotifyService {
 
   constructor(private snackBar: MatSnackBar) { }
 
-  showMessage(message: string, isError: boolean){
-    const config = new MatSnackBarConfig()
+  showMessage(message: string, type: string) {
+    const config = new MatSnackBarConfig();
     config.duration = 2000;
-    if (isError) {
-      config.panelClass = ['error-snackbar']
-    } else {
-      config.panelClass = ['success-snackbar']
-    }
+    config.panelClass = type === 'error' ? ['error-snackbar'] : ['success-snackbar'];
     this.snackBar.open(message, undefined, config)
   }
 }

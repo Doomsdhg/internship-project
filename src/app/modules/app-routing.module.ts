@@ -6,11 +6,16 @@ import { TransactionPageComponent } from './pages/transaction-page/transaction-p
 import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
 
 const routes: Routes = [
-  {path: 'transactions',
-  component: TransactionsTablePageComponent},
-  {path: 'transactions/:id', 
-  canDeactivate: [InputChangeGuard],
-  component: TransactionPageComponent}
+  { path: '', redirectTo: '/transactions', pathMatch: 'full' },
+  {
+    path: 'transactions',
+    component: TransactionsTablePageComponent
+  },
+  {
+    path: 'transactions/:id',
+    canDeactivate: [InputChangeGuard],
+    component: TransactionPageComponent
+  }
 ];
 
 @NgModule({

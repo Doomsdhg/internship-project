@@ -2,7 +2,7 @@
     "selectLanguage": "Оберіть мову",
     "amount": "Сума",
     "currency": "Валюта",
-    "displayedColumns":{
+    "displayedColumns": {
         "externalId": "Номер",
         "username": "ім'я користувача",
         "amount": "Сума",
@@ -14,7 +14,7 @@
         "additionalData": "Додаткові дані",
         "tools": "Дії"
     },
-    "buttons":{
+    "buttons": {
         "delete": "видалити",
         "edit": "редагувати",
         "cancel": "скасувати",
@@ -35,7 +35,7 @@
         "currency": "Потрібно ввести валюту",
         "comissionCurrency": "Потрібно запровадити валюту комісії"
     },
-    "placeholders":{
+    "placeholders": {
         "externalId": "Наприклад '123'",
         "provider": "Наприклад 'paypal'",
         "amount": "Наприклад '100'",
@@ -43,10 +43,10 @@
         "comissionAmount": "Наприклад '10'",
         "comissionCurrency": "Наприклад 'UAH'",
         "username": "Наприклад 'Дмитро Гордон'",
-        "additionalData":"Наприклад 'Додаткові дані'",
+        "additionalData": "Наприклад 'Додаткові дані'",
         "search": "пошук"
     },
-    "warnings" : {
+    "warnings": {
         "leaveWithoutSave": "Ви впевнені, що хочете продовжити без збереження змін?"
     },
     "transactionInfo": "Дані транзакції",

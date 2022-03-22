@@ -1,11 +1,11 @@
-import { Component, ViewChild, Input, ChangeDetectionStrategy } from '@angular/core';
-import { ElementRef } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionCrudResponseError } from '../../../models/interfaces/transaction-crud-response-error.interface';
+import { TransactionUpdateData } from 'src/app/models/interfaces/transaction.interface';
 
 @Component({
   selector: 'app-add-transaction',
@@ -14,19 +14,16 @@ import { TransactionCrudResponseError } from '../../../models/interfaces/transac
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class AddTransactionComponent{
+export class AddTransactionComponent {
 
   constructor(
     private transactionApiService: TransactionApiService, private notify: NotifyService
-   ) {}
+  ) { }
 
-  @Input() 
+  @Input()
   TransactionsTableComponent!: TransactionsTableComponent;
 
-  @ViewChild('addition_form', {static: false})
-  additionForm: ElementRef | undefined;
-
-  status: boolean = false;
+  displayForms = false;
 
   dataSource!: TransactionsDataSource;
 
@@ -42,13 +39,12 @@ export class AddTransactionComponent{
   });
 
   toggleForm = (): void => {
-    this.additionForm?.nativeElement;
-    this.status = !this.status
+    this.displayForms = !this.displayForms
   }
 
   addTransaction = (e: MouseEvent): void => {
     e.preventDefault();
-    const transactionObj: Object = {
+    const transactionObj: TransactionUpdateData = {
       "externalId": this.transactionUpdateForm.value.externalId,
       "provider": this.transactionUpdateForm.value.provider,
       "amount": {
@@ -63,11 +59,12 @@ export class AddTransactionComponent{
       "additionalData": this.transactionUpdateForm.value.additionalData
     }
     this.transactionApiService.uploadTransaction(transactionObj).subscribe({
-      next: ()=>{
-        this.notify.showMessage('transaction added successfully', false)
-        this.TransactionsTableComponent.dataSource.loadTransactions()},
+      next: () => {
+        this.notify.showMessage('transaction added successfully', 'success')
+        this.TransactionsTableComponent.dataSource.loadTransactions()
+      },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.status + '' + error.error, true)
+        this.notify.showMessage(error.status + '' + error.error, 'error')
       }
     })
   }

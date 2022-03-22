@@ -2,7 +2,7 @@
     "selectLanguage": "Select language",
     "amount": "amount",
     "currency": "currency",
-    "displayedColumns":{
+    "displayedColumns": {
         "externalId": "No.",
         "username": "Username",
         "amount": "Amount",
@@ -24,11 +24,11 @@
         "comissionCurrency": "Comission currency is required",
         "additionalData": "Additional data"
     },
-    "buttons":{
+    "buttons": {
         "delete": "delete",
         "edit": "edit",
         "cancel": "cancel",
-        "saveChanges": "saveChanges",
+        "saveChanges": "save changes",
         "transactionOpenForms": "Open form of adding new transaction",
         "transactionCloseForms": "Close form of adding new transaction",
         "uploadTransaction": "Upload transaction",
@@ -36,7 +36,7 @@
         "leave": "leave",
         "stay": "stay"
     },
-    "placeholders":{
+    "placeholders": {
         "externalId": "e.g. '123'",
         "provider": "e.g. 'webmoney'",
         "amount": "e.g. '100'",
@@ -47,10 +47,9 @@
         "additionalData": "e.g. 'some additional data'",
         "search": "search"
     },
-    "warnings" : {
+    "warnings": {
         "leaveWithoutSave": "Are you sure you wanna leave without saving changes?"
     },
     "transactionInfo": "Transaction info",
     "noData": "No data"
-
 }

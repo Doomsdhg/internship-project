@@ -1,7 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@use 'sass:map';
+@use '@angular/material';
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 
 .success-snackbar {
@@ -16,12 +26,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 80px;
 }
 
+.ms-2-percents {
+    margin-left: 2%;
+}
+
 .ms-10-percents {
     margin-left: 10%;
 }
 
+.ms-10-pixels {
+    margin-left: 10px !important;
+}
+
 .mt-10-pixels {
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 .mt-100-pixels {
@@ -69,4 +87,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .text-danger {
     color: red;
+}
+
+.float-right {
+    float: right;
+}
+
+.float-right {
+    float: left;
 }

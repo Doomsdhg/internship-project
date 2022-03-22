@@ -1,14 +1,18 @@
+<button mat-raised-button color="primary" class="mt-10-pixels ms-10-pixels" (click)="transactionsRedirect()">{{'buttons.transactions' | translate}}</button>
 <div class="select-language-form">
-    <button (click)="transactionsRedirect()">{{'buttons.transactions' | translate}}</button>
-    <p>{{'selectLanguage' | translate}}</p>
-    <select class="language-picker" (change)="changeLanguage($event)">
-        <option value="en" [selected]="language==='en'">English</option>
-        <option value="ru" [selected]="language==='ru'">Русский</option>
-        <option value="ua" [selected]="language==='ua'">Українська</option>
-        <option value="by" [selected]="language==='by'">Білоруська</option>
-    </select>
+    <div class="mt-100-pixels">
+        <form [formGroup]="selectLanguageForm" (ngSubmit)="changeLanguage()">
+        <mat-form-field  appearance="fill">
+            <mat-label>{{'selectLangugae' | translate}}</mat-label>
+            <mat-select formControlName="language" (selectionChange)="changeLanguage()">
+              <mat-option value="en">English</mat-option>
+              <mat-option value="ru">Русский</mat-option>
+              <mat-option value="by">Беларуская</mat-option>
+              <mat-option value="ua">Українська</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </form>
+    </div>
 </div>
 
-<!-- <app-add-transaction [TransactionsTableComponent]="TransactionsTableComponent"></app-add-transaction>
-<app-transactions-table></app-transactions-table> -->
 <router-outlet></router-outlet>

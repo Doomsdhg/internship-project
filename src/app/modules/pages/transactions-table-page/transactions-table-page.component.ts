@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { TransactionsTableComponent } from '../../components/transactions-table/transactions-table.component';
-import { transactionInterface } from '../../../models/interfaces/transaction.interface';
+import { Transaction } from '../../../models/interfaces/transaction.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
@@ -13,17 +13,14 @@ export class TransactionsTablePageComponent {
 
   @ViewChild(TransactionsTableComponent) TransactionsTableComponent!: TransactionsTableComponent;
 
-  transactionsArray!: MatTableDataSource<transactionInterface[]>;
+  transactionsArray!: MatTableDataSource<Transaction[]>;
 
   public router!: Router;
 
-  public title: string = 'internship-project';
+  public title = 'internship-project';
 
   language!: string | null;
 
   displayedColumns: string[] = [];
-
-  constructor() {}
-
 
 }

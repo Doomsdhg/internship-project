@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiEndpoints } from '../../constants/api-endpoints.constants';
+import { environment } from 'src/environments/environment';
+import { TransactionUpdateData } from 'src/app/models/interfaces/transaction.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +12,27 @@ export class TransactionApiService {
 
   constructor(private http: HttpClient) { }
 
-  deleteTransaction(id: string | undefined): Observable<Object> {
-    return this.http.delete(`${ApiEndpoints.TRANSACTIONS}${id}`)
+  deleteTransaction(id: string | undefined): Observable<object> {
+    return this.http.delete(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${id}`)
   }
 
   getTransactions(): Observable<any> {
-    return this.http.get(ApiEndpoints.TRANSACTIONS)
+    return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}`)
   }
 
   getDefiniteTransaction(id: string | null): Observable<any> {
-    return this.http.get(`${ApiEndpoints.TRANSACTIONS}/${id}`)
+    return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}/${id}`)
   }
 
-  patchTransaction(id: string | undefined, updateObj: Object): Observable<Object>{
-    return this.http.patch(`${ApiEndpoints.TRANSACTIONS}${id}`, updateObj)
+  patchTransaction(id: string | undefined, updateObj: TransactionUpdateData): Observable<any>{
+    return this.http.patch(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${id}`, updateObj)
   }
 
-  uploadTransaction(transactionData: Object):Observable<Object>{
-    return this.http.post(ApiEndpoints.TRANSACTIONS, transactionData)
+  uploadTransaction(transactionData: TransactionUpdateData):Observable<any>{
+    return this.http.post(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}`, transactionData)
+  }
+
+  searchTransactions(name: string, value: string | number): Observable<any> {
+    return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}?${name}=${value}`)
   }
 }

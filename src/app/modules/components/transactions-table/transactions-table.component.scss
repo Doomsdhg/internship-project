@@ -1,73 +1,24 @@
 .transactions-table {
     margin: 0 auto;
+    margin-top: 50px;
     margin-bottom: 3rem;
     width: 80%;
-    border-collapse: collapse;
-    border: 1px solid #000;
     padding: 0 !important;
 }
 
 .mat-header-cell {
-    padding: 0 !important;
+    justify-content: center;
 }
 
 .mat-cell {
-    padding: 0 !important;
-    min-height: 140px;
     justify-content: center;
-    height: 100% !important;
-    border-collapse: collapse;
-}
-
-.mat-row {
-    border: 1px solid #000;
-    border-collapse: collapse;
-}
-
-.cdk-column-externalId {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-}
-
-.cdk-column-username {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-}
-
-.cdk-column-amount {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-}
-
-.cdk-column-comissionAmount {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-}
-
-.cdk-column-provider {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-}
-
-.cdk-column-actions {
-    border-left: 1px solid #000;
-    border-right: 1px solid #000;
-}
-
-.mat-header-cell {
-    border: 1px solid #000;
-    justify-content: center;
-}
-
-.mat-header-row {
-    border: 1px solid #000;
 }
 
 .display-none {
     display: none;
 }
 
-.amount-form-container{
+.amount-form-container {
     display: flex !important;
     flex-direction: column !important;
 }
@@ -93,19 +44,17 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     display: flex;
-    border: 1px solid #000;
 }
 
 .flex-element {
     display: flex;
     flex: 1;
     justify-content: center;
-    border-right: 1px solid #000;
 }
 
 
 
 #toolsHeader {
     height: 80px;
-    
+
 }

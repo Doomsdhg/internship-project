@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
+import { Component, OnInit } from '@angular/core';
 import { ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../environments/environment';
+import { environment } from '../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,19 +14,27 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class AppComponent implements OnInit {
 
-  @ViewChild(TransactionsTableComponent) TransactionsTableComponent!: TransactionsTableComponent;
+  public title = 'internship-project';
 
-  public title: string = 'internship-project';
+  selectLanguageForm: FormGroup = new FormGroup({});
 
   language!: string | null;
 
+  selectedOption: string;
+
   constructor(
+    private fb: FormBuilder,
     private translateService: TranslateService,
     public router: Router,
     public route: ActivatedRoute
-   ) {
-     this.translateService.use(localStorage.getItem('language') || 'en');
-     }
+  ) {
+    const language = localStorage.getItem('language') || 'en';
+    this.translateService.use(language);
+    this.selectedOption = language;
+    this.selectLanguageForm = fb.group({
+      language: [this.selectedOption]
+    })
+  }
 
   async ngOnInit(): Promise<void> {
     this.language = localStorage.getItem('language') || environment.defaultLocale;
@@ -36,9 +44,8 @@ export class AppComponent implements OnInit {
     this.router.navigate(['transactions'], { relativeTo: this.route })
   }
 
-  changeLanguage(e: Event): void {
-    const target = e.target as HTMLButtonElement;
-    localStorage.setItem('language', target.value)
+  changeLanguage(): void {
+    localStorage.setItem('language', this.selectLanguageForm.controls['language'].value)
     window.location.reload()
   }
 

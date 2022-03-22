@@ -9,14 +9,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
-import { MatInputModule } from '@angular/material/input';           
+import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TransactionApiService } from '../services/web-services/transaction-api.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatTableModule } from '@angular/material/table';
-import { CdkTableModule } from '@angular/cdk/table'; 
+import { CdkTableModule } from '@angular/cdk/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotifyService } from '../services/notify.service';
@@ -26,6 +26,9 @@ import { TransactionPageComponent } from './pages/transaction-page/transaction-p
 import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
 import { GuardDialogContentComponent } from './components/guard-dialog-content/guard-dialog-content.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { UniqueValueDirective } from './directives/unique-value.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -38,9 +41,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionsTableComponent,
     TransactionPageComponent,
     TransactionsTablePageComponent,
-    GuardDialogContentComponent
+    GuardDialogContentComponent,
+    NumbersOnlyDirective,
+    UniqueValueDirective
   ],
   imports: [
+    MatSelectModule,
     MatDialogModule,
     MatSortModule,
     FormsModule,

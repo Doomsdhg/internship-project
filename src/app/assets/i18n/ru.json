@@ -2,7 +2,7 @@
     "selectLanguage": "Выберите язык",
     "amount": "количество",
     "currency": "валюта",
-    "displayedColumns":{
+    "displayedColumns": {
         "externalId": "Номер",
         "username": "Имя пользователя",
         "amount": "Количество",
@@ -14,7 +14,7 @@
         "additionalData": "Дополнительная информация",
         "tools": "Действия"
     },
-    "buttons":{
+    "buttons": {
         "delete": "удалить",
         "edit": "редактировать",
         "cancel": "отменить",
@@ -35,7 +35,7 @@
         "currency": "Требуется ввести валюту",
         "comissionCurrency": "Требуется ввести валюту комиссии"
     },
-    "placeholders":{
+    "placeholders": {
         "externalId": "например, '123'",
         "provider": "например, 'qiwi'",
         "amount": "например, '100'",
@@ -46,10 +46,9 @@
         "additionalData": "например, 'какая-то дополнительная информация'",
         "search": "поиск"
     },
-    "warnings" : {
+    "warnings": {
         "leaveWithoutSave": "Вы уверены что хотите продолжить без сохранения изменений?"
     },
     "transactionInfo": "Данные транзакции",
     "noData": "Нет данных"
-
 }
