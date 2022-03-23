@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TransactionApiService } from 'src/app/services/web-services/transaction-api.service';
-import { Transaction, TransactionUpdateData } from 'src/app/models/interfaces/transaction.interface';
+import { Transaction, TransactionUpdateData } from 'src/app/modules/interfaces/transaction.interface';
 import { ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NotifyService } from 'src/app/services/notify.service';
-import { TransactionCrudResponseError } from 'src/app/models/interfaces/transaction-crud-response-error.interface';
+import { TransactionCrudResponseError } from 'src/app/modules/interfaces/transaction-crud-response-error.interface';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -134,11 +134,11 @@ export class TransactionPageComponent implements OnInit {
       "username": this.transactionUpdateForm.value.username,
       "amount": {
         "amount": this.transactionUpdateForm.value.amount,
-        "currency": this.transactionUpdateForm.value.currency
+        "currency": this.transactionUpdateForm.value.currency.toUpperCase()
       },
       "comissionAmount": {
         "amount": this.transactionUpdateForm.value.comissionAmount,
-        "currency": this.transactionUpdateForm.value.comissionCurrency
+        "currency": this.transactionUpdateForm.value.comissionCurrency.toUpperCase()
       },
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData

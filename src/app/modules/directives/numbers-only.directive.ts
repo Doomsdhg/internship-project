@@ -1,6 +1,6 @@
 import { Directive, HostListener, ElementRef, Renderer2 } from '@angular/core';
 import { NotifyService } from '../../services/notify.service';
-import { El } from '../../models/interfaces/browser-event.interface';
+import { El } from '../../modules/interfaces/browser-event.interface';
 
 @Directive({
   selector: '[appNumbersOnly]'

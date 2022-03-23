@@ -1,7 +1,7 @@
 import { Directive, HostListener, ElementRef } from '@angular/core';
-import { El } from '../../models/interfaces/browser-event.interface';
+import { El } from '../../modules/interfaces/browser-event.interface';
 import { TransactionApiService } from 'src/app/services/web-services/transaction-api.service';
-import { Transaction } from 'src/app/models/interfaces/transaction.interface';
+import { Transaction } from 'src/app/modules/interfaces/transaction.interface';
 
 @Directive({
   selector: '[appUniqueValue]'
@@ -22,8 +22,8 @@ export class UniqueValueDirective {
           message = 'value is not unique'
           color = 'red';
         }
-        const indexOfSpan = this.el.nativeElement.innerHTML.toString().indexOf('<span style')
-        if (indexOfSpan !== -1) {
+        const includesSpan = this.el.nativeElement.innerHTML.toString().includes('<span style')
+        if (includesSpan) {
           const span = this.el.nativeElement.firstChild
           this.el.nativeElement.removeChild(span)
         }

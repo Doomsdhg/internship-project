@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { TransactionsTableComponent } from '../../components/transactions-table/transactions-table.component';
-import { Transaction } from '../../../models/interfaces/transaction.interface';
+import { Transaction } from '../../../modules/interfaces/transaction.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 

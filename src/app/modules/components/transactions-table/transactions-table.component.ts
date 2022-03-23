@@ -1,16 +1,15 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
-import { Transaction, Amount, TransactionUpdateData } from 'src/app/models/interfaces/transaction.interface';
+import { Transaction, Amount, TransactionUpdateData } from 'src/app/modules/interfaces/transaction.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from '../../../services/notify.service';
-import { TransactionCrudResponseError } from '../../../models/interfaces/transaction-crud-response-error.interface';
-import { MatPaginator } from '@angular/material/paginator';
+import { TransactionCrudResponseError } from '../../../modules/interfaces/transaction-crud-response-error.interface';
 import { MatSort } from '@angular/material/sort';
-import { Target } from '../../../models/interfaces/browser-event.interface'
+import { Target } from '../../../modules/interfaces/browser-event.interface'
 import { Router } from '@angular/router';
-import { Translations } from 'src/app/models/interfaces/translations.interface';
+import { Translations } from 'src/app/modules/interfaces/translations.interface';
 
 interface Column {
   id: string,
@@ -41,28 +40,17 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
 
   @Input() dataSource!: TransactionsDataSource;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
   @ViewChild(MatSort) sort!: MatSort;
 
-  idFilter = new FormControl('');
-  providerFilter = new FormControl('');
-  amountFilter = new FormControl('');
-  comissionAmountFilter = new FormControl('');
-  usernameFilter = new FormControl('');
-  filterValues = {
-    id: '',
-    provider: '',
-    amount: '',
-    comissionAmount: '',
-    username: ''
-  };
+  filterValues = new FormGroup({
+    idFilter : new FormControl(''),
+    providerFilter : new FormControl(''),
+    amountFilter : new FormControl(''),
+    comissionAmountFilter : new FormControl(''),
+    usernameFilter : new FormControl(''),
+  });
 
   formsToggled = false;
-
-  displayEditForms = false;
-
-  pageSizeArray: number[] = [5, 10, 20];
 
   displayedColumns: string[] = ['externalId', 'provider', 'amount', 'comissionAmount', 'username', 'actions'];
 
@@ -95,14 +83,11 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     public transactionApiService: TransactionApiService,
     private notify: NotifyService,
     private translateService: TranslateService,
-    private cdr: ChangeDetectorRef,
     private router: Router
   ) { }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator
     this.dataSource.sort = this.sort
-    this.cdr.markForCheck()
   }
 
   ngOnInit(): void {
@@ -131,39 +116,17 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   }
 
   subscribeToFilterFormsChanges(): void {
-    this.idFilter.valueChanges
+    this.filterValues.valueChanges
       .subscribe(
-        id => {
-          this.filterValues.id = id;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
-    this.providerFilter.valueChanges
-      .subscribe(
-        provider => {
-          this.filterValues.provider = provider;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
-    this.amountFilter.valueChanges
-      .subscribe(
-        amount => {
-          this.filterValues.amount = amount;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
-    this.comissionAmountFilter.valueChanges
-      .subscribe(
-        comissionAmount => {
-          this.filterValues.comissionAmount = comissionAmount;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
-        }
-      )
-    this.usernameFilter.valueChanges
-      .subscribe(
-        username => {
-          this.filterValues.username = username;
-          this.dataSource.filter = JSON.stringify(this.filterValues);
+        filters => {
+          const filter = {
+            id: filters.idFilter,
+            provider: filters.providerFilter,
+            amount: filters.amountFilter,
+            comissionAmount: filters.comissionAmountFilter,
+            username: filters.usernameFilter
+          }
+          this.dataSource.filter = JSON.stringify(filter);
         }
       )
   }
@@ -180,7 +143,6 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   deleteTransaction = (e: Event): void => {
     e.stopPropagation()
     const currentTarget = e.currentTarget as HTMLButtonElement;
-    console.log(currentTarget.textContent)
     const id: string | undefined = currentTarget.dataset['id'];
     this.transactionApiService.deleteTransaction(id).subscribe({
       next: () => {
@@ -222,11 +184,11 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
       "username": this.transactionUpdateForm.value.username,
       "amount": {
         "amount": this.transactionUpdateForm.value.amount,
-        "currency": this.transactionUpdateForm.value.currency
+        "currency": this.transactionUpdateForm.value.currency.toUpperCase()
       },
       "comissionAmount": {
         "amount": this.transactionUpdateForm.value.comissionAmount,
-        "currency": this.transactionUpdateForm.value.comissionCurrency
+        "currency": this.transactionUpdateForm.value.comissionCurrency.toUpperCase()
       },
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData

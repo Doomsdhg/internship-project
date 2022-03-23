@@ -6,39 +6,37 @@
 </div>
 <div class="flex-container w-100-percents">
   <div class="flex-element">
-    <mat-form-field class="filter" floatLabel="never">
+    <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
       <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
-      <input matInput [formControl]="idFilter">
+      <input formControlName="idFilter" matInput >
     </mat-form-field>
   </div>
   <div class="flex-element">
-    <mat-form-field class="filter" floatLabel="never">
+    <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
       <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
-      <input matInput [formControl]="providerFilter">
+      <input formControlName="providerFilter" matInput >
     </mat-form-field>
   </div>
   <div class="flex-element">
-    <mat-form-field class="filter" floatLabel="never">
+    <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
       <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-      <input matInput [formControl]="amountFilter">
+      <input formControlName="amountFilter" matInput >
     </mat-form-field>
   </div>
   <div class="flex-element">
-    <mat-form-field class="filter" floatLabel="never">
+    <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
       <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-      <input matInput [formControl]="comissionAmountFilter">
+      <input formControlName="comissionAmountFilter" matInput >
     </mat-form-field>
   </div>
   <div class="flex-element">
-    <mat-form-field class="filter" floatLabel="never">
+    <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
       <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
-      <input matInput [formControl]="usernameFilter">
+      <input formControlName="usernameFilter" matInput >
     </mat-form-field>
   </div>
   <div class="flex-element">
-
   </div>
-
 </div>
 <table mat-table matSort [dataSource]="dataSource" class="w-100-percents">
 
@@ -118,7 +116,7 @@
         </div>
       </ng-template>
       <ng-template #rowData>
-        {{row.amount.amount + ' ' + row.amount.currency}}
+        {{row.amount.amount | currency: row.amount.currency}}
       </ng-template>
     </mat-cell>
   </ng-container>
@@ -151,7 +149,7 @@
         </div>
       </ng-template>
       <ng-template #rowData>
-        {{row.comissionAmount.amount + ' ' + row.comissionAmount.currency}}
+        {{row.comissionAmount.amount | currency: row.comissionAmount.currency}}
       </ng-template>
     </mat-cell>
   </ng-container>
@@ -205,6 +203,4 @@
   <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="transactionRedirect(row)" class="onhover-pointer">
   </mat-row>
 </table>
-<mat-paginator [length]="dataSource.length" [pageIndex]="0" [pageSize]="5" [pageSizeOptions]="pageSizeArray"
-  aria-label="Select page"></mat-paginator>
 </div>

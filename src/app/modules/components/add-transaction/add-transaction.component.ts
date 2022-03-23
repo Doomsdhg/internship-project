@@ -4,8 +4,8 @@ import { TransactionApiService } from '../../../services/web-services/transactio
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { TransactionCrudResponseError } from '../../../models/interfaces/transaction-crud-response-error.interface';
-import { TransactionUpdateData } from 'src/app/models/interfaces/transaction.interface';
+import { TransactionCrudResponseError } from '../../../modules/interfaces/transaction-crud-response-error.interface';
+import { TransactionUpdateData } from 'src/app/modules/interfaces/transaction.interface';
 
 @Component({
   selector: 'app-add-transaction',
@@ -23,6 +23,7 @@ export class AddTransactionComponent {
   @Input()
   TransactionsTableComponent!: TransactionsTableComponent;
 
+  @Input()
   displayForms = false;
 
   dataSource!: TransactionsDataSource;
@@ -49,11 +50,11 @@ export class AddTransactionComponent {
       "provider": this.transactionUpdateForm.value.provider,
       "amount": {
         "amount": this.transactionUpdateForm.value.amount,
-        "currency": this.transactionUpdateForm.value.currency
+        "currency": this.transactionUpdateForm.value.currency.toUpperCase()
       },
       "comissionAmount": {
         "amount": this.transactionUpdateForm.value.comissionAmount,
-        "currency": this.transactionUpdateForm.value.comissionCurrency
+        "currency": this.transactionUpdateForm.value.comissionCurrency.toUpperCase()
       },
       "username": this.transactionUpdateForm.value.username,
       "additionalData": this.transactionUpdateForm.value.additionalData
