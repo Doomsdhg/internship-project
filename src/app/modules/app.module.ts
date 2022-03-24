@@ -31,6 +31,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { UniqueValueDirective } from './directives/unique-value.directive';
 import { CurrencyPipe } from '@angular/common';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
+import { NumericLengthDirective } from './directives/numeric-length.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -46,7 +47,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     GuardDialogContentComponent,
     NumbersOnlyDirective,
     UniqueValueDirective,
-    SelectLanguageComponent
+    SelectLanguageComponent,
+    NumericLengthDirective
   ],
   imports: [
     MatSelectModule,

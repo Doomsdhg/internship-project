@@ -8,21 +8,14 @@ import { Transaction } from 'src/app/modules/interfaces/transaction.interface';
 })
 export class UniqueValueDirective {
 
-  constructor(private el : ElementRef, private transactionService: TransactionApiService) { }
+  constructor(private el: ElementRef, private transactionService: TransactionApiService) { }
 
   @HostListener('input', ['$event.target']) OnInput(element: El) {
     this.transactionService.searchTransactions('externalId', element.value).subscribe({
-      next: (success: Transaction[])=>{
-        let message;
-        let color;
-        if (success.length === 0) {
-          message = 'value is unique';
-          color = 'green';
-        } else {
-          message = 'value is not unique'
-          color = 'red';
-        }
-        const includesSpan = this.el.nativeElement.innerHTML.toString().includes('<span style')
+      next: (success: Transaction[]) => {
+        const message = success.length === 0 ? 'value is unique' : 'value is not unique';
+        const color = success.length === 0 ? 'green' : 'red';
+        const includesSpan = this.el.nativeElement.innerHTML.includes('<span style')
         if (includesSpan) {
           const span = this.el.nativeElement.firstChild
           this.el.nativeElement.removeChild(span)

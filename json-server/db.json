@@ -2,10 +2,10 @@
   "transactions": [
     {
       "id": "133",
-      "externalId": "7",
+      "externalId": "7123",
       "provider": "paypal",
       "amount": {
-        "amount": "1",
+        "amount": 12,
         "currency": "USD"
       },
       "comissionAmount": {

@@ -1,15 +1,15 @@
-<div class="select-language-form">
+<div class="select-language-form-wrapper">
     <div class="mt-100-pixels">
         <form [formControl]="selectLanguageForm" (ngSubmit)="changeLanguage()">
-        <mat-form-field  appearance="fill">
-            <mat-label>{{'selectLangugae' | translate}}</mat-label>
-            <mat-select [formControl]="selectLanguageForm" (selectionChange)="changeLanguage()">
-              <mat-option value="en">English</mat-option>
-              <mat-option value="ru">Русский</mat-option>
-              <mat-option value="by">Беларуская</mat-option>
-              <mat-option value="ua">Українська</mat-option>
-            </mat-select>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>{{'selectLangugae' | translate}}</mat-label>
+                <mat-select [formControl]="selectLanguageForm" (selectionChange)="changeLanguage()">
+                    <mat-option value="en">English</mat-option>
+                    <mat-option value="ru">Русский</mat-option>
+                    <mat-option value="by">Беларуская</mat-option>
+                    <mat-option value="ua">Українська</mat-option>
+                </mat-select>
+            </mat-form-field>
         </form>
     </div>
 </div>

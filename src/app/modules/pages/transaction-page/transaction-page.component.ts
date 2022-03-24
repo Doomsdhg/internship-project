@@ -10,7 +10,7 @@ import { TransactionCrudResponseError } from 'src/app/modules/interfaces/transac
 @Component({
   selector: 'app-transaction-page',
   templateUrl: './transaction-page.component.html',
-  styleUrls: ['./transaction-page.component.scss'],
+  styleUrls: ['transaction-page.styles.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TransactionPageComponent implements OnInit {
@@ -95,8 +95,8 @@ export class TransactionPageComponent implements OnInit {
   }
 
   getTransactionInfo(): void {
-    this.id = this.route.snapshot.paramMap.get('id')
-    this.transactionApiService.getDefiniteTransaction(this.id).subscribe((success: Transaction) => {
+    const transactionId = this.route.snapshot.paramMap.get('id')
+    this.transactionApiService.getDefiniteTransaction(transactionId).subscribe((success: Transaction) => {
       this.transactionInfo = success;
       this.createFormGroup()
       this.initialFormValues = {
@@ -111,7 +111,7 @@ export class TransactionPageComponent implements OnInit {
           currency: success.comissionAmount.currency || 'no currency'
         },
         provider: success.provider || 'no provider',
-        additionalData: success.additionalData
+        additionalData: success.additionalData || 'no data'
       }
       this.cdr.detectChanges()
     })

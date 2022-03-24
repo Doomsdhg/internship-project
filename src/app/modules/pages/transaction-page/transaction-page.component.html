@@ -1,14 +1,14 @@
-<div class="container w-80-percents ms-10-percents mt-100-pixels">
+<div class="transaction-page-wrapper container w-80-percents ms-10-percents mt-100-pixels">
     <h1 class="w-100-percents center-header">{{'transactionInfo' | translate}}</h1>
     <button *ngIf="!formsToggled" mat-raised-button (click)="toggleForms()">{{'buttons.edit' | translate}}</button>
-    <button *ngIf="formsToggled" mat-raised-button class="{{formsToggled ? '' : 'display-none'}}" (click)="saveChanges()">{{'buttons.saveChanges' |
+    <button mat-raised-button *ngIf="formsToggled" (click)="saveChanges()">{{'buttons.saveChanges' |
         translate}}</button>
-    <button *ngIf="formsToggled" mat-raised-button class="{{formsToggled ? '' : 'display-none'}}" (click)="cancelChanges()">{{'buttons.cancel' |
+    <button mat-raised-button *ngIf="formsToggled" (click)="cancelChanges()">{{'buttons.cancel' |
         translate}}</button>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.externalId' | translate}}</h2>
         <p>{{transactionInfo.externalId || ('noData' | translate)}}</p>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
                 <input type="provider" required matInput formControlName="externalId"
@@ -30,7 +30,7 @@
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.provider' | translate}}</h2>
         <p>{{transactionInfo.provider || ('noData' | translate)}}</p>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
                 <input required matInput formControlName="provider"
@@ -48,8 +48,9 @@
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.amount' | translate}}</h2>
-        <p>{{transactionInfo.amount!.amount | currency : transactionInfo.amount!.currency || ('noData' | translate)}}</p>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <p>{{transactionInfo.amount!.amount | currency : transactionInfo.amount!.currency || ('noData' | translate)}}
+        </p>
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
                 <input type="number" required matInput formControlName="amount"
@@ -63,7 +64,7 @@
                 </div>
             </div>
         </form>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
                 <input required matInput formControlName="currency"
@@ -80,9 +81,10 @@
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.comissionAmount' | translate}}</h2>
-        <p>{{transactionInfo.comissionAmount!.amount | currency : transactionInfo.comissionAmount!.currency || ('noData' |
+        <p>{{transactionInfo.comissionAmount!.amount | currency : transactionInfo.comissionAmount!.currency || ('noData'
+            |
             translate)}}</p>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
                 <input type="number" required matInput formControlName="comissionAmount"
@@ -96,7 +98,7 @@
                 </div>
             </div>
         </form>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
                 <input required matInput formControlName="comissionCurrency"
@@ -115,7 +117,7 @@
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.username' | translate}}</h2>
         <p>{{transactionInfo.username || ('noData' | translate)}}</p>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
                 <input required matInput formControlName="username"
@@ -133,7 +135,7 @@
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.additionalData' | translate}}</h2>
         <p>{{transactionInfo.additionalData || ('noData' | translate)}}</p>
-        <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
+        <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.additionalData' | translate}}</mat-label>
                 <textarea matInput formControlName="additionalData"

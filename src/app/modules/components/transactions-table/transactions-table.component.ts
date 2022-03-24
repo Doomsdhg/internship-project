@@ -27,13 +27,6 @@ interface Row {
   id: string
 }
 
-interface Test {
-  provider: 'provider',
-  username: 'username',
-  externalId: 'externalId',
-  additionalData: 'additionalData'
-}
-
 @Component({
   selector: 'app-transactions-table',
   templateUrl: './transactions-table.component.html',
@@ -50,11 +43,11 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   filterValues = new FormGroup({
-    idFilter : new FormControl(''),
-    providerFilter : new FormControl(''),
-    amountFilter : new FormControl(''),
-    comissionAmountFilter : new FormControl(''),
-    usernameFilter : new FormControl(''),
+    idFilter: new FormControl(''),
+    providerFilter: new FormControl(''),
+    amountFilter: new FormControl(''),
+    comissionAmountFilter: new FormControl(''),
+    usernameFilter: new FormControl(''),
   });
 
   formsToggled = false;
@@ -96,7 +89,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.sortingDataAccessor = this.sortingDataAccessor
     this.dataSource.sort = this.sort
-    
+
   }
 
   ngOnInit(): void {
@@ -115,7 +108,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
       case 'comissionAmount':
         return Number(data[sortHeaderId].amount)
       default:
-        return data[sortHeaderId as keyof Test] as string | number
+        return data[sortHeaderId as keyof Transaction] as string | number
     }
   }
 
@@ -128,12 +121,12 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username',
       'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
       .subscribe((translations: Translations) => {
-          this.columnNames[0].value = translations['displayedColumns.externalId'];
-          this.columnNames[1].value = translations['displayedColumns.provider'];
-          this.columnNames[2].value = translations['displayedColumns.amount'];
-          this.columnNames[3].value = translations['displayedColumns.comissionAmount'];
-          this.columnNames[4].value = translations['displayedColumns.username'];
-          this.columnNames[5].value = translations['displayedColumns.actions'];
+        this.columnNames[0].value = translations['displayedColumns.externalId'];
+        this.columnNames[1].value = translations['displayedColumns.provider'];
+        this.columnNames[2].value = translations['displayedColumns.amount'];
+        this.columnNames[3].value = translations['displayedColumns.comissionAmount'];
+        this.columnNames[4].value = translations['displayedColumns.username'];
+        this.columnNames[5].value = translations['displayedColumns.actions'];
       });
   }
 
@@ -232,19 +225,19 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
       try {
         const searchTerms = JSON.parse(filter);
         if (typeof searchTerms !== 'object') {
-          throw new Error('')
+          throw new Error()
         }
         return data.externalId.indexOf(searchTerms.id) !== -1
-        && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
-        && String(data.amount.amount).indexOf(searchTerms.amount) !== -1
-        && String(data.comissionAmount.amount).indexOf(searchTerms.comissionAmount) !== -1
-        && data.username.toLowerCase().indexOf(searchTerms.username) !== -1;
+          && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
+          && String(data.amount.amount).indexOf(searchTerms.amount) !== -1
+          && String(data.comissionAmount.amount).indexOf(searchTerms.comissionAmount) !== -1
+          && data.username.toLowerCase().indexOf(searchTerms.username) !== -1;
       } catch (e) {
         return data.externalId.indexOf(filter) !== -1
-        || data.provider.toString().toLowerCase().indexOf(filter) !== -1
-        || String(data.amount.amount).indexOf(filter) !== -1
-        || String(data.comissionAmount.amount).indexOf(filter) !== -1
-        || data.username.toLowerCase().indexOf(filter) !== -1;
+          || data.provider.toString().toLowerCase().indexOf(filter) !== -1
+          || String(data.amount.amount).indexOf(filter) !== -1
+          || String(data.comissionAmount.amount).indexOf(filter) !== -1
+          || data.username.toLowerCase().indexOf(filter) !== -1;
       }
     }
     return filterFunction;

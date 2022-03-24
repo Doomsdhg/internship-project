@@ -30,7 +30,7 @@ export class AddTransactionComponent implements OnInit {
   transactionForm!: FormGroup;
 
   dataSource!: TransactionsDataSource;
-  
+
   ngOnInit(): void {
     this.initFormGroup()
   }
@@ -53,7 +53,6 @@ export class AddTransactionComponent implements OnInit {
   }
 
   addTransaction = (): void => {
-    console.log(this.transactionForm)
     if (this.transactionForm.status === 'VALID') {
       const transactionObj: TransactionUpdateData = {
         "externalId": this.transactionForm.value.externalId,

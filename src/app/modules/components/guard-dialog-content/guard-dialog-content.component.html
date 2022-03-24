@@ -1,3 +1,5 @@
-<p>{{'warnings.leaveWithoutSave' | translate}}</p>
-<button (click)="close(true)">{{'buttons.leave' | translate}}</button>
-<button (click)="close(false)">{{'buttons.stay' | translate}}</button>
+<div class="guard-dialog-content-wrapper">
+    <p>{{'warnings.leaveWithoutSave' | translate}}</p>
+    <button mat-raised-button (click)="close(true)">{{'buttons.leave' | translate}}</button>
+    <button mat-raised-button (click)="close(false)">{{'buttons.stay' | translate}}</button>
+</div>

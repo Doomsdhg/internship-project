@@ -22,10 +22,6 @@ body {
     background-color: red;
 }
 
-.mat-sort-header-content {
-    height: 80px;
-}
-
 .ms-2-percents {
     margin-left: 2%;
 }
@@ -35,11 +31,11 @@ body {
 }
 
 .ms-10-pixels {
-    margin-left: 10px !important;
+    margin-left: 10px;
 }
 
 .mt-10-pixels {
-    margin-top: 10px !important;
+    margin-top: 10px;
 }
 
 .mt-100-pixels {
@@ -58,31 +54,12 @@ body {
     width: 100%;
 }
 
-.center-header {
-    text-align: center;
-}
-
 .text-underline {
     text-decoration: underline;
 }
 
 .onhover-pointer:hover {
     cursor: pointer;
-}
-
-.container {
-    display: block;
-    margin-bottom: 50px;
-}
-
-.wrapper {
-    border: 1px solid #000;
-    margin-top: 10px;
-    padding: 7px;
-}
-
-.display-none {
-    display: none;
 }
 
 .text-danger {
@@ -93,6 +70,6 @@ body {
     float: right;
 }
 
-.float-right {
+.float-left {
     float: left;
 }

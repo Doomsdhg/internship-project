@@ -21,15 +21,15 @@ export class TransactionApiService {
   }
 
   getDefiniteTransaction(id: string | null): Observable<Transaction> {
-    return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}/${id}`) as Observable<Transaction> 
+    return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}/${id}`) as Observable<Transaction>
   }
 
-  patchTransaction(id: string | undefined, updateObj: TransactionUpdateData): Observable<Transaction>{
-    return this.http.patch(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${id}`, updateObj) as Observable<Transaction> 
+  patchTransaction(id: string | undefined, updateObj: TransactionUpdateData): Observable<Transaction> {
+    return this.http.patch(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${id}`, updateObj) as Observable<Transaction>
   }
 
-  uploadTransaction(transactionData: TransactionUpdateData):Observable<Transaction>{
-    return this.http.post(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}`, transactionData) as Observable<Transaction> 
+  uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
+    return this.http.post(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}`, transactionData) as Observable<Transaction>
   }
 
   searchTransactions(name: string, value: string | number): Observable<Transaction[]> {

@@ -1,4 +1,4 @@
-import { Directive, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, HostListener } from '@angular/core';
 import { NotifyService } from '../../services/notify.service';
 import { El } from '../../modules/interfaces/browser-event.interface';
 
@@ -7,7 +7,7 @@ import { El } from '../../modules/interfaces/browser-event.interface';
 })
 export class NumbersOnlyDirective {
 
-  constructor(private el : ElementRef, private renderer: Renderer2, private notify: NotifyService) { }
+  constructor(private notify: NotifyService) { }
 
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     if (isNaN(+element.value)) {

@@ -1,60 +1,24 @@
-.transactions-table {
+.transactions-table-wrapper {
     margin: 0 auto;
     margin-top: 50px;
     margin-bottom: 3rem;
     width: 80%;
-    padding: 0 !important;
-}
 
-.mat-header-cell {
-    justify-content: center;
-}
+    .mat-header-cell, .mat-cell {
+        justify-content: center;
+    }
 
-.mat-cell {
-    justify-content: center;
-}
+    .flex-container {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        display: flex;
+    }
 
-.display-none {
-    display: none;
-}
-
-.amount-form-container {
-    display: flex !important;
-    flex-direction: column !important;
-}
-
-.amount-form-container__input {
-    flex-direction: column;
-}
-
-.h-100 {
-    height: 100%;
-}
-
-.m-auto {
-    margin: 0 auto;
-}
-
-.mat-sort-header-content {
-    flex-direction: column !important;
-}
-
-.flex-container {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    display: flex;
-}
-
-.flex-element {
-    display: flex;
-    flex: 1;
-    justify-content: center;
-}
-
-
-
-#toolsHeader {
-    height: 80px;
+    .flex-element {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+    }
 
 }

@@ -5,7 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-guard-dialog-content',
   templateUrl: './guard-dialog-content.component.html',
-  styleUrls: ['./guard-dialog-content.component.scss']
+  styleUrls: []
 })
 export class GuardDialogContentComponent {
 
