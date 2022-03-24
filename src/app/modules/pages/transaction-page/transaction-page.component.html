@@ -1,9 +1,9 @@
 <div class="container w-80-percents ms-10-percents mt-100-pixels">
     <h1 class="w-100-percents center-header">{{'transactionInfo' | translate}}</h1>
-    <button mat-raised-button (click)="toggleForms()">{{'buttons.edit' | translate}}</button>
-    <button mat-raised-button class="{{formsToggled ? '' : 'display-none'}}" (click)="saveChanges()">{{'buttons.saveChanges' |
+    <button *ngIf="!formsToggled" mat-raised-button (click)="toggleForms()">{{'buttons.edit' | translate}}</button>
+    <button *ngIf="formsToggled" mat-raised-button class="{{formsToggled ? '' : 'display-none'}}" (click)="saveChanges()">{{'buttons.saveChanges' |
         translate}}</button>
-    <button mat-raised-button class="{{formsToggled ? '' : 'display-none'}}" (click)="cancelChanges()">{{'buttons.cancel' |
+    <button *ngIf="formsToggled" mat-raised-button class="{{formsToggled ? '' : 'display-none'}}" (click)="cancelChanges()">{{'buttons.cancel' |
         translate}}</button>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.externalId' | translate}}</h2>
@@ -48,12 +48,12 @@
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.amount' | translate}}</h2>
-        <p>{{transactionInfo.amount.amount | currency : transactionInfo.amount.currency || ('noData' | translate)}}</p>
+        <p>{{transactionInfo.amount!.amount | currency : transactionInfo.amount!.currency || ('noData' | translate)}}</p>
         <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
                 <input type="number" required matInput formControlName="amount"
-                    value="{{transactionInfo.amount.amount || ('noData' | translate)}}"
+                    value="{{transactionInfo.amount!.amount || ('noData' | translate)}}"
                     placeholder="{{ 'placeholders.amount' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['amount'].invalid && (transactionUpdateForm.controls['amount'].dirty
@@ -67,7 +67,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
                 <input required matInput formControlName="currency"
-                    value="{{transactionInfo.amount.currency || ('noData' | translate)}}"
+                    value="{{transactionInfo.amount!.currency || ('noData' | translate)}}"
                     placeholder="{{ 'placeholders.currency' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['currency'].invalid && (transactionUpdateForm.controls['currency'].dirty
@@ -80,13 +80,13 @@
     </div>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.comissionAmount' | translate}}</h2>
-        <p>{{transactionInfo.comissionAmount.amount | currency : transactionInfo.comissionAmount.currency || ('noData' |
+        <p>{{transactionInfo.comissionAmount!.amount | currency : transactionInfo.comissionAmount!.currency || ('noData' |
             translate)}}</p>
         <form class="{{formsToggled ? '' : 'display-none'}}" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
                 <input type="number" required matInput formControlName="comissionAmount"
-                    value="{{transactionInfo.comissionAmount.amount}}"
+                    value="{{transactionInfo.comissionAmount!.amount}}"
                     placeholder="{{ 'placeholders.comissionAmount' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['comissionAmount'].invalid && (transactionUpdateForm.controls['comissionAmount'].dirty 
@@ -100,7 +100,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
                 <input required matInput formControlName="comissionCurrency"
-                    value="{{transactionInfo.comissionAmount.currency || ('noData' | translate)}}"
+                    value="{{transactionInfo.comissionAmount!.currency || ('noData' | translate)}}"
                     placeholder="{{ 'placeholders.comissionCurrency' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['comissionCurrency'].invalid && (transactionUpdateForm.controls['comissionCurrency'].dirty 

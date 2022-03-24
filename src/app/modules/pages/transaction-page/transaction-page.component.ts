@@ -6,7 +6,6 @@ import { ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionCrudResponseError } from 'src/app/modules/interfaces/transaction-crud-response-error.interface';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transaction-page',
@@ -47,7 +46,6 @@ export class TransactionPageComponent implements OnInit {
   public formsToggled = false;
 
   constructor(
-    private dialog: MatDialog,
     private route: ActivatedRoute,
     private transactionApiService: TransactionApiService,
     private cdr: ChangeDetectorRef,
@@ -62,10 +60,10 @@ export class TransactionPageComponent implements OnInit {
       provider: new FormControl(this.transactionInfo.provider),
       username: new FormControl(this.transactionInfo.username),
       externalId: new FormControl(this.transactionInfo.externalId),
-      amount: new FormControl(this.transactionInfo.amount.amount),
-      currency: new FormControl(this.transactionInfo.amount.currency),
-      comissionAmount: new FormControl(this.transactionInfo.comissionAmount.amount),
-      comissionCurrency: new FormControl(this.transactionInfo.comissionAmount.currency),
+      amount: new FormControl(this.transactionInfo.amount!.amount),
+      currency: new FormControl(this.transactionInfo.amount!.currency),
+      comissionAmount: new FormControl(this.transactionInfo.comissionAmount!.amount),
+      comissionCurrency: new FormControl(this.transactionInfo.comissionAmount!.currency),
       additionalData: new FormControl(this.transactionInfo.additionalData)
     })
 
@@ -76,24 +74,19 @@ export class TransactionPageComponent implements OnInit {
   }
 
   saveChanges = (): void => {
-    if (this.getFormValidationErrors()) {
+    if (!this.getFormValidationErrors()) {
       this.updateTransaction()
       this.toggleForms
+    } else {
+      this.notify.showMessage('There is 1 or more mistakes about your inputs values.', 'error')
     }
   }
 
   getFormValidationErrors(): boolean {
-    let noErrors = true;
-    Object.keys(this.transactionUpdateForm.controls).forEach(key => {
-      const controlErrors = this.transactionUpdateForm.get(key)!.errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach(keyError => {
-          this.notify.showMessage('Error: ' + key + ' ' + keyError, 'error');
-          noErrors = false;
-        });
-      }
-    });
-    return noErrors;
+    const errors = Object.keys(this.transactionUpdateForm.controls).some(key => {
+      return this.transactionUpdateForm.controls[key]!.errors
+    })
+    return errors;
   }
 
   cancelChanges = (): void => {
@@ -107,17 +100,17 @@ export class TransactionPageComponent implements OnInit {
       this.transactionInfo = success;
       this.createFormGroup()
       this.initialFormValues = {
-        externalId: success.externalId,
-        username: success.username,
+        externalId: success.externalId || 'no id',
+        username: success.username || 'no username',
         amount: {
-          amount: success.amount.amount,
-          currency: success.amount.currency
+          amount: success.amount.amount || 0,
+          currency: success.amount.currency || 'no currency'
         },
         comissionAmount: {
-          amount: success.comissionAmount.amount,
-          currency: success.comissionAmount.currency
+          amount: success.comissionAmount.amount || 0,
+          currency: success.comissionAmount.currency || 'no currency'
         },
-        provider: success.provider,
+        provider: success.provider || 'no provider',
         additionalData: success.additionalData
       }
       this.cdr.detectChanges()

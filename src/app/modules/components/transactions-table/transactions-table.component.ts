@@ -27,6 +27,13 @@ interface Row {
   id: string
 }
 
+interface Test {
+  provider: 'provider',
+  username: 'username',
+  externalId: 'externalId',
+  additionalData: 'additionalData'
+}
+
 @Component({
   selector: 'app-transactions-table',
   templateUrl: './transactions-table.component.html',
@@ -87,7 +94,9 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
+    this.dataSource.sortingDataAccessor = this.sortingDataAccessor
     this.dataSource.sort = this.sort
+    
   }
 
   ngOnInit(): void {
@@ -95,6 +104,19 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     this.loadData()
     this.translateColumnsNames()
     this.dataSource.filterPredicate = this.createFilter();
+  }
+
+  sortingDataAccessor(data: Transaction, sortHeaderId: string): string | number {
+    switch (sortHeaderId) {
+      case 'externalId':
+        return Number(data[sortHeaderId])
+      case 'amount':
+        return Number(data[sortHeaderId].amount)
+      case 'comissionAmount':
+        return Number(data[sortHeaderId].amount)
+      default:
+        return data[sortHeaderId as keyof Test] as string | number
+    }
   }
 
   loadData(): void {
@@ -205,7 +227,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     })
   }
 
-  createFilter(): (data: any, filter: string) => boolean {
+  createFilter(): (data: Transaction, filter: string) => boolean {
     const filterFunction = function (data: Transaction, filter: string): boolean {
       try {
         const searchTerms = JSON.parse(filter);

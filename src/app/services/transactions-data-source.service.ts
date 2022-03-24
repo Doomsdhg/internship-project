@@ -12,7 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class TransactionsDataSource extends
-  MatTableDataSource<Transaction[]>{
+  MatTableDataSource<Transaction>{
 
   constructor(private transactionApiService: TransactionApiService, private notify: NotifyService) {
     super()
@@ -27,7 +27,7 @@ export class TransactionsDataSource extends
       .subscribe({
         next: (transactions: Transaction[]) => {
           this.transactionsSubject.next(transactions)
-          this.transactionsSubject.asObservable().subscribe((success: any) => this.data = success)
+          this.transactionsSubject.asObservable().subscribe((success: Transaction[]) => this.data = success)
         },
         error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, 'error')
       });

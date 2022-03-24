@@ -2,36 +2,36 @@
   class="toggle-transaction-forms">{{displayForms?('buttons.transactionCloseForms' |
   translate):('buttons.transactionOpenForms' | translate)}}</button>
   <div #addition_form *ngIf="displayForms" class="form-group">
-    <form class="form-group__form" [formGroup]="transactionUpdateForm">
+    <form class="form-group__form" [formGroup]="transactionForm">
       <mat-form-field class="form-group__form-input" appUniqueValue appearance="fill">
         <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
-        <input formControlName="externalId" matInput placeholder="{{'placeholders.externalId' | translate}}">
+        <input formControlName="externalId" required matInput placeholder="{{'placeholders.externalId' | translate}}">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
         <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
-        <input formControlName="provider" matInput placeholder="{{'placeholders.provider' | translate}}">
+        <input formControlName="provider" required matInput placeholder="{{'placeholders.provider' | translate}}">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
         <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-        <input formControlName="amount" matInput appNumbersOnly placeholder="{{'placeholders.amount' | translate}}">
+        <input formControlName="amount" required matInput appNumbersOnly placeholder="{{'placeholders.amount' | translate}}">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
         <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
-        <input formControlName="currency" matInput placeholder="{{'placeholders.currency' | translate}}">
+        <input formControlName="currency" required matInput placeholder="{{'placeholders.currency' | translate}}">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
         <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-        <input formControlName="comissionAmount" matInput appNumbersOnly
+        <input formControlName="comissionAmount" required matInput appNumbersOnly
           placeholder="{{'placeholders.comissionAmount' | translate}}">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
         <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
-        <input formControlName="comissionCurrency" matInput
+        <input formControlName="comissionCurrency" required matInput
           placeholder="{{'placeholders.comissionCurrency' | translate}}">
       </mat-form-field>
       <mat-form-field class="form-group__form-input" appearance="fill">
         <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
-        <input formControlName="username" matInput placeholder="{{'placeholders.username' | translate}}">
+        <input formControlName="username" required matInput placeholder="{{'placeholders.username' | translate}}">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>{{'displayedColumns.additionalData' | translate}}</mat-label>
@@ -40,6 +40,6 @@
       </mat-form-field>
 
     </form>
-    <button mat-raised-button color="primary" (click)="addTransaction($event)">{{'buttons.uploadTransaction' |
+    <button mat-raised-button color="primary" (click)="addTransaction()">{{'buttons.uploadTransaction' |
       translate}}</button>
   </div>

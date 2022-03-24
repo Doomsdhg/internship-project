@@ -3,9 +3,9 @@
     {
       "id": "133",
       "externalId": "7",
-      "provider": "йцв",
+      "provider": "paypal",
       "amount": {
-        "amount": 1,
+        "amount": "1",
         "currency": "USD"
       },
       "comissionAmount": {
@@ -91,19 +91,64 @@
       "id": "6TQyOuw"
     },
     {
-      "externalId": "123123e",
+      "externalId": "123123",
       "provider": "dasdaqwe",
       "amount": {
         "amount": 1234,
-        "currency": "zxc"
+        "currency": "ZXC"
       },
       "comissionAmount": {
         "amount": 123,
-        "currency": "zxc"
+        "currency": "ZXC"
       },
       "username": "qweqwdqqwdzxc",
       "additionalData": "qwdqwd",
       "id": "Ht2eXVn"
+    },
+    {
+      "externalId": "312",
+      "provider": "dsa",
+      "amount": {
+        "amount": "123",
+        "currency": "DSA"
+      },
+      "comissionAmount": {
+        "amount": "123",
+        "currency": "ASD"
+      },
+      "username": "dssdqw",
+      "additionalData": "",
+      "id": "bEOtW-O"
+    },
+    {
+      "externalId": "11",
+      "provider": "qiwi",
+      "amount": {
+        "amount": "13333",
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": "133",
+        "currency": "USD"
+      },
+      "username": "qqqq123",
+      "additionalData": "",
+      "id": "HPnzYU_"
+    },
+    {
+      "externalId": "",
+      "provider": "",
+      "amount": {
+        "amount": "",
+        "currency": ""
+      },
+      "comissionAmount": {
+        "amount": "",
+        "currency": ""
+      },
+      "username": "",
+      "additionalData": "",
+      "id": "ZrWGCQK"
     }
   ]
 }

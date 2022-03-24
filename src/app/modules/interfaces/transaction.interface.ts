@@ -3,7 +3,7 @@ export interface Amount {
   currency: string
 }
 
-export interface Transaction {
+export interface Transaction extends Object {
   id: string,
   externalId: string,
   provider: string,
@@ -20,4 +20,8 @@ export interface TransactionUpdateData {
   comissionAmount: Amount,
   username: string,
   additionalData?: string
+}
+
+export interface ApiTransactionResponse extends Object {
+  error?: string
 }
