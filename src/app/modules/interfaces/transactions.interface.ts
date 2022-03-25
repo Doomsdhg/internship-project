@@ -25,3 +25,9 @@ export interface TransactionUpdateData {
 export interface ApiTransactionResponse extends Object {
   error?: string
 }
+
+export interface TransactionCrudResponseError {
+  timestamp: number,
+  status: number,
+  error: string
+}

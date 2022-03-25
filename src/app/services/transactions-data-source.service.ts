@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, of } from "rxjs";
-import { Transaction } from "../modules/interfaces/transaction.interface";
+import { Transaction, TransactionCrudResponseError } from "../modules/interfaces/transactions.interface";
 import { TransactionApiService } from "../services/web-services/transaction-api.service";
 import { catchError } from "rxjs/operators";
-import { TransactionCrudResponseError } from '../modules/interfaces/transaction-crud-response-error.interface';
 import { NotifyService } from './notify.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Snackbar } from '../constants/snackbar.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class TransactionsDataSource extends
 
   public transactionsSubject = new BehaviorSubject<Transaction[]>([]);
 
-  loadTransactions() {
+  loadTransactions(): void {
     this.transactionApiService.getTransactions().pipe(
       catchError(() => of([])),
     )
@@ -29,7 +29,7 @@ export class TransactionsDataSource extends
           this.transactionsSubject.next(transactions)
           this.transactionsSubject.asObservable().subscribe((success: Transaction[]) => this.data = success)
         },
-        error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, 'error')
+        error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
       });
   }
 

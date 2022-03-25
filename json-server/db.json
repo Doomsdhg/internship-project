@@ -80,11 +80,11 @@
       "provider": "qweqweqw",
       "amount": {
         "amount": "123123",
-        "currency": "wqew"
+        "currency": "QWEQWE"
       },
       "comissionAmount": {
         "amount": "123123",
-        "currency": "qweqw"
+        "currency": "QWEQW"
       },
       "username": "qdqwdqw",
       "additionalData": "",
@@ -149,6 +149,21 @@
       "username": "",
       "additionalData": "",
       "id": "ZrWGCQK"
+    },
+    {
+      "externalId": "132",
+      "provider": "qdwwqd",
+      "amount": {
+        "amount": "133",
+        "currency": "USD"
+      },
+      "comissionAmount": {
+        "amount": "13",
+        "currency": "USD"
+      },
+      "username": "adwqdqw",
+      "additionalData": null,
+      "id": "TmkOU5M"
     }
   ]
 }

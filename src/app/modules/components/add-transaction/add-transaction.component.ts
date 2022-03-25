@@ -4,8 +4,10 @@ import { TransactionApiService } from '../../../services/web-services/transactio
 import { FormGroup, FormControl } from '@angular/forms';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { TransactionCrudResponseError } from '../../../modules/interfaces/transaction-crud-response-error.interface';
-import { TransactionUpdateData } from 'src/app/modules/interfaces/transaction.interface';
+import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/modules/interfaces/transactions.interface';
+import { Snackbar } from 'src/app/constants/snackbar.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 
 @Component({
   selector: 'app-add-transaction',
@@ -17,7 +19,7 @@ import { TransactionUpdateData } from 'src/app/modules/interfaces/transaction.in
 export class AddTransactionComponent implements OnInit {
 
   constructor(
-    private transactionApiService: TransactionApiService, private notify: NotifyService, private cdr: ChangeDetectorRef
+    private transactionApiService: TransactionApiService, private notify: NotifyService, private cdr: ChangeDetectorRef, private translateService: TranslateService
   ) { }
 
   @Input()
@@ -37,14 +39,14 @@ export class AddTransactionComponent implements OnInit {
 
   initFormGroup = (): void => {
     this.transactionForm = new FormGroup({
-      provider: new FormControl(''),
-      username: new FormControl(''),
-      externalId: new FormControl(''),
-      amount: new FormControl(''),
-      currency: new FormControl(''),
-      comissionAmount: new FormControl(''),
-      comissionCurrency: new FormControl(''),
-      additionalData: new FormControl('')
+      provider: new FormControl(),
+      username: new FormControl(),
+      externalId: new FormControl(),
+      amount: new FormControl(),
+      currency: new FormControl(),
+      comissionAmount: new FormControl(),
+      comissionCurrency: new FormControl(),
+      additionalData: new FormControl()
     })
   }
 
@@ -70,17 +72,24 @@ export class AddTransactionComponent implements OnInit {
       }
       this.transactionApiService.uploadTransaction(transactionObj).subscribe({
         next: () => {
-          this.notify.showMessage('transaction added successfully', 'success')
+          this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_ADDED).subscribe((msg) => {
+              this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE)
+            })
+          
           this.TransactionsTableComponent.dataSource.loadTransactions()
           this.initFormGroup()
           this.cdr.markForCheck()
         },
         error: (error: TransactionCrudResponseError) => {
-          this.notify.showMessage('server error:' + error.status + '' + error.error, 'error')
-        }
-      })
+          this.translateService.get
+          this.translateService.get(TranslationsEndpoints.SNACKBAR_SERVER_ERROR).subscribe(msg => {
+          this.notify.showMessage(msg + error.status + error.error, Snackbar.ERROR_TYPE)
+        })
+      }})
     } else {
-      this.notify.showMessage('There is one or more mistake about your inputs values', 'error')
+      this.translateService.get(TranslationsEndpoints.SNACKBAR_INPUT_ISSUES).subscribe((msg) => {
+        this.notify.showMessage(msg, Snackbar.ERROR_TYPE)
+      })
     }
   }
 }

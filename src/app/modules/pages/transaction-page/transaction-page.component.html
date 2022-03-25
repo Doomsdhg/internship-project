@@ -12,7 +12,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
                 <input type="provider" required matInput formControlName="externalId"
-                    value="{{transactionInfo.externalId || ('noData' | translate)}}"
+                    value="{{transactionInfo.externalId}}"
                     placeholder="{{ 'placeholders.externalId' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['externalId'].invalid && (transactionUpdateForm.controls['externalId'].dirty 
@@ -34,7 +34,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
                 <input required matInput formControlName="provider"
-                    value="{{transactionInfo.provider || ('noData' | translate)}}"
+                    value="{{transactionInfo.provider}}"
                     placeholder="{{ 'placeholders.provider' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['provider'].invalid && (transactionUpdateForm.controls['provider'].dirty 
@@ -53,8 +53,8 @@
         <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-                <input type="number" required matInput formControlName="amount"
-                    value="{{transactionInfo.amount!.amount || ('noData' | translate)}}"
+                <input [appNumericLength]="[10, 2]" appNumbersOnly required matInput formControlName="amount"
+                    value="{{transactionInfo.amount!.amount}}"
                     placeholder="{{ 'placeholders.amount' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['amount'].invalid && (transactionUpdateForm.controls['amount'].dirty
@@ -68,7 +68,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
                 <input required matInput formControlName="currency"
-                    value="{{transactionInfo.amount!.currency || ('noData' | translate)}}"
+                    value="{{transactionInfo.amount!.currency}}"
                     placeholder="{{ 'placeholders.currency' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['currency'].invalid && (transactionUpdateForm.controls['currency'].dirty
@@ -87,7 +87,7 @@
         <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-                <input type="number" required matInput formControlName="comissionAmount"
+                <input [appNumericLength]="[10, 2]" appNumbersOnly required matInput formControlName="comissionAmount"
                     value="{{transactionInfo.comissionAmount!.amount}}"
                     placeholder="{{ 'placeholders.comissionAmount' | translate }}">
             </mat-form-field>
@@ -102,7 +102,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
                 <input required matInput formControlName="comissionCurrency"
-                    value="{{transactionInfo.comissionAmount!.currency || ('noData' | translate)}}"
+                    value="{{transactionInfo.comissionAmount!.currency}}"
                     placeholder="{{ 'placeholders.comissionCurrency' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['comissionCurrency'].invalid && (transactionUpdateForm.controls['comissionCurrency'].dirty 
@@ -121,7 +121,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
                 <input required matInput formControlName="username"
-                    value="{{transactionInfo.username || ('noData' | translate)}}"
+                    value="{{transactionInfo.username}}"
                     placeholder="{{ 'placeholders.username' | translate }}">
             </mat-form-field>
             <div *ngIf="transactionUpdateForm.controls['username'].invalid && (transactionUpdateForm.controls['username'].dirty 
@@ -139,7 +139,7 @@
             <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.additionalData' | translate}}</mat-label>
                 <textarea matInput formControlName="additionalData"
-                    value="{{transactionInfo.additionalData || ('noData' | translate)}}"
+                    value="{{transactionInfo.additionalData}}"
                     placeholder="{{ 'placeholders.additionalData' | translate }}">
                     </textarea>
             </mat-form-field>

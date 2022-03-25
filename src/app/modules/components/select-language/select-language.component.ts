@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -12,8 +11,6 @@ import { FormControl } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectLanguageComponent {
-
-  public title = 'internship-project';
 
   selectLanguageForm: FormControl;
 

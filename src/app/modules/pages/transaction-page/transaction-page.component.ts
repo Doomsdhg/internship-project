@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TransactionApiService } from 'src/app/services/web-services/transaction-api.service';
-import { Transaction, TransactionUpdateData } from 'src/app/modules/interfaces/transaction.interface';
-import { ChangeDetectorRef } from '@angular/core';
+import { Transaction, TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NotifyService } from 'src/app/services/notify.service';
-import { TransactionCrudResponseError } from 'src/app/modules/interfaces/transaction-crud-response-error.interface';
+import { Snackbar } from 'src/app/constants/snackbar.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 
 @Component({
   selector: 'app-transaction-page',
@@ -22,26 +23,7 @@ export class TransactionPageComponent implements OnInit {
   initialFormValues!: TransactionUpdateData;
 
   @Input()
-  transactionInfo: Transaction =
-    {
-      id: '',
-      externalId: '',
-      provider: '',
-      amount: {
-        amount: 0,
-        currency: ''
-      },
-      comissionAmount: {
-        amount: 0,
-        currency: ''
-      },
-      username: '',
-      additionalData: ''
-    };
-
-  private id!: string | null;
-
-  public leavePage = false;
+  transactionInfo!: Transaction;
 
   public formsToggled = false;
 
@@ -49,7 +31,8 @@ export class TransactionPageComponent implements OnInit {
     private route: ActivatedRoute,
     private transactionApiService: TransactionApiService,
     private cdr: ChangeDetectorRef,
-    private notify: NotifyService) { }
+    private notify: NotifyService,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.getTransactionInfo()
@@ -60,13 +43,12 @@ export class TransactionPageComponent implements OnInit {
       provider: new FormControl(this.transactionInfo.provider),
       username: new FormControl(this.transactionInfo.username),
       externalId: new FormControl(this.transactionInfo.externalId),
-      amount: new FormControl(this.transactionInfo.amount!.amount),
-      currency: new FormControl(this.transactionInfo.amount!.currency),
-      comissionAmount: new FormControl(this.transactionInfo.comissionAmount!.amount),
-      comissionCurrency: new FormControl(this.transactionInfo.comissionAmount!.currency),
+      amount: new FormControl(this.transactionInfo.amount.amount),
+      currency: new FormControl(this.transactionInfo.amount.currency),
+      comissionAmount: new FormControl(this.transactionInfo.comissionAmount.amount),
+      comissionCurrency: new FormControl(this.transactionInfo.comissionAmount.currency),
       additionalData: new FormControl(this.transactionInfo.additionalData)
     })
-
   }
 
   toggleForms = (): void => {
@@ -78,13 +60,15 @@ export class TransactionPageComponent implements OnInit {
       this.updateTransaction()
       this.toggleForms
     } else {
-      this.notify.showMessage('There is 1 or more mistakes about your inputs values.', 'error')
+      this.translateService.get(TranslationsEndpoints.SNACKBAR_INPUT_ISSUES).subscribe(msg => {
+        this.notify.showMessage(msg, Snackbar.ERROR_TYPE)
+      })
     }
   }
 
   getFormValidationErrors(): boolean {
     const errors = Object.keys(this.transactionUpdateForm.controls).some(key => {
-      return this.transactionUpdateForm.controls[key]!.errors
+      return this.transactionUpdateForm.controls[key].errors
     })
     return errors;
   }
@@ -100,18 +84,18 @@ export class TransactionPageComponent implements OnInit {
       this.transactionInfo = success;
       this.createFormGroup()
       this.initialFormValues = {
-        externalId: success.externalId || 'no id',
-        username: success.username || 'no username',
+        externalId: success.externalId,
+        username: success.username,
         amount: {
-          amount: success.amount.amount || 0,
-          currency: success.amount.currency || 'no currency'
+          amount: success.amount.amount,
+          currency: success.amount.currency
         },
         comissionAmount: {
-          amount: success.comissionAmount.amount || 0,
-          currency: success.comissionAmount.currency || 'no currency'
+          amount: success.comissionAmount.amount,
+          currency: success.comissionAmount.currency
         },
-        provider: success.provider || 'no provider',
-        additionalData: success.additionalData || 'no data'
+        provider: success.provider,
+        additionalData: success.additionalData
       }
       this.cdr.detectChanges()
     })
@@ -140,10 +124,12 @@ export class TransactionPageComponent implements OnInit {
       next: () => {
         this.toggleForms()
         this.getTransactionInfo()
-        this.notify.showMessage('transaction data updated succesfully', 'success')
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED).subscribe(msg => {
+          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE)
+        })
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, 'error')
+        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
       }
     })
   }

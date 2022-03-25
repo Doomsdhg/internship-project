@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
-import { ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ApiEndpoints } from '../constants/api-endpoints.constants';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,6 @@ export class AppComponent {
   }
 
   transactionsRedirect(): void {
-    this.router.navigate(['transactions'], { relativeTo: this.route })
+    this.router.navigate([ApiEndpoints.TRANSACTIONS], { relativeTo: this.route })
   }
 }

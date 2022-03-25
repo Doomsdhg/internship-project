@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { SnackbarConfig } from '../constants/snackbar-config.constants';
+import { Snackbar } from '../constants/snackbar.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,10 @@ export class NotifyService {
 
   constructor(private snackBar: MatSnackBar) { }
 
-  showMessage(message: string, type: string) {
+  showMessage(message: string, type: string): void {
     const config = new MatSnackBarConfig();
-    config.duration = SnackbarConfig.duration;
-    config.panelClass = type === 'error' ? ['error-snackbar'] : ['success-snackbar'];
+    config.duration = Snackbar.DURATION;
+    config.panelClass = [type + Snackbar.CLASSNAME_POSTFIX];
     this.snackBar.open(message, undefined, config)
   }
 }

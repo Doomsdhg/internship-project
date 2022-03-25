@@ -102,7 +102,7 @@
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-                <input [appNumericLength]="[10, 2]" matInput formControlName="amount" value="{{row.amount.amount}}"
+                <input [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="amount" value="{{row.amount.amount}}"
                   placeholder="{{ 'placeholders.amount' | translate }}">
               </mat-form-field>
             </form>
@@ -135,7 +135,7 @@
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-                <input [appNumericLength]="[10, 2]" matInput formControlName="comissionAmount" value="{{row.comissionAmount.amount}}"
+                <input [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="comissionAmount" value="{{row.comissionAmount.amount}}"
                   placeholder="{{ 'placeholders.comissionAmount' | translate }}">
               </mat-form-field>
             </form>

@@ -1,26 +1,34 @@
-import { Directive, HostListener, ElementRef } from '@angular/core';
+import { Directive, HostListener, ElementRef, Input } from '@angular/core';
 import { El } from '../../modules/interfaces/browser-event.interface';
 import { TransactionApiService } from 'src/app/services/web-services/transaction-api.service';
-import { Transaction } from 'src/app/modules/interfaces/transaction.interface';
+import { Transaction } from 'src/app/modules/interfaces/transactions.interface';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
+import { Styles } from 'src/app/constants/styles.constants';
 
 @Directive({
   selector: '[appUniqueValue]'
 })
 export class UniqueValueDirective {
 
-  constructor(private el: ElementRef, private transactionService: TransactionApiService) { }
+  @Input('appUniqueValue') key!: string;
 
-  @HostListener('input', ['$event.target']) OnInput(element: El) {
-    this.transactionService.searchTransactions('externalId', element.value).subscribe({
+  constructor(private el: ElementRef, private transactionService: TransactionApiService, private translateService: TranslateService) { }
+
+  @HostListener('input', ['$event.target']) OnInput(element: El): void {
+    this.transactionService.searchTransactions(this.key, element.value).subscribe({
       next: (success: Transaction[]) => {
-        const message = success.length === 0 ? 'value is unique' : 'value is not unique';
-        const color = success.length === 0 ? 'green' : 'red';
-        const includesSpan = this.el.nativeElement.innerHTML.includes('<span style')
-        if (includesSpan) {
-          const span = this.el.nativeElement.firstChild
-          this.el.nativeElement.removeChild(span)
-        }
-        this.el.nativeElement.insertAdjacentHTML("afterbegin", `<span style='color: ${color}'>${message}</span>`)
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_UNIQUE).subscribe(messages=>{
+          const message = success.length === 0 ? messages.unique : messages.notUnique;
+          const color = success.length === 0 ? Styles.SUCCESS : Styles.ERROR;
+          const includesSpan = this.el.nativeElement.innerHTML.includes('<span style')
+          if (includesSpan) {
+            const span = this.el.nativeElement.firstChild
+            this.el.nativeElement.removeChild(span)
+          }
+          this.el.nativeElement.insertAdjacentHTML("afterbegin", `<span style='color: ${color}'>${message}</span>`)
+        })
+        
       }
     })
   }

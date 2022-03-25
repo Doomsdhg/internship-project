@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiEndpoints } from '../../constants/api-endpoints.constants';
 import { environment } from 'src/environments/environment';
-import { TransactionUpdateData, Transaction, ApiTransactionResponse } from 'src/app/modules/interfaces/transaction.interface';
+import { TransactionUpdateData, Transaction, ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
 
 @Injectable({
   providedIn: 'root'

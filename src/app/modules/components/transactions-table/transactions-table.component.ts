@@ -1,15 +1,19 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, AfterViewInit } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
-import { Transaction, Amount, TransactionUpdateData } from 'src/app/modules/interfaces/transaction.interface';
+import { Transaction, Amount, TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from '../../../services/notify.service';
-import { TransactionCrudResponseError } from '../../../modules/interfaces/transaction-crud-response-error.interface';
 import { MatSort } from '@angular/material/sort';
 import { Target } from '../../../modules/interfaces/browser-event.interface'
 import { Router } from '@angular/router';
 import { Translations } from 'src/app/modules/interfaces/translations.interface';
+import { Snackbar } from 'src/app/constants/snackbar.constants';
+import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
+import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
+import { Forms } from 'src/app/constants/forms.constants';
+import { Columns } from 'src/app/constants/columns.constants';
 
 interface Column {
   id: string,
@@ -42,41 +46,47 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValues = new FormGroup({
-    idFilter: new FormControl(''),
-    providerFilter: new FormControl(''),
-    amountFilter: new FormControl(''),
-    comissionAmountFilter: new FormControl(''),
-    usernameFilter: new FormControl(''),
+  filterValues: FormGroup = new FormGroup({
+    idFilter: new FormControl(Forms.INIT_VALUE),
+    providerFilter: new FormControl(Forms.INIT_VALUE),
+    amountFilter: new FormControl(Forms.INIT_VALUE),
+    comissionAmountFilter: new FormControl(Forms.INIT_VALUE),
+    usernameFilter: new FormControl(Forms.INIT_VALUE),
   });
 
   formsToggled = false;
 
-  displayedColumns: string[] = ['externalId', 'provider', 'amount', 'comissionAmount', 'username', 'actions'];
+  displayedColumns: string[] = [
+    'externalId', 
+    'provider', 
+    'amount', 
+    'comissionAmount', 
+    'username', 
+    'actions'];
 
   columnNames: Column[] = [{
-    id: 'externalId',
-    value: 'No.',
+    id: Columns.ID_EXTERNAL_ID,
+    value: Columns.NAME_EXTERNAL_ID,
   },
   {
-    id: 'provider',
-    value: 'Provider',
+    id: Columns.ID_PROVIDER,
+    value: Columns.NAME_PROVIDER,
   },
   {
-    id: 'amount',
-    value: 'Amount',
+    id: Columns.ID_AMOUNT,
+    value: Columns.NAME_AMOUNT,
   },
   {
-    id: 'comissionAmount',
-    value: 'Comission amount',
+    id: Columns.ID_COMISSION_AMOUNT,
+    value: Columns.NAME_COMISSION_AMOUNT,
   },
   {
-    id: 'username',
-    value: 'Username',
+    id: Columns.ID_USERNAME,
+    value: Columns.NAME_USERNAME,
   },
   {
-    id: 'actions',
-    value: 'Actions'
+    id: Columns.ID_ACTIONS,
+    value: Columns.NAME_ACTIONS
   }];
 
   constructor(
@@ -84,7 +94,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     private notify: NotifyService,
     private translateService: TranslateService,
     private router: Router
-  ) { }
+  ) {}
 
   ngAfterViewInit(): void {
     this.dataSource.sortingDataAccessor = this.sortingDataAccessor
@@ -93,6 +103,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    console.log(this.displayedColumns)
+    console.log(this.columnNames)
     this.subscribeToFilterFormsChanges()
     this.loadData()
     this.translateColumnsNames()
@@ -101,11 +113,11 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
 
   sortingDataAccessor(data: Transaction, sortHeaderId: string): string | number {
     switch (sortHeaderId) {
-      case 'externalId':
+      case Columns.ID_EXTERNAL_ID:
         return Number(data[sortHeaderId])
-      case 'amount':
+      case Columns.ID_AMOUNT:
         return Number(data[sortHeaderId].amount)
-      case 'comissionAmount':
+      case Columns.ID_COMISSION_AMOUNT:
         return Number(data[sortHeaderId].amount)
       default:
         return data[sortHeaderId as keyof Transaction] as string | number
@@ -118,15 +130,20 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   }
 
   translateColumnsNames(): void {
-    this.translateService.get(['displayedColumns.externalId', 'displayedColumns.username',
-      'displayedColumns.amount', 'displayedColumns.comissionAmount', 'displayedColumns.provider', 'displayedColumns.actions'])
+    this.translateService.get([
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USERNAME, 
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
       .subscribe((translations: Translations) => {
-        this.columnNames[0].value = translations['displayedColumns.externalId'];
-        this.columnNames[1].value = translations['displayedColumns.provider'];
-        this.columnNames[2].value = translations['displayedColumns.amount'];
-        this.columnNames[3].value = translations['displayedColumns.comissionAmount'];
-        this.columnNames[4].value = translations['displayedColumns.username'];
-        this.columnNames[5].value = translations['displayedColumns.actions'];
+        this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
+        this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
+        this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
+        this.columnNames[3].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT];
+        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USERNAME];
+        this.columnNames[5].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
       });
   }
 
@@ -162,10 +179,12 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     this.transactionApiService.deleteTransaction(id).subscribe({
       next: () => {
         this.refreshTransactions()
-        this.notify.showMessage('transaction deleted succesfully', 'success')
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_DELETED).subscribe(msg=>{
+          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE)
+        })
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, 'error')
+        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
       }
     })
   }
@@ -187,7 +206,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   }
 
   transactionRedirect(row: Row): void {
-    this.router.navigate(['transactions/', row.id])
+    this.router.navigate([ApiEndpoints.TRANSACTIONS, row.id])
   }
 
   updateTransaction = (e: Event, row: Row): void => {
@@ -212,10 +231,12 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
       next: () => {
         this.toggleForms(e, row)
         this.refreshTransactions()
-        this.notify.showMessage('transaction data updated succesfully', 'success')
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED).subscribe(msg=>{
+          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE)
+        })
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, 'error')
+        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
       }
     })
   }

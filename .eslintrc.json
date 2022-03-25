@@ -16,5 +16,9 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "no-duplicate-imports": "error",
+        "no-constructor-return": "error",
+        "array-callback-return": "error",
+        "no-await-in-loop": "error"
     }
 }
