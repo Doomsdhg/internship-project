@@ -18,9 +18,9 @@ export class InputChangeGuard implements CanDeactivate<ComponentWithInput> {
 
   canDeactivate(component: TransactionPageComponent): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.transactionUpdateForm.dirty) {
-      return this.dialog.open(GuardDialogContentComponent).afterClosed()
+      return this.dialog.open(GuardDialogContentComponent).afterClosed();
     }
-    return true
+    return true;
   }
 
 }

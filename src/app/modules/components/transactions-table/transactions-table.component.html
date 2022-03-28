@@ -51,9 +51,10 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+            <p *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
             <mat-form-field class="amount-form-container__input" appearance="fill">
               <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
-              <input matInput formControlName="externalId" value="{{row.externalId}}"
+              <input matInput required formControlName="externalId" value="{{row.externalId}}"
                 placeholder="{{ 'placeholders.externalId' | translate }}">
             </mat-form-field>
           </form>
@@ -77,7 +78,7 @@
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
             <mat-form-field class="amount-form-container__input" appearance="fill">
               <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
-              <input matInput formControlName="provider" value="{{row.provider}}"
+              <input matInput required formControlName="provider" value="{{row.provider}}"
                 placeholder="{{ 'placeholders.provider' | translate }}">
             </mat-form-field>
           </form>
@@ -102,14 +103,14 @@
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-                <input [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="amount" value="{{row.amount.amount}}"
-                  placeholder="{{ 'placeholders.amount' | translate }}">
+                <input required [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="amount"
+                  value="{{row.amount.amount}}" placeholder="{{ 'placeholders.amount' | translate }}">
               </mat-form-field>
             </form>
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
-                <input matInput formControlName="currency" value="{{row.amount.currency}}"
+                <input required matInput formControlName="currency" value="{{row.amount.currency}}"
                   placeholder="{{ 'placeholders.currency' | translate }}">
               </mat-form-field>
             </form>
@@ -135,14 +136,14 @@
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-                <input [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="comissionAmount" value="{{row.comissionAmount.amount}}"
-                  placeholder="{{ 'placeholders.comissionAmount' | translate }}">
+                <input required [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="comissionAmount"
+                  value="{{row.comissionAmount.amount}}" placeholder="{{ 'placeholders.comissionAmount' | translate }}">
               </mat-form-field>
             </form>
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
-                <input matInput formControlName="comissionCurrency" value="{{row.comissionAmount.currency}}"
+                <input required matInput formControlName="comissionCurrency" value="{{row.comissionAmount.currency}}"
                   placeholder="{{ 'placeholders.comissionCurrency' | translate }}">
               </mat-form-field>
             </form>
@@ -167,7 +168,7 @@
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
             <mat-form-field class="amount-form-container__input" appearance="fill">
               <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
-              <input matInput formControlName="username" value="{{row.username}}"
+              <input required matInput formControlName="username" value="{{row.username}}"
                 placeholder="{{ 'placeholders.username' | translate }}">
             </mat-form-field>
           </form>
@@ -205,4 +206,22 @@
       class="onhover-pointer">
     </mat-row>
   </table>
+  <div class="pagination-pannel">
+    <button mat-button (click)="dataSource.loadTransactions(1)">
+      << 
+    </button>
+    <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
+      < 
+    </button>
+    <mat-form-field appearance="fill">
+      <mat-label>Page size</mat-label>
+      <mat-select [(value)]="dataSource.selectedPageSize" (valueChange)="setPageSize($event)">
+        <mat-option *ngFor="let size of dataSource.pageSizeOptions" [value]="size">
+          {{size}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
+    <button mat-button (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
+  </div>
 </div>

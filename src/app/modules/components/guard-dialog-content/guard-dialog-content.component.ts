@@ -14,7 +14,7 @@ export class GuardDialogContentComponent {
   ) { }
 
   close(decision: boolean): void {
-    this.dialogRef.close(decision)
+    this.dialogRef.close(decision);
   }
 
 }

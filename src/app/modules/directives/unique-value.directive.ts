@@ -18,19 +18,19 @@ export class UniqueValueDirective {
   @HostListener('input', ['$event.target']) OnInput(element: El): void {
     this.transactionService.searchTransactions(this.key, element.value).subscribe({
       next: (success: Transaction[]) => {
-        this.translateService.get(TranslationsEndpoints.SNACKBAR_UNIQUE).subscribe(messages=>{
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_UNIQUE).subscribe((messages) => {
           const message = success.length === 0 ? messages.unique : messages.notUnique;
           const color = success.length === 0 ? Styles.SUCCESS : Styles.ERROR;
-          const includesSpan = this.el.nativeElement.innerHTML.includes('<span style')
+          const includesSpan = this.el.nativeElement.innerHTML.includes('<span style');
           if (includesSpan) {
-            const span = this.el.nativeElement.firstChild
-            this.el.nativeElement.removeChild(span)
+            const span = this.el.nativeElement.firstChild;
+            this.el.nativeElement.removeChild(span);
           }
-          this.el.nativeElement.insertAdjacentHTML("afterbegin", `<span style='color: ${color}'>${message}</span>`)
-        })
+          this.el.nativeElement.insertAdjacentHTML("afterbegin", `<span style='color: ${color}'>${message}</span>`);
+        });
         
       }
-    })
+    });
   }
 
 }

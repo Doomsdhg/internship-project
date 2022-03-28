@@ -68,5 +68,6 @@
             "unique": "Value is unique",
             "notUnique": "Value is not unique"
         }
-    }
+    },
+    "requiredInputs": "* - required fields"
 }

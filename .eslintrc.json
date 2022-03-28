@@ -19,6 +19,12 @@
         "no-duplicate-imports": "error",
         "no-constructor-return": "error",
         "array-callback-return": "error",
-        "no-await-in-loop": "error"
+        "no-await-in-loop": "error",
+        "array-bracket-spacing": "error",
+        "arrow-parens": "error",
+        "arrow-spacing": "error",
+        "comma-spacing": "error",
+        "no-mixed-spaces-and-tabs": "error",
+        "semi": "error"
     }
 }

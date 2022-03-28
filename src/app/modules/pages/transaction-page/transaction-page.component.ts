@@ -35,7 +35,7 @@ export class TransactionPageComponent implements OnInit {
     private translateService: TranslateService) { }
 
   ngOnInit(): void {
-    this.getTransactionInfo()
+    this.getTransactionInfo();
   }
 
   createFormGroup(): void {
@@ -48,41 +48,41 @@ export class TransactionPageComponent implements OnInit {
       comissionAmount: new FormControl(this.transactionInfo.comissionAmount.amount),
       comissionCurrency: new FormControl(this.transactionInfo.comissionAmount.currency),
       additionalData: new FormControl(this.transactionInfo.additionalData)
-    })
+    });
   }
 
   toggleForms = (): void => {
     this.formsToggled = !this.formsToggled;
-  }
+  };
 
   saveChanges = (): void => {
     if (!this.getFormValidationErrors()) {
-      this.updateTransaction()
-      this.toggleForms
+      this.updateTransaction();
+      this.toggleForms;
     } else {
-      this.translateService.get(TranslationsEndpoints.SNACKBAR_INPUT_ISSUES).subscribe(msg => {
-        this.notify.showMessage(msg, Snackbar.ERROR_TYPE)
-      })
+      this.translateService.get(TranslationsEndpoints.SNACKBAR_INPUT_ISSUES).subscribe((msg) => {
+        this.notify.showMessage(msg, Snackbar.ERROR_TYPE);
+      });
     }
-  }
+  };
 
   getFormValidationErrors(): boolean {
-    const errors = Object.keys(this.transactionUpdateForm.controls).some(key => {
-      return this.transactionUpdateForm.controls[key].errors
-    })
+    const errors = Object.keys(this.transactionUpdateForm.controls).some((key) => {
+      return this.transactionUpdateForm.controls[key].errors;
+    });
     return errors;
   }
 
   cancelChanges = (): void => {
-    this.toggleForms()
-    this.createFormGroup()
-  }
+    this.toggleForms();
+    this.createFormGroup();
+  };
 
   getTransactionInfo(): void {
-    const transactionId = this.route.snapshot.paramMap.get('id')
+    const transactionId = this.route.snapshot.paramMap.get('id');
     this.transactionApiService.getDefiniteTransaction(transactionId).subscribe((success: Transaction) => {
       this.transactionInfo = success;
-      this.createFormGroup()
+      this.createFormGroup();
       this.initialFormValues = {
         externalId: success.externalId,
         username: success.username,
@@ -96,14 +96,14 @@ export class TransactionPageComponent implements OnInit {
         },
         provider: success.provider,
         additionalData: success.additionalData
-      }
-      this.cdr.detectChanges()
-    })
+      };
+      this.cdr.detectChanges();
+    });
   }
 
   checkIfInputsChanged = (): boolean => {
-    return !this.transactionUpdateForm.dirty
-  }
+    return !this.transactionUpdateForm.dirty;
+  };
 
   updateTransaction = (): void => {
     const updateObj: TransactionUpdateData = {
@@ -119,19 +119,19 @@ export class TransactionPageComponent implements OnInit {
       },
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData
-    }
+    };
     this.transactionApiService.patchTransaction(this.transactionInfo.id, updateObj).subscribe({
       next: () => {
-        this.toggleForms()
-        this.getTransactionInfo()
-        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED).subscribe(msg => {
-          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE)
-        })
+        this.toggleForms();
+        this.getTransactionInfo();
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED).subscribe((msg) => {
+          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
+        });
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
+        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
       }
-    })
-  }
+    });
+  };
 
 }

@@ -3,6 +3,7 @@
     class="toggle-transaction-forms">{{displayForms?('buttons.transactionCloseForms' |
     translate):('buttons.transactionOpenForms' | translate)}}</button>
   <div #addition_form *ngIf="displayForms" class="form-group">
+    <p>{{'requiredInputs' | translate}}</p>
     <form class="form-group__form" [formGroup]="transactionForm">
       <mat-form-field class="form-group__form-input" [appUniqueValue]="'externalId'" appearance="fill">
         <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>

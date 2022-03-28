@@ -14,6 +14,6 @@ export class NotifyService {
     const config = new MatSnackBarConfig();
     config.duration = Snackbar.DURATION;
     config.panelClass = [type + Snackbar.CLASSNAME_POSTFIX];
-    this.snackBar.open(message, undefined, config)
+    this.snackBar.open(message, undefined, config);
   }
 }

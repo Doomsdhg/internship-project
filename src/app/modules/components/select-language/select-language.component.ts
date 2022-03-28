@@ -21,14 +21,14 @@ export class SelectLanguageComponent {
     public router: Router,
     public route: ActivatedRoute
   ) {
-    this.language = localStorage.getItem('language') || environment.defaultLocale
-    this.translateService.use(this.language)
-    this.selectLanguageForm = new FormControl(this.language)
+    this.language = localStorage.getItem('language') || environment.defaultLocale;
+    this.translateService.use(this.language);
+    this.selectLanguageForm = new FormControl(this.language);
   }
 
   changeLanguage(): void {
-    localStorage.setItem('language', this.selectLanguageForm.value)
-    window.location.reload()
+    localStorage.setItem('language', this.selectLanguageForm.value);
+    window.location.reload();
   }
 
 }

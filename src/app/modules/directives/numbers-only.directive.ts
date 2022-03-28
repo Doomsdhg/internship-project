@@ -14,10 +14,10 @@ export class NumbersOnlyDirective {
 
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     if (isNaN(+element.value)) {
-      element.value = element.value.slice(0, -1)
-      this.translateService.get(TranslationsEndpoints.SNACKBAR_NUMBERS_ONLY_ERROR).subscribe(msg=>{
-        this.notify.showMessage(msg, Snackbar.ERROR_TYPE)
-      })
+      element.value = element.value.slice(0, -1);
+      this.translateService.get(TranslationsEndpoints.SNACKBAR_NUMBERS_ONLY_ERROR).subscribe((msg) => {
+        this.notify.showMessage(msg, Snackbar.ERROR_TYPE);
+      });
       
     }
   }

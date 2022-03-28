@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from '../../../services/notify.service';
 import { MatSort } from '@angular/material/sort';
-import { Target } from '../../../modules/interfaces/browser-event.interface'
+import { Target } from '../../../modules/interfaces/browser-event.interface';
 import { Router } from '@angular/router';
 import { Translations } from 'src/app/modules/interfaces/translations.interface';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
@@ -45,6 +45,8 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   @Input() dataSource!: TransactionsDataSource;
 
   @ViewChild(MatSort) sort!: MatSort;
+
+  pageNumber = 1;
 
   filterValues: FormGroup = new FormGroup({
     idFilter: new FormControl(Forms.INIT_VALUE),
@@ -97,35 +99,41 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngAfterViewInit(): void {
-    this.dataSource.sortingDataAccessor = this.sortingDataAccessor
-    this.dataSource.sort = this.sort
-
+    this.dataSource.sortingDataAccessor = this.sortingDataAccessor;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnInit(): void {
-    console.log(this.displayedColumns)
-    console.log(this.columnNames)
-    this.subscribeToFilterFormsChanges()
-    this.loadData()
-    this.translateColumnsNames()
+    console.log(this.displayedColumns);
+    console.log(this.columnNames);
+    this.subscribeToFilterFormsChanges();
+    this.loadData();
+    this.translateColumnsNames();
     this.dataSource.filterPredicate = this.createFilter();
+    
   }
 
   sortingDataAccessor(data: Transaction, sortHeaderId: string): string | number {
     switch (sortHeaderId) {
       case Columns.ID_EXTERNAL_ID:
-        return Number(data[sortHeaderId])
+        return Number(data[sortHeaderId]);
       case Columns.ID_AMOUNT:
-        return Number(data[sortHeaderId].amount)
+        return Number(data[sortHeaderId].amount);
       case Columns.ID_COMISSION_AMOUNT:
-        return Number(data[sortHeaderId].amount)
+        return Number(data[sortHeaderId].amount);
       default:
-        return data[sortHeaderId as keyof Transaction] as string | number
+        return data[sortHeaderId as keyof Transaction] as string | number;
     }
+  }
+
+  setPageSize(event: string): void{
+    localStorage.setItem('pageSize', event || '10');
+    this.loadData();
   }
 
   loadData(): void {
     this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify);
+    this.dataSource.selectedPageSize = Number(localStorage.getItem('pageSize'));
     this.dataSource.loadTransactions();
   }
 
@@ -150,47 +158,47 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   subscribeToFilterFormsChanges(): void {
     this.filterValues.valueChanges
       .subscribe(
-        filters => {
+        (filters) => {
           const filter = {
             id: filters.idFilter,
             provider: filters.providerFilter,
             amount: filters.amountFilter,
             comissionAmount: filters.comissionAmountFilter,
             username: filters.usernameFilter
-          }
+          };
           this.dataSource.filter = JSON.stringify(filter);
         }
-      )
+      );
   }
 
   search = (e: Event): void => {
     const target = e.target as Target | null;
-    this.dataSource.filter = target!.value
-  }
+    this.dataSource.filter = target!.value;
+  };
 
   refreshTransactions = (): void => {
     this.dataSource.loadTransactions();
-  }
+  };
 
   deleteTransaction = (e: Event): void => {
-    e.stopPropagation()
+    e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
     this.transactionApiService.deleteTransaction(id).subscribe({
       next: () => {
-        this.refreshTransactions()
-        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_DELETED).subscribe(msg=>{
-          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE)
-        })
+        this.refreshTransactions();
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_DELETED).subscribe((msg) => {
+          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
+        });
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
+        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
       }
-    })
-  }
+    });
+  };
 
   toggleForms = (e: Event, row: Row): void => {
-    e.stopPropagation()
+    e.stopPropagation();
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
     this.transactionUpdateForm = new FormGroup({
@@ -202,15 +210,15 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
       comissionAmount: new FormControl(row.comissionAmount.amount),
       comissionCurrency: new FormControl(row.comissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
-    })
-  }
+    });
+  };
 
   transactionRedirect(row: Row): void {
-    this.router.navigate([ApiEndpoints.TRANSACTIONS, row.id])
+    this.router.navigate([ApiEndpoints.TRANSACTIONS, row.id]);
   }
 
   updateTransaction = (e: Event, row: Row): void => {
-    e.stopPropagation()
+    e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
     const updateObj: TransactionUpdateData = {
@@ -226,27 +234,27 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
       },
       "provider": this.transactionUpdateForm.value.provider,
       "additionalData": this.transactionUpdateForm.value.additionalData
-    }
+    };
     this.transactionApiService.patchTransaction(id, updateObj).subscribe({
       next: () => {
-        this.toggleForms(e, row)
-        this.refreshTransactions()
-        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED).subscribe(msg=>{
-          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE)
-        })
+        this.toggleForms(e, row);
+        this.refreshTransactions();
+        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED).subscribe((msg) => {
+          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
+        });
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
+        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
       }
-    })
-  }
+    });
+  };
 
   createFilter(): (data: Transaction, filter: string) => boolean {
     const filterFunction = function (data: Transaction, filter: string): boolean {
       try {
         const searchTerms = JSON.parse(filter);
         if (typeof searchTerms !== 'object') {
-          throw new Error()
+          throw new Error();
         }
         return data.externalId.indexOf(searchTerms.id) !== -1
           && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
@@ -260,7 +268,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
           || String(data.comissionAmount.amount).indexOf(filter) !== -1
           || data.username.toLowerCase().indexOf(filter) !== -1;
       }
-    }
+    };
     return filterFunction;
   }
 }

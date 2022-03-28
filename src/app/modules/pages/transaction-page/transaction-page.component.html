@@ -5,6 +5,7 @@
         translate}}</button>
     <button mat-raised-button *ngIf="formsToggled" (click)="cancelChanges()">{{'buttons.cancel' |
         translate}}</button>
+    <p *ngIf="formsToggled">{{'requiredInputs' | translate}}</p>
     <div class="wrapper">
         <h2 class="text-underline">{{'displayedColumns.externalId' | translate}}</h2>
         <p>{{transactionInfo.externalId || ('noData' | translate)}}</p>
