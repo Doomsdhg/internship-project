@@ -18,7 +18,7 @@ export class NumbersOnlyDirective {
       this.translateService.get(TranslationsEndpoints.SNACKBAR_NUMBERS_ONLY_ERROR).subscribe((msg) => {
         this.notify.showMessage(msg, Snackbar.ERROR_TYPE);
       });
-      
+
     }
   }
 

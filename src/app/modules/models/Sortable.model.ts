@@ -9,7 +9,7 @@ export class Sortable {
   field: string;
   direction: string;
 
-  constructor(field: string, direction: string) {
+  constructor(field = 'externalId', direction = 'asc') {
     this.field = field;
     this.direction = direction;
   }

@@ -73,9 +73,9 @@ export class AddTransactionComponent implements OnInit {
       this.transactionApiService.uploadTransaction(transactionObj).subscribe({
         next: () => {
           this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_ADDED).subscribe((msg) => {
-              this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
-            });
-          
+            this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
+          });
+
           this.TransactionsTableComponent.dataSource.loadTransactions();
           this.initFormGroup();
           this.cdr.markForCheck();
@@ -83,9 +83,10 @@ export class AddTransactionComponent implements OnInit {
         error: (error: TransactionCrudResponseError) => {
           this.translateService.get;
           this.translateService.get(TranslationsEndpoints.SNACKBAR_SERVER_ERROR).subscribe((msg) => {
-          this.notify.showMessage(msg + error.status + error.error, Snackbar.ERROR_TYPE);
-        });
-      }});
+            this.notify.showMessage(msg + error.status + error.error, Snackbar.ERROR_TYPE);
+          });
+        }
+      });
     } else {
       this.translateService.get(TranslationsEndpoints.SNACKBAR_INPUT_ISSUES).subscribe((msg) => {
         this.notify.showMessage(msg, Snackbar.ERROR_TYPE);

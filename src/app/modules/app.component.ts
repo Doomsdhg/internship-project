@@ -20,6 +20,6 @@ export class AppComponent {
   }
 
   transactionsRedirect(): void {
-    this.router.navigate([ApiEndpoints.TRANSACTIONS], { relativeTo: this.route })
+    this.router.navigate([ApiEndpoints.TRANSACTIONS], { relativeTo: this.route });
   }
 }

@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { TransactionUpdateData, Transaction, ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
 import { Pageable } from 'src/app/modules/models/Pageable.model';
 import { Sortable } from 'src/app/modules/models/Sortable.model';
+import { Page } from 'src/app/modules/types/Page.type';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,9 @@ export class TransactionApiService {
     return this.http.delete(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${id}`);
   }
 
-  getTransactions(pageNumber: number, pageSize: number): Observable<HttpResponse<Transaction[]>> {
-    return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${new Pageable(undefined, pageNumber, pageSize, new Sortable('externalId', 'asc')).toString()}`, { observe: 'response' }) as Observable<HttpResponse<Transaction[]>>;
+  getTransactions(pageNumber: number, pageSize: number): Observable<HttpResponse<Page<Transaction>>> {
+    return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${new Pageable(undefined, pageNumber, pageSize, new Sortable('externalId', 'asc')).toString()}`
+      , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
   }
 
   getDefiniteTransaction(id: string | null): Observable<Transaction> {

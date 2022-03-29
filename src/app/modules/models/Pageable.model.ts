@@ -19,7 +19,7 @@ export class Pageable {
   size: number;
   sort: Sortable;
 
-  constructor(q: QueryPredicates = new QueryPredicates(), page = PageableDefaults.pageNumber, size = PageableDefaults.pageSize, sort: Sortable) {
+  constructor(q: QueryPredicates = new QueryPredicates(), page = PageableDefaults.pageNumber, size = PageableDefaults.defaultPageSize, sort: Sortable) {
     this.q = q;
     this.page = page;
     this.size = size;
@@ -27,6 +27,6 @@ export class Pageable {
   }
 
   toString() {
-    return `?${this.q.toString()}&_page=${this.page}&_limit=${this.size}${this.sort ? this.sort.toString() : ''}`;
+    return `?${this.q.toString()}&_page=${this.page}&_limit=${this.size}`;
   }
 }

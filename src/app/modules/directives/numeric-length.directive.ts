@@ -28,7 +28,7 @@ export class NumericLengthDirective {
     if ((+numeric < -max || +numeric > +max) || (+numeric !== +element.value && element.value.length > maxLength)) {
       element.value = this.previousValue;
       this.translateService.get(TranslationsEndpoints.SNACKBAR_NUMBERS_LIMITED).subscribe((msg) => {
-        this.notify.showMessage( msg.start + digitsBeforeDecPoint + " " + msg.middle + " " + digitsAfterDecPoint + " " + msg.end, Snackbar.ERROR_TYPE);
+        this.notify.showMessage(msg.start + digitsBeforeDecPoint + " " + msg.middle + " " + digitsAfterDecPoint + " " + msg.end, Snackbar.ERROR_TYPE);
       });
     }
   }

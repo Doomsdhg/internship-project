@@ -14,6 +14,8 @@ import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { Forms } from 'src/app/constants/forms.constants';
 import { Columns } from 'src/app/constants/columns.constants';
+import { PageableDefaults } from '../../../constants/pageable.constants';
+import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 
 interface Column {
   id: string,
@@ -59,11 +61,11 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   formsToggled = false;
 
   displayedColumns: string[] = [
-    'externalId', 
-    'provider', 
-    'amount', 
-    'comissionAmount', 
-    'username', 
+    'externalId',
+    'provider',
+    'amount',
+    'comissionAmount',
+    'username',
     'actions'];
 
   columnNames: Column[] = [{
@@ -96,7 +98,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     private notify: NotifyService,
     private translateService: TranslateService,
     private router: Router
-  ) {}
+  ) { }
 
   ngAfterViewInit(): void {
     this.dataSource.sortingDataAccessor = this.sortingDataAccessor;
@@ -110,7 +112,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     this.loadData();
     this.translateColumnsNames();
     this.dataSource.filterPredicate = this.createFilter();
-    
+
   }
 
   sortingDataAccessor(data: Transaction, sortHeaderId: string): string | number {
@@ -126,14 +128,14 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  setPageSize(event: string): void{
-    localStorage.setItem('pageSize', event || '10');
+  setPageSize(event: string): void {
+    localStorage.setItem(LocalStorageAcessors.PAGE_SIZE, event || String(PageableDefaults.defaultPageSize));
     this.loadData();
   }
 
   loadData(): void {
     this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify);
-    this.dataSource.selectedPageSize = Number(localStorage.getItem('pageSize'));
+    this.dataSource.selectedPageSize = Number(localStorage.getItem(LocalStorageAcessors.PAGE_SIZE));
     this.dataSource.loadTransactions();
   }
 
@@ -143,7 +145,7 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USERNAME, 
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USERNAME,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
       .subscribe((translations: Translations) => {
         this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
