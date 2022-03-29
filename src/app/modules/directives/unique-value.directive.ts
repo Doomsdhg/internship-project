@@ -28,7 +28,6 @@ export class UniqueValueDirective {
           }
           this.el.nativeElement.insertAdjacentHTML("afterbegin", `<span style='color: ${color}'>${message}</span>`);
         });
-
       }
     });
   }

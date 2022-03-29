@@ -1,22 +1,7 @@
 {
   "transactions": [
     {
-      "id": "133",
-      "externalId": "7123",
-      "provider": "paypal",
-      "amount": {
-        "amount": 12,
-        "currency": "USD"
-      },
-      "comissionAmount": {
-        "amount": 1,
-        "currency": "USD"
-      },
-      "username": "qwe",
-      "additionalData": ""
-    },
-    {
-      "externalId": "343",
+      "externalId": "3431",
       "provider": "webmoney",
       "amount": {
         "amount": "14",
@@ -134,21 +119,6 @@
       "username": "qqqq123",
       "additionalData": "",
       "id": "HPnzYU_"
-    },
-    {
-      "externalId": "",
-      "provider": "",
-      "amount": {
-        "amount": "",
-        "currency": ""
-      },
-      "comissionAmount": {
-        "amount": "",
-        "currency": ""
-      },
-      "username": "",
-      "additionalData": "",
-      "id": "ZrWGCQK"
     },
     {
       "externalId": "132",

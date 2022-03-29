@@ -20,9 +20,6 @@ export class TransactionPageComponent implements OnInit {
   transactionUpdateForm!: FormGroup;
 
   @Input()
-  initialFormValues!: TransactionUpdateData;
-
-  @Input()
   transactionInfo!: Transaction;
 
   public formsToggled = false;
@@ -83,20 +80,6 @@ export class TransactionPageComponent implements OnInit {
     this.transactionApiService.getDefiniteTransaction(transactionId).subscribe((success: Transaction) => {
       this.transactionInfo = success;
       this.createFormGroup();
-      this.initialFormValues = {
-        externalId: success.externalId,
-        username: success.username,
-        amount: {
-          amount: success.amount.amount,
-          currency: success.amount.currency
-        },
-        comissionAmount: {
-          amount: success.comissionAmount.amount,
-          currency: success.comissionAmount.currency
-        },
-        provider: success.provider,
-        additionalData: success.additionalData
-      };
       this.cdr.detectChanges();
     });
   }

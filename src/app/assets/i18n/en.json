@@ -34,7 +34,8 @@
         "uploadTransaction": "Upload transaction",
         "transactions": "transactions",
         "leave": "leave",
-        "stay": "stay"
+        "stay": "stay",
+        "cancelChanges": "cancel changes"
     },
     "placeholders": {
         "externalId": "e.g. '123'",

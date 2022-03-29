@@ -24,8 +24,11 @@ server.use((req, res, next) => {
         totalElements: totalTransactions
       });
     };
+  } else {
+    router.render = function (req, res) {
+      res.jsonp(res.locals.data);
+    };
   }
-
   next();
 });
 

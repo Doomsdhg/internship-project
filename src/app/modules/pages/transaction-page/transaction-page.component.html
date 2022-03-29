@@ -10,7 +10,7 @@
         <h2 class="text-underline">{{'displayedColumns.externalId' | translate}}</h2>
         <p>{{transactionInfo.externalId || ('noData' | translate)}}</p>
         <form *ngIf="formsToggled" [formGroup]="transactionUpdateForm">
-            <mat-form-field class="amount-form-container__input" appearance="fill">
+            <mat-form-field [appUniqueValue]="'externalId'" class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
                 <input type="provider" required matInput formControlName="externalId"
                     value="{{transactionInfo.externalId}}"

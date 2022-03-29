@@ -24,7 +24,8 @@
         "uploadTransaction": "Добавить транзакцию",
         "transactions": "транзакции",
         "leave": "продолжить",
-        "stay": "остаться"
+        "stay": "остаться",
+        "cancelChanges": "отменить изменения"
     },
     "required": {
         "externalId": "Требуется ввести номер",

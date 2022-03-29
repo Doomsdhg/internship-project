@@ -1,8 +1,7 @@
-import { Component, Input, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/modules/interfaces/transactions.interface';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
@@ -19,7 +18,9 @@ import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.
 export class AddTransactionComponent implements OnInit {
 
   constructor(
-    private transactionApiService: TransactionApiService, private notify: NotifyService, private cdr: ChangeDetectorRef, private translateService: TranslateService
+    private transactionApiService: TransactionApiService, 
+    private notify: NotifyService, 
+    private translateService: TranslateService
   ) { }
 
   @Input()
@@ -30,8 +31,6 @@ export class AddTransactionComponent implements OnInit {
 
   @Input()
   transactionForm!: FormGroup;
-
-  dataSource!: TransactionsDataSource;
 
   ngOnInit(): void {
     this.initFormGroup();
@@ -60,11 +59,11 @@ export class AddTransactionComponent implements OnInit {
         "externalId": this.transactionForm.value.externalId,
         "provider": this.transactionForm.value.provider,
         "amount": {
-          "amount": this.transactionForm.value.amount,
+          "amount": Number(this.transactionForm.value.amount),
           "currency": this.transactionForm.value.currency.toUpperCase()
         },
         "comissionAmount": {
-          "amount": this.transactionForm.value.comissionAmount,
+          "amount": Number(this.transactionForm.value.comissionAmount),
           "currency": this.transactionForm.value.comissionCurrency.toUpperCase()
         },
         "username": this.transactionForm.value.username,
@@ -75,10 +74,8 @@ export class AddTransactionComponent implements OnInit {
           this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_ADDED).subscribe((msg) => {
             this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
           });
-
           this.TransactionsTableComponent.dataSource.loadTransactions();
           this.initFormGroup();
-          this.cdr.markForCheck();
         },
         error: (error: TransactionCrudResponseError) => {
           this.translateService.get;

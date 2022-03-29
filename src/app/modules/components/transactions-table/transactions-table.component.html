@@ -52,7 +52,7 @@
         <ng-template #editForms>
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
             <p *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
-            <mat-form-field class="amount-form-container__input" appearance="fill">
+            <mat-form-field [appUniqueValue]="'externalId'" class="amount-form-container__input" appearance="fill">
               <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
               <input matInput required formControlName="externalId" value="{{row.externalId}}"
                 placeholder="{{ 'placeholders.externalId' | translate }}">
@@ -187,17 +187,27 @@
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
-        <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}"
-          [disabled]="formsToggled" (click)="deleteTransaction($event)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button mat-raised-button [disabled]="formsToggled" (click)="toggleForms($event, row)">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-raised-button attr.data-id="{{row.id}}" (click)="updateTransaction($event, row)"
-          *ngIf="row.displayForms">
-          {{'buttons.saveChanges' | translate}}
-        </button>
+        <div class="flex-container-column">
+          <div class="buttons-group">
+            <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}"
+              [disabled]="formsToggled" (click)="deleteTransaction($event)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-raised-button [disabled]="formsToggled" (click)="toggleForms($event, row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="row.displayForms" class="buttons-group">
+            <button mat-raised-button attr.data-id="{{row.id}}" (click)="updateTransaction($event, row)">
+              {{'buttons.saveChanges' | translate}}
+            </button>
+          </div>
+          <div *ngIf="row.displayForms" class="buttons-group">
+            <button mat-raised-button attr.data-id="{{row.id}}" (click)="toggleForms($event, row)">
+              {{'buttons.cancelChanges' | translate}}
+            </button>
+          </div>
+        </div>
       </mat-cell>
     </ng-container>
 
@@ -208,20 +218,18 @@
   </table>
   <div class="pagination-pannel">
     <button mat-button (click)="dataSource.loadTransactions(1)">
-      << 
-    </button>
-    <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
-      < 
-    </button>
-    <mat-form-field appearance="fill">
-      <mat-label>Page size</mat-label>
-      <mat-select [(value)]="dataSource.selectedPageSize" (valueChange)="setPageSize($event)">
-        <mat-option *ngFor="let size of dataSource.pageSizeOptions" [value]="size">
-          {{size}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
-    <button mat-button (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
+      << </button>
+        <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
+          < </button>
+            <mat-form-field appearance="fill">
+              <mat-label>Page size</mat-label>
+              <mat-select [(value)]="dataSource.selectedPageSize" (valueChange)="setPageSize($event)">
+                <mat-option *ngFor="let size of dataSource.pageSizeOptions" [value]="size">
+                  {{size}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
+            <button mat-button (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
   </div>
 </div>

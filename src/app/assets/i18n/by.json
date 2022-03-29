@@ -24,7 +24,8 @@
         "uploadTransaction": "Дадаць транзакцыю",
         "transactions": "транзакцыі",
         "leave": "працягнуць",
-        "stay": "застацца"
+        "stay": "застацца",
+        "cancelChanges": "адмяніць змены"
     },
     "required": {
         "externalId": "Патрабуецца ўвесці нумар",
