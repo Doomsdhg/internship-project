@@ -4,7 +4,7 @@
     "currency": "Валюта",
     "displayedColumns": {
         "externalId": "Номер",
-        "username": "ім'я користувача",
+        "username": "Ім'я користувача",
         "amount": "Сума",
         "comissionAmount": "Сума комісії",
         "provider": "Постачальник",
@@ -15,17 +15,17 @@
         "tools": "Дії"
     },
     "buttons": {
-        "delete": "видалити",
-        "edit": "редагувати",
-        "cancel": "скасувати",
-        "saveChanges": "зберегти зміни",
+        "delete": "Видалити",
+        "edit": "Редагувати",
+        "cancel": "Скасувати",
+        "saveChanges": "Зберегти зміни",
         "transactionOpenForms": "Відкрити форму додавання нової транзакції",
         "transactionCloseForms": "Закрито форму додавання нової транзакції",
         "uploadTransaction": "Додати транзакцію",
-        "transactions": "транзакції",
-        "leave": "продовжити",
-        "stay": "залишитися",
-        "cancelChanges": "відмінити зміни"
+        "transactions": "Транзакції",
+        "leave": "Продовжити",
+        "stay": "Залишитися",
+        "cancelChanges": "Відмінити зміни"
     },
     "required": {
         "externalId": "Потрібно ввести номер",
@@ -61,8 +61,8 @@
         "numbersOnlyError": "У цьому полі можна вводити лише цифри",
         "numbersLimited": {
             "start": "Це поле обмежене",
-            "middle": "цифрами до коми та",
-            "end": "цифрами після коми"
+            "middle": "Цифрами до коми та",
+            "end": "Цифрами після коми"
         },
         "unique": {
             "unique": "Значення унікальне",

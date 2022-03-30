@@ -30,8 +30,14 @@ export class TransactionsDataSource extends
 
   public selectedPageSize = PageableDefaults.defaultPageSize;
 
+  public sortColumn!: string;
+
+  public sortOrder!: string;
+
+  public query! :string | string[];
+
   loadTransactions(pageNumber = 1): void {
-    this.transactionApiService.getTransactions(pageNumber, this.selectedPageSize)
+    this.transactionApiService.getTransactions(this.query, pageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({
         next: (transactions: HttpResponse<Page<Transaction>>) => {
           this.transactionsSubject.next(transactions);

@@ -4,7 +4,7 @@
     "currency": "Валюта",
     "displayedColumns": {
         "externalId": "Нумар",
-        "username": "імя карыстальніка",
+        "username": "Імя карыстальніка",
         "amount": "Сума",
         "comissionAmount": "Сума камісіі",
         "provider": "Правайдэр",
@@ -17,15 +17,15 @@
     "buttons": {
         "delete": "Выдаліць",
         "edit": "Рэдагаваць",
-        "cancel": "адмяніць",
+        "cancel": "Адмяніць",
         "saveChanges": "Захаваць змены",
         "transactionOpenForms": "Адкрыць форму дадання новай транзакцыі",
         "transactionCloseForms": "Закрыць форму дадання новай транзакцыі",
         "uploadTransaction": "Дадаць транзакцыю",
-        "transactions": "транзакцыі",
-        "leave": "працягнуць",
-        "stay": "застацца",
-        "cancelChanges": "адмяніць змены"
+        "transactions": "Транзакцыі",
+        "leave": "Працягнуць",
+        "stay": "Застацца",
+        "cancelChanges": "Адмяніць змены"
     },
     "required": {
         "externalId": "Патрабуецца ўвесці нумар",
@@ -45,7 +45,7 @@
         "comissionCurrency": "Напрыклад 'BYN'",
         "username": "Напрыклад 'Слава Комиссаренко'",
         "additionalData": "Напрыклад 'Дадатковыя дадзеныя'",
-        "search": "пошук"
+        "search": "Пошук"
     },
     "warnings": {
         "leaveWithoutSave": "Вы ўпэўненыя што хочаце працягнуць без захавання змен?"
@@ -61,8 +61,8 @@
         "numbersOnlyError": "У гэтае поле можна ўводзіць толькі лічбы",
         "numbersLimited": {
             "start": "Гэтае поле абмежавана",
-            "middle": "лічбамі да коскі і",
-            "end": "лічбамі пасля коскі"
+            "middle": "Лічбамі да коскі і",
+            "end": "Лічбамі пасля коскі"
         },
         "unique": {
             "unique": "Значэнне ўнікальна",

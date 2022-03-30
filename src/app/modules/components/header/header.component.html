@@ -1,0 +1,13 @@
+<div class="header-wrapper">
+    <div class="links-container">
+        <button mat-button (click)="redirect('/')" color="primary">
+            <mat-icon aria-hidden="false">
+                home
+            </mat-icon>
+        </button>
+        <button mat-button class="{{currentRoute === environment.appUrl + 'transactions'?'active-link':''}}" (click)="redirect('transactions')" color="primary">
+            {{'buttons.transactions' | translate}}
+        </button>
+    </div>
+    <app-select-language></app-select-language>
+</div>

@@ -18,7 +18,7 @@ export class QueryPredicates {
 
   toString() {
     return this.predicates
-      .map((predicate) => `q=${encodeURIComponent(predicate)}`)
+      .map((predicate) => predicate)
       .join('&');
   }
 }

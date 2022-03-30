@@ -1,7 +1,7 @@
 {
     "selectLanguage": "Выберите язык",
-    "amount": "количество",
-    "currency": "валюта",
+    "amount": "Количество",
+    "currency": "Валюта",
     "displayedColumns": {
         "externalId": "Номер",
         "username": "Имя пользователя",
@@ -15,17 +15,17 @@
         "tools": "Действия"
     },
     "buttons": {
-        "delete": "удалить",
-        "edit": "редактировать",
-        "cancel": "отменить",
-        "saveChanges": "сохранить изменения",
+        "delete": "Удалить",
+        "edit": "Редактировать",
+        "cancel": "Отменить",
+        "saveChanges": "Сохранить изменения",
         "transactionOpenForms": "Открыть форму добавления новой транзакции",
         "transactionCloseForms": "Закрыть форму добавления новой транзакции",
         "uploadTransaction": "Добавить транзакцию",
-        "transactions": "транзакции",
-        "leave": "продолжить",
-        "stay": "остаться",
-        "cancelChanges": "отменить изменения"
+        "transactions": "Транзакции",
+        "leave": "Продолжить",
+        "stay": "Остаться",
+        "cancelChanges": "Отменить изменения"
     },
     "required": {
         "externalId": "Требуется ввести номер",
@@ -37,15 +37,15 @@
         "comissionCurrency": "Требуется ввести валюту комиссии"
     },
     "placeholders": {
-        "externalId": "например, '123'",
-        "provider": "например, 'qiwi'",
-        "amount": "например, '100'",
-        "currency": "например, 'RUB'",
-        "comissionAmount": "например, '10'",
-        "comissionCurrency": "например, 'RUB'",
-        "username": "например, 'любитель кефира'",
-        "additionalData": "например, 'какая-то дополнительная информация'",
-        "search": "поиск"
+        "externalId": "Например, '123'",
+        "provider": "Например, 'qiwi'",
+        "amount": "Например, '100'",
+        "currency": "Например, 'RUB'",
+        "comissionAmount": "Например, '10'",
+        "comissionCurrency": "Например, 'RUB'",
+        "username": "Например, 'любитель кефира'",
+        "additionalData": "Например, 'какая-то дополнительная информация'",
+        "search": "Поиск"
     },
     "warnings": {
         "leaveWithoutSave": "Вы уверены что хотите продолжить без сохранения изменений?"
@@ -61,8 +61,8 @@
         "numbersOnlyError": "В это поле можно вводить только цифры",
         "numbersLimited": {
             "start": "Это поле ограничено",
-            "middle": "цифрами(ой) до запятой и",
-            "end": "цифрами(ой) после запятой"
+            "middle": "Цифрами(ой) до запятой и",
+            "end": "Цифрами(ой) после запятой"
         },
         "unique": {
             "unique": "Значение уникально",

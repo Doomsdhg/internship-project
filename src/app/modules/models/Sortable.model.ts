@@ -9,14 +9,14 @@ export class Sortable {
   field: string;
   direction: string;
 
-  constructor(field = 'externalId', direction = 'asc') {
+  constructor(field: string, direction: string) {
     this.field = field;
     this.direction = direction;
   }
 
   toString() {
     if (this.direction && this.direction.length) {
-      return `&sort=${this.field},${this.direction}`;
+      return `&_sort=${this.field}&_order=${this.direction}`;
     }
 
     // skip sorting if no direction passed

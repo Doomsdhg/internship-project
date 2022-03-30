@@ -1,38 +1,38 @@
 <div class="transactions-table-wrapper mat-elevation-z8">
   <div class="ms-2-percents mt-10-pixels">
-    <mat-form-field>
-      <input matInput placeholder="{{'placeholders.search' | translate}}" (keyup)="search($event)">
+    <mat-form-field [formGroup]="filterValues">
+      <input formControlName="q" matInput placeholder="{{'placeholders.search' | translate}}">
     </mat-form-field>
   </div>
   <div class="flex-container w-100-percents">
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
         <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
-        <input formControlName="idFilter" matInput>
+        <input formControlName="externalId" matInput>
       </mat-form-field>
     </div>
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
         <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
-        <input formControlName="providerFilter" matInput>
+        <input formControlName="provider" matInput>
       </mat-form-field>
     </div>
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
         <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-        <input formControlName="amountFilter" matInput>
+        <input formControlName="amount" matInput>
       </mat-form-field>
     </div>
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
         <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-        <input formControlName="comissionAmountFilter" matInput>
+        <input formControlName="comissionAmount" matInput>
       </mat-form-field>
     </div>
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" floatLabel="never">
         <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
-        <input formControlName="usernameFilter" matInput>
+        <input formControlName="username" matInput>
       </mat-form-field>
     </div>
     <div class="flex-element">
@@ -42,9 +42,9 @@
 
     <!-- External id Column -->
     <ng-container matColumnDef="externalId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef (click)="sortify('externalId')">
         <span class="column-header">
-          {{ 'displayedColumns.externalId' | translate }}
+          {{ 'displayedColumns.externalId' | translate }}{{sorted !== undefined && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -67,9 +67,9 @@
 
     <!-- Provider Column -->
     <ng-container matColumnDef="provider">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef (click)="sortify('provider')">
         <span class="column-header">
-          {{ 'displayedColumns.provider' | translate }}
+          {{ 'displayedColumns.provider' | translate }}{{sorted !== undefined && sorted.provider !== undefined ? sorted!.provider?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -91,9 +91,9 @@
 
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef (click)="sortify('amount')">
         <span class="column-header">
-          {{ 'displayedColumns.amount' | translate }}
+          {{ 'displayedColumns.amount' | translate }}{{sorted !== undefined && sorted.amount !== undefined ? sorted!.amount?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -124,9 +124,9 @@
 
     <!-- Comission amount Column -->
     <ng-container matColumnDef="comissionAmount">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef (click)="sortify('comissionAmount')">
         <span class="column-header">
-          {{ 'displayedColumns.comissionAmount' | translate }}
+          {{ 'displayedColumns.comissionAmount' | translate }}{{sorted !== undefined && sorted.comissionAmount !== undefined ? sorted!.comissionAmount?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -157,9 +157,9 @@
 
     <!-- Username Column -->
     <ng-container matColumnDef="username">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <mat-header-cell *matHeaderCellDef (click)="sortify('username')">
         <span class="column-header">
-          {{ 'displayedColumns.username' | translate }}
+          {{ 'displayedColumns.username' | translate }}{{sorted !== undefined && sorted.username !== undefined ? sorted!.username?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">

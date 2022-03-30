@@ -1,7 +1,7 @@
 {
     "selectLanguage": "Select language",
-    "amount": "amount",
-    "currency": "currency",
+    "amount": "Amount",
+    "currency": "Currency",
     "displayedColumns": {
         "externalId": "No.",
         "username": "Username",
@@ -25,28 +25,28 @@
         "additionalData": "Additional data"
     },
     "buttons": {
-        "delete": "delete",
-        "edit": "edit",
-        "cancel": "cancel",
-        "saveChanges": "save changes",
+        "delete": "Delete",
+        "edit": "Edit",
+        "cancel": "Cancel",
+        "saveChanges": "Save changes",
         "transactionOpenForms": "Open form of adding new transaction",
         "transactionCloseForms": "Close form of adding new transaction",
         "uploadTransaction": "Upload transaction",
-        "transactions": "transactions",
-        "leave": "leave",
-        "stay": "stay",
-        "cancelChanges": "cancel changes"
+        "transactions": "Transactions",
+        "leave": "Leave",
+        "stay": "Stay",
+        "cancelChanges": "Cancel changes"
     },
     "placeholders": {
-        "externalId": "e.g. '123'",
-        "provider": "e.g. 'webmoney'",
-        "amount": "e.g. '100'",
-        "currency": "e.g. 'USD'",
-        "comissionAmount": "e.g. '10'",
-        "comissionCurrency": "e.g. 'USD'",
-        "username": "e.g. 'foobar'",
-        "additionalData": "e.g. 'some additional data'",
-        "search": "search"
+        "externalId": "E.g. '123'",
+        "provider": "E.g. 'webmoney'",
+        "amount": "E.g. '100'",
+        "currency": "E.g. 'USD'",
+        "comissionAmount": "E.g. '10'",
+        "comissionCurrency": "E.g. 'USD'",
+        "username": "E.g. 'foobar'",
+        "additionalData": "E.g. 'some additional data'",
+        "search": "Search"
     },
     "warnings": {
         "leaveWithoutSave": "Are you sure you wanna leave without saving changes?"
@@ -56,13 +56,13 @@
     "snackbar": {
         "inputIssues": "There is 1 or more mistakes about your inputs values.",
         "transactionUpdated": "Transaction data updated succesfully!",
-        "transactionAdded": "transaction added successfully",
+        "transactionAdded": "Transaction added successfully",
         "serverError": "Server error!",
         "transactionDeleted": "Transaction deleted successfully!",
         "numbersOnlyError": "This field is numbers only",
         "numbersLimited": {
             "start": "This field is limited to",
-            "middle": "digits before decimal point and",
+            "middle": "Digits before decimal point and",
             "end": "digits after decimal point."
         },
         "unique": {

@@ -32,6 +32,7 @@ import { UniqueValueDirective } from './directives/unique-value.directive';
 import { CurrencyPipe } from '@angular/common';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
 import { NumericLengthDirective } from './directives/numeric-length.directive';
+import { HeaderComponent } from './components/header/header.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
@@ -48,7 +49,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NumbersOnlyDirective,
     UniqueValueDirective,
     SelectLanguageComponent,
-    NumericLengthDirective
+    NumericLengthDirective,
+    HeaderComponent
   ],
   imports: [
     MatSelectModule,

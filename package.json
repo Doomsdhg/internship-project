@@ -7,8 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "eslint './**' --fix",
-    "server": "nodemon ./json-server/index.js"
+    "lint": "eslint './**' --fix"
   },
   "private": true,
   "dependencies": {

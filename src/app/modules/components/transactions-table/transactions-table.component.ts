@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { Transaction, Amount, TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -16,6 +16,7 @@ import { Forms } from 'src/app/constants/forms.constants';
 import { Columns } from 'src/app/constants/columns.constants';
 import { PageableDefaults } from '../../../constants/pageable.constants';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
+import { SortingStrings } from 'src/app/constants/sorting.constants';
 
 interface Column {
   id: string,
@@ -33,6 +34,14 @@ interface Row {
   id: string
 }
 
+interface Sorted {
+  externalId?: boolean,
+  provider?: boolean,
+  amount?: boolean,
+  comissionAmount?: boolean,
+  username?: boolean
+}
+
 @Component({
   selector: 'app-transactions-table',
   templateUrl: './transactions-table.component.html',
@@ -40,7 +49,7 @@ interface Row {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TransactionsTableComponent implements OnInit, AfterViewInit {
+export class TransactionsTableComponent implements OnInit {
 
   @Input() transactionUpdateForm!: FormGroup;
 
@@ -51,11 +60,12 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
   pageNumber = 1;
 
   filterValues: FormGroup = new FormGroup({
-    idFilter: new FormControl(Forms.INIT_VALUE),
-    providerFilter: new FormControl(Forms.INIT_VALUE),
-    amountFilter: new FormControl(Forms.INIT_VALUE),
-    comissionAmountFilter: new FormControl(Forms.INIT_VALUE),
-    usernameFilter: new FormControl(Forms.INIT_VALUE),
+    q: new FormControl(Forms.INIT_VALUE),
+    externalId: new FormControl(Forms.INIT_VALUE),
+    provider: new FormControl(Forms.INIT_VALUE),
+    amount: new FormControl(Forms.INIT_VALUE),
+    comissionAmount: new FormControl(Forms.INIT_VALUE),
+    username: new FormControl(Forms.INIT_VALUE),
   });
 
   formsToggled = false;
@@ -93,6 +103,9 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     value: Columns.NAME_ACTIONS
   }];
 
+  @Input()
+  sorted: Sorted | undefined;
+
   constructor(
     public transactionApiService: TransactionApiService,
     private notify: NotifyService,
@@ -100,19 +113,11 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     private router: Router
   ) { }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sortingDataAccessor = this.sortingDataAccessor;
-    this.dataSource.sort = this.sort;
-  }
-
   ngOnInit(): void {
-    console.log(this.displayedColumns);
-    console.log(this.columnNames);
     this.subscribeToFilterFormsChanges();
     this.loadData();
     this.translateColumnsNames();
     this.dataSource.filterPredicate = this.createFilter();
-
   }
 
   sortingDataAccessor(data: Transaction, sortHeaderId: string): string | number {
@@ -161,14 +166,14 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
     this.filterValues.valueChanges
       .subscribe(
         (filters) => {
-          const filter = {
-            id: filters.idFilter,
-            provider: filters.providerFilter,
-            amount: filters.amountFilter,
-            comissionAmount: filters.comissionAmountFilter,
-            username: filters.usernameFilter
-          };
-          this.dataSource.filter = JSON.stringify(filter);
+          const filter = [];
+          for (const key in filters) {
+            if (filters[key]) {
+              filter.push(`${key}=${filters[key]}`);
+            }
+          }
+          this.dataSource.query = [...filter];
+          this.dataSource.loadTransactions();
         }
       );
   }
@@ -249,6 +254,23 @@ export class TransactionsTableComponent implements OnInit, AfterViewInit {
         this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
       }
     });
+  };
+
+  sortify = (columnName: string): void => {
+    if (this.sorted === undefined) {
+      this.sorted = new Object();
+    }
+    if (this.sorted![columnName as keyof Sorted] === false) {
+      this.sorted = undefined;
+      this.dataSource.sortColumn = SortingStrings.DEFAULT_COLUMN;
+      this.dataSource.sortOrder = SortingStrings.DEFAULT_ORDER;
+    } else {
+      this.sorted![columnName as keyof Sorted] = !this.sorted![columnName as keyof Sorted];
+      const amountColumnName = columnName === Columns.ID_AMOUNT || columnName === Columns.ID_COMISSION_AMOUNT ? columnName + SortingStrings.AMOUNT_POSTFIX : SortingStrings.DEFAULT_COLUMN;
+      this.dataSource.sortColumn = amountColumnName || columnName;
+      this.dataSource.sortOrder = this.sorted![columnName as keyof Sorted] == true ? SortingStrings.ASC : SortingStrings.DESC;
+    }
+    this.dataSource.loadTransactions();
   };
 
   createFilter(): (data: Transaction, filter: string) => boolean {
