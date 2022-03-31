@@ -4,23 +4,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TransactionApiService } from '../services/web-services/transaction-api.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatTableModule } from '@angular/material/table';
 import { CdkTableModule } from '@angular/cdk/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotifyService } from '../services/notify.service';
-import { FormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { TransactionPageComponent } from './pages/transaction-page/transaction-page.component';
 import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
@@ -33,9 +31,10 @@ import { CurrencyPipe } from '@angular/common';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
 import { NumericLengthDirective } from './directives/numeric-length.directive';
 import { HeaderComponent } from './components/header/header.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json')
+  return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
 }
 
 @NgModule({
@@ -53,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HeaderComponent
   ],
   imports: [
+    MatSlideToggleModule,
     MatSelectModule,
     MatDialogModule,
     MatSortModule,

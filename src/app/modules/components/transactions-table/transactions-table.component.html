@@ -42,7 +42,7 @@
 
     <!-- External id Column -->
     <ng-container matColumnDef="externalId">
-      <mat-header-cell *matHeaderCellDef (click)="sortify('externalId')">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('externalId')">
         <span class="column-header">
           {{ 'displayedColumns.externalId' | translate }}{{sorted !== undefined && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
         </span>
@@ -67,7 +67,7 @@
 
     <!-- Provider Column -->
     <ng-container matColumnDef="provider">
-      <mat-header-cell *matHeaderCellDef (click)="sortify('provider')">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('provider')">
         <span class="column-header">
           {{ 'displayedColumns.provider' | translate }}{{sorted !== undefined && sorted.provider !== undefined ? sorted!.provider?'▲':'▼':''}}
         </span>
@@ -91,7 +91,7 @@
 
     <!-- Amount Column -->
     <ng-container matColumnDef="amount">
-      <mat-header-cell *matHeaderCellDef (click)="sortify('amount')">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('amount')">
         <span class="column-header">
           {{ 'displayedColumns.amount' | translate }}{{sorted !== undefined && sorted.amount !== undefined ? sorted!.amount?'▲':'▼':''}}
         </span>
@@ -124,7 +124,7 @@
 
     <!-- Comission amount Column -->
     <ng-container matColumnDef="comissionAmount">
-      <mat-header-cell *matHeaderCellDef (click)="sortify('comissionAmount')">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('comissionAmount')">
         <span class="column-header">
           {{ 'displayedColumns.comissionAmount' | translate }}{{sorted !== undefined && sorted.comissionAmount !== undefined ? sorted!.comissionAmount?'▲':'▼':''}}
         </span>
@@ -157,7 +157,7 @@
 
     <!-- Username Column -->
     <ng-container matColumnDef="username">
-      <mat-header-cell *matHeaderCellDef (click)="sortify('username')">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('username')">
         <span class="column-header">
           {{ 'displayedColumns.username' | translate }}{{sorted !== undefined && sorted.username !== undefined ? sorted!.username?'▲':'▼':''}}
         </span>
@@ -217,9 +217,9 @@
     </mat-row>
   </table>
   <div class="pagination-pannel">
-    <button mat-button (click)="dataSource.loadTransactions(1)">
+    <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(1)">
       << </button>
-        <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
+        <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
           < </button>
             <mat-form-field appearance="fill">
               <mat-label>Page size</mat-label>
@@ -229,7 +229,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
-            <button mat-button (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
+            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
+            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
   </div>
 </div>

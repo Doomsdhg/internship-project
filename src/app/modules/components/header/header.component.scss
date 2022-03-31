@@ -1,8 +1,10 @@
+@import '../../../../variables.scss';
+
 .header-wrapper {
     height: 70px;
-    border-bottom: 2px solid rgb(196, 196, 196);
-    background-color: rgb(247, 247, 247);
-    vertical-align:middle;
+    box-shadow: 2px 1px 3px $border-color;
+    -moz-box-shadow: 2px 1px 3px $border-color;
+    -webkit-box-shadow: 2px 1px 3px $border-color;
     padding: 5px;
 
     .links-container{
@@ -12,7 +14,16 @@
 
     .active-link{
         border-bottom: 3px solid;
-        background-color: rgb(243, 243, 243);
     }
 
+    .managing-tools-container{
+        display: inline flex;
+        float: right;
+        height: 100%;
+
+        .managing-tools-container__item{
+            margin: auto;
+            margin-right: 2rem;
+        }
+    }
 }

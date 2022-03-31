@@ -1,11 +1,11 @@
 <div class="transaction-page-wrapper container w-80-percents ms-10-percents mt-100-pixels">
     <h1 class="w-100-percents center-header">{{'transactionInfo' | translate}}</h1>
-    <button *ngIf="!formsToggled" mat-raised-button (click)="toggleForms()">{{'buttons.edit' | translate}}</button>
+    <button *ngIf="!formsToggled" color="primary" mat-raised-button (click)="toggleForms()">{{'buttons.edit' | translate}}</button>
     <button mat-raised-button color="primary" *ngIf="formsToggled" (click)="saveChanges()">{{'buttons.saveChanges' |
         translate}}</button>
     <button mat-raised-button *ngIf="formsToggled" (click)="cancelChanges()">{{'buttons.cancel' |
         translate}}</button>
-    <div class="container">
+    <div>
         <p *ngIf="formsToggled">{{'requiredInputs' | translate}}</p>
         <div class="form-wrapper">
             <h2 *ngIf="!formsToggled" class="text-underline">{{'displayedColumns.externalId' | translate}}</h2>

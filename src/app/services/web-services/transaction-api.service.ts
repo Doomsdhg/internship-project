@@ -21,6 +21,7 @@ export class TransactionApiService {
   }
 
   getTransactions(query: string[] | string, pageNumber: number, pageSize: number, sortColumn: string, sortOrder: string): Observable<HttpResponse<Page<Transaction>>> {
+    console.log(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`);
     return this.http.get(`${environment.appUrl}${ApiEndpoints.TRANSACTIONS}${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
       , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
   }

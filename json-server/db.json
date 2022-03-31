@@ -209,6 +209,21 @@
       "username": "qdw",
       "additionalData": null,
       "id": "M0Az-yj"
+    },
+    {
+      "externalId": "1234",
+      "provider": "12qwd",
+      "amount": {
+        "amount": 123,
+        "currency": "QWE"
+      },
+      "comissionAmount": {
+        "amount": 12,
+        "currency": "QWE"
+      },
+      "username": "dqwdqw",
+      "additionalData": null,
+      "id": "rHy2ogi"
     }
   ]
 }

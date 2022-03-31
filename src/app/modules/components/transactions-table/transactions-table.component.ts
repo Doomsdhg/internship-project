@@ -71,12 +71,12 @@ export class TransactionsTableComponent implements OnInit {
   formsToggled = false;
 
   displayedColumns: string[] = [
-    'externalId',
-    'provider',
-    'amount',
-    'comissionAmount',
-    'username',
-    'actions'];
+    Columns.ID_EXTERNAL_ID,
+    Columns.ID_PROVIDER,
+    Columns.ID_AMOUNT,
+    Columns.ID_COMISSION_AMOUNT,
+    Columns.ID_USERNAME,
+    Columns.ID_ACTIONS];
 
   columnNames: Column[] = [{
     id: Columns.ID_EXTERNAL_ID,

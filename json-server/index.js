@@ -12,7 +12,7 @@ server.use((req, res, next) => {
   if (req.originalUrl.includes('_page')) {
     const totalTransactions = router.db.get('transactions').value().length;
     router.render = function (req, res) {
-      const pageSize = res.locals.data.length;
+      const pageSize = Number(req.originalUrl.slice(req.originalUrl.indexOf('&_limit=') + 8));
       const pageQueryBegining = req.originalUrl.indexOf('=') + 1;
       const pageQueryEnding = req.originalUrl.indexOf('&_limit');
       const pageNumber = Number(req.originalUrl.slice(pageQueryBegining, pageQueryEnding));

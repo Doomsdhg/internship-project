@@ -1,7 +1,7 @@
 <div class="header-wrapper">
     <div class="links-container">
         <button mat-button (click)="redirect('/')" color="primary">
-            <mat-icon aria-hidden="false">
+            <mat-icon id="home-icon" aria-hidden="false" color="primary">
                 home
             </mat-icon>
         </button>
@@ -9,5 +9,12 @@
             {{'buttons.transactions' | translate}}
         </button>
     </div>
-    <app-select-language></app-select-language>
+    <div class="managing-tools-container">
+        <div class="managing-tools-container__item">
+            <mat-slide-toggle (change)="switchTheme($event)" [checked]="theme === 'dark-theme' ? true : false" color="primary" class="theme-toggle-slider"></mat-slide-toggle>
+        </div>
+        <div class="managing-tools-container__item">
+            <app-select-language></app-select-language>
+        </div>
+    </div>
 </div>
