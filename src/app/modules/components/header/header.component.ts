@@ -4,10 +4,6 @@ import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.
 import { Themes } from 'src/app/constants/themes.constants';
 import { environment } from 'src/environments/environment.prod';
 
-interface SliderToggle {
-  checked: boolean
-}
-
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
