@@ -70,5 +70,7 @@
             "notUnique": "Value is not unique"
         }
     },
-    "requiredInputs": "* - required fields"
+    "requiredInputs": "* - required fields",
+    "of": "of",
+    "pageSize": "Page size"
 }

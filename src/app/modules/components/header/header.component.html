@@ -11,10 +11,41 @@
     </div>
     <div class="managing-tools-container">
         <div class="managing-tools-container__item">
-            <mat-slide-toggle (change)="switchTheme($event)" [checked]="theme === 'dark-theme' ? true : false" color="primary" class="theme-toggle-slider"></mat-slide-toggle>
+            <button mat-button *ngIf="theme==='dark-theme'" (click)="switchTheme()">
+                <span class="material-icons">
+                    light_mode
+                    </span>
+            </button>
+            <button mat-button *ngIf="theme==='light-theme'" (click)="switchTheme()">
+                <span class="material-icons">
+                    dark_mode
+                    </span>
+            </button>
         </div>
         <div class="managing-tools-container__item">
             <app-select-language></app-select-language>
         </div>
+    </div>
+    <div mat-icon-button class="managing-tools-mobile">
+        <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <div class="managing-tools-mobile__item">
+                <button mat-button *ngIf="theme==='dark-theme'" (click)="switchTheme()">
+                    <span class="material-icons">
+                        light_mode
+                        </span>
+                </button>
+                <button mat-button *ngIf="theme==='light-theme'" (click)="switchTheme()">
+                    <span class="material-icons">
+                        dark_mode
+                        </span>
+                </button>
+            </div>
+            <div class="managing-tools-mobile__item">
+                <app-select-language></app-select-language>
+            </div>
+        </mat-menu>
     </div>
 </div>

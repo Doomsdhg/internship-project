@@ -1,6 +1,9 @@
-@import '../../../../variables.scss';
-
 .transaction-page-wrapper {
+    margin-left: 10%;
+    width: fit-content;
+    min-width: 30%;
+    padding: 7px;
+    border-radius: 5px;
 
     button {
         margin-left: 5px;
@@ -15,6 +18,21 @@
     .form-wrapper {
         margin-top: 10px;
         padding: 7px;
-        border-bottom: 1px solid $border-color;
+    }
+
+    .transaction-info-wrapper {
+        margin-top: 3rem;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    @media all and (max-width: 1400px) {
+        margin-left: 10%;
+        width: 45%;
+    }
+
+    @media all and (max-width: 700px) {
+        margin-left: 10%;
+        width: 80%;
     }
 }

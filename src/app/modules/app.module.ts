@@ -32,6 +32,7 @@ import { SelectLanguageComponent } from './components/select-language/select-lan
 import { NumericLengthDirective } from './directives/numeric-length.directive';
 import { HeaderComponent } from './components/header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatMenuModule} from '@angular/material/menu'; 
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -52,6 +53,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HeaderComponent
   ],
   imports: [
+    MatMenuModule,
     MatSlideToggleModule,
     MatSelectModule,
     MatDialogModule,

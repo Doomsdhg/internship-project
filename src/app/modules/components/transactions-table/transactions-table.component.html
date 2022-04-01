@@ -1,4 +1,4 @@
-<div class="transactions-table-wrapper mat-elevation-z8">
+<div class="transactions-table-wrapper">
   <div class="ms-2-percents mt-10-pixels">
     <mat-form-field [formGroup]="filterValues">
       <input formControlName="q" matInput placeholder="{{'placeholders.search' | translate}}">
@@ -217,12 +217,13 @@
     </mat-row>
   </table>
   <div class="pagination-pannel">
+    <span>{{dataSource.displayedTransactions}} {{'of' | translate}} {{dataSource.totalTransactions}}</span>
     <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(1)">
       << </button>
         <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
           < </button>
             <mat-form-field appearance="fill">
-              <mat-label>Page size</mat-label>
+              <mat-label>{{'pageSize' | translate}}</mat-label>
               <mat-select [(value)]="dataSource.selectedPageSize" (valueChange)="setPageSize($event)">
                 <mat-option *ngFor="let size of dataSource.pageSizeOptions" [value]="size">
                   {{size}}

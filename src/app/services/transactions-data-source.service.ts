@@ -36,6 +36,10 @@ export class TransactionsDataSource extends
 
   public query! :string | string[];
 
+  public totalTransactions! : number;
+
+  public displayedTransactions! : string;
+
   loadTransactions(pageNumber = 1): void {
     this.transactionApiService.getTransactions(this.query, pageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({
@@ -45,6 +49,10 @@ export class TransactionsDataSource extends
             this.data = success.body!.results;
             this.currentPageNumber = success.body!.page;
             this.lastPage = success.body!.totalPages;
+            this.totalTransactions = success.body!.totalElements;
+            this.displayedTransactions = this.currentPageNumber === success.body!.totalPages ? 
+            String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + success.body!.totalElements):
+            String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + this.currentPageNumber * this.selectedPageSize);
           });
         },
         error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)

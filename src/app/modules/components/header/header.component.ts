@@ -38,8 +38,7 @@ export class HeaderComponent implements OnInit {
 
   setTheme(): void {
     this.theme = localStorage.getItem(LocalStorageAcessors.THEME) || Themes.LIGHT;
-    const body = document.getElementsByTagName('body')[0];
-    body.classList.add(this.theme);
+    document.getElementsByTagName('body')[0].classList.add(this.theme);
   }
 
   setCurrentRoute(): void {
@@ -51,12 +50,19 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/', route]);
   }
 
-  switchTheme(event: SliderToggle): void {
-    const body = document.getElementsByTagName('body')[0];
-    body.classList.remove(this.theme);
-    this.theme = event.checked ?  Themes.DARK : Themes.LIGHT;
-    body.classList.add(this.theme);
+  switchTheme(): void {
+    console.log(this.theme);
+    this.replaceThemeClass();
+    this.theme = this.theme === Themes.LIGHT ?  Themes.DARK : Themes.LIGHT;
     localStorage.setItem(LocalStorageAcessors.THEME, this.theme);
+  }
+
+  replaceThemeClass(): void {
+    const currentTheme = this.theme;
+    const futureTheme = this.theme === Themes.DARK ? Themes.LIGHT : Themes.DARK;
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove(currentTheme);
+    body.classList.add(futureTheme);
   }
 
 }

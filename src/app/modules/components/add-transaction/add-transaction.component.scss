@@ -1,12 +1,8 @@
-@import '../../../../variables.scss';
-
 .add-transaction-wrapper {
 
     .form-group {
         width: 80%;
-        border: 1px solid $border-color;
         border-radius: 5px;
-        box-shadow: 3px 1px 3px $shadow-color;
         margin: 0 auto;
         padding: 5px;
     }

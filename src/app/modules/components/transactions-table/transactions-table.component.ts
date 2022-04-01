@@ -57,8 +57,6 @@ export class TransactionsTableComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  pageNumber = 1;
-
   filterValues: FormGroup = new FormGroup({
     q: new FormControl(Forms.INIT_VALUE),
     externalId: new FormControl(Forms.INIT_VALUE),
