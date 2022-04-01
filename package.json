@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "eslint './**' --fix",
-    "heroku-postbuild": "ng build internship-project prod"
+    "heroku-postbuild": "ng build internship-project --prod"
   },
   "private": true,
   "dependencies": {
