@@ -25,12 +25,14 @@
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
         display: flex;
+        justify-content: center;
     }
 
     .flex-element {
         display: flex;
         flex: 1;
         justify-content: center;
+        width: 20%;
     }
 
     .pagination-pannel {
