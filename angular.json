@@ -44,15 +44,6 @@
             "scripts": []
           },
           "configurations": {
-            "ru": {
-              "localize": ["ru"]
-            },
-            "ua": {
-              "localize": ["ua"]
-            },
-            "by": {
-              "localize": ["by"]
-            },
             "production": {
               "budgets": [
                 {

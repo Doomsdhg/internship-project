@@ -79,6 +79,13 @@ $success-color: mat-color($success-palette);
         box-shadow: 0 0 10px $shadow-color;
     }
 
+    .add-transaction-wrapper {
+        .form-group {
+            box-shadow: 0 0 10px $shadow-color;
+        }
+    }
+    
+
 }
 
 .light-theme {
@@ -114,6 +121,12 @@ $success-color: mat-color($success-palette);
 
     .transactions-table-wrapper {
         box-shadow: 0 0 10px $shadow-color;
+    }
+
+    .add-transaction-wrapper {
+        .form-group {
+            box-shadow: 0 0 10px $shadow-color;
+        }
     }
 
 }
