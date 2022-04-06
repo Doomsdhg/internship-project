@@ -77,6 +77,7 @@ export class TransactionPageComponent implements OnInit {
 
   getTransactionInfo(): void {
     const transactionId = this.route.snapshot.paramMap.get('id');
+    console.log(transactionId);
     this.transactionApiService.getDefiniteTransaction(transactionId).subscribe((success: Transaction) => {
       this.transactionInfo = success;
       this.createFormGroup();
