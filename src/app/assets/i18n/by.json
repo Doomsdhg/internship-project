@@ -4,9 +4,9 @@
     "currency": "Валюта",
     "displayedColumns": {
         "externalId": "Нумар",
-        "username": "Імя карыстальніка",
+        "user": "Імя карыстальніка",
         "amount": "Сума",
-        "comissionAmount": "Сума камісіі",
+        "commissionAmount": "Сума камісіі",
         "provider": "Правайдэр",
         "actions": "Дзеянні",
         "currency": "Валюта",
@@ -29,9 +29,9 @@
     },
     "required": {
         "externalId": "Патрабуецца ўвесці нумар",
-        "username": "Патрабуецца ўвесці імя карыстальніка",
+        "user": "Патрабуецца ўвесці імя карыстальніка",
         "amount": "Патрабуецца ўвесці колькасць",
-        "comissionAmount": "Патрабуецца ўвесці камісію",
+        "commissionAmount": "Патрабуецца ўвесці камісію",
         "provider": "Патрабуецца ўвесці правайдэра",
         "currency": "Патрабуецца ўвесці валюту",
         "comissionCurrency": "Патрабуецца ўвесці валюту камісіі"
@@ -41,9 +41,9 @@
         "provider": "Напрыклад 'paypal'",
         "amount": "Напрыклад '100'",
         "currency": "Напрыклад 'BYN'",
-        "comissionAmount": "Напрыклад '10'",
+        "commissionAmount": "Напрыклад '10'",
         "comissionCurrency": "Напрыклад 'BYN'",
-        "username": "Напрыклад 'Слава Комиссаренко'",
+        "user": "Напрыклад 'Слава Комиссаренко'",
         "additionalData": "Напрыклад 'Дадатковыя дадзеныя'",
         "search": "Пошук"
     },

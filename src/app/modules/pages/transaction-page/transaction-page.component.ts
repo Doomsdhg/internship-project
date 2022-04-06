@@ -38,12 +38,12 @@ export class TransactionPageComponent implements OnInit {
   createFormGroup(): void {
     this.transactionUpdateForm = new FormGroup({
       provider: new FormControl(this.transactionInfo.provider),
-      username: new FormControl(this.transactionInfo.username),
+      user: new FormControl(this.transactionInfo.user),
       externalId: new FormControl(this.transactionInfo.externalId),
       amount: new FormControl(this.transactionInfo.amount.amount),
       currency: new FormControl(this.transactionInfo.amount.currency),
-      comissionAmount: new FormControl(this.transactionInfo.comissionAmount.amount),
-      comissionCurrency: new FormControl(this.transactionInfo.comissionAmount.currency),
+      commissionAmount: new FormControl(this.transactionInfo.commissionAmount.amount),
+      comissionCurrency: new FormControl(this.transactionInfo.commissionAmount.currency),
       additionalData: new FormControl(this.transactionInfo.additionalData)
     });
   }
@@ -91,13 +91,13 @@ export class TransactionPageComponent implements OnInit {
   updateTransaction = (): void => {
     const updateObj: TransactionUpdateData = {
       "externalId": this.transactionUpdateForm.value.externalId,
-      "username": this.transactionUpdateForm.value.username,
+      "user": this.transactionUpdateForm.value.user,
       "amount": {
         "amount": this.transactionUpdateForm.value.amount,
         "currency": this.transactionUpdateForm.value.currency.toUpperCase()
       },
-      "comissionAmount": {
-        "amount": this.transactionUpdateForm.value.comissionAmount,
+      "commissionAmount": {
+        "amount": this.transactionUpdateForm.value.commissionAmount,
         "currency": this.transactionUpdateForm.value.comissionCurrency.toUpperCase()
       },
       "provider": this.transactionUpdateForm.value.provider,

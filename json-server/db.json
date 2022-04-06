@@ -7,11 +7,11 @@
         "amount": "14",
         "currency": "USD"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "1",
         "currency": "USD"
       },
-      "username": "Nikolay",
+      "user": "Nikolay",
       "additionalData": "",
       "id": "qZzyKpp"
     },
@@ -22,11 +22,11 @@
         "amount": "1000",
         "currency": "USD"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "100",
         "currency": "USD"
       },
-      "username": "Vladimir",
+      "user": "Vladimir",
       "additionalData": "",
       "id": "tQbthb4"
     },
@@ -37,11 +37,11 @@
         "amount": "544",
         "currency": "EUR"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "54",
         "currency": "EUR"
       },
-      "username": "Svetlana",
+      "user": "Svetlana",
       "additionalData": "",
       "id": "Xb9gAxI"
     },
@@ -52,11 +52,11 @@
         "amount": 123,
         "currency": "RUB"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": 1,
         "currency": "RUB"
       },
-      "username": "dsadas",
+      "user": "dsadas",
       "additionalData": "",
       "id": "fwVPw1B"
     },
@@ -67,11 +67,11 @@
         "amount": "123123",
         "currency": "QWEQWE"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "123123",
         "currency": "QWEQW"
       },
-      "username": "qdqwdqw",
+      "user": "qdqwdqw",
       "additionalData": "",
       "id": "6TQyOuw"
     },
@@ -82,11 +82,11 @@
         "amount": 1234,
         "currency": "ZXC"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": 123,
         "currency": "ZXC"
       },
-      "username": "qweqwdqqwdzxc",
+      "user": "qweqwdqqwdzxc",
       "additionalData": "qwdqwd",
       "id": "Ht2eXVn"
     },
@@ -97,11 +97,11 @@
         "amount": "123",
         "currency": "DSA"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "123",
         "currency": "ASD"
       },
-      "username": "dssdqw",
+      "user": "dssdqw",
       "additionalData": "",
       "id": "bEOtW-O"
     },
@@ -112,11 +112,11 @@
         "amount": "13333",
         "currency": "USD"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "133",
         "currency": "USD"
       },
-      "username": "qqqq123",
+      "user": "qqqq123",
       "additionalData": "",
       "id": "HPnzYU_"
     },
@@ -127,11 +127,11 @@
         "amount": "133",
         "currency": "USD"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "13",
         "currency": "USD"
       },
-      "username": "adwqdqw",
+      "user": "adwqdqw",
       "additionalData": null,
       "id": "TmkOU5M"
     },
@@ -142,11 +142,11 @@
         "amount": "123",
         "currency": "QWE"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "12",
         "currency": "QWE"
       },
-      "username": "qdwd",
+      "user": "qdwd",
       "additionalData": null,
       "id": "n7_-2Vr"
     },
@@ -157,11 +157,11 @@
         "amount": "123",
         "currency": "QWE"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "12",
         "currency": "QWE"
       },
-      "username": "dqwd",
+      "user": "dqwd",
       "additionalData": null,
       "id": "ddR3Iqc"
     },
@@ -172,11 +172,11 @@
         "amount": "123",
         "currency": "QWE"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "12",
         "currency": "QWE"
       },
-      "username": "qdwdq",
+      "user": "qdwdq",
       "additionalData": null,
       "id": "C1McOOC"
     },
@@ -187,11 +187,11 @@
         "amount": "12",
         "currency": "WEQ"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "1",
         "currency": "QWD"
       },
-      "username": "fwqf",
+      "user": "fwqf",
       "additionalData": null,
       "id": "PwRhGQ9"
     },
@@ -202,11 +202,11 @@
         "amount": "12",
         "currency": "QWE"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": "12q",
         "currency": "QWE"
       },
-      "username": "qdw",
+      "user": "qdw",
       "additionalData": null,
       "id": "M0Az-yj"
     },
@@ -217,11 +217,11 @@
         "amount": 123,
         "currency": "QWE"
       },
-      "comissionAmount": {
+      "commissionAmount": {
         "amount": 12,
         "currency": "QWE"
       },
-      "username": "dqwdqw",
+      "user": "dqwdqw",
       "additionalData": null,
       "id": "rHy2ogi"
     }

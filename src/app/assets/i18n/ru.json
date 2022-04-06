@@ -4,9 +4,9 @@
     "currency": "Валюта",
     "displayedColumns": {
         "externalId": "Номер",
-        "username": "Имя пользователя",
+        "user": "Имя пользователя",
         "amount": "Количество",
-        "comissionAmount": "Комиссия",
+        "commissionAmount": "Комиссия",
         "provider": "Провайдер",
         "actions": "Действия",
         "currency": "Валюта",
@@ -29,9 +29,9 @@
     },
     "required": {
         "externalId": "Требуется ввести номер",
-        "username": "Требуется ввести имя пользователя",
+        "user": "Требуется ввести имя пользователя",
         "amount": "Требуется ввести количество",
-        "comissionAmount": "Требуется ввести комиссию",
+        "commissionAmount": "Требуется ввести комиссию",
         "provider": "Требуется ввести провайдера",
         "currency": "Требуется ввести валюту",
         "comissionCurrency": "Требуется ввести валюту комиссии"
@@ -41,9 +41,9 @@
         "provider": "Например, 'qiwi'",
         "amount": "Например, '100'",
         "currency": "Например, 'RUB'",
-        "comissionAmount": "Например, '10'",
+        "commissionAmount": "Например, '10'",
         "comissionCurrency": "Например, 'RUB'",
-        "username": "Например, 'любитель кефира'",
+        "user": "Например, 'любитель кефира'",
         "additionalData": "Например, 'какая-то дополнительная информация'",
         "search": "Поиск"
     },

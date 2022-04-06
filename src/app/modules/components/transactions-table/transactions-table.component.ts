@@ -26,10 +26,10 @@ interface Column {
 interface Row {
   displayForms: boolean,
   provider: string,
-  username: string,
+  user: string,
   externalId: string,
   amount: Amount,
-  comissionAmount: Amount,
+  commissionAmount: Amount,
   additionalData: string,
   id: string
 }
@@ -38,8 +38,8 @@ interface Sorted {
   externalId?: boolean,
   provider?: boolean,
   amount?: boolean,
-  comissionAmount?: boolean,
-  username?: boolean
+  commissionAmount?: boolean,
+  user?: boolean
 }
 
 @Component({
@@ -62,8 +62,8 @@ export class TransactionsTableComponent implements OnInit {
     externalId: new FormControl(Forms.INIT_VALUE),
     provider: new FormControl(Forms.INIT_VALUE),
     amount: new FormControl(Forms.INIT_VALUE),
-    comissionAmount: new FormControl(Forms.INIT_VALUE),
-    username: new FormControl(Forms.INIT_VALUE),
+    commissionAmount: new FormControl(Forms.INIT_VALUE),
+    user: new FormControl(Forms.INIT_VALUE),
   });
 
   formsToggled = false;
@@ -73,7 +73,7 @@ export class TransactionsTableComponent implements OnInit {
     Columns.ID_PROVIDER,
     Columns.ID_AMOUNT,
     Columns.ID_COMISSION_AMOUNT,
-    Columns.ID_USERNAME,
+    Columns.ID_user,
     Columns.ID_ACTIONS];
 
   columnNames: Column[] = [{
@@ -93,8 +93,8 @@ export class TransactionsTableComponent implements OnInit {
     value: Columns.NAME_COMISSION_AMOUNT,
   },
   {
-    id: Columns.ID_USERNAME,
-    value: Columns.NAME_USERNAME,
+    id: Columns.ID_user,
+    value: Columns.NAME_user,
   },
   {
     id: Columns.ID_ACTIONS,
@@ -149,14 +149,14 @@ export class TransactionsTableComponent implements OnInit {
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USERNAME,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_user,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
       .subscribe((translations: Translations) => {
         this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
         this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
         this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
         this.columnNames[3].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT];
-        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USERNAME];
+        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_user];
         this.columnNames[5].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
       });
   }
@@ -209,12 +209,12 @@ export class TransactionsTableComponent implements OnInit {
     row.displayForms = !row.displayForms;
     this.transactionUpdateForm = new FormGroup({
       provider: new FormControl(row.provider),
-      username: new FormControl(row.username),
+      user: new FormControl(row.user),
       externalId: new FormControl(row.externalId),
       amount: new FormControl(row.amount.amount),
       currency: new FormControl(row.amount.currency),
-      comissionAmount: new FormControl(row.comissionAmount.amount),
-      comissionCurrency: new FormControl(row.comissionAmount.currency),
+      commissionAmount: new FormControl(row.commissionAmount.amount),
+      comissionCurrency: new FormControl(row.commissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     });
   };
@@ -229,13 +229,13 @@ export class TransactionsTableComponent implements OnInit {
     const id: string | undefined = currentTarget.dataset['id'];
     const updateObj: TransactionUpdateData = {
       "externalId": this.transactionUpdateForm.value.externalId,
-      "username": this.transactionUpdateForm.value.username,
+      "user": this.transactionUpdateForm.value.user,
       "amount": {
         "amount": this.transactionUpdateForm.value.amount,
         "currency": this.transactionUpdateForm.value.currency.toUpperCase()
       },
-      "comissionAmount": {
-        "amount": this.transactionUpdateForm.value.comissionAmount,
+      "commissionAmount": {
+        "amount": this.transactionUpdateForm.value.commissionAmount,
         "currency": this.transactionUpdateForm.value.comissionCurrency.toUpperCase()
       },
       "provider": this.transactionUpdateForm.value.provider,
@@ -282,14 +282,14 @@ export class TransactionsTableComponent implements OnInit {
         return data.externalId.indexOf(searchTerms.id) !== -1
           && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
           && String(data.amount.amount).indexOf(searchTerms.amount) !== -1
-          && String(data.comissionAmount.amount).indexOf(searchTerms.comissionAmount) !== -1
-          && data.username.toLowerCase().indexOf(searchTerms.username) !== -1;
+          && String(data.commissionAmount.amount).indexOf(searchTerms.commissionAmount) !== -1
+          && data.user.toLowerCase().indexOf(searchTerms.user) !== -1;
       } catch (e) {
         return data.externalId.indexOf(filter) !== -1
           || data.provider.toString().toLowerCase().indexOf(filter) !== -1
           || String(data.amount.amount).indexOf(filter) !== -1
-          || String(data.comissionAmount.amount).indexOf(filter) !== -1
-          || data.username.toLowerCase().indexOf(filter) !== -1;
+          || String(data.commissionAmount.amount).indexOf(filter) !== -1
+          || data.user.toLowerCase().indexOf(filter) !== -1;
       }
     };
     return filterFunction;

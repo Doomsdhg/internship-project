@@ -4,9 +4,9 @@
     "currency": "Валюта",
     "displayedColumns": {
         "externalId": "Номер",
-        "username": "Ім'я користувача",
+        "user": "Ім'я користувача",
         "amount": "Сума",
-        "comissionAmount": "Сума комісії",
+        "commissionAmount": "Сума комісії",
         "provider": "Постачальник",
         "actions": "Дії",
         "currency": "Валюта",
@@ -29,9 +29,9 @@
     },
     "required": {
         "externalId": "Потрібно ввести номер",
-        "username": "Потрібно ввести ім'я користувача",
+        "user": "Потрібно ввести ім'я користувача",
         "amount": "Потрібно ввести кількість",
-        "comissionAmount": "Потрібно запровадити комісію",
+        "commissionAmount": "Потрібно запровадити комісію",
         "provider": "Потрібно ввести провайдера",
         "currency": "Потрібно ввести валюту",
         "comissionCurrency": "Потрібно запровадити валюту комісії"
@@ -41,9 +41,9 @@
         "provider": "Наприклад 'paypal'",
         "amount": "Наприклад '100'",
         "currency": "Наприклад 'UAH'",
-        "comissionAmount": "Наприклад '10'",
+        "commissionAmount": "Наприклад '10'",
         "comissionCurrency": "Наприклад 'UAH'",
-        "username": "Наприклад 'Дмитро Гордон'",
+        "user": "Наприклад 'Дмитро Гордон'",
         "additionalData": "Наприклад 'Додаткові дані'",
         "search": "пошук"
     },
