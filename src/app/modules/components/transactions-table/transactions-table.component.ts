@@ -10,7 +10,7 @@ import { Target } from '../../../modules/interfaces/browser-event.interface';
 import { Router } from '@angular/router';
 import { Translations } from 'src/app/modules/interfaces/translations.interface';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
-import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
+import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { Forms } from 'src/app/constants/forms.constants';
 import { Columns } from 'src/app/constants/columns.constants';
@@ -116,6 +116,7 @@ export class TransactionsTableComponent implements OnInit {
     this.loadData();
     this.translateColumnsNames();
     this.dataSource.filterPredicate = this.createFilter();
+    console.log(this.dataSource);
   }
 
   sortingDataAccessor(data: Transaction, sortHeaderId: string): string | number {
@@ -219,7 +220,7 @@ export class TransactionsTableComponent implements OnInit {
   };
 
   transactionRedirect(row: Row): void {
-    this.router.navigate([ApiEndpoints.TRANSACTIONS, row.id]);
+    this.router.navigate([AppRoutes.TRANSACTIONS, row.id]);
   }
 
   updateTransaction = (e: Event, row: Row): void => {

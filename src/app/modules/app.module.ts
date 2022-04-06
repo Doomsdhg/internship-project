@@ -32,7 +32,9 @@ import { SelectLanguageComponent } from './components/select-language/select-lan
 import { NumericLengthDirective } from './directives/numeric-length.directive';
 import { HeaderComponent } from './components/header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatMenuModule} from '@angular/material/menu'; 
+import {MatMenuModule} from '@angular/material/menu';
+import { AuthPageComponent } from './pages/auth-page/auth-page.component';
+import { AuthFormComponent } from './components/auth-form/auth-form.component'; 
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -50,7 +52,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     UniqueValueDirective,
     SelectLanguageComponent,
     NumericLengthDirective,
-    HeaderComponent
+    HeaderComponent,
+    AuthPageComponent,
+    AuthFormComponent
   ],
   imports: [
     MatMenuModule,

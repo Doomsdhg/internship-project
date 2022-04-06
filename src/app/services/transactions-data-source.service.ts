@@ -46,13 +46,13 @@ export class TransactionsDataSource extends
         next: (transactions: HttpResponse<Page<Transaction>>) => {
           this.transactionsSubject.next(transactions);
           this.transactionsSubject.asObservable().subscribe((success: HttpResponse<Page<Transaction>>) => {
-            this.data = success.body!.results;
-            this.currentPageNumber = success.body!.page;
-            this.lastPage = success.body!.totalPages;
-            this.totalTransactions = success.body!.totalElements;
-            this.displayedTransactions = this.currentPageNumber === success.body!.totalPages ? 
-            String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + success.body!.totalElements):
-            String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + this.currentPageNumber * this.selectedPageSize);
+            this.data = success.body as unknown as Transaction[];
+            // this.currentPageNumber = success.body!.page;
+            // this.lastPage = success.body!.totalPages;
+            // this.totalTransactions = success.body!.totalElements;
+            // this.displayedTransactions = this.currentPageNumber === success.body!.totalPages ? 
+            // String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + success.body!.totalElements):
+            // String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + this.currentPageNumber * this.selectedPageSize);
           });
         },
         error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
