@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 import { Themes } from 'src/app/constants/themes.constants';
 import { environment } from 'src/environments/environment.prod';
@@ -20,7 +20,8 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {
     router.events.subscribe(() => {
       this.setCurrentRoute();
@@ -30,6 +31,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.setCurrentRoute();
     this.setTheme();
+    localStorage.setItem('jwt', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4YzY5NzZlNWI1NDEwNDE1YmRlOTA4YmQ0ZGVlMTVkZmIxNjdhOWM4NzNmYzRiYjhhODFmNmYyYWI0NDhhOTE4Iiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpYXQiOjE2NDkyNjA5OTUsImV4cCI6MTY0OTI2NTk5NX0.DXz19muXiIv7wEGf5ckg8G8svCHsweyTGDu-ApI3MQ08fKgvvCdUzGAOoLCDulVBjVm4kHPQjOKZQKHk6rgAdQ');
   }
 
   setTheme(): void {
@@ -49,7 +51,7 @@ export class HeaderComponent implements OnInit {
   switchTheme(): void {
     console.log(this.theme);
     this.replaceThemeClass();
-    this.theme = this.theme === Themes.LIGHT ?  Themes.DARK : Themes.LIGHT;
+    this.theme = this.theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT;
     localStorage.setItem(LocalStorageAcessors.THEME, this.theme);
   }
 

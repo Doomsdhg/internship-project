@@ -1,3 +1,3 @@
 export class ApiEndpoints {
-    static readonly TRANSACTIONS = 'transactions/';
+    static readonly TRANSACTIONS = 'admin/transactions/';
 }

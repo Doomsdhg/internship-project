@@ -1,0 +1,12 @@
+<div class="auth-form-wrapper">
+    <form [formGroup]="authForms">
+        <mat-form-field [style.width.%]=100 class="auth-form-wrapper__input" appearance="fill">
+            <mat-label>login</mat-label>
+            <input [formControlName="login"]>
+        </mat-form-field>
+        <mat-form-field [style.width.%]=100 class="auth-form-wrapper__input" appearance="fill">
+            <mat-label>password</mat-label>
+            <input type="password" [formControlName="password"]>
+        </mat-form-field>
+    </form>
+</div>

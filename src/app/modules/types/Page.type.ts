@@ -3,5 +3,5 @@ export declare class Page<T> {
     pageSize: number;
     totalPages: number;
     totalElements: number;
-    results: T[];
+    body: T[];
 }
