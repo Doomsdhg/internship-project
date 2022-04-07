@@ -8,6 +8,7 @@ import { Pageable } from 'src/app/modules/models/Pageable.model';
 import { Sortable } from 'src/app/modules/models/Sortable.model';
 import { Page } from 'src/app/modules/types/Page.type';
 import { QueryPredicates } from 'src/app/modules/models/QueryPredicates.model';
+import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,7 @@ export class TransactionApiService {
   constructor(private http: HttpClient) { }
 
   private headers: HttpHeaders = new HttpHeaders({
-    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-    // 'Access-Control-Allow-Origin': '*'
+    'Authorization': `Bearer ${localStorage.getItem(LocalStorageAcessors.TOKEN)}`
   });
 
   deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {

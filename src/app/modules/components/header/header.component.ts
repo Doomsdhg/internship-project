@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 import { Themes } from 'src/app/constants/themes.constants';
+import { AuthService } from 'src/app/services/web-services/auth.service';
 import { environment } from 'src/environments/environment.prod';
+import { AppRoutes } from 'src/app/constants/app-routes.constants';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +23,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private route: ActivatedRoute
+    private auth: AuthService
   ) {
     router.events.subscribe(() => {
       this.setCurrentRoute();
@@ -29,6 +31,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(localStorage);
+    console.log(localStorage.getItem(LocalStorageAcessors.TOKEN_EXPIRATION_DATE));
     this.setCurrentRoute();
     this.setTheme();
   }
@@ -48,7 +52,6 @@ export class HeaderComponent implements OnInit {
   }
 
   switchTheme(): void {
-    console.log(this.theme);
     this.replaceThemeClass();
     this.theme = this.theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT;
     localStorage.setItem(LocalStorageAcessors.THEME, this.theme);
@@ -60,6 +63,12 @@ export class HeaderComponent implements OnInit {
     const body = document.getElementsByTagName('body')[0];
     body.classList.remove(currentTheme);
     body.classList.add(futureTheme);
+  }
+
+  logout(): void {
+    this.auth.logout().subscribe(() => {
+      this.redirect(AppRoutes.AUTHENTICATION);
+    });
   }
 
 }

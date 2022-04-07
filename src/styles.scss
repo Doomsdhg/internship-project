@@ -28,7 +28,7 @@ $warning-color: mat-color($warning-palette);
 $success-palette: mat-palette($mat-green);
 $success-color: mat-color($success-palette);
 
-//Styles
+//Themes styles
 
 @include angular-material-theme($light-theme);
 
@@ -131,6 +131,7 @@ $success-color: mat-color($success-palette);
 
 }
 
+// default styles
 
 html,
 body {

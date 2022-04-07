@@ -5,6 +5,7 @@ import { InputChangeGuard } from '../services/guards/input-change.guard';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { TransactionPageComponent } from './pages/transaction-page/transaction-page.component';
 import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
+import { AppRoutes } from '../constants/app-routes.constants';
 
 const routes: Routes = [
   { path: '', redirectTo: '/transactions', pathMatch: 'full' },
@@ -13,7 +14,7 @@ const routes: Routes = [
     component: TransactionsTablePageComponent
   },
   {
-    path: 'auth',
+    path: AppRoutes.AUTHENTICATION,
     component: AuthPageComponent
   },
   {

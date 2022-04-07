@@ -35,7 +35,10 @@
         "transactions": "Transactions",
         "leave": "Leave",
         "stay": "Stay",
-        "cancelChanges": "Cancel changes"
+        "cancelChanges": "Cancel changes",
+        "auth": "Authentication",
+        "login": "Login",
+        "logout": "Log out"
     },
     "placeholders": {
         "externalId": "E.g. '123'",
@@ -69,6 +72,10 @@
             "unique": "Value is unique",
             "notUnique": "Value is not unique"
         }
+    },
+    "labels": {
+        "login": "Login",
+        "password": "Password"
     },
     "requiredInputs": "* - required fields",
     "of": "of",

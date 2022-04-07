@@ -40,6 +40,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
 }
 
+export function tokenGetter() {
+  return localStorage.getItem("jwt");
+}
+
 @NgModule({
   declarations: [
     AppComponent,
