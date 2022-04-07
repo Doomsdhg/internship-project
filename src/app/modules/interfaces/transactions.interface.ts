@@ -8,8 +8,8 @@ export interface Transaction extends Object {
   externalId: string,
   provider: string,
   amount: Amount,
-  comissionAmount: Amount,
-  username: string,
+  commissionAmount: Amount,
+  user: string,
   additionalData?: string
 }
 
@@ -17,8 +17,8 @@ export interface TransactionUpdateData {
   externalId: string,
   provider: string,
   amount: Amount,
-  comissionAmount: Amount,
-  username: string,
+  commissionAmount: Amount,
+  user: string,
   additionalData?: string
 }
 

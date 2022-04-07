@@ -25,14 +25,14 @@
     </div>
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-        <input formControlName="comissionAmount" matInput>
+        <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
+        <input formControlName="commissionAmount" matInput>
       </mat-form-field>
     </div>
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
-        <input formControlName="username" matInput>
+        <mat-label>{{'displayedColumns.user' | translate}}</mat-label>
+        <input formControlName="user" matInput>
       </mat-form-field>
     </div>
     <div class="flex-element">
@@ -123,10 +123,10 @@
     </ng-container>
 
     <!-- Comission amount Column -->
-    <ng-container matColumnDef="comissionAmount">
-      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('comissionAmount')">
+    <ng-container matColumnDef="commissionAmount">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('commissionAmount')">
         <span class="column-header">
-          {{ 'displayedColumns.comissionAmount' | translate }}{{sorted !== undefined && sorted.comissionAmount !== undefined ? sorted!.comissionAmount?'▲':'▼':''}}
+          {{ 'displayedColumns.commissionAmount' | translate }}{{sorted !== undefined && sorted.commissionAmount !== undefined ? sorted!.commissionAmount?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -135,31 +135,31 @@
           <div class="amount-form-container">
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{'displayedColumns.comissionAmount' | translate}}</mat-label>
-                <input required [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="comissionAmount"
-                  value="{{row.comissionAmount.amount}}" placeholder="{{ 'placeholders.comissionAmount' | translate }}">
+                <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
+                <input required [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="commissionAmount"
+                  value="{{row.commissionAmount.amount}}" placeholder="{{ 'placeholders.commissionAmount' | translate }}">
               </mat-form-field>
             </form>
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.comissionCurrency' | translate}}</mat-label>
-                <input required matInput formControlName="comissionCurrency" value="{{row.comissionAmount.currency}}"
+                <input required matInput formControlName="comissionCurrency" value="{{row.commissionAmount.currency}}"
                   placeholder="{{ 'placeholders.comissionCurrency' | translate }}">
               </mat-form-field>
             </form>
           </div>
         </ng-template>
         <ng-template #rowData>
-          {{row.comissionAmount.amount | currency: row.comissionAmount.currency}}
+          {{row.commissionAmount.amount | currency: row.commissionAmount.currency}}
         </ng-template>
       </mat-cell>
     </ng-container>
 
-    <!-- Username Column -->
-    <ng-container matColumnDef="username">
-      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('username')">
+    <!-- user Column -->
+    <ng-container matColumnDef="user">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('user')">
         <span class="column-header">
-          {{ 'displayedColumns.username' | translate }}{{sorted !== undefined && sorted.username !== undefined ? sorted!.username?'▲':'▼':''}}
+          {{ 'displayedColumns.user' | translate }}{{sorted !== undefined && sorted.user !== undefined ? sorted!.user?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row">
@@ -167,14 +167,14 @@
         <ng-template #editForms>
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
             <mat-form-field class="amount-form-container__input" appearance="fill">
-              <mat-label>{{'displayedColumns.username' | translate}}</mat-label>
-              <input required matInput formControlName="username" value="{{row.username}}"
-                placeholder="{{ 'placeholders.username' | translate }}">
+              <mat-label>{{'displayedColumns.user' | translate}}</mat-label>
+              <input required matInput formControlName="user" value="{{row.user}}"
+                placeholder="{{ 'placeholders.user' | translate }}">
             </mat-form-field>
           </form>
         </ng-template>
         <ng-template #rowData>
-          {{row.username}}
+          {{row.user}}
         </ng-template>
       </mat-cell>
     </ng-container>

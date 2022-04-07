@@ -39,11 +39,11 @@ export class AddTransactionComponent implements OnInit {
   initFormGroup = (): void => {
     this.transactionForm = new FormGroup({
       provider: new FormControl(),
-      username: new FormControl(),
+      user: new FormControl(),
       externalId: new FormControl(),
       amount: new FormControl(),
       currency: new FormControl(),
-      comissionAmount: new FormControl(),
+      commissionAmount: new FormControl(),
       comissionCurrency: new FormControl(),
       additionalData: new FormControl()
     });
@@ -62,11 +62,11 @@ export class AddTransactionComponent implements OnInit {
           "amount": Number(this.transactionForm.value.amount),
           "currency": this.transactionForm.value.currency.toUpperCase()
         },
-        "comissionAmount": {
-          "amount": Number(this.transactionForm.value.comissionAmount),
+        "commissionAmount": {
+          "amount": Number(this.transactionForm.value.commissionAmount),
           "currency": this.transactionForm.value.comissionCurrency.toUpperCase()
         },
-        "username": this.transactionForm.value.username,
+        "user": this.transactionForm.value.user,
         "additionalData": this.transactionForm.value.additionalData
       };
       this.transactionApiService.uploadTransaction(transactionObj).subscribe({

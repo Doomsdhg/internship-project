@@ -31,7 +31,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.setCurrentRoute();
     this.setTheme();
-    localStorage.setItem('jwt', 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4YzY5NzZlNWI1NDEwNDE1YmRlOTA4YmQ0ZGVlMTVkZmIxNjdhOWM4NzNmYzRiYjhhODFmNmYyYWI0NDhhOTE4Iiwicm9sZXMiOlsiUk9MRV9BRE1JTiJdLCJpYXQiOjE2NDkyNjA5OTUsImV4cCI6MTY0OTI2NTk5NX0.DXz19muXiIv7wEGf5ckg8G8svCHsweyTGDu-ApI3MQ08fKgvvCdUzGAOoLCDulVBjVm4kHPQjOKZQKHk6rgAdQ');
   }
 
   setTheme(): void {
@@ -45,7 +44,7 @@ export class HeaderComponent implements OnInit {
   }
 
   redirect(route: string): void {
-    this.router.navigate(['/', route]);
+    this.router.navigate([route]);
   }
 
   switchTheme(): void {

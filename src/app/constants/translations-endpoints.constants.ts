@@ -5,9 +5,9 @@ export class TranslationsEndpoints {
     static readonly SNACKBAR_TRANSACTION_ADDED = 'snackbar.transactionAdded';
     static readonly SNACKBAR_TRANSACTION_DELETED = 'snackbar.transactionDeleted';
     static readonly SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID = 'displayedColumns.externalId';
-    static readonly SNACKBAR_DISPLAYED_COLUMNS_USERNAME = 'displayedColumns.username';
+    static readonly SNACKBAR_DISPLAYED_COLUMNS_user = 'displayedColumns.user';
     static readonly SNACKBAR_DISPLAYED_COLUMNS_AMOUNT = 'displayedColumns.amount';
-    static readonly SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT = 'displayedColumns.comissionAmount';
+    static readonly SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT = 'displayedColumns.commissionAmount';
     static readonly SNACKBAR_DISPLAYED_COLUMNS_PROVIDER = 'displayedColumns.provider';
     static readonly SNACKBAR_DISPLAYED_COLUMNS_ACTIONS = 'displayedColumns.actions';
     static readonly SNACKBAR_NUMBERS_ONLY_ERROR = 'snackbar.numbersOnlyError';
