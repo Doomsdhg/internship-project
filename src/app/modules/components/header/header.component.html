@@ -9,7 +9,10 @@
             {{'buttons.transactions' | translate}}
         </button>
         <button mat-button class="{{currentRoute.slice(-4) === 'auth'?'active-link':''}}" (click)="redirect('auth')" color="primary">
-            {{'buttons.auth | translate'}}
+            {{'buttons.auth' | translate}}
+        </button>
+        <button mat-raised-button (click)="logout()" color="primary">
+            {{'buttons.logout' | translate}}
         </button>
     </div>
     <div class="managing-tools-container">

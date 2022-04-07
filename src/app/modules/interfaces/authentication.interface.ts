@@ -1,6 +1,7 @@
 export interface AuthenticationResponse {
     accessToken: string,
     refreshToken: string,
+    username: string,
     type: string
 }
 
@@ -10,4 +11,9 @@ export interface AuthenticationResponseError {
 
 interface ErrorObject {
     message: string
+}
+
+export interface DecodedToken {
+    exp: number,
+    iat: number
 }
