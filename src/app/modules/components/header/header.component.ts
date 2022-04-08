@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 import { Themes } from 'src/app/constants/themes.constants';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { environment } from 'src/environments/environment.prod';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
   selector: 'app-header',
@@ -23,16 +24,19 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private auth: AuthService
+    private auth: AuthService,
+    private localStorageManager: LocalStorageManagerService
   ) {
     router.events.subscribe(() => {
       this.setCurrentRoute();
     });
   }
 
+  public get authenticated() {
+    return this.localStorageManager.getAuthenticationInfo()?.authenticated;
+  }
+
   ngOnInit(): void {
-    console.log(localStorage);
-    console.log(localStorage.getItem(LocalStorageAcessors.TOKEN_EXPIRATION_DATE));
     this.setCurrentRoute();
     this.setTheme();
   }
@@ -67,6 +71,7 @@ export class HeaderComponent implements OnInit {
 
   logout(): void {
     this.auth.logout().subscribe(() => {
+      this.localStorageManager.deleteLoginValues();
       this.redirect(AppRoutes.AUTHENTICATION);
     });
   }

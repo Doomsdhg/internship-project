@@ -12,7 +12,8 @@
         "currency": "Валюта",
         "comissionCurrency": "Валюта комиссии",
         "additionalData": "Дополнительная информация",
-        "tools": "Действия"
+        "tools": "Действия",
+        "status": "Статус"
     },
     "buttons": {
         "delete": "Удалить",
@@ -62,6 +63,7 @@
         "serverError": "Ошибка сервера!",
         "transactionDeleted": "Транзакция успешно удалена",
         "numbersOnlyError": "В это поле можно вводить только цифры",
+        "transactionCompleted": "Транзакция завершена!",
         "numbersLimited": {
             "start": "Это поле ограничено",
             "middle": "Цифрами(ой) до запятой и",

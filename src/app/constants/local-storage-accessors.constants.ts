@@ -7,4 +7,5 @@ export class LocalStorageAcessors {
     static readonly TOKEN = 'jwt';
     static readonly REFRESH_TOKEN = 'refreshToken';
     static readonly USERNAME = 'username';
+    static readonly AUTHENTICATED = 'authenticated';
 }

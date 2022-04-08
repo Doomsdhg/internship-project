@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
 import { NotifyService } from 'src/app/services/notify.service';
 import { AuthService } from 'src/app/services/web-services/auth.service';
-import { AuthenticationResponse, AuthenticationResponseError, DecodedToken } from '../../interfaces/authentication.interface';
-import jwtDecode from "jwt-decode";
+import { AuthenticationResponse, AuthenticationResponseError } from '../../interfaces/authentication.interface';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
   selector: 'app-auth-form',
@@ -25,25 +25,18 @@ export class AuthFormComponent {
   constructor (
     private auth: AuthService, 
     private notify: NotifyService,
-    private router: Router
-) {
+    private router: Router,
+    private localStorageManager: LocalStorageManagerService
+  ) {
     }
 
   login(): void {
     this.auth.login(this.authForms.controls['login'].value, this.authForms.controls['password'].value).subscribe({
       next: (success: AuthenticationResponse) => {
-      console.log(success);
-      const decodedToken: DecodedToken = jwtDecode(success.accessToken);
-      console.log(jwtDecode(success.accessToken));
-      localStorage.setItem(LocalStorageAcessors.TOKEN, success.accessToken);
-      localStorage.setItem(LocalStorageAcessors.REFRESH_TOKEN, success.refreshToken);
-      localStorage.setItem(LocalStorageAcessors.USERNAME, success.username);
-      localStorage.setItem(LocalStorageAcessors.TOKEN_EXPIRATION_DATE, String(decodedToken.exp));
-      localStorage.setItem(LocalStorageAcessors.TOKEN_CREATION_DATE, String(decodedToken.iat));
-      this.router.navigate([AppRoutes.TRANSACTIONS]);
+        this.localStorageManager.setLoginValues(success);
+        this.router.navigate([AppRoutes.TRANSACTIONS]);
       },
       error: (error: AuthenticationResponseError) => {
-        console.log(error);
         this.notify.showMessage(error.error.message, Snackbar.ERROR_TYPE);
       }
     });

@@ -17,21 +17,18 @@ export class TransactionApiService {
 
   constructor(private http: HttpClient) { }
 
-  private headers: HttpHeaders = new HttpHeaders({
-    'Authorization': `Bearer ${localStorage.getItem(LocalStorageAcessors.TOKEN)}`
-  });
-
   deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
     return this.http.delete(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}${id}`);
   }
 
   getTransactions(query: string[] | string, pageNumber: number, pageSize: number, sortColumn: string, sortOrder: string): Observable<HttpResponse<Page<Transaction>>> {
+    console.log(new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString());
     return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
-      , { observe: 'response', headers: this.headers }) as Observable<HttpResponse<Page<Transaction>>>;
+      , { observe: 'response'}) as Observable<HttpResponse<Page<Transaction>>>;
   }
 
   getDefiniteTransaction(id: string | null): Observable<Transaction> {
-    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}/${id}`, {headers: this.headers}) as Observable<Transaction>;
+    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}/${id}`) as Observable<Transaction>;
   }
 
   patchTransaction(id: string | undefined, updateObj: TransactionUpdateData): Observable<Transaction> {
@@ -44,5 +41,9 @@ export class TransactionApiService {
 
   searchTransactions(name: string, value: string | number): Observable<Transaction[]> {
     return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}?${name}=${value}`) as Observable<Transaction[]>;
+  }
+
+  confirmTransaction(externalId: string | undefined, provider: string | undefined): Observable<Transaction[]> {
+    return this.http.post(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}?external_id=${externalId}&provider=${provider}`, {}) as Observable<Transaction[]>;
   }
 }

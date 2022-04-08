@@ -12,7 +12,8 @@
         "currency": "Currency",
         "comissionCurrency": "Comission currency",
         "additionalData": "Additional data",
-        "tools": "Tools"
+        "tools": "Tools",
+        "status": "Status"
     },
     "required": {
         "externalId": "No. is required",
@@ -63,6 +64,7 @@
         "serverError": "Server error!",
         "transactionDeleted": "Transaction deleted successfully!",
         "numbersOnlyError": "This field is numbers only",
+        "transactionCompleted": "Transaction completed!",
         "numbersLimited": {
             "start": "This field is limited to",
             "middle": "Digits before decimal point and",

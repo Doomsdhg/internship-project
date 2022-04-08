@@ -12,7 +12,8 @@
         "currency": "Валюта",
         "comissionCurrency": "Камісійная валюта",
         "additionalData": "Дадатковыя дадзеныя",
-        "tools": "Дзеянні"
+        "tools": "Дзеянні",
+        "status": "Статус"
     },
     "buttons": {
         "delete": "Выдаліць",
@@ -62,6 +63,7 @@
         "serverError": "Памылка сервера!",
         "transactionDeleted": "Транзакцыя паспяхова выдаленая",
         "numbersOnlyError": "У гэтае поле можна ўводзіць толькі лічбы",
+        "transactionCompleted": "Транзакцыя завершана!",
         "numbersLimited": {
             "start": "Гэтае поле абмежавана",
             "middle": "Лічбамі да коскі і",

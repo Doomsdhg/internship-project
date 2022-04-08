@@ -7,6 +7,7 @@ export interface Transaction extends Object {
   id: string,
   externalId: string,
   provider: string,
+  status: string,
   amount: Amount,
   commissionAmount: Amount,
   user: string,
@@ -16,6 +17,7 @@ export interface Transaction extends Object {
 export interface TransactionUpdateData {
   externalId: string,
   provider: string,
+  status: string,
   amount: Amount,
   commissionAmount: Amount,
   user: string,
@@ -29,5 +31,6 @@ export interface ApiTransactionResponse extends Object {
 export interface TransactionCrudResponseError {
   timestamp: number,
   status: number,
-  error: string
+  error: string,
+  message?: string
 }
