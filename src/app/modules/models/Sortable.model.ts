@@ -16,7 +16,7 @@ export class Sortable {
 
   toString() {
     if (this.direction && this.direction.length) {
-      return `&_sort=${this.field}&_order=${this.direction}`;
+      return `&sort=${this.field}&order=${this.direction}`;
     }
 
     // skip sorting if no direction passed

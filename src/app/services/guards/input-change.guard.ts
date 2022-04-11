@@ -3,7 +3,7 @@ import { CanDeactivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { GuardDialogContentComponent } from 'src/app/modules/components/guard-dialog-content/guard-dialog-content.component';
-import { TransactionPageComponent } from 'src/app/modules/pages/transaction-page/transaction-page.component';
+import { TransactionsTableComponent } from '../../modules/components/transactions-table/transactions-table.component';
 
 interface ComponentWithInput {
   checkIfInputsChanged: () => boolean
@@ -16,7 +16,7 @@ export class InputChangeGuard implements CanDeactivate<ComponentWithInput> {
 
   constructor(private dialog: MatDialog) { }
 
-  canDeactivate(component: TransactionPageComponent): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canDeactivate(component: TransactionsTableComponent): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.transactionUpdateForm.dirty) {
       return this.dialog.open(GuardDialogContentComponent).afterClosed();
     }

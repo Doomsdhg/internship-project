@@ -12,7 +12,8 @@
         "currency": "Валюта",
         "comissionCurrency": "Комісійна валюта",
         "additionalData": "Додаткові дані",
-        "tools": "Дії"
+        "tools": "Дії",
+        "status": "Статус"
     },
     "buttons": {
         "delete": "Видалити",
@@ -62,6 +63,7 @@
         "serverError": "Помилка сервера!",
         "transactionDeleted": "Транзакція успішно видалена",
         "numbersOnlyError": "У цьому полі можна вводити лише цифри",
+        "transactionCompleted": "Транзакція завершена!",
         "numbersLimited": {
             "start": "Це поле обмежене",
             "middle": "Цифрами до коми та",

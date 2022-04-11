@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
@@ -20,7 +20,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotifyService } from '../services/notify.service';
 import { MatSortModule } from '@angular/material/sort';
-import { TransactionPageComponent } from './pages/transaction-page/transaction-page.component';
 import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
 import { GuardDialogContentComponent } from './components/guard-dialog-content/guard-dialog-content.component';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -32,9 +31,10 @@ import { SelectLanguageComponent } from './components/select-language/select-lan
 import { NumericLengthDirective } from './directives/numeric-length.directive';
 import { HeaderComponent } from './components/header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { AuthFormComponent } from './components/auth-form/auth-form.component'; 
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -49,7 +49,6 @@ export function tokenGetter() {
     AppComponent,
     AddTransactionComponent,
     TransactionsTableComponent,
-    TransactionPageComponent,
     TransactionsTablePageComponent,
     GuardDialogContentComponent,
     NumbersOnlyDirective,
@@ -90,6 +89,7 @@ export function tokenGetter() {
     })
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     NotifyService,
     TransactionApiService,
     HttpClient,

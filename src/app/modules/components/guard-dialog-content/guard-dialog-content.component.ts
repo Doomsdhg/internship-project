@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TransactionPageComponent } from '../../pages/transaction-page/transaction-page.component';
+import { TransactionsTableComponent } from '../../components/transactions-table/transactions-table.component';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -10,7 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class GuardDialogContentComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<TransactionPageComponent>
+    public dialogRef: MatDialogRef<TransactionsTableComponent>
   ) { }
 
   close(decision: boolean): void {

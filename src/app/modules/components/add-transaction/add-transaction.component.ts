@@ -41,6 +41,7 @@ export class AddTransactionComponent implements OnInit {
       provider: new FormControl(),
       user: new FormControl(),
       externalId: new FormControl(),
+      status: new FormControl(),
       amount: new FormControl(),
       currency: new FormControl(),
       commissionAmount: new FormControl(),
@@ -58,6 +59,7 @@ export class AddTransactionComponent implements OnInit {
       const transactionObj: TransactionUpdateData = {
         "externalId": this.transactionForm.value.externalId,
         "provider": this.transactionForm.value.provider,
+        "status": this.transactionForm.value.status,
         "amount": {
           "amount": Number(this.transactionForm.value.amount),
           "currency": this.transactionForm.value.currency.toUpperCase()

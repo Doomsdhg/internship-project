@@ -24,7 +24,7 @@ export class TransactionsDataSource extends
 
   public lastPage!: number;
   
-  public currentPageNumber = 1;
+  public currentPageNumber = 0;
 
   public pageSizeOptions = PageableDefaults.pageSizeOptions;
 
@@ -40,8 +40,10 @@ export class TransactionsDataSource extends
 
   public displayedTransactions! : string;
 
-  loadTransactions(pageNumber = 1): void {
-    this.transactionApiService.getTransactions(this.query, pageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
+  loadTransactions(pageNumber = 0): void {
+    this.currentPageNumber = pageNumber;
+    console.log(this.query);
+    this.transactionApiService.getTransactions(this.query, this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({
         next: (transactions: HttpResponse<Page<Transaction>>) => {
           this.transactionsSubject.next(transactions);

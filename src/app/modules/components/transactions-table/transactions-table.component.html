@@ -19,6 +19,12 @@
     </div>
     <div class="flex-element">
       <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
+        <mat-label>{{'displayedColumns.status' | translate}}</mat-label>
+        <input formControlName="status" matInput>
+      </mat-form-field>
+    </div>
+    <div class="flex-element">
+      <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
         <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
         <input formControlName="amount" matInput>
       </mat-form-field>
@@ -51,7 +57,7 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
-            <p *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
+            <p class="required-text" *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
             <mat-form-field [appUniqueValue]="'externalId'" class="amount-form-container__input" appearance="fill">
               <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
               <input matInput required formControlName="externalId" value="{{row.externalId}}"
@@ -85,6 +91,30 @@
         </ng-template>
         <ng-template #rowData>
           {{row.provider}}
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <!-- status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('status')">
+        <span class="column-header">
+          {{ 'displayedColumns.status' | translate }}{{sorted !== undefined && sorted.status !== undefined ? sorted!.status?'▲':'▼':''}}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+        <ng-template #editForms>
+          <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.status' | translate}}</mat-label>
+              <input required matInput formControlName="status" value="{{row.status}}"
+                placeholder="{{ 'placeholders.status' | translate }}">
+            </mat-form-field>
+          </form>
+        </ng-template>
+        <ng-template #rowData>
+          {{row.status}}
         </ng-template>
       </mat-cell>
     </ng-container>
@@ -189,9 +219,9 @@
       <mat-cell *matCellDef="let row">
         <div class="flex-container-column">
           <div class="buttons-group">
-            <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}"
-              [disabled]="formsToggled" (click)="deleteTransaction($event)">
-              <mat-icon>delete</mat-icon>
+            <button *ngIf="row.status === 'INITIAL'" mat-raised-button attr.data-external_id="{{row.externalId}}" attr.data-provider="{{row.provider}}"
+              [disabled]="formsToggled" (click)="confirmTransaction($event)">
+              <mat-icon>check icon</mat-icon>
             </button>
             <button mat-raised-button [disabled]="formsToggled" (click)="toggleForms($event, row)">
               <mat-icon>edit</mat-icon>
@@ -218,9 +248,9 @@
   </table>
   <div class="pagination-pannel">
     <span>{{dataSource.displayedTransactions}} {{'of' | translate}} {{dataSource.totalTransactions}}</span>
-    <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(1)">
+    <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(0)">
       << </button>
-        <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
+        <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
           < </button>
             <mat-form-field appearance="fill">
               <mat-label>{{'pageSize' | translate}}</mat-label>
