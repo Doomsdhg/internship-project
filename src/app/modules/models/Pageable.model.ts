@@ -27,6 +27,6 @@ export class Pageable {
   }
 
   toString() {
-    return `?${this.q.toString()}&page=${this.page}&pageSize=${this.size}${this.sort.toString()}`;
+    return `?${this.q.toString() + '&'}page=${this.page}&pageSize=${this.size}${this.sort.toString()}`;
   }
 }

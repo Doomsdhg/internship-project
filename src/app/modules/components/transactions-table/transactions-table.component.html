@@ -248,9 +248,9 @@
   </table>
   <div class="pagination-pannel">
     <span>{{dataSource.displayedTransactions}} {{'of' | translate}} {{dataSource.totalTransactions}}</span>
-    <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(1)">
+    <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(0)">
       << </button>
-        <button mat-button [disabled]="dataSource.currentPageNumber === 1 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
+        <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
           < </button>
             <mat-form-field appearance="fill">
               <mat-label>{{'pageSize' | translate}}</mat-label>

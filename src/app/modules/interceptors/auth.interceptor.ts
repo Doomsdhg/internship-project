@@ -18,21 +18,21 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private web: AuthService, private localStorageManager: LocalStorageManagerService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const isLogOutRequest = request.body && request.body.username;
     console.log(Date.now());
-    console.log(Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration) * 1000);
-    if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration) * 1000 || 0) {
+    if (isLogOutRequest) {
+      return next.handle(request);
+    }
+    if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration)) {
       this.web.refreshToken().subscribe((success: AuthenticationResponse) => {
         this.localStorageManager.refreshToken(success);
       });
     }
-    console.log(request);
-    console.log(this.localStorageManager.getAuthenticationInfo()?.token);
     if (request.url !== `${environment.serverUrl}${ApiEndpoints.LOGIN}`) {
       request = request.clone({
         headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
       });
     }
-    console.log(request);
     return next.handle(request);
   }
 }

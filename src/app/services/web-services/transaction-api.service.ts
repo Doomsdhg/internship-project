@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiEndpoints } from '../../constants/api-endpoints.constants';
 import { environment } from 'src/environments/environment';
@@ -8,7 +8,6 @@ import { Pageable } from 'src/app/modules/models/Pageable.model';
 import { Sortable } from 'src/app/modules/models/Sortable.model';
 import { Page } from 'src/app/modules/types/Page.type';
 import { QueryPredicates } from 'src/app/modules/models/QueryPredicates.model';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 
 @Injectable({
   providedIn: 'root'
