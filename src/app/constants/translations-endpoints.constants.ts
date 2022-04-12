@@ -14,5 +14,5 @@ export class TranslationsEndpoints {
     static readonly SNACKBAR_NUMBERS_ONLY_ERROR = 'snackbar.numbersOnlyError';
     static readonly SNACKBAR_NUMBERS_LIMITED = 'snackbar.numbersLimited';
     static readonly SNACKBAR_UNIQUE = 'snackbar.unique';
-    static readonly SNACKBAR_TRANSACTION_CONFIRMED = 'snackbar.transactionConfirmed';
+    static readonly SNACKBAR_TRANSACTION_COMPLETED = 'snackbar.transactionCompleted';
 }

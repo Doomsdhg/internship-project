@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -47,7 +46,6 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    AddTransactionComponent,
     TransactionsTableComponent,
     TransactionsTablePageComponent,
     GuardDialogContentComponent,

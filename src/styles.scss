@@ -1,135 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-@use 'sass:map';
-@use '@angular/material' as mat;
-@import '~@angular/material/theming';
-@include mat.core();
-
-//Themes
-
-$light-primary: mat-palette($mat-cyan);
-$light-accent: mat-palette($mat-pink, A200, A100, A400);
-$light-theme: mat-light-theme($light-primary, $light-accent);
-
-$dark-primary: mat-palette($mat-indigo);
-$dark-accent: mat-palette($mat-amber, A200, A100, A400);
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent);
-
-
-//Variables
-
-$dark-primary-color: mat-color($dark-primary);
-$dark-palette: mat-palette($mat-grey);
-$light-primary-color: mat-color($light-primary);
-
-$warning-palette: mat-palette($mat-red);
-$warning-color: mat-color($warning-palette);
-
-$success-palette: mat-palette($mat-green);
-$success-color: mat-color($success-palette);
-
-//Themes styles
-
-@include angular-material-theme($light-theme);
-
-.dark-theme {
-    $border-color: rgb(187, 187, 187);
-    $shadow-color: #fff;
-    @include angular-material-theme($dark-theme);
-
-    button.mat-button.mat-primary {
-        color: $dark-primary-color;
-    }
-
-    #home-icon.mat-icon.mat-primary {
-        color: $dark-primary-color;
-    }
-
-    button.mat-raised-button.mat-primary {
-        background-color: $dark-primary-color;
-    }
-
-    .managing-tools-mobile {
-        color: $dark-primary-color;
-    }
-
-    .form-group {
-        border: 1px solid $border-color;
-        box-shadow: 3px 1px 3px $shadow-color;
-    }
-
-    .header-wrapper {
-        box-shadow: 0 0 10px $border-color;
-        -moz-box-shadow: 0 0 10px $border-color;
-        -webkit-box-shadow: 0 0 10px $border-color;
-    }
-
-    .form-wrapper {
-        border-bottom: 1px solid $border-color;
-    }
-
-    .transaction-info-wrapper {
-        box-shadow: 0 0 10px $shadow-color;
-        -moz-box-shadow: 0 0 10px $shadow-color;
-        -webkit-box-shadow: 0 0 10px $shadow-color;
-        margin-top: 3rem;
-    }
-
-    .transactions-table-wrapper {
-        box-shadow: 0 0 10px $shadow-color;
-    }
-
-    .add-transaction-wrapper {
-        .form-group {
-            box-shadow: 0 0 10px $shadow-color;
-        }
-    }
-    
-
-}
-
-.light-theme {
-    $border-color: #777;
-    $shadow-color: #000;
-    @include angular-material-theme($light-theme);
-
-    .managing-tools-mobile {
-        color: $light-primary-color;
-    }
-
-    .form-group {
-        border: 1px solid $border-color;
-        box-shadow: 3px 1px 3px $shadow-color;
-    }
-
-    .header-wrapper {
-        box-shadow: 0 0 10px $border-color;
-        -moz-box-shadow: 0 0 10px $border-color;
-        -webkit-box-shadow: 0 0 10px $border-color;
-    }
-
-    .form-wrapper {
-        border-bottom: 1px solid $border-color;
-    }
-
-    .transaction-info-wrapper {
-        box-shadow: 0 0 10px $shadow-color;
-        -moz-box-shadow: 0 0 10px $shadow-color;
-        -webkit-box-shadow: 0 0 10px $shadow-color;
-        margin-top: 3rem;
-    }
-
-    .transactions-table-wrapper {
-        box-shadow: 0 0 10px $shadow-color;
-    }
-
-    .add-transaction-wrapper {
-        .form-group {
-            box-shadow: 0 0 10px $shadow-color;
-        }
-    }
-
-}
+@use './dark-theme.scss';
+@use './light-theme.scss';
 
 // default styles
 
@@ -143,15 +15,6 @@ body {
 
 body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-
-.success-snackbar {
-    background-color: $success-color;
-}
-
-.error-snackbar {
-    background-color: $warning-color;
 }
 
 .ms-2-percents {
@@ -192,10 +55,6 @@ body {
 
 .onhover-pointer:hover {
     cursor: pointer;
-}
-
-.text-danger {
-    color: $warning-color;
 }
 
 .float-right {

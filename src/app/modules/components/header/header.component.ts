@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 import { Themes } from 'src/app/constants/themes.constants';

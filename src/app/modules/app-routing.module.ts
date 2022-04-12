@@ -9,11 +9,12 @@ import { PreventAuthenticatedAccessGuard } from '../services/guards/prevent-auth
 import { PreventUnathenticatedAccessGuard } from '../services/guards/prevent-unathenticated-access.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/transactions', pathMatch: 'full' },
+  { path: '', redirectTo: AppRoutes.TRANSACTIONS, pathMatch: 'full' },
   {
-    path: 'transactions',
+    path: AppRoutes.TRANSACTIONS,
     component: TransactionsTablePageComponent,
-    canActivate: [PreventUnathenticatedAccessGuard]
+    canActivate: [PreventUnathenticatedAccessGuard],
+    canDeactivate: [InputChangeGuard]
   },
   {
     path: AppRoutes.AUTHENTICATION,

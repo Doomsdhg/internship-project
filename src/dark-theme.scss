@@ -1,0 +1,91 @@
+@use '@angular/material' as mat;
+@import '~@angular/material/theming';
+@include mat.core();
+
+//Theme
+
+$dark-primary: mat-palette($mat-indigo);
+$dark-accent: mat-palette($mat-amber, A200, A100, A400);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent);
+
+
+//Variables
+
+$dark-primary-color: mat-color($dark-primary);
+$dark-palette: mat-palette($mat-grey);
+
+$warning-palette: mat-palette($mat-red);
+$warning-color: mat-color($warning-palette);
+
+$success-palette: mat-palette($mat-green);
+$success-color: mat-color($success-palette);
+
+//Theme styles
+
+.dark-theme {
+    $border-color: rgb(187, 187, 187);
+    $shadow-color: #fff;
+    @include angular-material-theme($dark-theme);
+
+    .error-snackbar {
+        background-color: $warning-color;
+    }
+    
+    .success-snackbar {
+        background-color: $success-color;
+    }
+
+    .text-danger {
+        color: $warning-color;
+    }
+
+    button.mat-button.mat-primary {
+        color: $dark-primary-color;
+    }
+
+    #home-icon.mat-icon.mat-primary {
+        color: $dark-primary-color;
+    }
+
+    button.mat-raised-button.mat-primary {
+        background-color: $dark-primary-color;
+    }
+
+    .managing-tools-mobile {
+        color: $dark-primary-color;
+    }
+
+    .form-group {
+        border: 1px solid $border-color;
+        box-shadow: 3px 1px 3px $shadow-color;
+    }
+
+    .header-wrapper {
+        box-shadow: 0 0 10px $border-color;
+        -moz-box-shadow: 0 0 10px $border-color;
+        -webkit-box-shadow: 0 0 10px $border-color;
+    }
+
+    .form-wrapper {
+        border-bottom: 1px solid $border-color;
+    }
+
+    .transaction-info-wrapper {
+        box-shadow: 0 0 10px $shadow-color;
+        -moz-box-shadow: 0 0 10px $shadow-color;
+        -webkit-box-shadow: 0 0 10px $shadow-color;
+        margin-top: 3rem;
+    }
+
+    .transactions-table-wrapper {
+        box-shadow: 0 0 10px $shadow-color;
+    }
+
+    .add-transaction-wrapper {
+        .form-group {
+            box-shadow: 0 0 10px $shadow-color;
+        }
+    }
+    
+
+}

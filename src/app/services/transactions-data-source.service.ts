@@ -8,6 +8,10 @@ import { Snackbar } from '../constants/snackbar.constants';
 import { HttpResponse } from '@angular/common/http';
 import { PageableDefaults } from '../constants/pageable.constants';
 import { Page } from '../modules/types/Page.type';
+import { Router } from '@angular/router';
+import { AppRoutes } from '../constants/app-routes.constants';
+import { HeaderComponent } from '../modules/components/header/header.component';
+import { LocalStorageManagerService } from './local-storage-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +20,20 @@ import { Page } from '../modules/types/Page.type';
 export class TransactionsDataSource extends
   MatTableDataSource<Transaction>{
 
-  constructor(private transactionApiService: TransactionApiService, private notify: NotifyService) {
+  constructor(
+    private transactionApiService: TransactionApiService,
+    private notify: NotifyService,
+    private router: Router,
+    private localStorageManager: LocalStorageManagerService) {
     super();
   }
+
+  private header!: HeaderComponent;
 
   public transactionsSubject = new BehaviorSubject<HttpResponse<Page<Transaction>>>(new HttpResponse());
 
   public lastPage!: number;
-  
+
   public currentPageNumber = 0;
 
   public pageSizeOptions = PageableDefaults.pageSizeOptions;
@@ -34,30 +44,32 @@ export class TransactionsDataSource extends
 
   public sortOrder!: string;
 
-  public query! :string | string[];
+  public query!: string | string[];
 
-  public totalTransactions! : number;
+  public totalTransactions!: number;
 
-  public displayedTransactions! : string;
+  public displayedTransactions!: string;
 
   loadTransactions(pageNumber = 0): void {
     this.currentPageNumber = pageNumber;
-    console.log(this.query);
     this.transactionApiService.getTransactions(this.query, this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({
         next: (transactions: HttpResponse<Page<Transaction>>) => {
+          console.log(transactions);
           this.transactionsSubject.next(transactions);
           this.transactionsSubject.asObservable().subscribe((success: HttpResponse<Page<Transaction>>) => {
             this.data = success.body as unknown as Transaction[];
-            // this.currentPageNumber = success.body!.page;
-            // this.lastPage = success.body!.totalPages;
-            // this.totalTransactions = success.body!.totalElements;
-            // this.displayedTransactions = this.currentPageNumber === success.body!.totalPages ? 
-            // String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + success.body!.totalElements):
-            // String((this.currentPageNumber - 1) * this.selectedPageSize + 1 + ` - ` + this.currentPageNumber * this.selectedPageSize);
           });
         },
-        error: (error: TransactionCrudResponseError) => this.notify.showMessage(error.error, Snackbar.ERROR_TYPE)
+        error: (error: TransactionCrudResponseError) => {
+          console.log(error);
+          console.log(error.status === 401);
+          this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
+          if (error.status === 401) {
+            this.localStorageManager.deleteLoginValues();
+            this.router.navigate([AppRoutes.AUTHENTICATION]);
+          }
+        }
       });
   }
 
