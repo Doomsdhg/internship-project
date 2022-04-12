@@ -6,7 +6,7 @@ import { GuardDialogContentComponent } from 'src/app/modules/components/guard-di
 import { TransactionsTableComponent } from '../../modules/components/transactions-table/transactions-table.component';
 
 interface ComponentWithInput {
-  checkIfInputsChanged: () => boolean
+  get inputChanged(): boolean
 }
 
 @Injectable({
@@ -17,7 +17,7 @@ export class InputChangeGuard implements CanDeactivate<ComponentWithInput> {
   constructor(private dialog: MatDialog) { }
 
   canDeactivate(component: TransactionsTableComponent): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (component.transactionUpdateForm.dirty) {
+    if (component.inputChanged) {
       return this.dialog.open(GuardDialogContentComponent).afterClosed();
     }
     return true;

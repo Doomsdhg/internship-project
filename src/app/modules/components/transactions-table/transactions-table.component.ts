@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
-import { Transaction, Amount, TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
+import { Amount, TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
@@ -12,7 +12,6 @@ import { Translations } from 'src/app/modules/interfaces/translations.interface'
 import { Snackbar } from 'src/app/constants/snackbar.constants';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
-import { Forms } from 'src/app/constants/forms.constants';
 import { Columns } from 'src/app/constants/columns.constants';
 import { PageableDefaults } from '../../../constants/pageable.constants';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
@@ -60,16 +59,6 @@ export class TransactionsTableComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  filterValues: FormGroup = new FormGroup({
-    q: new FormControl(Forms.INIT_VALUE),
-    externalId: new FormControl(Forms.INIT_VALUE),
-    provider: new FormControl(Forms.INIT_VALUE),
-    status: new FormControl(Forms.INIT_VALUE),
-    amount: new FormControl(Forms.INIT_VALUE),
-    commissionAmount: new FormControl(Forms.INIT_VALUE),
-    user: new FormControl(Forms.INIT_VALUE),
-  });
-
   formsToggled = false;
 
   displayedColumns: string[] = [
@@ -78,7 +67,7 @@ export class TransactionsTableComponent implements OnInit {
     Columns.ID_STATUS,
     Columns.ID_AMOUNT,
     Columns.ID_COMISSION_AMOUNT,
-    Columns.ID_user,
+    Columns.ID_USER,
     Columns.ID_ACTIONS];
 
   columnNames: Column[] = [{
@@ -102,8 +91,8 @@ export class TransactionsTableComponent implements OnInit {
     value: Columns.NAME_COMISSION_AMOUNT,
   },
   {
-    id: Columns.ID_user,
-    value: Columns.NAME_user,
+    id: Columns.ID_USER,
+    value: Columns.NAME_USER,
   },
   {
     id: Columns.ID_ACTIONS,
@@ -122,27 +111,12 @@ export class TransactionsTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.subscribeToFilterFormsChanges();
     this.loadData();
     this.translateColumnsNames();
-    this.dataSource.filterPredicate = this.createFilter();
   }
 
-  checkIfInputsChanged = (): boolean => {
+  get inputChanged() {  
     return !this.transactionUpdateForm.dirty;
-  };
-
-  sortingDataAccessor(data: Transaction, sortHeaderId: string): string | number {
-    switch (sortHeaderId) {
-      case Columns.ID_EXTERNAL_ID:
-        return Number(data[sortHeaderId]);
-      case Columns.ID_AMOUNT:
-        return Number(data[sortHeaderId].amount);
-      case Columns.ID_COMISSION_AMOUNT:
-        return Number(data[sortHeaderId].amount);
-      default:
-        return data[sortHeaderId as keyof Transaction] as string | number;
-    }
   }
 
   setPageSize(pageSize: string): void {
@@ -151,7 +125,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   loadData(): void {
-    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify);
+    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify, this.router, this.localStorageManager);
     this.dataSource.selectedPageSize = Number(localStorage.getItem(LocalStorageAcessors.PAGE_SIZE)) || PageableDefaults.defaultPageSize;
     this.dataSource.loadTransactions();
   }
@@ -176,22 +150,6 @@ export class TransactionsTableComponent implements OnInit {
       });
   }
 
-  subscribeToFilterFormsChanges(): void {
-    this.filterValues.valueChanges
-      .subscribe(
-        (filters) => {
-          const filter = [];
-          for (const key in filters) {
-            if (filters[key]) {
-              filter.push(`${key}=${filters[key]}`);
-            }
-          }
-          this.dataSource.query = [...filter];
-          this.dataSource.loadTransactions();
-        }
-      );
-  }
-
   search = (e: Event): void => {
     const target = e.target as Target | null;
     this.dataSource.filter = target!.value;
@@ -209,9 +167,7 @@ export class TransactionsTableComponent implements OnInit {
     this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
       next: () => {
         this.refreshTransactions();
-        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_CONFIRMED).subscribe((msg) => {
-          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
-        });
+        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_COMPLETED, Snackbar.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
         this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
@@ -224,9 +180,7 @@ export class TransactionsTableComponent implements OnInit {
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
     this.transactionUpdateForm = new FormGroup({
-      provider: new FormControl(row.provider),
       user: new FormControl(row.user),
-      externalId: new FormControl(row.externalId),
       status: new FormControl(row.status),
       amount: new FormControl(row.amount.amount),
       currency: new FormControl(row.amount.currency),
@@ -244,8 +198,11 @@ export class TransactionsTableComponent implements OnInit {
     e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string | undefined = currentTarget.dataset['id'];
+    const provider: string | undefined = currentTarget.dataset['provider'];
+    const externalId: string | undefined = currentTarget.dataset['external_id'];
     const updateObj: TransactionUpdateData = {
-      "externalId": this.transactionUpdateForm.value.externalId,
+      "id": id,
+      "externalId": externalId,
       "user": this.transactionUpdateForm.value.user,
       "status": this.transactionUpdateForm.value.status,
       "amount": {
@@ -256,16 +213,16 @@ export class TransactionsTableComponent implements OnInit {
         "amount": this.transactionUpdateForm.value.commissionAmount,
         "currency": this.transactionUpdateForm.value.comissionCurrency.toUpperCase()
       },
-      "provider": this.transactionUpdateForm.value.provider,
+      "provider": provider,
+      "timestamp": Date.now() / 1000,
+      "providerTimestamp": Date.now() / 1000,
       "additionalData": this.transactionUpdateForm.value.additionalData
     };
-    this.transactionApiService.patchTransaction(id, updateObj).subscribe({
+    this.transactionApiService.patchTransaction(updateObj).subscribe({
       next: () => {
         this.toggleForms(e, row);
         this.refreshTransactions();
-        this.translateService.get(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED).subscribe((msg) => {
-          this.notify.showMessage(msg, Snackbar.SUCCESS_TYPE);
-        });
+        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Snackbar.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
         this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
@@ -280,7 +237,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   setSorting(columnName: string): void {
-    columnName = columnName === 'user' ? 'userId' : columnName;
+    columnName = columnName === Columns.ID_USER ? Columns.SORT_NAME_USER : columnName;
     this.dataSource.sortColumn = columnName;
     this.dataSource.sortOrder = this.sorted![columnName as keyof Sorted] == true ? SortingStrings.ASC : SortingStrings.DESC;
   }
@@ -300,27 +257,4 @@ export class TransactionsTableComponent implements OnInit {
     }
     this.dataSource.loadTransactions();
   };
-
-  createFilter(): (data: Transaction, filter: string) => boolean {
-    const filterFunction = function (data: Transaction, filter: string): boolean {
-      try {
-        const searchTerms = JSON.parse(filter);
-        if (typeof searchTerms !== 'object') {
-          throw new Error();
-        }
-        return data.externalId.indexOf(searchTerms.id) !== -1
-          && data.provider.toString().toLowerCase().indexOf(searchTerms.provider) !== -1
-          && String(data.amount.amount).indexOf(searchTerms.amount) !== -1
-          && String(data.commissionAmount.amount).indexOf(searchTerms.commissionAmount) !== -1
-          && data.user.toLowerCase().indexOf(searchTerms.user) !== -1;
-      } catch (e) {
-        return data.externalId.indexOf(filter) !== -1
-          || data.provider.toString().toLowerCase().indexOf(filter) !== -1
-          || String(data.amount.amount).indexOf(filter) !== -1
-          || String(data.commissionAmount.amount).indexOf(filter) !== -1
-          || data.user.toLowerCase().indexOf(filter) !== -1;
-      }
-    };
-    return filterFunction;
-  }
 }

@@ -19,10 +19,11 @@ export class UniqueValueDirective {
     this.transactionService.searchTransactions(this.key, element.value).subscribe({
       next: (success: Transaction[]) => {
         this.translateService.get(TranslationsEndpoints.SNACKBAR_UNIQUE).subscribe((messages) => {
-          const message = success.length === 0 ? messages.unique : messages.notUnique;
-          const color = success.length === 0 ? Styles.SUCCESS : Styles.ERROR;
-          const includesSpan = this.el.nativeElement.innerHTML.includes('<span style');
-          if (includesSpan) {
+          const isUniqueValue = success.length === 0;
+          const message = isUniqueValue ? messages.unique : messages.notUnique;
+          const color = isUniqueValue ? Styles.SUCCESS : Styles.ERROR;
+          const messageAlreadyExists = this.el.nativeElement.innerHTML.includes('<span style');
+          if (messageAlreadyExists) {
             const span = this.el.nativeElement.firstChild;
             this.el.nativeElement.removeChild(span);
           }

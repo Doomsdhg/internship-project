@@ -40,4 +40,17 @@
         margin-top: 3px;
     }
 
+    .required-text {
+        display: block;
+    }
+
+    .display-forms.mat-cell {
+        height: 150px;
+        flex-direction: column;
+
+        .required-text {
+            margin-top: -40px;
+            margin-bottom: 20px;
+        }
+    }
 }

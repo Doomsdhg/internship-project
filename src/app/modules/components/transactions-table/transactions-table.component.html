@@ -1,49 +1,4 @@
 <div class="transactions-table-wrapper">
-  <div class="ms-2-percents mt-10-pixels">
-    <mat-form-field [formGroup]="filterValues">
-      <input formControlName="q" matInput placeholder="{{'placeholders.search' | translate}}">
-    </mat-form-field>
-  </div>
-  <div class="flex-container w-100-percents">
-    <div class="flex-element">
-      <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
-        <input formControlName="externalId" matInput>
-      </mat-form-field>
-    </div>
-    <div class="flex-element">
-      <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
-        <input formControlName="provider" matInput>
-      </mat-form-field>
-    </div>
-    <div class="flex-element">
-      <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.status' | translate}}</mat-label>
-        <input formControlName="status" matInput>
-      </mat-form-field>
-    </div>
-    <div class="flex-element">
-      <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-        <input formControlName="amount" matInput>
-      </mat-form-field>
-    </div>
-    <div class="flex-element">
-      <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
-        <input formControlName="commissionAmount" matInput>
-      </mat-form-field>
-    </div>
-    <div class="flex-element">
-      <mat-form-field class="filter" [formGroup]="filterValues" [style.width.%]="70" floatLabel="never">
-        <mat-label>{{'displayedColumns.user' | translate}}</mat-label>
-        <input formControlName="user" matInput>
-      </mat-form-field>
-    </div>
-    <div class="flex-element">
-    </div>
-  </div>
   <table mat-table matSort [dataSource]="dataSource" class="w-100-percents">
 
     <!-- External id Column -->
@@ -53,21 +8,11 @@
           {{ 'displayedColumns.externalId' | translate }}{{sorted !== undefined && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
-        <ng-template #editForms>
-          <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
-            <p class="required-text" *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
-            <mat-form-field [appUniqueValue]="'externalId'" class="amount-form-container__input" appearance="fill">
-              <mat-label>{{'displayedColumns.externalId' | translate}}</mat-label>
-              <input matInput required formControlName="externalId" value="{{row.externalId}}"
-                placeholder="{{ 'placeholders.externalId' | translate }}">
-            </mat-form-field>
-          </form>
-        </ng-template>
-        <ng-template #rowData>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <p class="required-text text-danger" *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
+        <p>
           {{row.externalId}}
-        </ng-template>
+        </p>
       </mat-cell>
     </ng-container>
 
@@ -78,20 +23,10 @@
           {{ 'displayedColumns.provider' | translate }}{{sorted !== undefined && sorted.provider !== undefined ? sorted!.provider?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
-        <ng-template #editForms>
-          <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
-            <mat-form-field class="amount-form-container__input" appearance="fill">
-              <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
-              <input matInput required formControlName="provider" value="{{row.provider}}"
-                placeholder="{{ 'placeholders.provider' | translate }}">
-            </mat-form-field>
-          </form>
-        </ng-template>
-        <ng-template #rowData>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <p>
           {{row.provider}}
-        </ng-template>
+        </p>
       </mat-cell>
     </ng-container>
 
@@ -102,7 +37,7 @@
           {{ 'displayedColumns.status' | translate }}{{sorted !== undefined && sorted.status !== undefined ? sorted!.status?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
@@ -126,7 +61,7 @@
           {{ 'displayedColumns.amount' | translate }}{{sorted !== undefined && sorted.amount !== undefined ? sorted!.amount?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <div class="amount-form-container">
@@ -159,7 +94,7 @@
           {{ 'displayedColumns.commissionAmount' | translate }}{{sorted !== undefined && sorted.commissionAmount !== undefined ? sorted!.commissionAmount?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <div class="amount-form-container">
@@ -192,7 +127,7 @@
           {{ 'displayedColumns.user' | translate }}{{sorted !== undefined && sorted.user !== undefined ? sorted!.user?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
@@ -216,19 +151,19 @@
           {{ 'displayedColumns.tools' | translate }}
         </span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <div class="flex-container-column">
           <div class="buttons-group">
             <button *ngIf="row.status === 'INITIAL'" mat-raised-button attr.data-external_id="{{row.externalId}}" attr.data-provider="{{row.provider}}"
               [disabled]="formsToggled" (click)="confirmTransaction($event)">
               <mat-icon>check icon</mat-icon>
             </button>
-            <button mat-raised-button [disabled]="formsToggled" (click)="toggleForms($event, row)">
+            <button *ngIf="row.status === 'INITIAL'" mat-raised-button [disabled]="formsToggled" (click)="toggleForms($event, row)">
               <mat-icon>edit</mat-icon>
             </button>
           </div>
           <div *ngIf="row.displayForms" class="buttons-group">
-            <button mat-raised-button attr.data-id="{{row.id}}" (click)="updateTransaction($event, row)">
+            <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}" attr.data-external_id="{{row.externalId}}" (click)="updateTransaction($event, row)">
               {{'buttons.saveChanges' | translate}}
             </button>
           </div>

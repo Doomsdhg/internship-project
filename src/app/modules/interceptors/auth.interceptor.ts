@@ -19,7 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const isLogOutRequest = request.body && request.body.username;
-    console.log(Date.now());
     if (isLogOutRequest) {
       return next.handle(request);
     }

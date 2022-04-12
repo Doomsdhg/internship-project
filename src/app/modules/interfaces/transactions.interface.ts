@@ -15,13 +15,16 @@ export interface Transaction extends Object {
 }
 
 export interface TransactionUpdateData {
-  externalId: string,
-  provider: string,
+  id: string | undefined,
+  externalId: string | undefined,
+  provider: string | undefined,
   status: string,
   amount: Amount,
   commissionAmount: Amount,
   user: string,
-  additionalData?: string
+  additionalData?: string,
+  timestamp: number,
+  providerTimestamp: number
 }
 
 export interface ApiTransactionResponse extends Object {
