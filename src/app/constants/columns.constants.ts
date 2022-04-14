@@ -13,5 +13,4 @@ export class Columns {
     static readonly NAME_USER = 'user';
     static readonly NAME_ACTIONS = 'Actions';
     static readonly NAME_STATUS = 'Status';
-    static readonly SORT_NAME_USER = 'userId';
 }

@@ -26,8 +26,8 @@ export class TransactionApiService {
     pageSize: number,
     sortColumn: string,
     sortOrder: string): Observable<HttpResponse<Page<Transaction>>> {
-    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}
-    ${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
+    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS
+    }${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
       , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
   }
 

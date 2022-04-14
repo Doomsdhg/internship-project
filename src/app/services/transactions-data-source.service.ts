@@ -55,15 +55,12 @@ export class TransactionsDataSource extends
     this.transactionApiService.getTransactions(this.query, this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({
         next: (transactions: HttpResponse<Page<Transaction>>) => {
-          console.log(transactions);
           this.transactionsSubject.next(transactions);
           this.transactionsSubject.asObservable().subscribe((success: HttpResponse<Page<Transaction>>) => {
             this.data = success.body as unknown as Transaction[];
           });
         },
         error: (error: TransactionCrudResponseError) => {
-          console.log(error);
-          console.log(error.status === 401);
           this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
           if (error.status === 401) {
             this.localStorageManager.deleteLoginValues();
