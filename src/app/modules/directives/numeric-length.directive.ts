@@ -23,7 +23,7 @@ export class NumericLengthDirective {
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     const [digitsBeforeDecPoint, digitsAfterDecPoint] = this.options;
     const numeric = (+element.value).toFixed(digitsAfterDecPoint);
-    const max = this.getMax(digitsBeforeDecPoint, digitsAfterDecPoint);
+    const max = this.getMaxPossibleDecimal(digitsBeforeDecPoint, digitsAfterDecPoint);
     const maxLength = digitsBeforeDecPoint + digitsAfterDecPoint;
     if ((+numeric < -max || +numeric > +max) || (+numeric !== +element.value && element.value.length > maxLength)) {
       element.value = this.previousValue;
@@ -33,16 +33,16 @@ export class NumericLengthDirective {
     }
   }
 
-  getMax(int: number, dec: number): string {
-    let max = '';
+  getMaxPossibleDecimal(int: number, dec: number): string {
+    let maxInt = '';
     for (let i = 1; i <= int; i++) {
-      max = max + '9';
+      maxInt = maxInt + '9';
     }
-    max = max + '.';
+    let maxDec = maxInt + '.';
     for (let i = 1; i <= dec; i++) {
-      max = max + '9';
+      maxDec = maxDec + '9';
     }
-    return max;
+    return maxDec;
   }
 
 }

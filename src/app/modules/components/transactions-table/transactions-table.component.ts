@@ -237,7 +237,6 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   setSorting(columnName: string): void {
-    columnName = columnName === Columns.ID_USER ? Columns.SORT_NAME_USER : columnName;
     this.dataSource.sortColumn = columnName;
     this.dataSource.sortOrder = this.sorted![columnName as keyof Sorted] == true ? SortingStrings.ASC : SortingStrings.DESC;
   }
