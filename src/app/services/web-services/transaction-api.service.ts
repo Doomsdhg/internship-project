@@ -21,18 +21,14 @@ export class TransactionApiService {
   }
 
   getTransactions(
-    query: string[] | string,
-    pageNumber: number,
-    pageSize: number,
-    sortColumn: string,
-    sortOrder: string): Observable<HttpResponse<Page<Transaction>>> {
+    query: string[] | string = '',
+    pageNumber = 1,
+    pageSize = 3,
+    sortColumn = 'id',
+    sortOrder = 'ASC'): Observable<HttpResponse<Page<Transaction>>> {
     return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS
     }${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
       , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
-  }
-
-  getDefiniteTransaction(id: string | null): Observable<Transaction> {
-    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}/${id}`) as Observable<Transaction>;
   }
 
   patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
@@ -41,10 +37,6 @@ export class TransactionApiService {
 
   uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
     return this.http.post(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}`, transactionData) as Observable<Transaction>;
-  }
-
-  searchTransactions(name: string, value: string | number): Observable<Transaction[]> {
-    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}?${name}=${value}`) as Observable<Transaction[]>;
   }
 
   confirmTransaction(externalId: string | undefined, provider: string | undefined): Observable<Transaction[]> {
