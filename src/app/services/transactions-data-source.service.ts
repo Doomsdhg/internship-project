@@ -10,7 +10,6 @@ import { PageableDefaults } from '../constants/pageable.constants';
 import { Page } from '../modules/types/Page.type';
 import { Router } from '@angular/router';
 import { AppRoutes } from '../constants/app-routes.constants';
-import { HeaderComponent } from '../modules/components/header/header.component';
 import { LocalStorageManagerService } from './local-storage-manager.service';
 
 @Injectable({
@@ -27,8 +26,6 @@ export class TransactionsDataSource extends
     private localStorageManager: LocalStorageManagerService) {
     super();
   }
-
-  private header!: HeaderComponent;
 
   public transactionsSubject = new BehaviorSubject<HttpResponse<Page<Transaction>>>(new HttpResponse());
 
