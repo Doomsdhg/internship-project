@@ -8,7 +8,7 @@ describe('SelectLanguageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SelectLanguageComponent ]
+      declarations: [SelectLanguageComponent]
     })
     .compileComponents();
   });
@@ -19,7 +19,5 @@ describe('SelectLanguageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
 });

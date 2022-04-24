@@ -10,7 +10,5 @@ describe('PreventUnathenticatedAccessGuard', () => {
     guard = TestBed.inject(PreventUnathenticatedAccessGuard);
   });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
+
 });

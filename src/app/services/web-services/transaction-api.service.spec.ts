@@ -131,7 +131,6 @@ describe('TransactionApiService', () => {
         done();
       });
     }); 
-    
   });
 
   it('should return list of transactions with first item updated', (done) => {

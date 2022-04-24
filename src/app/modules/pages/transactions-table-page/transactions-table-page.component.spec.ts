@@ -8,7 +8,7 @@ describe('TransactionsTablePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TransactionsTablePageComponent ]
+      declarations: [TransactionsTablePageComponent]
     })
     .compileComponents();
   });
@@ -19,7 +19,5 @@ describe('TransactionsTablePageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
 });
