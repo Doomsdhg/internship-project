@@ -159,7 +159,6 @@ describe('TransactionApiService', () => {
     });
     service.uploadTransaction(updateObj).subscribe(() => {
       service.getTransactions().subscribe((success: any) => {
-        console.log(transactionsListExample);
         expect(success).toEqual(transactionsListExample);
         done();
       }); 
