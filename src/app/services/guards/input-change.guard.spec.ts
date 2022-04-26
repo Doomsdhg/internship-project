@@ -10,7 +10,5 @@ describe('InputChangeGuard', () => {
     guard = TestBed.inject(InputChangeGuard);
   });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
+
 });

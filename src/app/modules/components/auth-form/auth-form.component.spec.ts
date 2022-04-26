@@ -8,7 +8,7 @@ describe('AuthFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AuthFormComponent ]
+      declarations: [AuthFormComponent]
     })
     .compileComponents();
   });
@@ -19,7 +19,5 @@ describe('AuthFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
 });

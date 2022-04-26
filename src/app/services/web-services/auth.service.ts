@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { environment } from 'src/environments/environment';
-import { AuthenticationResponse } from 'src/app/modules/interfaces/authentication.interface';
+import { AuthenticationResponse, LogoutResponse } from 'src/app/modules/interfaces/authentication.interface';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 
 @Injectable({
@@ -22,10 +22,10 @@ export class AuthService {
     }) as Observable<AuthenticationResponse>;
   }
 
-  logout(): Observable<AuthenticationResponse> {
+  logout(): Observable<LogoutResponse> {
     return this.http.post(`${environment.serverUrl}${ApiEndpoints.LOGOUT}`, {
       username: localStorage.getItem(LocalStorageAcessors.USERNAME)
-    }) as Observable<AuthenticationResponse>;
+    }) as Observable<LogoutResponse>;
   }
 
   refreshToken(): Observable<AuthenticationResponse> {

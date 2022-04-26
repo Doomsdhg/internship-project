@@ -10,7 +10,5 @@ describe('TransactionsDataSourceService', () => {
     service = TestBed.inject(TransactionsDataSource);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+
 });

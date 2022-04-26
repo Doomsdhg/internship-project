@@ -5,6 +5,10 @@ export interface AuthenticationResponse {
     type: string
 }
 
+export interface LogoutResponse {
+    message: string
+}
+
 export interface AuthenticationResponseError {
     error: ErrorObject
 }

@@ -131,7 +131,6 @@ describe('TransactionApiService', () => {
         done();
       });
     }); 
-    
   });
 
   it('should return list of transactions with first item updated', (done) => {
@@ -160,7 +159,6 @@ describe('TransactionApiService', () => {
     });
     service.uploadTransaction(updateObj).subscribe(() => {
       service.getTransactions().subscribe((success: any) => {
-        console.log(transactionsListExample);
         expect(success).toEqual(transactionsListExample);
         done();
       }); 

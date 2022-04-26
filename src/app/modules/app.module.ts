@@ -24,7 +24,6 @@ import { GuardDialogContentComponent } from './components/guard-dialog-content/g
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
-import { UniqueValueDirective } from './directives/unique-value.directive';
 import { CurrencyPipe } from '@angular/common';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
 import { NumericLengthDirective } from './directives/numeric-length.directive';
@@ -50,7 +49,6 @@ export function tokenGetter() {
     TransactionsTablePageComponent,
     GuardDialogContentComponent,
     NumbersOnlyDirective,
-    UniqueValueDirective,
     SelectLanguageComponent,
     NumericLengthDirective,
     HeaderComponent,
