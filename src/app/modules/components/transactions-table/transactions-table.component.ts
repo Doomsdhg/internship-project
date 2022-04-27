@@ -104,8 +104,8 @@ export class TransactionsTableComponent implements OnInit {
 
   constructor(
     public transactionApiService: TransactionApiService,
+    public translateService: TranslateService,
     private notify: NotifyService,
-    private translateService: TranslateService,
     private router: Router,
     private localStorageManager: LocalStorageManagerService
   ) { }
@@ -140,6 +140,7 @@ export class TransactionsTableComponent implements OnInit {
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
       .subscribe((translations: Translations) => {
+        console.log(translations);
         this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
         this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
         this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
