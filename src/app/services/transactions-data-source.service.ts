@@ -20,7 +20,7 @@ export class TransactionsDataSource extends
   MatTableDataSource<Transaction>{
 
   constructor(
-    private transactionApiService: TransactionApiService,
+    public transactionApiService: TransactionApiService,
     private notify: NotifyService,
     private router: Router,
     private localStorageManager: LocalStorageManagerService) {
