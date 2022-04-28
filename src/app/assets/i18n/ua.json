@@ -10,7 +10,7 @@
         "provider": "Постачальник",
         "actions": "Дії",
         "currency": "Валюта",
-        "comissionCurrency": "Комісійна валюта",
+        "commissionCurrency": "Комісійна валюта",
         "additionalData": "Додаткові дані",
         "tools": "Дії",
         "status": "Статус"
@@ -38,7 +38,7 @@
         "commissionAmount": "Потрібно запровадити комісію",
         "provider": "Потрібно ввести провайдера",
         "currency": "Потрібно ввести валюту",
-        "comissionCurrency": "Потрібно запровадити валюту комісії"
+        "commissionCurrency": "Потрібно запровадити валюту комісії"
     },
     "placeholders": {
         "externalId": "Наприклад '123'",
@@ -46,7 +46,7 @@
         "amount": "Наприклад '100'",
         "currency": "Наприклад 'UAH'",
         "commissionAmount": "Наприклад '10'",
-        "comissionCurrency": "Наприклад 'UAH'",
+        "commissionCurrency": "Наприклад 'UAH'",
         "user": "Наприклад 'Дмитро Гордон'",
         "additionalData": "Наприклад 'Додаткові дані'",
         "search": "пошук"

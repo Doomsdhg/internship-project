@@ -10,7 +10,6 @@ import { Target } from '../../../modules/interfaces/browser-event.interface';
 import { Router } from '@angular/router';
 import { Translations } from 'src/app/modules/interfaces/translations.interface';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { Columns } from 'src/app/constants/columns.constants';
 import { PageableDefaults } from '../../../constants/pageable.constants';
@@ -23,7 +22,7 @@ interface Column {
   value: string
 }
 
-interface Row {
+export interface Row {
   displayForms: boolean,
   provider: string,
   user: string,
@@ -66,7 +65,7 @@ export class TransactionsTableComponent implements OnInit {
     Columns.ID_PROVIDER,
     Columns.ID_STATUS,
     Columns.ID_AMOUNT,
-    Columns.ID_COMISSION_AMOUNT,
+    Columns.ID_commission_AMOUNT,
     Columns.ID_USER,
     Columns.ID_ACTIONS];
 
@@ -87,8 +86,8 @@ export class TransactionsTableComponent implements OnInit {
     value: Columns.NAME_AMOUNT,
   },
   {
-    id: Columns.ID_COMISSION_AMOUNT,
-    value: Columns.NAME_COMISSION_AMOUNT,
+    id: Columns.ID_commission_AMOUNT,
+    value: Columns.NAME_commission_AMOUNT,
   },
   {
     id: Columns.ID_USER,
@@ -109,6 +108,10 @@ export class TransactionsTableComponent implements OnInit {
     private router: Router,
     private localStorageManager: LocalStorageManagerService
   ) { }
+
+  get getTransactionUpdateForm () {
+    return this.transactionUpdateForm;
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -136,25 +139,19 @@ export class TransactionsTableComponent implements OnInit {
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER,
       TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
       .subscribe((translations: Translations) => {
-        console.log(translations);
         this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
         this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
         this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
         this.columnNames[3].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
-        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMISSION_AMOUNT];
+        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT];
         this.columnNames[5].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER];
         this.columnNames[6].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
       });
   }
-
-  search = (e: Event): void => {
-    const target = e.target as Target | null;
-    this.dataSource.filter = target!.value;
-  };
 
   refreshTransactions = (): void => {
     this.dataSource.loadTransactions();
@@ -186,21 +183,17 @@ export class TransactionsTableComponent implements OnInit {
       amount: new FormControl(row.amount.amount),
       currency: new FormControl(row.amount.currency),
       commissionAmount: new FormControl(row.commissionAmount.amount),
-      comissionCurrency: new FormControl(row.commissionAmount.currency),
+      commissionCurrency: new FormControl(row.commissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     });
   };
 
-  transactionRedirect(row: Row): void {
-    this.router.navigate([AppRoutes.TRANSACTIONS, row.id]);
-  }
-
   updateTransaction = (e: Event, row: Row): void => {
     e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
-    const id: string | undefined = currentTarget.dataset['id'];
-    const provider: string | undefined = currentTarget.dataset['provider'];
-    const externalId: string | undefined = currentTarget.dataset['external_id'];
+    const id: string  = currentTarget.dataset['id'] || 'no id';
+    const provider: string = currentTarget.dataset['provider'] || 'no provider';
+    const externalId: string = currentTarget.dataset['external_id'] || 'no external id';
     const updateObj: TransactionUpdateData = {
       "id": id,
       "externalId": externalId,
@@ -212,7 +205,7 @@ export class TransactionsTableComponent implements OnInit {
       },
       "commissionAmount": {
         "amount": this.transactionUpdateForm.value.commissionAmount,
-        "currency": this.transactionUpdateForm.value.comissionCurrency.toUpperCase()
+        "currency": this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       "provider": provider,
       "timestamp": Date.now() / 1000,
@@ -239,7 +232,8 @@ export class TransactionsTableComponent implements OnInit {
 
   setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
-    this.dataSource.sortOrder = this.sorted![columnName as keyof Sorted] == true ? SortingStrings.ASC : SortingStrings.DESC;
+    const columnSortedAlready = Boolean(this.sorted![columnName as keyof Sorted]);
+    this.dataSource.sortOrder = columnSortedAlready === true ? SortingStrings.DESC : SortingStrings.ASC;
   }
 
   toggleSortingIcon(columnName: string): void {
@@ -247,7 +241,8 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   sortify = (columnName: string): void => {
-    this.sorted = this.sorted === undefined ? new Object() : this.sorted;
+    const isDefaultSorting = this.sorted === undefined;
+    this.sorted = isDefaultSorting ? new Object() : this.sorted;
     const sortedBothOrders = this.sorted![columnName as keyof Sorted] === false;
     if (sortedBothOrders) {
       this.setDefaultSorting();

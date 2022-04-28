@@ -6,11 +6,11 @@
         "externalId": "No.",
         "user": "user",
         "amount": "Amount",
-        "commissionAmount": "Comission amount",
+        "commissionAmount": "commission amount",
         "provider": "Provider",
         "actions": "Actions",
         "currency": "Currency",
-        "comissionCurrency": "Comission currency",
+        "commissionCurrency": "commission currency",
         "additionalData": "Additional data",
         "tools": "Tools",
         "status": "Status"
@@ -19,10 +19,10 @@
         "externalId": "No. is required",
         "user": "user is required",
         "amount": "Amount is required",
-        "commissionAmount": "Comission amount is required",
+        "commissionAmount": "commission amount is required",
         "provider": "Provider is required",
         "currency": "Currency is required",
-        "comissionCurrency": "Comission currency is required",
+        "commissionCurrency": "commission currency is required",
         "additionalData": "Additional data"
     },
     "buttons": {
@@ -47,7 +47,7 @@
         "amount": "E.g. '100'",
         "currency": "E.g. 'USD'",
         "commissionAmount": "E.g. '10'",
-        "comissionCurrency": "E.g. 'USD'",
+        "commissionCurrency": "E.g. 'USD'",
         "user": "E.g. 'foobar'",
         "additionalData": "E.g. 'some additional data'",
         "search": "Search"

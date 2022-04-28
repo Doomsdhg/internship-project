@@ -10,7 +10,7 @@
         "provider": "Провайдер",
         "actions": "Действия",
         "currency": "Валюта",
-        "comissionCurrency": "Валюта комиссии",
+        "commissionCurrency": "Валюта комиссии",
         "additionalData": "Дополнительная информация",
         "tools": "Действия",
         "status": "Статус"
@@ -38,7 +38,7 @@
         "commissionAmount": "Требуется ввести комиссию",
         "provider": "Требуется ввести провайдера",
         "currency": "Требуется ввести валюту",
-        "comissionCurrency": "Требуется ввести валюту комиссии"
+        "commissionCurrency": "Требуется ввести валюту комиссии"
     },
     "placeholders": {
         "externalId": "Например, '123'",
@@ -46,7 +46,7 @@
         "amount": "Например, '100'",
         "currency": "Например, 'RUB'",
         "commissionAmount": "Например, '10'",
-        "comissionCurrency": "Например, 'RUB'",
+        "commissionCurrency": "Например, 'RUB'",
         "user": "Например, 'любитель кефира'",
         "additionalData": "Например, 'какая-то дополнительная информация'",
         "search": "Поиск"

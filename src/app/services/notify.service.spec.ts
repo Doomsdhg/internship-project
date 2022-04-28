@@ -69,6 +69,9 @@ describe('NotifyService', () => {
         observer.complete();
       });
     });
+    spyOn(service, 'showMessage').and.callFake(() => {
+      console.log('ok');
+    });
     service.showTranslatedMessage('ok', Snackbar.SUCCESS_TYPE);
     setTimeout(() => {
       expect(service.showMessage).toHaveBeenCalled();
