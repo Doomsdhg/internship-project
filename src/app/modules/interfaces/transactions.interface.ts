@@ -15,9 +15,9 @@ export interface Transaction extends Object {
 }
 
 export interface TransactionUpdateData {
-  id: string | undefined,
-  externalId: string | undefined,
-  provider: string | undefined,
+  id: string,
+  externalId: string,
+  provider: string,
   status: string,
   amount: Amount,
   commissionAmount: Amount,

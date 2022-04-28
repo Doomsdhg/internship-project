@@ -1,8 +1,7 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { TransactionsTableComponent } from './transactions-table.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Row, TransactionsTableComponent } from './transactions-table.component';
 import { 
   TranslateModule,
-  TranslateService,
   TranslateLoader, 
 } from '@ngx-translate/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -16,6 +15,8 @@ import { Columns } from '../../../constants/columns.constants';
 import { Page } from '../../types/Page.type';
 import { Transaction } from '../../interfaces/transactions.interface';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormGroup } from '@angular/forms';
+import { SortingStrings } from 'src/app/constants/sorting.constants';
 
 describe('TransactionsTableComponent', () => {
 
@@ -46,7 +47,7 @@ describe('TransactionsTableComponent', () => {
     value: 'количество',
   },
   {
-    id: Columns.ID_COMISSION_AMOUNT,
+    id: Columns.ID_commission_AMOUNT,
     value: 'размер комиссии',
   },
   {
@@ -118,6 +119,26 @@ describe('TransactionsTableComponent', () => {
     }
   };
 
+  const rowMock: Row =  {
+    ...transactionsResponseExample.body[0],
+    displayForms: false,
+    additionalData: 'no data'
+  };
+
+  const transactionUpdateFormMock = {
+    value: {
+      user: '123qwe',
+      status: 'INITIAL',
+      amount: '100',
+      currency: 'USD',
+      commissionAmount: '10',
+      commissionCurrency: 'USD',
+      additionalData: 'no data'
+    }
+  };
+
+  const columnNameMock = 'externalId';
+
   let component: TransactionsTableComponent;
   let fixture: ComponentFixture<TransactionsTableComponent>;
 
@@ -173,7 +194,7 @@ describe('TransactionsTableComponent', () => {
     expect(component.dataSource.data).toEqual(transactionsResponseExample.body);
   });
 
-  it('should refresh transaction status', () => {
+  it('should change status of first transaction', () => {
     spyOn(component.dataSource.transactionApiService, 'getTransactions').and.callFake(() => {
       return new Observable((observer) => {
         observer.next(transactionsResponseExample as unknown as HttpResponse<Page<Transaction>>);
@@ -190,5 +211,67 @@ describe('TransactionsTableComponent', () => {
     transactionsResponseExample.body[0].status = 'COMPLETED';
     component.confirmTransaction(eventMock as unknown as Event);
     expect(component.dataSource.data[0].status).toBe('COMPLETED');
+  });
+
+  it('should toggle forms', () => {
+    component.toggleForms(eventMock as unknown as Event, rowMock);
+    console.log(component.transactionUpdateForm.value);
+    expect(component.formsToggled).toBe(true);
+    expect(rowMock.displayForms).toBe(true);
+    expect(component.transactionUpdateForm.value.user).toBe(rowMock.user);
+    expect(component.transactionUpdateForm.value.status).toBe(rowMock.status);
+    expect(component.transactionUpdateForm.value.amount).toBe(rowMock.amount.amount);
+    expect(component.transactionUpdateForm.value.currency).toBe(rowMock.amount.currency);
+    expect(component.transactionUpdateForm.value.commissionAmount).toBe(rowMock.commissionAmount.amount);
+    expect(component.transactionUpdateForm.value.commissionCurrency).toBe(rowMock.commissionAmount.currency);
+    expect(component.transactionUpdateForm.value.additionalData).toBe(rowMock.additionalData);
+  });
+
+  it('should change info of first transaction', () => {
+    spyOn(component.dataSource.transactionApiService, 'getTransactions').and.callFake(() => {
+      return new Observable((observer) => {
+        observer.next(transactionsResponseExample as unknown as HttpResponse<Page<Transaction>>);
+        observer.complete();
+      });
+    });
+    spyOn(component.transactionApiService, 'patchTransaction').and.callFake((updateObj) => {
+      transactionsResponseExample.body[1] = updateObj;
+      return new Observable((observer) => {
+        observer.complete();
+      });
+    });
+    component.loadData();
+    component.transactionUpdateForm = transactionUpdateFormMock as FormGroup;
+    component.updateTransaction(eventMock as unknown as Event, rowMock);
+    expect(component.dataSource.data[1].user).toBe(transactionUpdateFormMock.value.user);
+    expect(component.dataSource.data[1].status).toBe(transactionUpdateFormMock.value.status);
+    expect(Number(component.dataSource.data[1].amount.amount)).toBe(Number(transactionUpdateFormMock.value.amount));
+    expect(component.dataSource.data[1].amount.currency).toBe(transactionUpdateFormMock.value.currency);
+    expect(Number(component.dataSource.data[1].commissionAmount.amount)).toBe(Number(transactionUpdateFormMock.value.commissionAmount));
+    expect(component.dataSource.data[1].commissionAmount.currency).toBe(transactionUpdateFormMock.value.commissionCurrency);
+  });
+
+  it('should nullify sorting', () => {
+    component.setDefaultSorting();
+    expect(component.sorted).toBeUndefined();
+    expect(component.dataSource.sortColumn).toBeFalsy();
+    expect(component.dataSource.sortOrder).toBeFalsy();
+  });
+
+  it('should set sorting', () => {
+    component.sorted = {};
+    component.setSorting(columnNameMock);
+    expect(component.dataSource.sortColumn).toBe(columnNameMock);
+    expect(component.dataSource.sortOrder).toBe(SortingStrings.ASC);
+  });
+
+  it('should set sorting in datasource and call loadTransactions', () => {
+    spyOn(component.dataSource, 'loadTransactions').and.callFake(() => {
+      console.log('ok');
+    });
+    component.sortify(columnNameMock);
+    expect(component.dataSource.sortColumn).toBe(columnNameMock);
+    expect(component.dataSource.sortOrder).toBe(SortingStrings.DESC);
+    expect(component.dataSource.loadTransactions).toHaveBeenCalled();
   });
 });
