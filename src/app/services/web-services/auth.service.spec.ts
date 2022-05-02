@@ -1,8 +1,7 @@
-import { HttpClient, HttpHandler, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHandler } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
-import { AuthenticationResponse, LogoutResponse } from 'src/app/modules/interfaces/authentication.interface';
 
 describe('AuthService', () => {
 

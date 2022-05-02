@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Row, TransactionsTableComponent } from './transactions-table.component';
+import { Column, Row, TransactionsTableComponent } from './transactions-table.component';
 import { 
   TranslateModule,
   TranslateLoader, 
@@ -15,7 +15,7 @@ import { Columns } from '../../../constants/columns.constants';
 import { Page } from '../../types/Page.type';
 import { Transaction } from '../../interfaces/transactions.interface';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { SortingStrings } from 'src/app/constants/sorting.constants';
 
 describe('TransactionsTableComponent', () => {
@@ -30,7 +30,7 @@ describe('TransactionsTableComponent', () => {
     "displayedColumns.user": "имя пользователя"
   };
 
-  const translatedColumnNames = [{
+  const translatedColumnNames: Column[] = [{
     id: Columns.ID_EXTERNAL_ID,
     value: 'номер',
   },
@@ -59,7 +59,11 @@ describe('TransactionsTableComponent', () => {
     value: 'действия'
   }];
 
-  const transactionsResponseExample = {
+  const transactionsResponseExample: Page<Transaction> = {
+    page: 1,
+    pageSize: 1,
+    totalPages: 1,
+    totalElements: 1,
     body: [
       {
         id: '1',
@@ -125,17 +129,15 @@ describe('TransactionsTableComponent', () => {
     additionalData: 'no data'
   };
 
-  const transactionUpdateFormMock = {
-    value: {
-      user: '123qwe',
-      status: 'INITIAL',
-      amount: '100',
-      currency: 'USD',
-      commissionAmount: '10',
-      commissionCurrency: 'USD',
-      additionalData: 'no data'
-    }
-  };
+  const transactionUpdateFormMock = new FormGroup({
+    user: new FormControl('test1'),
+    status: new FormControl('INITIAL'),
+    amount: new FormControl('123'),
+    currency: new FormControl('USD'),
+    commissionAmount: new FormControl('123'),
+    commissionCurrency: new FormControl('USD'),
+    additionalData: new FormControl('no data')
+  });
 
   const columnNameMock = 'externalId';
 

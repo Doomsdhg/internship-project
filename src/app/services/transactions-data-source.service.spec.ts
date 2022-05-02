@@ -8,6 +8,7 @@ import { Page } from '../modules/types/Page.type';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { NotifyService } from './notify.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterTestingModule } from '@angular/router/testing';
 import { 
   DEFAULT_LANGUAGE, 
   MissingTranslationHandler, 
@@ -21,11 +22,14 @@ import {
   USE_EXTEND, 
   USE_STORE 
 } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TransactionsDataSourceService', () => {
 
-  const transactionsArrayExample = {
+  const transactionsArrayExample: Page<Transaction> = {
+    page: 1,
+    pageSize: 1,
+    totalPages: 1,
+    totalElements: 1,
     body: [
     {
       id: 'qwe123',

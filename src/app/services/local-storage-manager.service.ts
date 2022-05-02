@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import { DecodedToken, AuthenticationResponse } from '../modules/interfaces/authentication.interface';
 import { PageableDefaults } from '../constants/pageable.constants';
 
-interface AuthenticationData {
+export interface AuthenticationData {
   authenticated: string | null,
   token: string | null,
   refreshToken: string | null,

@@ -20,9 +20,9 @@ import { AppRoutes } from 'src/app/constants/app-routes.constants';
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    private web: AuthService, 
-    private localStorageManager: LocalStorageManagerService,
-    private router: Router) { }
+    public web: AuthService, 
+    public localStorageManager: LocalStorageManagerService,
+    public router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const isLogOutRequest = request.body && request.body.username;
@@ -49,6 +49,5 @@ export class AuthInterceptor implements HttpInterceptor {
         return throwError(() => new Error(error.message));
     })
     );
-
   }
 }
