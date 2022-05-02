@@ -6,7 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from '../../../services/notify.service';
 import { MatSort } from '@angular/material/sort';
-import { Target } from '../../../modules/interfaces/browser-event.interface';
 import { Router } from '@angular/router';
 import { Translations } from 'src/app/modules/interfaces/translations.interface';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
@@ -17,7 +16,7 @@ import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.
 import { SortingStrings } from 'src/app/constants/sorting.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
-interface Column {
+export interface Column {
   id: string,
   value: string
 }

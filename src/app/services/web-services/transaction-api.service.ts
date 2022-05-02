@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiEndpoints } from '../../constants/api-endpoints.constants';
 import { environment } from 'src/environments/environment';
-import { TransactionUpdateData, Transaction, ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
 import { Pageable } from 'src/app/modules/models/Pageable.model';
 import { Sortable } from 'src/app/modules/models/Sortable.model';
 import { Page } from 'src/app/modules/types/Page.type';
 import { QueryPredicates } from 'src/app/modules/models/QueryPredicates.model';
+import { 
+  HttpClient, 
+  HttpResponse } from '@angular/common/http';
+import { 
+  TransactionUpdateData, 
+  Transaction, 
+  ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(public http: HttpClient) { }
 
   deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
     return this.http.delete(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}${id}`);
