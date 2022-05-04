@@ -9,7 +9,7 @@ import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.
 })
 export class NumbersOnlyDirective {
 
-  constructor(private notify: NotifyService) { }
+  constructor(public notify: NotifyService) { }
 
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     if (isNaN(+element.value)) {

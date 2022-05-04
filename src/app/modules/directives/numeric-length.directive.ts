@@ -10,7 +10,7 @@ import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.
 })
 export class NumericLengthDirective {
 
-  private previousValue!: string;
+  public previousValue!: string;
 
   constructor(private notify: NotifyService, private translateService: TranslateService) { }
 
