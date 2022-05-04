@@ -14,7 +14,7 @@ interface ComponentWithInput {
 })
 export class InputChangeGuard implements CanDeactivate<ComponentWithInput> {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
   canDeactivate(component: TransactionsTableComponent): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (component.inputChanged) {

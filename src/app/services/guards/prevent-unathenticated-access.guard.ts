@@ -8,7 +8,7 @@ import { LocalStorageManagerService } from '../local-storage-manager.service';
 })
 export class PreventUnathenticatedAccessGuard implements CanActivate {
 
-  constructor(private localStorageManager: LocalStorageManagerService) {
+  constructor(public localStorageManager: LocalStorageManagerService) {
   }
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

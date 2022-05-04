@@ -29,7 +29,10 @@ export class SelectLanguageComponent {
 
   changeLanguage(): void {
     localStorage.setItem(LocalStorageAcessors.LANGUAGE, this.selectLanguageForm.value);
-    window.location.reload();
+    this.reloadCurrentPage();
   }
 
+  reloadCurrentPage(): void {
+    window.location.reload();
+  }
 }

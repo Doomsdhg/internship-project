@@ -7,7 +7,7 @@ import { AuthInterceptor } from './auth.interceptor';
 
 describe('AuthInterceptor', () => {
 
-  let service: TransactionApiService;
+  let httpClient: TransactionApiService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -25,13 +25,23 @@ describe('AuthInterceptor', () => {
         },
       ],
     });
-    service = TestBed.get(TransactionApiService);
-    httpMock = TestBed.get(HttpTestingController);
+    httpClient = TestBed.inject(TransactionApiService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
   it('should add authorization header to request', () => {
-    service.http.get('').subscribe();
+    httpClient.http.get('').subscribe();
     const httpRequest = httpMock.expectOne('');
     expect(httpRequest.request.headers.has('Authorization')).toBeTruthy();
+  });
+
+  it('shouldnt add authorization header to request', () => {
+    httpClient.http.post('',
+      {
+        username: 'admin'
+      })
+      .subscribe();
+    const httpRequest = httpMock.expectOne('');
+    expect(httpRequest.request.headers.has('Authorization')).toBeFalsy();
   });
 });

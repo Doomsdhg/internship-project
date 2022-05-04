@@ -22,9 +22,9 @@ export class AuthFormComponent {
   });
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private notify: NotifyService,
-    private router: Router,
+    public router: Router,
     private localStorageManager: LocalStorageManagerService
   ) { }
 
