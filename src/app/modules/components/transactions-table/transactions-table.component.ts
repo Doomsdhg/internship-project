@@ -16,6 +16,7 @@ import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.
 import { SortingStrings } from 'src/app/constants/sorting.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
+//TODO: in separate file.
 export interface Column {
   id: string,
   value: string
@@ -59,6 +60,7 @@ export class TransactionsTableComponent implements OnInit {
 
   formsToggled = false;
 
+  //TODO: you may build it in separate file too
   displayedColumns: string[] = [
     Columns.ID_EXTERNAL_ID,
     Columns.ID_PROVIDER,
@@ -117,7 +119,7 @@ export class TransactionsTableComponent implements OnInit {
     this.translateColumnsNames();
   }
 
-  get inputChanged() {  
+  get inputChanged() {
     return !this.transactionUpdateForm.dirty;
   }
 

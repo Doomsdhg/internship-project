@@ -22,8 +22,10 @@ export class SelectLanguageComponent {
     public router: Router,
     public route: ActivatedRoute
   ) {
+    //TODO: better make all initialisations in OnInit
     this.language = localStorage.getItem(LocalStorageAcessors.LANGUAGE) || environment.defaultLocale;
     this.translateService.use(this.language);
+    // creations too
     this.selectLanguageForm = new FormControl(this.language);
   }
 
@@ -32,6 +34,7 @@ export class SelectLanguageComponent {
     this.reloadCurrentPage();
   }
 
+  //TODO: One usage method in one line - not necessary
   reloadCurrentPage(): void {
     window.location.reload();
   }

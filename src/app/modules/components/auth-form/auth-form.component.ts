@@ -8,6 +8,7 @@ import { AuthenticationResponse, AuthenticationResponseError } from '../../inter
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
+//TODO: change detection.
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
@@ -15,12 +16,14 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
 })
 export class AuthFormComponent {
 
+  //TODO: getting controls or group with input not good.
   @Input()
   authForms: FormGroup = new FormGroup({
     login: new FormControl(),
     password: new FormControl(),
   });
 
+  //TODO: full names like authService.
   constructor(
     public auth: AuthService,
     private notify: NotifyService,

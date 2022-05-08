@@ -15,6 +15,9 @@ export class AuthService {
     public http: HttpClient
   ) { }
 
+  //TODO: `${environment.serverUrl}${ApiEndpoints.LOGIN}` - make it in Endpoints.AUTH.LOGIN
+  // login(request: LoginRequest)
+  // avoid casting, make abstract service BaseApiService and extends your service from
   login(username: string, password: string): Observable<AuthenticationResponse> {
     return this.http.post(`${environment.serverUrl}${ApiEndpoints.LOGIN}`, {
       username: username,
