@@ -29,6 +29,7 @@ export class AuthFormComponent {
   ) { }
 
   login(): void {
+    //TODO: to const
     this.auth.login(this.authForms.controls['login'].value, this.authForms.controls['password'].value).subscribe({
       next: (success: AuthenticationResponse) => {
         this.localStorageManager.setLoginValues(success);
