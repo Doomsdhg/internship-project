@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./auth-page.component.scss']
 })
 export class AuthPageComponent {
-
+  //TODO: empty.
 }

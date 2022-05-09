@@ -61,6 +61,7 @@ export class HeaderComponent implements OnInit {
     localStorage.setItem(LocalStorageAcessors.THEME, this.theme);
   }
 
+  //TODO: replace your switcher by realisation with arg.
   replaceThemeClass(): void {
     const currentTheme = this.theme;
     const futureTheme = this.theme === Themes.DARK ? Themes.LIGHT : Themes.DARK;

@@ -52,6 +52,8 @@ interface Sorted {
 
 export class TransactionsTableComponent implements OnInit {
 
+  //TODO: Methods are overloaded, modifiers on methods (check your application).
+
   @Input() transactionUpdateForm!: FormGroup;
 
   @Input() dataSource!: TransactionsDataSource;
@@ -110,6 +112,7 @@ export class TransactionsTableComponent implements OnInit {
     private localStorageManager: LocalStorageManagerService
   ) { }
 
+  //TODO: unused.
   get getTransactionUpdateForm () {
     return this.transactionUpdateForm;
   }
@@ -161,6 +164,7 @@ export class TransactionsTableComponent implements OnInit {
   confirmTransaction = (e: Event): void => {
     e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
+    //TODO: string | undefined - why?
     const externalId: string | undefined = currentTarget.dataset['external_id'];
     const provider: string | undefined = currentTarget.dataset['provider'];
     this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
@@ -192,9 +196,11 @@ export class TransactionsTableComponent implements OnInit {
   updateTransaction = (e: Event, row: Row): void => {
     e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
+    //TODO: need to discuss.
     const id: string  = currentTarget.dataset['id'] || 'no id';
     const provider: string = currentTarget.dataset['provider'] || 'no provider';
     const externalId: string = currentTarget.dataset['external_id'] || 'no external id';
+    //TODO: syntax without bracers - id: id
     const updateObj: TransactionUpdateData = {
       "id": id,
       "externalId": externalId,
@@ -209,12 +215,16 @@ export class TransactionsTableComponent implements OnInit {
         "currency": this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       "provider": provider,
+      //TODO: be carefully with timestamp, where timezone and offset? better to use
+      // complete library like Moment.js - import * as moment from 'moment-timezone';
+      //                                   import { Moment } from 'moment';
       "timestamp": Date.now() / 1000,
       "providerTimestamp": Date.now() / 1000,
       "additionalData": this.transactionUpdateForm.value.additionalData
     };
     this.transactionApiService.patchTransaction(updateObj).subscribe({
       next: () => {
+        //TODO: e?
         this.toggleForms(e, row);
         this.refreshTransactions();
         this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Snackbar.SUCCESS_TYPE);
@@ -226,6 +236,7 @@ export class TransactionsTableComponent implements OnInit {
   };
 
   setDefaultSorting(): void {
+    //TODO: better set really default value then undefiner. (in your case this method should calls -reset)
     this.sorted = undefined;
     this.dataSource.sortColumn = SortingStrings.DEFAULT_COLUMN;
     this.dataSource.sortOrder = SortingStrings.DEFAULT_ORDER;
@@ -234,6 +245,7 @@ export class TransactionsTableComponent implements OnInit {
   setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
     const columnSortedAlready = Boolean(this.sorted![columnName as keyof Sorted]);
+    //TODO: just isColumnSorted (columnSortedAlready) instead isColumnSorted === true
     this.dataSource.sortOrder = columnSortedAlready === true ? SortingStrings.DESC : SortingStrings.ASC;
   }
 
@@ -243,6 +255,7 @@ export class TransactionsTableComponent implements OnInit {
 
   sortify = (columnName: string): void => {
     const isDefaultSorting = this.sorted === undefined;
+    //TODO: new Object() you may replace by {}
     this.sorted = isDefaultSorting ? new Object() : this.sorted;
     const sortedBothOrders = this.sorted![columnName as keyof Sorted] === false;
     if (sortedBothOrders) {
