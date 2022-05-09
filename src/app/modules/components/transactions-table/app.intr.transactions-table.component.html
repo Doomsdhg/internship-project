@@ -1,0 +1,201 @@
+<div class="transactions-table-wrapper">
+  <table mat-table matSort [dataSource]="dataSource" class="w-100-percents">
+
+    <!-- External id Column -->
+    <ng-container matColumnDef="externalId">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('externalId')">
+        <span class="column-header">
+          {{ 'displayedColumns.externalId' | translate }}{{sorted !== undefined && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <p class="required-text text-danger" *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
+        <p>
+          {{row.externalId}}
+        </p>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Provider Column -->
+    <ng-container matColumnDef="provider">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('provider')">
+        <span class="column-header">
+          {{ 'displayedColumns.provider' | translate }}{{sorted !== undefined && sorted.provider !== undefined ? sorted!.provider?'▲':'▼':''}}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <p>
+          {{row.provider}}
+        </p>
+      </mat-cell>
+    </ng-container>
+
+    <!-- status Column -->
+    <ng-container matColumnDef="status">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('status')">
+        <span class="column-header">
+          {{ 'displayedColumns.status' | translate }}{{sorted !== undefined && sorted.status !== undefined ? sorted!.status?'▲':'▼':''}}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+        <ng-template #editForms>
+          <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.status' | translate}}</mat-label>
+              <input required matInput formControlName="status" value="{{row.status}}"
+                placeholder="{{ 'placeholders.status' | translate }}">
+            </mat-form-field>
+          </form>
+        </ng-template>
+        <ng-template #rowData>
+          {{row.status}}
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="amount">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('amount')">
+        <span class="column-header">
+          {{ 'displayedColumns.amount' | translate }}{{sorted !== undefined && sorted.amount !== undefined ? sorted!.amount?'▲':'▼':''}}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+        <ng-template #editForms>
+          <div class="amount-form-container">
+            <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+              <mat-form-field class="amount-form-container__input" appearance="fill">
+                <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
+                <input required [appIntrNumericLength]="[10, 2]" appIntrNumbersOnly matInput formControlName="amount"
+                  value="{{row.amount.amount}}" placeholder="{{ 'placeholders.amount' | translate }}">
+              </mat-form-field>
+            </form>
+            <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+              <mat-form-field class="amount-form-container__input" appearance="fill">
+                <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
+                <input required matInput formControlName="currency" value="{{row.amount.currency}}"
+                  placeholder="{{ 'placeholders.currency' | translate }}">
+              </mat-form-field>
+            </form>
+          </div>
+        </ng-template>
+        <ng-template #rowData>
+          {{row.amount.amount | currency: row.amount.currency}}
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <!-- commission amount Column -->
+    <ng-container matColumnDef="commissionAmount">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('commissionAmount')">
+        <span class="column-header">
+          {{ 'displayedColumns.commissionAmount' | translate }}{{sorted !== undefined && sorted.commissionAmount !== undefined ? sorted!.commissionAmount?'▲':'▼':''}}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+        <ng-template #editForms>
+          <div class="amount-form-container">
+            <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+              <mat-form-field class="amount-form-container__input" appearance="fill">
+                <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
+                <input required [appIntrNumericLength]="[10, 2]" appIntrNumbersOnly matInput formControlName="commissionAmount"
+                  value="{{row.commissionAmount.amount}}" placeholder="{{ 'placeholders.commissionAmount' | translate }}">
+              </mat-form-field>
+            </form>
+            <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+              <mat-form-field class="amount-form-container__input" appearance="fill">
+                <mat-label>{{'displayedColumns.commissionCurrency' | translate}}</mat-label>
+                <input required matInput formControlName="commissionCurrency" value="{{row.commissionAmount.currency}}"
+                  placeholder="{{ 'placeholders.commissionCurrency' | translate }}">
+              </mat-form-field>
+            </form>
+          </div>
+        </ng-template>
+        <ng-template #rowData>
+          {{row.commissionAmount.amount | currency: row.commissionAmount.currency}}
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <!-- user Column -->
+    <ng-container matColumnDef="user">
+      <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('user')">
+        <span class="column-header">
+          {{ 'displayedColumns.user' | translate }}{{sorted !== undefined && sorted.user !== undefined ? sorted!.user?'▲':'▼':''}}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
+        <ng-template #editForms>
+          <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
+            <mat-form-field class="amount-form-container__input" appearance="fill">
+              <mat-label>{{'displayedColumns.user' | translate}}</mat-label>
+              <input required matInput formControlName="user" value="{{row.user}}"
+                placeholder="{{ 'placeholders.user' | translate }}">
+            </mat-form-field>
+          </form>
+        </ng-template>
+        <ng-template #rowData>
+          {{row.user}}
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <mat-header-cell id="toolsHeader" *matHeaderCellDef>
+        <span class="column-header">
+          {{ 'displayedColumns.tools' | translate }}
+        </span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
+        <div class="flex-container-column">
+          <div class="buttons-group">
+            <button *ngIf="row.status === 'INITIAL'" mat-raised-button attr.data-external_id="{{row.externalId}}" attr.data-provider="{{row.provider}}"
+              [disabled]="formsToggled" (click)="confirmTransaction($event)">
+              <mat-icon>check icon</mat-icon>
+            </button>
+            <button *ngIf="row.status === 'INITIAL'" mat-raised-button [disabled]="formsToggled" (click)="toggleForms($event, row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="row.displayForms" class="buttons-group">
+            <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}" attr.data-external_id="{{row.externalId}}" (click)="updateTransaction($event, row)">
+              {{'buttons.saveChanges' | translate}}
+            </button>
+          </div>
+          <div *ngIf="row.displayForms" class="buttons-group">
+            <button mat-raised-button attr.data-id="{{row.id}}" (click)="toggleForms($event, row)">
+              {{'buttons.cancelChanges' | translate}}
+            </button>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+      class="onhover-pointer">
+    </mat-row>
+  </table>
+  <div class="pagination-pannel">
+    <span>{{dataSource.displayedTransactions}} {{'of' | translate}} {{dataSource.totalTransactions}}</span>
+    <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(0)">
+      << </button>
+        <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
+          < </button>
+            <mat-form-field appearance="fill">
+              <mat-label>{{'pageSize' | translate}}</mat-label>
+              <mat-select [(value)]="dataSource.selectedPageSize" (valueChange)="setPageSize($event)">
+                <mat-option *ngFor="let size of dataSource.pageSizeOptions" [value]="size">
+                  {{size}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
+            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
+  </div>
+</div>
