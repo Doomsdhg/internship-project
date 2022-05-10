@@ -1,12 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
-import { Themes } from 'src/app/constants/themes.constants';
+import { Constants } from 'src/app/constants/main.constants';
 import { AuthService } from 'src/app/services/web-services/app.intr.auth.service';
 import { environment } from 'src/environments/environment.prod';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { LocalStorageManagerService } from 'src/app/services/app.intr.local-storage-manager.service';
-import { SpinnerService } from 'src/app/services/app.intr.spinner.service';
 
 @Component({
   selector: 'app-intr-header',
@@ -26,8 +23,7 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef,
     private auth: AuthService,
-    private localStorageManager: LocalStorageManagerService,
-    private spinnerService: SpinnerService
+    private localStorageManager: LocalStorageManagerService
   ) {
     router.events.subscribe(() => {
       this.setCurrentRoute();
@@ -44,7 +40,7 @@ export class HeaderComponent implements OnInit {
   }
 
   setTheme(): void {
-    this.theme = localStorage.getItem(LocalStorageAcessors.THEME) || Themes.LIGHT;
+    this.theme = localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME) || Constants.THEMES.LIGHT;
     document.getElementsByTagName('body')[0].classList.add(this.theme);
   }
 
@@ -59,13 +55,13 @@ export class HeaderComponent implements OnInit {
 
   switchTheme(): void {
     this.replaceThemeClass();
-    this.theme = this.theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT;
-    localStorage.setItem(LocalStorageAcessors.THEME, this.theme);
+    this.theme = this.theme === Constants.THEMES.LIGHT ? Constants.THEMES.DARK : Constants.THEMES.LIGHT;
+    localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME, this.theme);
   }
 
   replaceThemeClass(): void {
     const currentTheme = this.theme;
-    const futureTheme = this.theme === Themes.DARK ? Themes.LIGHT : Themes.DARK;
+    const futureTheme = this.theme === Constants.THEMES.DARK ? Constants.THEMES.LIGHT : Constants.THEMES.DARK;
     const body = document.getElementsByTagName('body')[0];
     body.classList.remove(currentTheme);
     body.classList.add(futureTheme);
@@ -74,7 +70,7 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.auth.logout().subscribe(() => {
       this.localStorageManager.deleteLoginValues();
-      this.redirect(AppRoutes.AUTHENTICATION);
+      this.redirect(Constants.APP_ROUTES.AUTHENTICATION);
     });
   }
 

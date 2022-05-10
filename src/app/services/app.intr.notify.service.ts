@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Snackbar } from '../constants/snackbar.constants';
+import { Constants } from '../constants/main.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,8 @@ export class NotifyService {
 
   showMessage(message: string, type: string): void {
     const config = new MatSnackBarConfig();
-    config.duration = Snackbar.DURATION;
-    config.panelClass = [type + Snackbar.CLASSNAME_POSTFIX];
+    config.duration = Constants.SNACKBAR.DURATION;
+    config.panelClass = [type + Constants.SNACKBAR.CLASSNAME_POSTFIX];
     this.snackBar.open(message, undefined, config);
   }
 }

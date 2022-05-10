@@ -9,9 +9,8 @@ import { AuthService } from 'src/app/services/web-services/app.intr.auth.service
 import { AuthenticationResponse } from '../interfaces/app.intr.authentication.interface';
 import { LocalStorageManagerService } from 'src/app/services/app.intr.local-storage-manager.service';
 import { environment } from 'src/environments/environment';
-import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
+import { Constants } from 'src/app/constants/main.constants';
 import { Router } from '@angular/router';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { SpinnerService } from 'src/app/services/app.intr.spinner.service';
 import { map } from 'rxjs';
 
@@ -36,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.localStorageManager.refreshToken(success);
       });
     }
-    if (request.url !== `${environment.serverUrl}${ApiEndpoints.LOGIN}`) {
+    if (request.url !== `${environment.serverUrl}${Constants.API_ENDPOINTS.LOGIN}`) {
       request = request.clone({
         headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
       });
@@ -48,7 +47,7 @@ export class AuthInterceptor implements HttpInterceptor {
         const unauthorized = response.status === 401;
         if (unauthorized) {
           this.localStorageManager.deleteLoginValues();
-          this.router.navigate([AppRoutes.AUTHENTICATION]);
+          this.router.navigate([Constants.APP_ROUTES.AUTHENTICATION]);
         }
           this.spinnerService.hideSpinner();
         if (noError) {
