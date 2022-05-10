@@ -1,23 +1,23 @@
 export interface AuthenticationResponse {
-    accessToken: string,
-    refreshToken: string,
-    username: string,
-    type: string
+    accessToken: string;
+    refreshToken: string;
+    username: string;
+    type: string;
 }
 
 export interface LogoutResponse {
-    message: string
+    message: string;
 }
 
 export interface AuthenticationResponseError {
-    error: ErrorObject
+    error: ErrorObject;
 }
 
 interface ErrorObject {
-    message: string
+    message: string;
 }
 
 export interface DecodedToken {
-    exp: number,
-    iat: number
+    exp: number;
+    iat: number;
 }

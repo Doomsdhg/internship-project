@@ -1,4 +1,4 @@
-import { GridState } from "./GridState.model";
+import { GridState } from './GridState.model';
 
 export class Sortable {
 
@@ -14,7 +14,7 @@ export class Sortable {
     this.direction = direction;
   }
 
-  toString() {
+  toString(): string {
     if (this.direction && this.direction.length) {
       return `&sort=${this.field}&order=${this.direction}`;
     }

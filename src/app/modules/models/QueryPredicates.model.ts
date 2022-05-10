@@ -1,4 +1,4 @@
-import { GridState } from "./GridState.model";
+import { GridState } from './GridState.model';
 
 export class QueryPredicates {
 
@@ -16,7 +16,7 @@ export class QueryPredicates {
     }
   }
 
-  toString() {
+  toString(): string {
     return this.predicates
       .map((predicate) => predicate)
       .join('&');
