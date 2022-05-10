@@ -6,11 +6,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { TransactionsTableComponent } from 'src/app/modules/components/transactions-table/transactions-table.component';
-import { NotifyService } from '../notify.service';
+import { TransactionsTableComponent } from '../../modules/components/transactions-table/intr.transactions-table.component';
+import { NotifyService } from '../intr.notify.service';
 import { TransactionApiService } from '../web-services/transaction-api.service';
-
-import { InputChangeGuard } from './input-change.guard';
+import { InputChangeGuard } from './intr.input-change.guard';
 
 describe('InputChangeGuard', () => {
   let guard: InputChangeGuard;

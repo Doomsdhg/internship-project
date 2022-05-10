@@ -17,7 +17,7 @@
         "component-selector": [
           true,
           "element",
-          "app-intr",
+          ["app", "intr"],
           "kebab-case"
         ],
         "contextual-lifecycle": true,
@@ -25,7 +25,7 @@
         "directive-selector": [
           true,
           "attribute",
-          "appIntr",
+          "intr",
           "camelCase"
         ],
         "no-attribute-decorator": true,

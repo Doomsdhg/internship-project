@@ -9,9 +9,9 @@ import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
-  selector: 'app-auth-form',
-  templateUrl: './auth-form.component.html',
-  styleUrls: ['./auth-form.component.scss']
+  selector: 'intr-auth-form',
+  templateUrl: './intr.auth-form.component.html',
+  styleUrls: ['./intr.auth-form.component.scss']
 })
 export class AuthFormComponent {
 

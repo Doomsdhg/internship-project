@@ -16,7 +16,7 @@ describe('NumericLengthDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NotifyService, 
+        NotifyService,
         NumbersOnlyDirective
       ],
       imports: [
@@ -28,7 +28,7 @@ describe('NumericLengthDirective', () => {
     directive = TestBed.inject(NumbersOnlyDirective);
   });
 
-  it('should delete last symbol and call `showtTranslatedMessage`', 
+  it('should delete last symbol and call `showtTranslatedMessage`',
   () => {
     spyOn(directive.notify, 'showTranslatedMessage').and.callThrough();
     directive.onInput(elementMock);

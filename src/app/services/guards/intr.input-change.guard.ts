@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { CanDeactivate, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { GuardDialogContentComponent } from 'src/app/modules/components/guard-dialog-content/guard-dialog-content.component';
-import { TransactionsTableComponent } from '../../modules/components/transactions-table/transactions-table.component';
+import { GuardDialogContentComponent } from 'src/app/modules/components/guard-dialog-content/intr.guard-dialog-content.component';
+import { TransactionsTableComponent } from '../../modules/components/transactions-table/intr.transactions-table.component';
 
 interface ComponentWithInput {
-  get inputChanged(): boolean
+  get inputChanged(): boolean;
 }
 
 @Injectable({

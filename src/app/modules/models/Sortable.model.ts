@@ -1,4 +1,4 @@
-import { GridState } from "./GridState.model";
+import { GridState } from './GridState.model';
 
 export class Sortable {
 

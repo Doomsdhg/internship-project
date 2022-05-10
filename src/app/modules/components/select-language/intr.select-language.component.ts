@@ -6,9 +6,9 @@ import { FormControl } from '@angular/forms';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 
 @Component({
-  selector: 'app-select-language',
-  templateUrl: './select-language.component.html',
-  styleUrls: ['./select-language.component.scss'],
+  selector: 'intr-select-language',
+  templateUrl: './intr.select-language.component.html',
+  styleUrls: ['./intr.select-language.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectLanguageComponent {

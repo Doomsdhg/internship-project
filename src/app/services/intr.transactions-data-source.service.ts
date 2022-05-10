@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from "rxjs";
-import { Transaction, TransactionCrudResponseError } from "../modules/interfaces/transactions.interface";
-import { TransactionApiService } from "../services/web-services/transaction-api.service";
+import { BehaviorSubject } from 'rxjs';
+import { Transaction, TransactionCrudResponseError } from '../modules/interfaces/transactions.interface';
+import { TransactionApiService } from '../services/web-services/transaction-api.service';
 import { NotifyService } from './notify.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { Snackbar } from '../constants/snackbar.constants';
@@ -17,7 +17,7 @@ import { LocalStorageManagerService } from './local-storage-manager.service';
 })
 
 export class TransactionsDataSource extends
-  MatTableDataSource<Transaction>{
+  MatTableDataSource<Transaction> {
 
   constructor(
     public transactionApiService: TransactionApiService,

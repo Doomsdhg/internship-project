@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { TransactionApiService } from './transaction-api.service';
 import { Observable } from 'rxjs';
-import { Transaction, TransactionUpdateData } from 'src/app/modules/interfaces/transactions.interface';
+import { Transaction, TransactionUpdateData } from '../../modules/interfaces/transactions.interface';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TransactionApiService', () => {
@@ -114,7 +114,7 @@ describe('TransactionApiService', () => {
       expect(success).toEqual(transactionsListExample);
       done();
     }
-    ); 
+    );
   });
 
   it('should return list of transactions without last one on the list', (done) => {
@@ -130,7 +130,7 @@ describe('TransactionApiService', () => {
         expect(success).toEqual(transactionsListExample);
         done();
       });
-    }); 
+    });
   });
 
   it('should return list of transactions with first item updated', (done) => {
@@ -145,7 +145,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success).toEqual(transactionsListExample);
         done();
-      }); 
+      });
     });
   });
 
@@ -161,7 +161,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success).toEqual(transactionsListExample);
         done();
-      }); 
+      });
     });
   });
 
@@ -177,7 +177,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success).toEqual(transactionsListExample);
         done();
-      }); 
+      });
     });
   });
 
@@ -193,7 +193,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success[1].status).toBe('COMPLETED');
         done();
-      }); 
+      });
     });
   });
 

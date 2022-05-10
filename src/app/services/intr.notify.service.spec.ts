@@ -1,24 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 import { Snackbar } from '../constants/snackbar.constants';
-import { TransactionsTableComponent } from '../modules/components/transactions-table/transactions-table.component';
-import { NotifyService } from './notify.service';
+import { TransactionsTableComponent } from '../modules/components/transactions-table/intr.transactions-table.component';
+import { NotifyService } from './intr.notify.service';
 import {  MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs';
-import { 
+import {
   TranslateModule,
-  DEFAULT_LANGUAGE, 
-  MissingTranslationHandler, 
-  TranslateCompiler, 
-  TranslateLoader, 
-  TranslateParser, 
-  TranslateService, 
-  TranslateStore, 
-  USE_DEFAULT_LANG, 
-  USE_EXTEND, 
-  USE_STORE 
+  DEFAULT_LANGUAGE,
+  MissingTranslationHandler,
+  TranslateCompiler,
+  TranslateLoader,
+  TranslateParser,
+  TranslateService,
+  TranslateStore,
+  USE_DEFAULT_LANG,
+  USE_EXTEND,
+  USE_STORE
 } from '@ngx-translate/core';
 
 
@@ -33,7 +33,7 @@ describe('NotifyService', () => {
       imports: [
         TranslateModule,
         BrowserAnimationsModule,
-        MatSnackBarModule, 
+        MatSnackBarModule,
         HttpClientTestingModule,
         RouterTestingModule
       ],

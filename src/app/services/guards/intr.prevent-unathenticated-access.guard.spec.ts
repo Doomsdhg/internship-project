@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
+import { LocalStorageAcessors } from '../../constants/local-storage-accessors.constants';
 import { LocalStorageManagerService } from '../local-storage-manager.service';
-import { PreventAuthenticatedAccessGuard } from './prevent-authenticated-access.guard';
+import { PreventUnathenticatedAccessGuard } from './prevent-unathenticated-access.guard';
 
-describe('PreventAuthenticatedAccessGuard', () => {
-  let guard: PreventAuthenticatedAccessGuard;
+describe('PreventUnathenticatedAccessGuard', () => {
+  let guard: PreventUnathenticatedAccessGuard;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,13 +12,13 @@ describe('PreventAuthenticatedAccessGuard', () => {
         LocalStorageManagerService,
       ]
     });
-    guard = TestBed.inject(PreventAuthenticatedAccessGuard);
+    guard = TestBed.inject(PreventUnathenticatedAccessGuard);
   });
 
   it('should call localStorageManagerService getAuthenticationInfo function and return true', () => {
     spyOn(guard.localStorageManager, 'getAuthenticationInfo').and.callThrough();
     guard.canActivate();
-    localStorage.removeItem(LocalStorageAcessors.AUTHENTICATED);
+    localStorage.setItem(LocalStorageAcessors.AUTHENTICATED, 'true');
     expect(guard.localStorageManager.getAuthenticationInfo).toHaveBeenCalled();
     expect(guard.canActivate()).toBe(true);
   });

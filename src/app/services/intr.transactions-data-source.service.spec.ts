@@ -1,26 +1,26 @@
 import { TestBed } from '@angular/core/testing';
-import { TransactionsDataSource } from './transactions-data-source.service';
-import { TransactionApiService } from "../services/web-services/transaction-api.service";
+import { TransactionsDataSource } from './intr.transactions-data-source.service';
+import { TransactionApiService } from '../services/web-services/intr.transaction-api.service';
 import { Observable } from 'rxjs';
 import { Transaction } from '../modules/interfaces/transactions.interface';
 import { HttpResponse } from '@angular/common/http';
 import { Page } from '../modules/types/Page.type';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { NotifyService } from './notify.service';
+import { NotifyService } from './intr.notify.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { 
-  DEFAULT_LANGUAGE, 
-  MissingTranslationHandler, 
-  TranslateCompiler, 
-  TranslateLoader, 
-  TranslateModule, 
-  TranslateParser, 
-  TranslateService, 
-  TranslateStore, 
-  USE_DEFAULT_LANG, 
-  USE_EXTEND, 
-  USE_STORE 
+import {
+  DEFAULT_LANGUAGE,
+  MissingTranslationHandler,
+  TranslateCompiler,
+  TranslateLoader,
+  TranslateModule,
+  TranslateParser,
+  TranslateService,
+  TranslateStore,
+  USE_DEFAULT_LANG,
+  USE_EXTEND,
+  USE_STORE
 } from '@ngx-translate/core';
 
 describe('TransactionsDataSourceService', () => {
@@ -87,10 +87,10 @@ describe('TransactionsDataSourceService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        TransactionApiService, 
-        NotifyService, 
-        TranslateService, 
-        TranslateStore, 
+        TransactionApiService,
+        NotifyService,
+        TranslateService,
+        TranslateStore,
         TranslateLoader,
         TranslateCompiler,
         TranslateParser,
@@ -101,8 +101,8 @@ describe('TransactionsDataSourceService', () => {
         {provide: DEFAULT_LANGUAGE, useValue: null},
       ],
       imports: [
-        HttpClientTestingModule, 
-        MatSnackBarModule, 
+        HttpClientTestingModule,
+        MatSnackBarModule,
         TranslateModule,
         RouterTestingModule
       ]

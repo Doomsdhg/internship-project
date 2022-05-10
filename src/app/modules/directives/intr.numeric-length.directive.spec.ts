@@ -19,8 +19,8 @@ describe('NumericLengthDirective', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        NotifyService, 
-        NumericLengthDirective, 
+        NotifyService,
+        NumericLengthDirective,
       ],
       imports: [
         MatSnackBarModule,
@@ -31,7 +31,7 @@ describe('NumericLengthDirective', () => {
     directive = TestBed.inject(NumericLengthDirective);
   });
 
-  it('should return string of maximum possible number with first argument as amount of digits before decimal point and second argument as amount of digits after decimal point', 
+  it('should return string of maximum possible number with first argument as amount of digits before decimal point and second argument as amount of digits after decimal point',
   () => {
     directive.previousValue = twelveNines;
     directive.options = [10, 2];
