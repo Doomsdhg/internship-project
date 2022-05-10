@@ -19,9 +19,9 @@ export class TransactionsDataSource extends
 
   constructor(
     public transactionApiService: TransactionApiService,
-    private notify: NotifyService,
+    private notifyService: NotifyService,
     private router: Router,
-    private localStorageManager: LocalStorageManagerService) {
+    private localStorageManagerService: LocalStorageManagerService) {
     super();
   }
 
@@ -56,9 +56,9 @@ export class TransactionsDataSource extends
           });
         },
         error: (error: TransactionCrudResponseError) => {
-          this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
+          this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
           if (error.status === 401) {
-            this.localStorageManager.deleteLoginValues();
+            this.localStorageManagerService.deleteLoginValues();
             this.router.navigate([Constants.APP_ROUTES.AUTHENTICATION]);
           }
         }

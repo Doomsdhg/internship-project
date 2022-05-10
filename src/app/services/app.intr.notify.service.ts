@@ -9,7 +9,7 @@ import { Constants } from '../constants/main.constants';
 
 export class NotifyService {
 
-  constructor(private snackBar: MatSnackBar, private translateService: TranslateService) { }
+  constructor(private matSnackBar: MatSnackBar, private translateService: TranslateService) { }
 
   showTranslatedMessage(messageAccessor: string, messageType: string): void {
     this.translateService.get(messageAccessor).subscribe((msg: string) => {
@@ -21,6 +21,6 @@ export class NotifyService {
     const config = new MatSnackBarConfig();
     config.duration = Constants.SNACKBAR.DURATION;
     config.panelClass = [type + Constants.SNACKBAR.CLASSNAME_POSTFIX];
-    this.snackBar.open(message, undefined, config);
+    this.matSnackBar.open(message, undefined, config);
   }
 }

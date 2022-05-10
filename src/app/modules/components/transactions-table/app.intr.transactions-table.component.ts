@@ -46,11 +46,13 @@ interface Sorted {
 
 export class TransactionsTableComponent implements OnInit {
 
-  @Input() transactionUpdateForm!: FormGroup;
-
   @Input() dataSource!: TransactionsDataSource;
 
+  @Input() sorted: Sorted | undefined;
+
   @ViewChild(MatSort) sort!: MatSort;
+
+  transactionUpdateForm!: FormGroup;
 
   formsToggled = false;
 
@@ -92,12 +94,10 @@ export class TransactionsTableComponent implements OnInit {
     value: Constants.COLUMNS.NAME_ACTIONS
   }];
 
-  @Input() sorted: Sorted | undefined;
-
   constructor(
     public transactionApiService: TransactionApiService,
     public translateService: TranslateService,
-    private notify: NotifyService,
+    private notifyService: NotifyService,
     private router: Router,
     private localStorageManager: LocalStorageManagerService
   ) { }
@@ -121,7 +121,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   loadData(): void {
-    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify, this.router, this.localStorageManager);
+    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notifyService, this.router, this.localStorageManager);
     this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.PAGE_SIZE)) ||
     Constants.PAGEABLE_DEFAULTS.defaultPageSize;
     this.dataSource.loadTransactions();
@@ -159,10 +159,11 @@ export class TransactionsTableComponent implements OnInit {
     this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
       next: () => {
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(Constants.TRANSLATION_ENDPOINTS.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notifyService.showTranslatedMessage(
+          Constants.TRANSLATION_ENDPOINTS.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
+        this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
   }
@@ -210,10 +211,11 @@ export class TransactionsTableComponent implements OnInit {
       next: () => {
         this.toggleForms(e, row);
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(Constants.TRANSLATION_ENDPOINTS.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notifyService.showTranslatedMessage(
+          Constants.TRANSLATION_ENDPOINTS.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
+        this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
   }

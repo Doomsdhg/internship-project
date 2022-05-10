@@ -20,11 +20,11 @@ import {
 export class TransactionApiService {
 
   constructor(
-    public http: HttpClient
+    public httpClient: HttpClient
     ) { }
 
   deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
-    return this.http.delete(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}${id}`);
+    return this.httpClient.delete(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}${id}`);
   }
 
   getTransactions(
@@ -33,21 +33,22 @@ export class TransactionApiService {
     pageSize = 3,
     sortColumn = 'id',
     sortOrder = 'ASC'): Observable<HttpResponse<Page<Transaction>>> {
-    return this.http.get(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS
+    return this.httpClient.get(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS
     }${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
       , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
   }
 
   patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.http.put(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, updateObj) as Observable<Transaction>;
+    return this.httpClient.put(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, updateObj) as Observable<Transaction>;
   }
 
   uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
-    return this.http.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, transactionData) as Observable<Transaction>;
+    return this.httpClient.post(
+      `${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, transactionData) as Observable<Transaction>;
   }
 
   confirmTransaction(externalId: string | undefined, provider: string | undefined): Observable<Transaction[]> {
-    return this.http.post(`${environment.serverUrl}
+    return this.httpClient.post(`${environment.serverUrl}
     ${Constants.API_ENDPOINTS.TRANSACTIONS}?external_id=${externalId}&provider=${provider}`, {}) as Observable<Transaction[]>;
   }
 }

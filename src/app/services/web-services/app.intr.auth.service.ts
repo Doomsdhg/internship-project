@@ -10,24 +10,24 @@ import { AuthenticationResponse, LogoutResponse } from 'src/app/modules/interfac
 export class AuthService {
 
   constructor(
-    public http: HttpClient
+    public httpClient: HttpClient
   ) { }
 
   login(username: string, password: string): Observable<AuthenticationResponse> {
-    return this.http.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.LOGIN}`, {
+    return this.httpClient.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.LOGIN}`, {
       username: username,
       password: password
     }) as Observable<AuthenticationResponse>;
   }
 
   logout(): Observable<LogoutResponse> {
-    return this.http.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.LOGOUT}`, {
+    return this.httpClient.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.LOGOUT}`, {
       username: localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.USERNAME)
     }) as Observable<LogoutResponse>;
   }
 
   refreshToken(): Observable<AuthenticationResponse> {
-    return this.http.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.REFRESH}`, {
+    return this.httpClient.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.REFRESH}`, {
       refreshToken: localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.REFRESH_TOKEN)
     }) as Observable<AuthenticationResponse>;
   }

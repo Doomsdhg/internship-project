@@ -18,8 +18,8 @@ import { map } from 'rxjs';
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    public web: AuthService,
-    public localStorageManager: LocalStorageManagerService,
+    public authService: AuthService,
+    public localStorageManagerService: LocalStorageManagerService,
     public router: Router,
     public spinnerService: SpinnerService
     ) { }
@@ -30,14 +30,14 @@ export class AuthInterceptor implements HttpInterceptor {
     if (isLogOutRequest) {
       return next.handle(request);
     }
-    if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration)) {
-      this.web.refreshToken().subscribe((success: AuthenticationResponse) => {
-        this.localStorageManager.refreshToken(success);
+    if (Date.now() > Number(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration)) {
+      this.authService.refreshToken().subscribe((success: AuthenticationResponse) => {
+        this.localStorageManagerService.refreshToken(success);
       });
     }
     if (request.url !== `${environment.serverUrl}${Constants.API_ENDPOINTS.LOGIN}`) {
       request = request.clone({
-        headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
+        headers: request.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
       });
     }
 
@@ -46,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
         const noError = response.status === 200;
         const unauthorized = response.status === 401;
         if (unauthorized) {
-          this.localStorageManager.deleteLoginValues();
+          this.localStorageManagerService.deleteLoginValues();
           this.router.navigate([Constants.APP_ROUTES.AUTHENTICATION]);
         }
           this.spinnerService.hideSpinner();

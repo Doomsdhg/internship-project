@@ -11,7 +11,7 @@ export class NumericLengthDirective {
 
   private previousValue!: string;
 
-  constructor(private notify: NotifyService, private translateService: TranslateService) { }
+  constructor(private notifyService: NotifyService, private translateService: TranslateService) { }
 
   @Input('appIntrNumericLength') options!: number[];
 
@@ -27,7 +27,7 @@ export class NumericLengthDirective {
     if ((+numeric < -max || +numeric > +max) || (+numeric !== +element.value && element.value.length > maxLength)) {
       element.value = this.previousValue;
       this.translateService.get(Constants.TRANSLATION_ENDPOINTS.SNACKBAR_NUMBERS_LIMITED).subscribe((msg) => {
-        this.notify.showMessage(msg.start +
+        this.notifyService.showMessage(msg.start +
           digitsBeforeDecPoint + ' ' + msg.middle + ' ' +
           digitsAfterDecPoint + ' ' + msg.end, Constants.SNACKBAR.ERROR_TYPE);
       });

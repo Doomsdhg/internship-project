@@ -22,8 +22,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private auth: AuthService,
-    private localStorageManager: LocalStorageManagerService
+    private authService: AuthService,
+    private localStorageManagerService: LocalStorageManagerService
   ) {
     router.events.subscribe(() => {
       this.setCurrentRoute();
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public get authenticated(): string | null | undefined {
-    return this.localStorageManager.getAuthenticationInfo()?.authenticated;
+    return this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
   }
 
   ngOnInit(): void {
@@ -68,8 +68,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.auth.logout().subscribe(() => {
-      this.localStorageManager.deleteLoginValues();
+    this.authService.logout().subscribe(() => {
+      this.localStorageManagerService.deleteLoginValues();
       this.redirect(Constants.APP_ROUTES.AUTHENTICATION);
     });
   }
