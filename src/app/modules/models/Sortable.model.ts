@@ -18,7 +18,6 @@ export class Sortable {
     if (this.direction && this.direction.length) {
       return `&sort=${this.field}&order=${this.direction}`;
     }
-
     // skip sorting if no direction passed
     return '';
   }

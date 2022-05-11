@@ -1,0 +1,57 @@
+<div class="header-wrapper">
+    <div class="links-container">
+        <button mat-button class="links-container__link" (click)="redirect('/')" color="primary">
+            <mat-icon id="home-icon" aria-hidden="false" color="primary">
+                home
+            </mat-icon>
+        </button>
+        <button mat-button *ngIf="authenticated" class="links-container__link {{currentRoute.slice(-12) === 'transactions'?'active-link':''}}" (click)="redirect('transactions')" color="primary">
+            {{'buttons.transactions' | translate}}
+        </button>
+        <button mat-raised-button *ngIf="!authenticated" class="links-container__link" (click)="redirect('auth')" color="primary">
+            {{'buttons.auth' | translate}}
+        </button>
+        <button mat-raised-button *ngIf="authenticated" class="links-container__link" (click)="logout()" color="primary">
+            {{'buttons.logout' | translate}}
+        </button>
+    </div>
+    <div class="managing-tools-container">
+        <div class="managing-tools-container__item">
+            <button mat-button *ngIf="theme==='dark-theme'" (click)="switchTheme()">
+                <span class="material-icons">
+                    light_mode
+                    </span>
+            </button>
+            <button mat-button *ngIf="theme==='light-theme'" (click)="switchTheme()">
+                <span class="material-icons">
+                    dark_mode
+                    </span>
+            </button>
+        </div>
+        <div class="managing-tools-container__item">
+            <intr-select-language></intr-select-language>
+        </div>
+    </div>
+    <div mat-icon-button class="managing-tools-mobile">
+        <button mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <div class="managing-tools-mobile__item">
+                <button mat-button *ngIf="theme === 'dark-theme'" (click)="switchTheme()">
+                    <span class="material-icons">
+                        light_mode
+                        </span>
+                </button>
+                <button mat-button *ngIf="theme === 'light-theme'" (click)="switchTheme()">
+                    <span class="material-icons">
+                        dark_mode
+                        </span>
+                </button>
+            </div>
+            <div class="managing-tools-mobile__item">
+                <intr-select-language></intr-select-language>
+            </div>
+        </mat-menu>
+    </div>
+</div>
