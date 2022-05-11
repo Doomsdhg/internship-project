@@ -30,7 +30,6 @@ import { NumericLengthDirective } from './directives/intr.numeric-length.directi
 import { HeaderComponent } from './components/header/intr.header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthPageComponent } from './pages/auth-page/intr.auth-page.component';
 import { AuthFormComponent } from './components/auth-form/intr.auth-form.component';
 import { AuthInterceptor } from './interceptors/intr.auth.interceptor';
@@ -59,7 +58,6 @@ export function tokenGetter(): string | null {
   ],
   imports: [
     MatProgressSpinnerModule,
-    NgxSpinnerModule,
     MatMenuModule,
     MatSlideToggleModule,
     MatSelectModule,
