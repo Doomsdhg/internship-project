@@ -1,7 +1,7 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
-import { SpinnerOverlayComponent } from '../modules/components/spinner-overlay/app.intr.spinner-overlay.component';
+import { SpinnerOverlayComponent } from '../modules/components/spinner-overlay/spinner-overlay.component';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class SpinnerService {
   }
 
   hideSpinner(): void {
-    if (!!this.overlayRef) {
+    if (this.overlayRef) {
       this.overlayRef.detach();
     }
   }

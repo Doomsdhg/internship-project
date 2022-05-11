@@ -2,8 +2,8 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TransactionApiService } from 'src/app/services/web-services/intr.transaction-api.service';
-import { AuthInterceptor } from './intr.auth.interceptor';
+import { TransactionApiService } from 'src/app/services/web-services/transaction-api.service';
+import { AuthInterceptor } from './auth.interceptor';
 
 describe('AuthInterceptor', () => {
 

@@ -4,16 +4,15 @@ import {
   HttpHandler,
   HttpInterceptor,
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { AuthService } from 'src/app/services/web-services/intr.auth.service';
+import { Observable, throwError, map } from 'rxjs';
+import { AuthService } from 'src/app/services/web-services/auth.service';
 import { AuthenticationResponse } from '../interfaces/authentication.interface';
-import { LocalStorageManagerService } from 'src/app/services/intr.local-storage-manager.service';
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { environment } from 'src/environments/environment';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
-import { SpinnerService } from 'src/app/services/intr.spinner.service';
-import { map } from 'rxjs';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
