@@ -114,7 +114,7 @@ describe('TransactionApiService', () => {
       expect(success).toEqual(transactionsListExample);
       done();
     }
-    ); 
+    );
   });
 
   it('should return list of transactions without last one on the list', (done) => {
@@ -130,7 +130,7 @@ describe('TransactionApiService', () => {
         expect(success).toEqual(transactionsListExample);
         done();
       });
-    }); 
+    });
   });
 
   it('should return list of transactions with first item updated', (done) => {
@@ -145,7 +145,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success).toEqual(transactionsListExample);
         done();
-      }); 
+      });
     });
   });
 
@@ -161,7 +161,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success).toEqual(transactionsListExample);
         done();
-      }); 
+      });
     });
   });
 
@@ -177,7 +177,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success).toEqual(transactionsListExample);
         done();
-      }); 
+      });
     });
   });
 
@@ -193,7 +193,7 @@ describe('TransactionApiService', () => {
       service.getTransactions().subscribe((success: any) => {
         expect(success[1].status).toBe('COMPLETED');
         done();
-      }); 
+      });
     });
   });
 

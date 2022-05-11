@@ -8,7 +8,7 @@ import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
-  selector: 'app-header',
+  selector: 'intr-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  public get authenticated() {
+  public get authenticated(): string | null | undefined {
     return this.localStorageManager.getAuthenticationInfo()?.authenticated;
   }
 
@@ -75,5 +75,4 @@ export class HeaderComponent implements OnInit {
       this.redirect(AppRoutes.AUTHENTICATION);
     });
   }
-
 }

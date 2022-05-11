@@ -6,7 +6,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStore } from '@ngx-translate/core';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
-
 import { AuthFormComponent } from './auth-form.component';
 
 describe('AuthFormComponent', () => {

@@ -2,12 +2,12 @@ import { NumericLengthDirective } from './numeric-length.directive';
 import { TestBed } from '@angular/core/testing';
 import { NotifyService } from 'src/app/services/notify.service';
 import {  MatSnackBarModule } from '@angular/material/snack-bar';
-import { MissingTranslationHandler, 
-  TranslateCompiler, 
-  TranslateLoader, 
-  TranslateParser, 
-  TranslateService, 
-  TranslateStore, 
+import { MissingTranslationHandler,
+  TranslateCompiler,
+  TranslateLoader,
+  TranslateParser,
+  TranslateService,
+  TranslateStore,
   USE_DEFAULT_LANG,
   USE_STORE,
   USE_EXTEND,
@@ -18,13 +18,13 @@ describe('NumericLengthDirective', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NotifyService, 
-        NumericLengthDirective, 
-        TranslateService, 
-        TranslateStore, 
-        TranslateLoader, 
-        TranslateCompiler, 
-        TranslateParser, 
+      providers: [NotifyService,
+        NumericLengthDirective,
+        TranslateService,
+        TranslateStore,
+        TranslateLoader,
+        TranslateCompiler,
+        TranslateParser,
         MissingTranslationHandler,
         { provide: USE_DEFAULT_LANG, useValue: undefined },
         { provide: USE_STORE, useValue: undefined },
@@ -40,7 +40,8 @@ describe('NumericLengthDirective', () => {
     expect(directive).toBeTruthy();
   });
 
-  it('should return string of maximum possible number with first argument as amount of digits before decimal point and second argument as amount of digits after decimal point', 
+  it('should return string of maximum possible number with first argument as amount of digits before decimal point and' +
+  'second argument as amount of digits after decimal point',
   () => {
     const result = directive.getMaxPossibleDecimal(10, 2);
     expect(result).toBe('9999999999.99');

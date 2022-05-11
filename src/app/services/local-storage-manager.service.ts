@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageAcessors } from '../constants/local-storage-accessors.constants';
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 import { DecodedToken, AuthenticationResponse } from '../modules/interfaces/authentication.interface';
 import { PageableDefaults } from '../constants/pageable.constants';
 
 export interface AuthenticationData {
-  authenticated: string | null,
-  token: string | null,
-  refreshToken: string | null,
-  username: string | null,
-  tokenExpiration: string | null,
-  tokenCreated: string | null
+  authenticated: string | null;
+  token: string | null;
+  refreshToken: string | null;
+  username: string | null;
+  tokenExpiration: string | null;
+  tokenCreated: string | null;
 }
 
 @Injectable({

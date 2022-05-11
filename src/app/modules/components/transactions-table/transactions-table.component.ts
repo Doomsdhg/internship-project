@@ -17,33 +17,33 @@ import { SortingStrings } from 'src/app/constants/sorting.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 export interface Column {
-  id: string,
-  value: string
+  id: string;
+  value: string;
 }
 
 export interface Row {
-  displayForms: boolean,
-  provider: string,
-  user: string,
-  externalId: string,
-  status: string,
-  amount: Amount,
-  commissionAmount: Amount,
-  additionalData: string,
-  id: string
+  displayForms: boolean;
+  provider: string;
+  user: string;
+  externalId: string;
+  status: string;
+  amount: Amount;
+  commissionAmount: Amount;
+  additionalData: string;
+  id: string;
 }
 
 interface Sorted {
-  externalId?: boolean,
-  provider?: boolean,
-  status?: boolean,
-  amount?: boolean,
-  commissionAmount?: boolean,
-  user?: boolean
+  externalId?: boolean;
+  provider?: boolean;
+  status?: boolean;
+  amount?: boolean;
+  commissionAmount?: boolean;
+  user?: boolean;
 }
 
 @Component({
-  selector: 'app-transactions-table',
+  selector: 'intr-transactions-table',
   templateUrl: './transactions-table.component.html',
   styleUrls: ['./transactions-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -97,8 +97,7 @@ export class TransactionsTableComponent implements OnInit {
     value: Columns.NAME_ACTIONS
   }];
 
-  @Input()
-  sorted: Sorted | undefined;
+  @Input() sorted: Sorted | undefined;
 
   constructor(
     public transactionApiService: TransactionApiService,
@@ -108,7 +107,7 @@ export class TransactionsTableComponent implements OnInit {
     private localStorageManager: LocalStorageManagerService
   ) { }
 
-  get getTransactionUpdateForm () {
+  get getTransactionUpdateForm (): FormGroup {
     return this.transactionUpdateForm;
   }
 
@@ -117,7 +116,7 @@ export class TransactionsTableComponent implements OnInit {
     this.translateColumnsNames();
   }
 
-  get inputChanged() {  
+  get inputChanged(): boolean {
     return !this.transactionUpdateForm.dirty;
   }
 
@@ -154,7 +153,7 @@ export class TransactionsTableComponent implements OnInit {
 
   refreshTransactions = (): void => {
     this.dataSource.loadTransactions();
-  };
+  }
 
   confirmTransaction = (e: Event): void => {
     e.stopPropagation();
@@ -170,7 +169,7 @@ export class TransactionsTableComponent implements OnInit {
         this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
       }
     });
-  };
+  }
 
   toggleForms = (e: Event, row: Row): void => {
     e.stopPropagation();
@@ -185,7 +184,7 @@ export class TransactionsTableComponent implements OnInit {
       commissionCurrency: new FormControl(row.commissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     });
-  };
+  }
 
   updateTransaction = (e: Event, row: Row): void => {
     e.stopPropagation();
@@ -194,22 +193,22 @@ export class TransactionsTableComponent implements OnInit {
     const provider: string = currentTarget.dataset['provider'] || 'no provider';
     const externalId: string = currentTarget.dataset['external_id'] || 'no external id';
     const updateObj: TransactionUpdateData = {
-      "id": id,
-      "externalId": externalId,
-      "user": this.transactionUpdateForm.value.user,
-      "status": this.transactionUpdateForm.value.status,
-      "amount": {
-        "amount": this.transactionUpdateForm.value.amount,
-        "currency": this.transactionUpdateForm.value.currency.toUpperCase()
+      id: id,
+      externalId: externalId,
+      user: this.transactionUpdateForm.value.user,
+      status: this.transactionUpdateForm.value.status,
+      amount: {
+        amount: this.transactionUpdateForm.value.amount,
+        currency: this.transactionUpdateForm.value.currency.toUpperCase()
       },
-      "commissionAmount": {
-        "amount": this.transactionUpdateForm.value.commissionAmount,
-        "currency": this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
+      commissionAmount: {
+        amount: this.transactionUpdateForm.value.commissionAmount,
+        currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
-      "provider": provider,
-      "timestamp": Date.now() / 1000,
-      "providerTimestamp": Date.now() / 1000,
-      "additionalData": this.transactionUpdateForm.value.additionalData
+      provider: provider,
+      timestamp: Date.now() / 1000,
+      providerTimestamp: Date.now() / 1000,
+      additionalData: this.transactionUpdateForm.value.additionalData
     };
     this.transactionApiService.patchTransaction(updateObj).subscribe({
       next: () => {
@@ -221,7 +220,7 @@ export class TransactionsTableComponent implements OnInit {
         this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
       }
     });
-  };
+  }
 
   setDefaultSorting(): void {
     this.sorted = undefined;
@@ -231,24 +230,30 @@ export class TransactionsTableComponent implements OnInit {
 
   setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
-    const columnSortedAlready = Boolean(this.sorted![columnName as keyof Sorted]);
-    this.dataSource.sortOrder = columnSortedAlready === true ? SortingStrings.DESC : SortingStrings.ASC;
+    if (this.sorted) {
+      const columnSortedAlready = Boolean(this.sorted[columnName as keyof Sorted]);
+      this.dataSource.sortOrder = columnSortedAlready === true ? SortingStrings.DESC : SortingStrings.ASC;
+    }
   }
 
   toggleSortingIcon(columnName: string): void {
-    this.sorted![columnName as keyof Sorted] = !this.sorted![columnName as keyof Sorted];
+    if (this.sorted) {
+      this.sorted[columnName as keyof Sorted] = !this.sorted[columnName as keyof Sorted];
+    }
   }
 
   sortify = (columnName: string): void => {
     const isDefaultSorting = this.sorted === undefined;
     this.sorted = isDefaultSorting ? new Object() : this.sorted;
-    const sortedBothOrders = this.sorted![columnName as keyof Sorted] === false;
-    if (sortedBothOrders) {
-      this.setDefaultSorting();
-    } else {
-      this.toggleSortingIcon(columnName);
-      this.setSorting(columnName);
+    if (this.sorted) {
+      const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
+      if (sortedBothOrders) {
+        this.setDefaultSorting();
+      } else {
+        this.toggleSortingIcon(columnName);
+        this.setSorting(columnName);
+      }
+      this.dataSource.loadTransactions();
     }
-    this.dataSource.loadTransactions();
-  };
+  }
 }

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TransactionsTablePageComponent } from './transactions-table-page.component';
 
 describe('TransactionsTablePageComponent', () => {

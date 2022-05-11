@@ -6,7 +6,7 @@ import { FormControl } from '@angular/forms';
 import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
 
 @Component({
-  selector: 'app-select-language',
+  selector: 'intr-select-language',
   templateUrl: './select-language.component.html',
   styleUrls: ['./select-language.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -31,5 +31,4 @@ export class SelectLanguageComponent {
     localStorage.setItem(LocalStorageAcessors.LANGUAGE, this.selectLanguageForm.value);
     window.location.reload();
   }
-
 }

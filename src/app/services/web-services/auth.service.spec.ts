@@ -8,7 +8,7 @@ describe('AuthService', () => {
   const loginResponseExample = {
     accessToken: '123qwe',
     refreshToken: 'qwe123',
-    username:'test_user',
+    username: 'test_user',
     type: 'admin'
   };
 
@@ -27,7 +27,7 @@ describe('AuthService', () => {
     http = TestBed.inject(HttpClient);
   });
 
-  it("should return object with login data", (done) => {
+  it('should return object with login data', (done) => {
     spyOn(http, 'post').and.callFake((): any => {
       return new Observable((observer) => {
         observer.next(loginResponseExample);
@@ -40,7 +40,7 @@ describe('AuthService', () => {
     });
   });
 
-  it("should return object with logout data", (done) => {
+  it('should return object with logout data', (done) => {
     spyOn(http, 'post').and.callFake((): any => {
       return new Observable((observer) => {
         observer.next(logoutResponseExample);
@@ -53,7 +53,7 @@ describe('AuthService', () => {
     });
   });
 
-  it("should return object with login data", (done) => {
+  it('should return object with login data', (done) => {
     spyOn(http, 'post').and.callFake((): any => {
       return new Observable((observer) => {
         observer.next(loginResponseExample);

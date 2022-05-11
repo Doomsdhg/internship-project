@@ -14,7 +14,7 @@ describe('AuthInterceptor', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        RouterTestingModule  
+        RouterTestingModule
       ],
       providers: [
         TransactionApiService,

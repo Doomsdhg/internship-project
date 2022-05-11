@@ -41,14 +41,14 @@
         "commissionCurrency": "Патрабуецца ўвесці валюту камісіі"
     },
     "placeholders": {
-        "externalId": "Напрыклад '123'",
-        "provider": "Напрыклад 'paypal'",
-        "amount": "Напрыклад '100'",
-        "currency": "Напрыклад 'BYN'",
-        "commissionAmount": "Напрыклад '10'",
-        "commissionCurrency": "Напрыклад 'BYN'",
-        "user": "Напрыклад 'Слава Комиссаренко'",
-        "additionalData": "Напрыклад 'Дадатковыя дадзеныя'",
+        "externalId": "Напрыклад \"123\"",
+        "provider": "Напрыклад \"paypal\"",
+        "amount": "Напрыклад \"100\"",
+        "currency": "Напрыклад \"BYN\"",
+        "commissionAmount": "Напрыклад \"10\"",
+        "commissionCurrency": "Напрыклад \"BYN\"",
+        "user": "Напрыклад \"Слава Комиссаренко\"",
+        "additionalData": "Напрыклад \"Дадатковыя дадзеныя\"",
         "search": "Пошук"
     },
     "warnings": {

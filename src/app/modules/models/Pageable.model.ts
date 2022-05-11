@@ -1,7 +1,7 @@
-import { GridState } from "./GridState.model";
-import { Sortable } from "./Sortable.model";
-import { QueryPredicates } from "./QueryPredicates.model";
-import { PageableDefaults } from "src/app/constants/pageable.constants";
+import { GridState } from './GridState.model';
+import { Sortable } from './Sortable.model';
+import { QueryPredicates } from './QueryPredicates.model';
+import { PageableDefaults } from 'src/app/constants/pageable.constants';
 
 export class Pageable {
 
@@ -30,7 +30,7 @@ export class Pageable {
     this.sort = sort;
   }
 
-  toString() {
+  toString(): string {
     return `?${this.q.toString() + '&'}page=${this.page}&pageSize=${this.size}${this.sort.toString()}`;
   }
 }

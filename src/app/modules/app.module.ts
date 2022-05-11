@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppComponent } from './app-component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -31,15 +31,16 @@ import { HeaderComponent } from './components/header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
-import { AuthFormComponent } from './components/auth-form/auth-form.component'; 
+import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
 }
 
-export function tokenGetter() {
-  return localStorage.getItem("jwt");
+export function tokenGetter(): string | null {
+  return localStorage.getItem('jwt');
 }
 
 @NgModule({
@@ -56,6 +57,7 @@ export function tokenGetter() {
     AuthFormComponent
   ],
   imports: [
+    MatProgressSpinnerModule,
     MatMenuModule,
     MatSlideToggleModule,
     MatSelectModule,

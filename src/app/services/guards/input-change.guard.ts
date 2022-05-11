@@ -6,7 +6,7 @@ import { GuardDialogContentComponent } from 'src/app/modules/components/guard-di
 import { TransactionsTableComponent } from '../../modules/components/transactions-table/transactions-table.component';
 
 interface ComponentWithInput {
-  get inputChanged(): boolean
+  get inputChanged(): boolean;
 }
 
 @Injectable({
@@ -22,5 +22,4 @@ export class InputChangeGuard implements CanDeactivate<ComponentWithInput> {
     }
     return true;
   }
-
 }

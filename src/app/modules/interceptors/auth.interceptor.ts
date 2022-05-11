@@ -7,7 +7,7 @@ import {
   HttpErrorResponse
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import {catchError} from "rxjs/operators";
+import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { AuthenticationResponse } from '../interfaces/authentication.interface';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
@@ -20,7 +20,7 @@ import { AppRoutes } from 'src/app/constants/app-routes.constants';
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    public web: AuthService, 
+    public web: AuthService,
     public localStorageManager: LocalStorageManagerService,
     public router: Router) { }
 
