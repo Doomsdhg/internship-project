@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SpinnerOverlayComponent } from './intr.spinner-overlay.component';
+import { SpinnerOverlayComponent } from './spinner-overlay.component';
 
 describe('SpinnerOverlayComponent', () => {
   let component: SpinnerOverlayComponent;
