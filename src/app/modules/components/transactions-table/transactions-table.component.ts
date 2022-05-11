@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
-import { Amount, TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
+import { TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
+import { Column, Row, Sorted } from 'src/app/modules/interfaces/transactions-table.interface';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
@@ -8,39 +9,8 @@ import { NotifyService } from '../../../services/notify.service';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { Translations } from 'src/app/modules/interfaces/translations.interface';
-import { Snackbar } from 'src/app/constants/snackbar.constants';
-import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
-import { Columns } from 'src/app/constants/columns.constants';
-import { PageableDefaults } from '../../../constants/pageable.constants';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
-import { SortingStrings } from 'src/app/constants/sorting.constants';
+import { Constants } from 'src/app/constants/main.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
-
-export interface Column {
-  id: string;
-  value: string;
-}
-
-export interface Row {
-  displayForms: boolean;
-  provider: string;
-  user: string;
-  externalId: string;
-  status: string;
-  amount: Amount;
-  commissionAmount: Amount;
-  additionalData: string;
-  id: string;
-}
-
-interface Sorted {
-  externalId?: boolean;
-  provider?: boolean;
-  status?: boolean;
-  amount?: boolean;
-  commissionAmount?: boolean;
-  user?: boolean;
-}
 
 @Component({
   selector: 'intr-transactions-table',
@@ -51,50 +21,50 @@ interface Sorted {
 
 export class TransactionsTableComponent implements OnInit {
 
-  @Input() transactionUpdateForm!: FormGroup;
-
   @Input() dataSource!: TransactionsDataSource;
 
   @ViewChild(MatSort) sort!: MatSort;
 
+  transactionUpdateForm!: FormGroup;
+
   formsToggled = false;
 
   displayedColumns: string[] = [
-    Columns.ID_EXTERNAL_ID,
-    Columns.ID_PROVIDER,
-    Columns.ID_STATUS,
-    Columns.ID_AMOUNT,
-    Columns.ID_commission_AMOUNT,
-    Columns.ID_USER,
-    Columns.ID_ACTIONS];
+    Constants.COLUMNS.ID_EXTERNAL_ID,
+    Constants.COLUMNS.ID_PROVIDER,
+    Constants.COLUMNS.ID_STATUS,
+    Constants.COLUMNS.ID_AMOUNT,
+    Constants.COLUMNS.ID_commission_AMOUNT,
+    Constants.COLUMNS.ID_USER,
+    Constants.COLUMNS.ID_ACTIONS];
 
   columnNames: Column[] = [{
-    id: Columns.ID_EXTERNAL_ID,
-    value: Columns.NAME_EXTERNAL_ID,
+    id: Constants.COLUMNS.ID_EXTERNAL_ID,
+    value: Constants.COLUMNS.NAME_EXTERNAL_ID,
   },
   {
-    id: Columns.ID_PROVIDER,
-    value: Columns.NAME_PROVIDER,
+    id: Constants.COLUMNS.ID_PROVIDER,
+    value: Constants.COLUMNS.NAME_PROVIDER,
   },
   {
-    id: Columns.ID_STATUS,
-    value: Columns.NAME_STATUS,
+    id: Constants.COLUMNS.ID_STATUS,
+    value: Constants.COLUMNS.NAME_STATUS,
   },
   {
-    id: Columns.ID_AMOUNT,
-    value: Columns.NAME_AMOUNT,
+    id: Constants.COLUMNS.ID_AMOUNT,
+    value: Constants.COLUMNS.NAME_AMOUNT,
   },
   {
-    id: Columns.ID_commission_AMOUNT,
-    value: Columns.NAME_commission_AMOUNT,
+    id: Constants.COLUMNS.ID_commission_AMOUNT,
+    value: Constants.COLUMNS.NAME_commission_AMOUNT,
   },
   {
-    id: Columns.ID_USER,
-    value: Columns.NAME_USER,
+    id: Constants.COLUMNS.ID_USER,
+    value: Constants.COLUMNS.NAME_USER,
   },
   {
-    id: Columns.ID_ACTIONS,
-    value: Columns.NAME_ACTIONS
+    id: Constants.COLUMNS.ID_ACTIONS,
+    value: Constants.COLUMNS.NAME_ACTIONS
   }];
 
   @Input() sorted: Sorted | undefined;
@@ -117,7 +87,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   get inputChanged(): boolean {
-    return !this.transactionUpdateForm.dirty;
+    return this.transactionUpdateForm.dirty;
   }
 
   setPageSize(pageSize: string): void {
@@ -127,27 +97,28 @@ export class TransactionsTableComponent implements OnInit {
 
   loadData(): void {
     this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify, this.router, this.localStorageManager);
-    this.dataSource.selectedPageSize = Number(localStorage.getItem(LocalStorageAcessors.PAGE_SIZE)) || PageableDefaults.defaultPageSize;
+    this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.PAGE_SIZE)) ||
+    Constants.PAGEABLE_DEFAULTS.defaultPageSize;
     this.dataSource.loadTransactions();
   }
 
   translateColumnsNames(): void {
     this.translateService.get([
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
+      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
+      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
+      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_STATUS,
+      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
+      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT,
+      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_USER,
+      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
       .subscribe((translations: Translations) => {
-        this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
-        this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
-        this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
-        this.columnNames[3].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
-        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT];
-        this.columnNames[5].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER];
-        this.columnNames[6].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
+        this.columnNames[0].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
+        this.columnNames[1].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
+        this.columnNames[2].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
+        this.columnNames[3].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
+        this.columnNames[4].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT];
+        this.columnNames[5].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_USER];
+        this.columnNames[6].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
       });
   }
 
@@ -163,10 +134,10 @@ export class TransactionsTableComponent implements OnInit {
     this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
       next: () => {
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_COMPLETED, Snackbar.SUCCESS_TYPE);
+        this.notify.showTranslatedMessage(Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
+        this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
   }
@@ -214,25 +185,25 @@ export class TransactionsTableComponent implements OnInit {
       next: () => {
         this.toggleForms(e, row);
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Snackbar.SUCCESS_TYPE);
+        this.notify.showTranslatedMessage(Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
+        this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
   }
 
   setDefaultSorting(): void {
     this.sorted = undefined;
-    this.dataSource.sortColumn = SortingStrings.DEFAULT_COLUMN;
-    this.dataSource.sortOrder = SortingStrings.DEFAULT_ORDER;
+    this.dataSource.sortColumn = Constants.SORTING_STRINGS.DEFAULT_COLUMN;
+    this.dataSource.sortOrder = Constants.SORTING_STRINGS.DEFAULT_ORDER;
   }
 
   setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
     if (this.sorted) {
       const columnSortedAlready = Boolean(this.sorted[columnName as keyof Sorted]);
-      this.dataSource.sortOrder = columnSortedAlready === true ? SortingStrings.DESC : SortingStrings.ASC;
+      this.dataSource.sortOrder = columnSortedAlready === true ? Constants.SORTING_STRINGS.DESC : Constants.SORTING_STRINGS.ASC;
     }
   }
 

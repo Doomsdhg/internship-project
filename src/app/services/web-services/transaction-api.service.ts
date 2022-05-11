@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiEndpoints } from '../../constants/api-endpoints.constants';
+import { Constants } from '../../constants/main.constants';
 import { environment } from 'src/environments/environment';
 import { Pageable } from 'src/app/modules/models/Pageable.model';
 import { Sortable } from 'src/app/modules/models/Sortable.model';
@@ -24,7 +24,7 @@ export class TransactionApiService {
     ) { }
 
   deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
-    return this.http.delete(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}${id}`);
+    return this.http.delete(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}${id}`);
   }
 
   getTransactions(
@@ -33,21 +33,21 @@ export class TransactionApiService {
     pageSize = 3,
     sortColumn = 'id',
     sortOrder = 'ASC'): Observable<HttpResponse<Page<Transaction>>> {
-    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS
+    return this.http.get(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS
     }${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
       , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
   }
 
   patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.http.put(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}`, updateObj) as Observable<Transaction>;
+    return this.http.put(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, updateObj) as Observable<Transaction>;
   }
 
   uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
-    return this.http.post(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}`, transactionData) as Observable<Transaction>;
+    return this.http.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, transactionData) as Observable<Transaction>;
   }
 
   confirmTransaction(externalId: string | undefined, provider: string | undefined): Observable<Transaction[]> {
     return this.http.post(`${environment.serverUrl}
-    ${ApiEndpoints.TRANSACTIONS}?external_id=${externalId}&provider=${provider}`, {}) as Observable<Transaction[]>;
+    ${Constants.API_ENDPOINTS.TRANSACTIONS}?external_id=${externalId}&provider=${provider}`, {}) as Observable<Transaction[]>;
   }
 }

@@ -5,6 +5,15 @@ export interface AuthenticationResponse {
     type: string;
 }
 
+export interface AuthenticationData {
+    authenticated: string | null;
+    token: string | null;
+    refreshToken: string | null;
+    username: string | null;
+    tokenExpiration: string | null;
+    tokenCreated: string | null;
+}
+
 export interface LogoutResponse {
     message: string;
 }

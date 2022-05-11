@@ -1,10 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
-import { Themes } from 'src/app/constants/themes.constants';
+import { Constants } from 'src/app/constants/main.constants';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { environment } from 'src/environments/environment.prod';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
@@ -19,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   public environment = environment;
 
-  public theme!: string;
+  public currentTheme!: string;
 
   constructor(
     private router: Router,
@@ -42,8 +40,10 @@ export class HeaderComponent implements OnInit {
   }
 
   setTheme(): void {
-    this.theme = localStorage.getItem(LocalStorageAcessors.THEME) || Themes.LIGHT;
-    document.getElementsByTagName('body')[0].classList.add(this.theme);
+    const theme = localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME) || Constants.THEMES.LIGHT;
+    this.currentTheme = theme;
+    document.getElementsByTagName('body')[0].classList.add(theme);
+    this.changeButtonsClasses(theme);
   }
 
   setCurrentRoute(): void {
@@ -55,24 +55,32 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-  switchTheme(): void {
-    this.replaceThemeClass();
-    this.theme = this.theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT;
-    localStorage.setItem(LocalStorageAcessors.THEME, this.theme);
+  switchTheme(selectedTheme: string): void {
+    this.switchThemeClass(selectedTheme);
+    this.changeButtonsClasses(selectedTheme);
+    this.changeButtonsClasses(this.currentTheme);
+    this.currentTheme = selectedTheme;
+    localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME, this.currentTheme);
+    this.cdr.detectChanges();
   }
 
-  replaceThemeClass(): void {
-    const currentTheme = this.theme;
-    const futureTheme = this.theme === Themes.DARK ? Themes.LIGHT : Themes.DARK;
+  changeButtonsClasses(theme: string): void {
+    const buttonsArray = document.getElementsByClassName(`${theme}-button`);
+    Array.prototype.forEach.call(buttonsArray, function(button: HTMLElement): void {
+      button.classList.toggle('display-none');
+    });
+  }
+
+  switchThemeClass(selectedTheme: string): void {
     const body = document.getElementsByTagName('body')[0];
-    body.classList.remove(currentTheme);
-    body.classList.add(futureTheme);
+    body.classList.remove(this.currentTheme);
+    body.classList.add(selectedTheme);
   }
 
   logout(): void {
     this.auth.logout().subscribe(() => {
+      this.redirect(Constants.APP_ROUTES.AUTHENTICATION);
       this.localStorageManager.deleteLoginValues();
-      this.redirect(AppRoutes.AUTHENTICATION);
     });
   }
 }

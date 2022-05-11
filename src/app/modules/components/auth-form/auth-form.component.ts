@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Snackbar } from 'src/app/constants/snackbar.constants';
+import { Constants } from 'src/app/constants/main.constants';
 import { NotifyService } from 'src/app/services/notify.service';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { AuthenticationResponse, AuthenticationResponseError } from '../../interfaces/authentication.interface';
@@ -35,7 +35,7 @@ export class AuthFormComponent {
         this.router.navigate([AppRoutes.TRANSACTIONS]);
       },
       error: (error: AuthenticationResponseError) => {
-        this.notify.showMessage(error.error.message, Snackbar.ERROR_TYPE);
+        this.notify.showMessage(error.error.message, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
   }

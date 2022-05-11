@@ -1,9 +1,8 @@
 import { Directive, HostListener, Input } from '@angular/core';
 import { NotifyService } from '../../services/notify.service';
 import { El } from '../interfaces/browser-event.interface';
-import { Snackbar } from 'src/app/constants/snackbar.constants';
+import { Constants } from 'src/app/constants/main.constants';
 import { TranslateService } from '@ngx-translate/core';
-import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 
 @Directive({
   selector: '[intrNumericLength]'
@@ -27,10 +26,10 @@ export class NumericLengthDirective {
     const maxLength = digitsBeforeDecPoint + digitsAfterDecPoint;
     if ((+numeric < -max || +numeric > +max) || (+numeric !== +element.value && element.value.length > maxLength)) {
       element.value = this.previousValue;
-      this.translateService.get(TranslationsEndpoints.SNACKBAR_NUMBERS_LIMITED).subscribe((msg) => {
+      this.translateService.get(Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_NUMBERS_LIMITED).subscribe((msg) => {
         this.notify.showMessage(msg.start +
           digitsBeforeDecPoint + ' ' + msg.middle + ' ' +
-          digitsAfterDecPoint + ' ' + msg.end, Snackbar.ERROR_TYPE);
+          digitsAfterDecPoint + ' ' + msg.end, Constants.SNACKBAR.ERROR_TYPE);
       });
     }
   }

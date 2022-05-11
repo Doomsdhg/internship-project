@@ -4,10 +4,7 @@ import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { GuardDialogContentComponent } from 'src/app/modules/components/guard-dialog-content/guard-dialog-content.component';
 import { TransactionsTableComponent } from '../../modules/components/transactions-table/transactions-table.component';
-
-interface ComponentWithInput {
-  get inputChanged(): boolean;
-}
+import { ComponentWithInput } from 'src/app/modules/interfaces/component-with-input.interface';
 
 @Injectable({
   providedIn: 'root'
