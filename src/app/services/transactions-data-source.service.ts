@@ -25,7 +25,7 @@ export class TransactionsDataSource extends
     super();
   }
 
-  public transactionsSubject = new BehaviorSubject<HttpResponse<Page<Transaction>>>(new HttpResponse());
+  private transactionsSubject = new BehaviorSubject<HttpResponse<Page<Transaction>>>(new HttpResponse());
 
   public lastPage!: number;
 
@@ -39,13 +39,13 @@ export class TransactionsDataSource extends
 
   public sortOrder!: string;
 
-  public query!: string | string[];
+  private query!: string | string[];
 
   public totalTransactions!: number;
 
   public displayedTransactions!: string;
 
-  loadTransactions(pageNumber = 0): void {
+  public loadTransactions(pageNumber = 0): void {
     this.currentPageNumber = pageNumber;
     this.transactionApiService.getTransactions(this.query, this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({

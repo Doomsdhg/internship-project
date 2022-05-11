@@ -23,11 +23,11 @@ export class TransactionApiService {
     public http: HttpClient
     ) { }
 
-  deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
+  public deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
     return this.http.delete(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}${id}`);
   }
 
-  getTransactions(
+  public getTransactions(
     query: string[] | string = '',
     pageNumber = 1,
     pageSize = 3,
@@ -38,15 +38,15 @@ export class TransactionApiService {
       , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
   }
 
-  patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
+  public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
     return this.http.put(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, updateObj) as Observable<Transaction>;
   }
 
-  uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
+  public uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
     return this.http.post(`${environment.serverUrl}${Constants.API_ENDPOINTS.TRANSACTIONS}`, transactionData) as Observable<Transaction>;
   }
 
-  confirmTransaction(externalId: string | undefined, provider: string | undefined): Observable<Transaction[]> {
+  public confirmTransaction(externalId: string | undefined, provider: string | undefined): Observable<Transaction[]> {
     return this.http.post(`${environment.serverUrl}
     ${Constants.API_ENDPOINTS.TRANSACTIONS}?external_id=${externalId}&provider=${provider}`, {}) as Observable<Transaction[]>;
   }

@@ -11,13 +11,13 @@ export class NotifyService {
 
   constructor(private snackBar: MatSnackBar, private translateService: TranslateService) { }
 
-  showTranslatedMessage(messageAccessor: string, messageType: string): void {
+  public showTranslatedMessage(messageAccessor: string, messageType: string): void {
     this.translateService.get(messageAccessor).subscribe((msg: string) => {
       this.showMessage(msg, messageType);
     });
   }
 
-  showMessage(message: string, type: string): void {
+  public showMessage(message: string, type: string): void {
     const config = new MatSnackBarConfig();
     config.duration = Constants.SNACKBAR.DURATION;
     config.panelClass = [type + Constants.SNACKBAR.CLASSNAME_POSTFIX];

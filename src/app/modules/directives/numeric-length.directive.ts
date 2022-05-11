@@ -34,7 +34,7 @@ export class NumericLengthDirective {
     }
   }
 
-  getMaxPossibleDecimal(int: number, dec: number): string {
+  private getMaxPossibleDecimal(int: number, dec: number): string {
     let maxInt = '';
     for (let i = 1; i <= int; i++) {
       maxInt = maxInt + '9';

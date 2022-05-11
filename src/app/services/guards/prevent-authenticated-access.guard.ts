@@ -11,7 +11,7 @@ export class PreventAuthenticatedAccessGuard implements CanActivate {
   constructor(private localStorageManager: LocalStorageManagerService) {
   }
 
-  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  public canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return !(this.localStorageManager.getAuthenticationInfo()?.authenticated);
   }
 }

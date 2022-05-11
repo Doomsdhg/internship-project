@@ -9,7 +9,7 @@ import { AuthenticationData } from 'src/app/modules/interfaces/authentication.in
 })
 export class LocalStorageManagerService {
 
-  setLoginValues(loginObject: AuthenticationResponse): void {
+  public setLoginValues(loginObject: AuthenticationResponse): void {
     const decodedToken: DecodedToken = jwtDecode(loginObject.accessToken);
     localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.AUTHENTICATED, 'true');
     localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.TOKEN, loginObject.accessToken);
@@ -19,11 +19,11 @@ export class LocalStorageManagerService {
     localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.TOKEN_CREATION_DATE, String((decodedToken.iat - 10800) * 1000));
   }
 
-  setPageSize(pageSize: string): void {
+  public setPageSize(pageSize: string): void {
     localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.PAGE_SIZE, pageSize || String(Constants.PAGEABLE_DEFAULTS.defaultPageSize));
   }
 
-  deleteLoginValues(): void {
+  public deleteLoginValues(): void {
     localStorage.removeItem(Constants.LOCAL_STORAGE_ACCESSORS.AUTHENTICATED);
     localStorage.removeItem(Constants.LOCAL_STORAGE_ACCESSORS.TOKEN);
     localStorage.removeItem(Constants.LOCAL_STORAGE_ACCESSORS.REFRESH_TOKEN);
@@ -32,7 +32,7 @@ export class LocalStorageManagerService {
     localStorage.removeItem(Constants.LOCAL_STORAGE_ACCESSORS.TOKEN_CREATION_DATE);
   }
 
-  getAuthenticationInfo(): AuthenticationData | null {
+  public getAuthenticationInfo(): AuthenticationData | null {
     return {
       authenticated: localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.AUTHENTICATED),
       token: localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.TOKEN),
@@ -43,7 +43,7 @@ export class LocalStorageManagerService {
     };
   }
 
-  refreshToken(refreshResponse: AuthenticationResponse): void {
+  public refreshToken(refreshResponse: AuthenticationResponse): void {
     localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.TOKEN, refreshResponse.accessToken);
     localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.REFRESH_TOKEN, refreshResponse.refreshToken);
   }

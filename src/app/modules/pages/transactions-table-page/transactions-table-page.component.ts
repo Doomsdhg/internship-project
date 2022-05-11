@@ -8,7 +8,7 @@ import { TransactionsTableComponent } from '../../components/transactions-table/
 })
 export class TransactionsTablePageComponent {
   @ViewChild(TransactionsTableComponent) transactionsTableComponent!: TransactionsTableComponent;
-  get inputChanged(): boolean {
+  public get inputChanged(): boolean {
     return this.transactionsTableComponent.inputChanged;
   }
 }

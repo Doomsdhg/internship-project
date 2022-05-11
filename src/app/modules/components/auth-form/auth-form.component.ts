@@ -16,7 +16,7 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
 })
 export class AuthFormComponent {
 
-  @Input() authForms: FormGroup = new FormGroup({
+  public authForms: FormGroup = new FormGroup({
     login: new FormControl(),
     password: new FormControl(),
   });
@@ -28,7 +28,7 @@ export class AuthFormComponent {
     private localStorageManager: LocalStorageManagerService
   ) { }
 
-  login(): void {
+  public login(): void {
     this.auth.login(this.authForms.controls['login'].value, this.authForms.controls['password'].value).subscribe({
       next: (success: AuthenticationResponse) => {
         this.localStorageManager.setLoginValues(success);

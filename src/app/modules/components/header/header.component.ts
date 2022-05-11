@@ -34,28 +34,28 @@ export class HeaderComponent implements OnInit {
     return this.localStorageManager.getAuthenticationInfo()?.authenticated;
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.setCurrentRoute();
     this.setTheme();
   }
 
-  setTheme(): void {
+  private setTheme(): void {
     const theme = localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME) || Constants.THEMES.LIGHT;
     this.currentTheme = theme;
     document.getElementsByTagName('body')[0].classList.add(theme);
     this.changeButtonsClasses(theme);
   }
 
-  setCurrentRoute(): void {
+  private setCurrentRoute(): void {
     this.currentRoute = String(window.location.href);
     this.cdr.markForCheck();
   }
 
-  redirect(route: string): void {
+  public redirect(route: string): void {
     this.router.navigate([route]);
   }
 
-  switchTheme(selectedTheme: string): void {
+  public switchTheme(selectedTheme: string): void {
     this.switchThemeClass(selectedTheme);
     this.changeButtonsClasses(selectedTheme);
     this.changeButtonsClasses(this.currentTheme);
@@ -64,23 +64,23 @@ export class HeaderComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  changeButtonsClasses(theme: string): void {
+  private changeButtonsClasses(theme: string): void {
     const buttonsArray = document.getElementsByClassName(`${theme}-button`);
     Array.prototype.forEach.call(buttonsArray, function(button: HTMLElement): void {
       button.classList.toggle('display-none');
     });
   }
 
-  switchThemeClass(selectedTheme: string): void {
+  private switchThemeClass(selectedTheme: string): void {
     const body = document.getElementsByTagName('body')[0];
     body.classList.remove(this.currentTheme);
     body.classList.add(selectedTheme);
   }
 
-  logout(): void {
+  public logout(): void {
     this.auth.logout().subscribe(() => {
-      this.redirect(Constants.APP_ROUTES.AUTHENTICATION);
       this.localStorageManager.deleteLoginValues();
+      this.redirect(Constants.APP_ROUTES.AUTHENTICATION);
     });
   }
 }

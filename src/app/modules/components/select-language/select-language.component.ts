@@ -13,9 +13,9 @@ import { Constants } from 'src/app/constants/main.constants';
 })
 export class SelectLanguageComponent {
 
-  selectLanguageForm: FormControl;
+  public selectLanguageForm: FormControl;
 
-  language!: string | null;
+  private language!: string | null;
 
   constructor(
     private translateService: TranslateService,
@@ -27,7 +27,7 @@ export class SelectLanguageComponent {
     this.selectLanguageForm = new FormControl(this.language);
   }
 
-  changeLanguage(): void {
+  public changeLanguage(): void {
     localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.LANGUAGE, this.selectLanguageForm.value);
     window.location.reload();
   }

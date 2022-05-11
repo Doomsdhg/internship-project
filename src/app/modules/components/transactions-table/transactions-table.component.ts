@@ -21,15 +21,15 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
 
 export class TransactionsTableComponent implements OnInit {
 
-  @Input() dataSource!: TransactionsDataSource;
-
   @ViewChild(MatSort) sort!: MatSort;
 
-  transactionUpdateForm!: FormGroup;
+  public dataSource!: TransactionsDataSource;
 
-  formsToggled = false;
+  public transactionUpdateForm!: FormGroup;
 
-  displayedColumns: string[] = [
+  public formsToggled = false;
+
+  public displayedColumns: string[] = [
     Constants.COLUMNS.ID_EXTERNAL_ID,
     Constants.COLUMNS.ID_PROVIDER,
     Constants.COLUMNS.ID_STATUS,
@@ -38,7 +38,7 @@ export class TransactionsTableComponent implements OnInit {
     Constants.COLUMNS.ID_USER,
     Constants.COLUMNS.ID_ACTIONS];
 
-  columnNames: Column[] = [{
+  private columnNames: Column[] = [{
     id: Constants.COLUMNS.ID_EXTERNAL_ID,
     value: Constants.COLUMNS.NAME_EXTERNAL_ID,
   },
@@ -67,7 +67,7 @@ export class TransactionsTableComponent implements OnInit {
     value: Constants.COLUMNS.NAME_ACTIONS
   }];
 
-  @Input() sorted: Sorted | undefined;
+  public sorted: Sorted | undefined;
 
   constructor(
     public transactionApiService: TransactionApiService,
@@ -77,32 +77,31 @@ export class TransactionsTableComponent implements OnInit {
     private localStorageManager: LocalStorageManagerService
   ) { }
 
-  get getTransactionUpdateForm (): FormGroup {
-    return this.transactionUpdateForm;
-  }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loadData();
     this.translateColumnsNames();
   }
 
-  get inputChanged(): boolean {
-    return this.transactionUpdateForm.dirty;
+  public get inputChanged(): boolean {
+    if (this.transactionUpdateForm) {
+      return this.transactionUpdateForm.dirty;
+    }
+    return false;
   }
 
-  setPageSize(pageSize: string): void {
+  public setPageSize(pageSize: string): void {
     this.localStorageManager.setPageSize(pageSize);
     this.loadData();
   }
 
-  loadData(): void {
+  private loadData(): void {
     this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify, this.router, this.localStorageManager);
     this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.PAGE_SIZE)) ||
     Constants.PAGEABLE_DEFAULTS.defaultPageSize;
     this.dataSource.loadTransactions();
   }
 
-  translateColumnsNames(): void {
+  private translateColumnsNames(): void {
     this.translateService.get([
       Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
       Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
@@ -122,11 +121,11 @@ export class TransactionsTableComponent implements OnInit {
       });
   }
 
-  refreshTransactions = (): void => {
+  private refreshTransactions = (): void => {
     this.dataSource.loadTransactions();
   }
 
-  confirmTransaction = (e: Event): void => {
+  public confirmTransaction = (e: Event): void => {
     e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const externalId: string | undefined = currentTarget.dataset['external_id'];
@@ -142,7 +141,7 @@ export class TransactionsTableComponent implements OnInit {
     });
   }
 
-  toggleForms = (e: Event, row: Row): void => {
+  public toggleForms = (e: Event, row: Row): void => {
     e.stopPropagation();
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
@@ -157,7 +156,7 @@ export class TransactionsTableComponent implements OnInit {
     });
   }
 
-  updateTransaction = (e: Event, row: Row): void => {
+  public updateTransaction = (e: Event, row: Row): void => {
     e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
     const id: string  = currentTarget.dataset['id'] || 'no id';
@@ -177,8 +176,6 @@ export class TransactionsTableComponent implements OnInit {
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       provider: provider,
-      timestamp: Date.now() / 1000,
-      providerTimestamp: Date.now() / 1000,
       additionalData: this.transactionUpdateForm.value.additionalData
     };
     this.transactionApiService.patchTransaction(updateObj).subscribe({
@@ -193,13 +190,13 @@ export class TransactionsTableComponent implements OnInit {
     });
   }
 
-  setDefaultSorting(): void {
+  private setDefaultSorting(): void {
     this.sorted = undefined;
     this.dataSource.sortColumn = Constants.SORTING_STRINGS.DEFAULT_COLUMN;
     this.dataSource.sortOrder = Constants.SORTING_STRINGS.DEFAULT_ORDER;
   }
 
-  setSorting(columnName: string): void {
+  private setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
     if (this.sorted) {
       const columnSortedAlready = Boolean(this.sorted[columnName as keyof Sorted]);
@@ -207,13 +204,13 @@ export class TransactionsTableComponent implements OnInit {
     }
   }
 
-  toggleSortingIcon(columnName: string): void {
+  private toggleSortingIcon(columnName: string): void {
     if (this.sorted) {
       this.sorted[columnName as keyof Sorted] = !this.sorted[columnName as keyof Sorted];
     }
   }
 
-  sortify = (columnName: string): void => {
+  public sortify = (columnName: string): void => {
     const isDefaultSorting = this.sorted === undefined;
     this.sorted = isDefaultSorting ? new Object() : this.sorted;
     if (this.sorted) {

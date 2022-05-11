@@ -23,9 +23,9 @@ export class AuthInterceptor implements HttpInterceptor {
     public localStorageManager: LocalStorageManagerService,
     public router: Router) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const isLogOutRequest = request.body && request.body.username;
-    if (isLogOutRequest) {
+    if (isLogOutRequest || !this.localStorageManager.getAuthenticationInfo()?.authenticated) {
       return next.handle(request);
     }
     if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration)) {
