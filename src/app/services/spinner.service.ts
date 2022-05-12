@@ -14,9 +14,9 @@ export class SpinnerService {
   displaySpinner(): void {
     if (!this.overlayRef) {
       this.overlayRef = this.overlay.create();
+      const spinnerOverlayPortal = new ComponentPortal(SpinnerOverlayComponent);
+      this.overlayRef.attach(spinnerOverlayPortal);
     }
-    const spinnerOverlayPortal = new ComponentPortal(SpinnerOverlayComponent);
-    this.overlayRef.attach(spinnerOverlayPortal);
   }
 
   hideSpinner(): void {

@@ -49,16 +49,13 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
     return next.handle(request).pipe(
-      map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> => {
-        console.log(response);
-        console.log(response instanceof HttpErrorResponse);
+      map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> | void => {
         if (response instanceof HttpErrorResponse) {
           if (response.status === HttpStatusCode.UNAUTHORIZED) {
             this.logout();
           }
           return this.handleError(response);
-        } else {
-          console.log('return response');
+        } else if (response instanceof HttpResponse && response.status === HttpStatusCode.OK) {
           return response;
         }
       }),
