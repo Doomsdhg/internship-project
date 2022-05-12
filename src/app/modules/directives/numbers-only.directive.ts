@@ -1,15 +1,15 @@
 import { Directive, HostListener } from '@angular/core';
 import { NotifyService } from '../../services/notify.service';
-import { El } from '../../modules/interfaces/browser-event.interface';
+import { El } from '../interfaces/browser-event.interface';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 
 @Directive({
-  selector: '[appNumbersOnly]'
+  selector: '[intrNumbersOnly]'
 })
 export class NumbersOnlyDirective {
 
-  constructor(public notify: NotifyService) { }
+  constructor(private notify: NotifyService) { }
 
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     if (isNaN(+element.value)) {
@@ -17,5 +17,4 @@ export class NumbersOnlyDirective {
       this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_NUMBERS_ONLY_ERROR, Snackbar.ERROR_TYPE);
     }
   }
-
 }

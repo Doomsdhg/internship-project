@@ -1,20 +1,20 @@
 export interface BrowserEvent {
-    target: Target,
-    currentTarget: CurrentTarget
+    target: Target;
+    currentTarget: CurrentTarget;
 }
 
 export interface Target {
-    value: string
+    value: string;
 }
 
 export interface CurrentTarget {
-    dataset: Dataset
+    dataset: Dataset;
 }
 
 export interface Dataset {
-    id: string
+    id: string;
 }
 
 export interface El {
-    value: string
+    value: string;
 }

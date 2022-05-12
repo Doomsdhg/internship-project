@@ -7,18 +7,18 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs';
-import { 
+import {
   TranslateModule,
-  DEFAULT_LANGUAGE, 
-  MissingTranslationHandler, 
-  TranslateCompiler, 
-  TranslateLoader, 
-  TranslateParser, 
-  TranslateService, 
-  TranslateStore, 
-  USE_DEFAULT_LANG, 
-  USE_EXTEND, 
-  USE_STORE 
+  DEFAULT_LANGUAGE,
+  MissingTranslationHandler,
+  TranslateCompiler,
+  TranslateLoader,
+  TranslateParser,
+  TranslateService,
+  TranslateStore,
+  USE_DEFAULT_LANG,
+  USE_EXTEND,
+  USE_STORE
 } from '@ngx-translate/core';
 
 
@@ -33,7 +33,7 @@ describe('NotifyService', () => {
       imports: [
         TranslateModule,
         BrowserAnimationsModule,
-        MatSnackBarModule, 
+        MatSnackBarModule,
         HttpClientTestingModule,
         RouterTestingModule
       ],
@@ -45,10 +45,10 @@ describe('NotifyService', () => {
         TranslateCompiler,
         TranslateParser,
         MissingTranslationHandler,
-        {provide: USE_DEFAULT_LANG, useValue: undefined},
-        {provide: USE_STORE, useValue: undefined},
-        {provide: USE_EXTEND, useValue: undefined},
-        {provide: DEFAULT_LANGUAGE, useValue: undefined},
+        { provide: USE_DEFAULT_LANG, useValue: undefined },
+        { provide: USE_STORE, useValue: undefined },
+        { provide: USE_EXTEND, useValue: undefined },
+        { provide: DEFAULT_LANGUAGE, useValue: undefined },
       ]
     });
     service = TestBed.inject(NotifyService);

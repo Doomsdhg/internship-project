@@ -9,7 +9,7 @@ describe('LocalStorageManagerService', () => {
     username: 'test',
     type: 'test',
     refreshToken: 'qwe',
-    accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c' 
+    accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
   };
 
   const comparableAuthenticationData = {
@@ -25,7 +25,7 @@ describe('LocalStorageManagerService', () => {
     username: '',
     type: '',
     refreshToken: '123',
-    accessToken: '1234' 
+    accessToken: '1234'
   };
 
   let service: LocalStorageManagerService;
@@ -35,7 +35,7 @@ describe('LocalStorageManagerService', () => {
     service = TestBed.inject(LocalStorageManagerService);
   });
 
-  it("should update local storage authentication data", () => {
+  it('should update local storage authentication data', () => {
     service.setLoginValues(loginObject);
     expect(localStorage.getItem(LocalStorageAcessors.AUTHENTICATED)).toBe(comparableAuthenticationData.authenticated);
     expect(localStorage.getItem(LocalStorageAcessors.TOKEN)).toBe(comparableAuthenticationData.token);
@@ -45,12 +45,12 @@ describe('LocalStorageManagerService', () => {
     expect(localStorage.getItem(LocalStorageAcessors.TOKEN_CREATION_DATE)).toBe(comparableAuthenticationData.tokenCreated);
   });
 
-  it("should set page size in local storage", () => {
+  it('should set page size in local storage', () => {
     service.setPageSize('7');
     expect(localStorage.getItem(LocalStorageAcessors.PAGE_SIZE)).toBe('7');
   });
 
-  it("should delete local storage authentication data", () => {
+  it('should delete local storage authentication data', () => {
     service.deleteLoginValues();
     expect(localStorage.getItem(LocalStorageAcessors.AUTHENTICATED)).toBeFalsy();
     expect(localStorage.getItem(LocalStorageAcessors.TOKEN)).toBeFalsy();
@@ -60,13 +60,13 @@ describe('LocalStorageManagerService', () => {
     expect(localStorage.getItem(LocalStorageAcessors.TOKEN_CREATION_DATE)).toBeFalsy();
   });
 
-  it("should return object with authentication info", () => {
+  it('should return object with authentication info', () => {
     service.setLoginValues(loginObject);
     const result = service.getAuthenticationInfo();
     expect(result).toEqual(comparableAuthenticationData);
   });
 
-  it("should refresh token info in local storage", () => {
+  it('should refresh token info in local storage', () => {
     service.refreshToken(refreshTokenObject);
     const result = service.getAuthenticationInfo();
     expect(result?.refreshToken).toEqual(refreshTokenObject.refreshToken);

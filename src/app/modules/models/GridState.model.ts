@@ -1,6 +1,6 @@
-import { PageEvent } from "@angular/material/paginator";
-import { Sort } from "@angular/material/sort";
-import { PageableDefaults } from "src/app/constants/pageable.constants";
+import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
+import { PageableDefaults } from 'src/app/constants/pageable.constants';
 
 export class GridState {
   query: string | string[] = [];

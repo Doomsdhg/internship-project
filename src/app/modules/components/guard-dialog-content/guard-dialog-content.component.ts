@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { TransactionsTableComponent } from '../../components/transactions-table/transactions-table.component';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-guard-dialog-content',
+  selector: 'intr-guard-dialog-content',
   templateUrl: './guard-dialog-content.component.html',
-  styleUrls: []
+  styleUrls: [],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GuardDialogContentComponent {
 
@@ -16,5 +17,4 @@ export class GuardDialogContentComponent {
   close(decision: boolean): void {
     this.dialogRef.close(decision);
   }
-
 }

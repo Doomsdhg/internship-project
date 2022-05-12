@@ -6,12 +6,12 @@ import { Pageable } from 'src/app/modules/models/Pageable.model';
 import { Sortable } from 'src/app/modules/models/Sortable.model';
 import { Page } from 'src/app/modules/types/Page.type';
 import { QueryPredicates } from 'src/app/modules/models/QueryPredicates.model';
-import { 
-  HttpClient, 
+import {
+  HttpClient,
   HttpResponse } from '@angular/common/http';
-import { 
-  TransactionUpdateData, 
-  Transaction, 
+import {
+  TransactionUpdateData,
+  Transaction,
   ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
 
 @Injectable({
@@ -19,7 +19,9 @@ import {
 })
 export class TransactionApiService {
 
-  constructor(public http: HttpClient) { }
+  constructor(
+    public http: HttpClient
+    ) { }
 
   deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
     return this.http.delete(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}${id}`);

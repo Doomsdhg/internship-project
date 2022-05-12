@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Snackbar } from 'src/app/constants/snackbar.constants';
@@ -9,22 +9,22 @@ import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
-  selector: 'app-auth-form',
+  selector: 'intr-auth-form',
   templateUrl: './auth-form.component.html',
-  styleUrls: ['./auth-form.component.scss']
+  styleUrls: ['./auth-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthFormComponent {
 
-  @Input()
-  authForms: FormGroup = new FormGroup({
+  @Input() authForms: FormGroup = new FormGroup({
     login: new FormControl(),
     password: new FormControl(),
   });
 
   constructor(
-    public auth: AuthService,
+    private auth: AuthService,
     private notify: NotifyService,
-    public router: Router,
+    private router: Router,
     private localStorageManager: LocalStorageManagerService
   ) { }
 
@@ -39,6 +39,5 @@ export class AuthFormComponent {
       }
     });
   }
-
 }
 

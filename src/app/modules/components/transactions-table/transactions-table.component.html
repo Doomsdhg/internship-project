@@ -68,7 +68,7 @@
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-                <input required [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="amount"
+                <input required [intrNumericLength]="[10, 2]" intrNumbersOnly matInput formControlName="amount"
                   value="{{row.amount.amount}}" placeholder="{{ 'placeholders.amount' | translate }}">
               </mat-form-field>
             </form>
@@ -101,7 +101,7 @@
             <form [formGroup]="transactionUpdateForm" (click)="$event.stopPropagation()">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
-                <input required [appNumericLength]="[10, 2]" appNumbersOnly matInput formControlName="commissionAmount"
+                <input required [intrNumericLength]="[10, 2]" intrNumbersOnly matInput formControlName="commissionAmount"
                   value="{{row.commissionAmount.amount}}" placeholder="{{ 'placeholders.commissionAmount' | translate }}">
               </mat-form-field>
             </form>
@@ -176,6 +176,7 @@
       </mat-cell>
     </ng-container>
 
+    <!-- Header row -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"
       class="onhover-pointer">

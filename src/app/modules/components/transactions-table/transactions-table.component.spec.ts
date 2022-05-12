@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Column, Row, TransactionsTableComponent } from './transactions-table.component';
-import { 
+import {
   TranslateModule,
-  TranslateLoader, 
+  TranslateLoader,
 } from '@ngx-translate/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -21,13 +21,13 @@ import { SortingStrings } from 'src/app/constants/sorting.constants';
 describe('TransactionsTableComponent', () => {
 
   const translationObjectExample = {
-    "displayedColumns.actions": "действия",
-    "displayedColumns.amount": "количество",
-    "displayedColumns.commissionAmount": "размер комиссии",
-    "displayedColumns.externalId": "номер",
-    "displayedColumns.provider": "провайдер",
-    "displayedColumns.status": "статус",
-    "displayedColumns.user": "имя пользователя"
+    'displayedColumns.actions': 'действия',
+    'displayedColumns.amount': 'количество',
+    'displayedColumns.commissionAmount': 'размер комиссии',
+    'displayedColumns.externalId': 'номер',
+    'displayedColumns.provider': 'провайдер',
+    'displayedColumns.status': 'статус',
+    'displayedColumns.user': 'имя пользователя'
   };
 
   const translatedColumnNames: Column[] = [{
@@ -114,7 +114,7 @@ describe('TransactionsTableComponent', () => {
   };
 
   const eventMock = {
-    stopPropagation: () => {console.log(1);},
+    stopPropagation: () => {console.log(1); },
     currentTarget: {
       dataset : {
         external_id: '123qwe',
@@ -149,8 +149,8 @@ describe('TransactionsTableComponent', () => {
       declarations: [TransactionsTableComponent],
       imports: [
         BrowserAnimationsModule,
-        HttpClientTestingModule, 
-        MatSnackBarModule, 
+        HttpClientTestingModule,
+        MatSnackBarModule,
         RouterTestingModule,
         TranslateModule.forRoot({
           loader: {
