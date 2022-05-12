@@ -3,8 +3,11 @@ import {
   HttpRequest,
   HttpHandler,
   HttpInterceptor,
+  HttpErrorResponse,
+  HttpResponse,
+  HttpEvent,
 } from '@angular/common/http';
-import { Observable, throwError, map } from 'rxjs';
+import { Observable, throwError, map, finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { AuthenticationResponse } from '../interfaces/authentication.interface';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
@@ -13,6 +16,7 @@ import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { HttpStatusCode } from '../../enums/HttpStatusCode';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -28,7 +32,11 @@ export class AuthInterceptor implements HttpInterceptor {
     this.spinnerService.displaySpinner();
     const isLogOutRequest = request.body && request.body.username;
     if (isLogOutRequest) {
-      return next.handle(request);
+      return next.handle(request).pipe(
+        finalize((): void => {
+          this.spinnerService.hideSpinner();
+        })
+      );
     }
     if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration)) {
       this.web.refreshToken().subscribe((success: AuthenticationResponse) => {
@@ -40,21 +48,33 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
       });
     }
-
     return next.handle(request).pipe(
-      map((response: any) => {
-        const noError = response.status === 200;
-        const unauthorized = response.status === 401;
-        if (unauthorized) {
-          this.localStorageManager.deleteLoginValues();
-          this.router.navigate([AppRoutes.AUTHENTICATION]);
-        }
-          this.spinnerService.hideSpinner();
-        if (noError) {
+      map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> => {
+        console.log(response);
+        console.log(response instanceof HttpErrorResponse);
+        if (response instanceof HttpErrorResponse) {
+          if (response.status === HttpStatusCode.UNAUTHORIZED) {
+            this.logout();
+          }
+          return this.handleError(response);
+        } else {
+          console.log('return response');
           return response;
         }
-        return throwError(() => new Error(response.message));
+      }),
+      finalize((): void => {
+        this.spinnerService.hideSpinner();
       })
     );
+  }
+
+  private logout(): void {
+    this.localStorageManager.deleteLoginValues();
+    this.router.navigate([AppRoutes.AUTHENTICATION]);
+  }
+
+  private handleError(response: HttpErrorResponse): Observable<Error> {
+    const errorText = 'status: ' + response.status + ', error: ' + response.message;
+    return throwError(() => new Error(errorText));
   }
 }
