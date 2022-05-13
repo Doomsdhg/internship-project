@@ -32,10 +32,9 @@ export class AuthInterceptor implements HttpInterceptor {
     this.spinnerService.displaySpinner();
     const isLogOutRequest = request.body && request.body.username;
     if (isLogOutRequest) {
-      return next.handle(request).pipe(
-        finalize((): void => {
-          this.spinnerService.hideSpinner();
-        })
+      return next.handle(request)
+      .pipe(
+        finalize(() => this.spinnerService.hideSpinner())
       );
     }
     if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration)) {
@@ -48,7 +47,8 @@ export class AuthInterceptor implements HttpInterceptor {
         headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
       });
     }
-    return next.handle(request).pipe(
+    return next.handle(request)
+    .pipe(
       map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> | void => {
         if (response instanceof HttpErrorResponse) {
           if (response.status === HttpStatusCode.UNAUTHORIZED) {
@@ -59,9 +59,7 @@ export class AuthInterceptor implements HttpInterceptor {
           return response;
         }
       }),
-      finalize((): void => {
-        this.spinnerService.hideSpinner();
-      })
+      finalize(() => this.spinnerService.hideSpinner())
     );
   }
 
