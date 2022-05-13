@@ -33,7 +33,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
+import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -54,7 +55,8 @@ export function tokenGetter(): string | null {
     NumericLengthDirective,
     HeaderComponent,
     AuthPageComponent,
-    AuthFormComponent
+    AuthFormComponent,
+    SpinnerOverlayComponent
   ],
   imports: [
     MatProgressSpinnerModule,
@@ -87,6 +89,7 @@ export function tokenGetter(): string | null {
     })
   ],
   providers: [
+    MatSpinner,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     NotifyService,
     TransactionApiService,
