@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Constants } from '../constants/main.constants';
+import { Constants } from '../constants/general.constants';
 
 @Injectable({
   providedIn: 'root'

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "tslint '**/*.ts' --fix",
+    "lint": "tslint 'src/**/*.ts?(x)' --fix",
     "heroku-postbuild": "ng build internship-project"
   },
   "private": true,

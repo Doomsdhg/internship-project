@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Constants } from 'src/app/constants/main.constants';
+import { Constants } from 'src/app/constants/general.constants';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { environment } from 'src/environments/environment.prod';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
+import { AppRoutes } from 'src/app/constants/app-routes.constants';
+import { Theme } from './Theme.type';
 
 @Component({
   selector: 'intr-header',
@@ -11,13 +13,23 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class HeaderComponent implements OnInit {
+
+  private readonly themes: {light: Theme, dark: Theme} = {
+    light: {
+      name: 'light-theme'
+    },
+    dark: {
+      name: 'dark-theme'
+    }
+  };
 
   public currentRoute!: string;
 
   public environment = environment;
 
-  public currentTheme!: string;
+  public currentTheme!: Theme;
 
   constructor(
     private router: Router,
@@ -30,20 +42,20 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  public get authenticated(): string | null | undefined {
-    return this.localStorageManager.getAuthenticationInfo()?.authenticated;
+  public get authenticated(): string {
+    return this.localStorageManager.getAuthenticationInfo()?.authenticated || 'false';
   }
 
   public ngOnInit(): void {
     this.setCurrentRoute();
-    this.setTheme();
+    this.enableDefaultTheme();
   }
 
-  private setTheme(): void {
-    const theme = localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME) || Constants.THEMES.LIGHT;
+  private enableDefaultTheme(): void {
+    const theme = new Theme(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME) || this.themes.light.name);
     this.currentTheme = theme;
-    document.getElementsByTagName('body')[0].classList.add(theme);
-    this.changeButtonsClasses(theme);
+    document.getElementsByTagName('body')[0].classList.add(theme.name);
+    this.changeButtonsClasses(theme.name);
   }
 
   private setCurrentRoute(): void {
@@ -55,13 +67,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-  public switchTheme(selectedTheme: string): void {
-    this.switchThemeClass(selectedTheme);
-    this.changeButtonsClasses(selectedTheme);
-    this.changeButtonsClasses(this.currentTheme);
+  public changeTheme(selectedTheme: Theme): void {
+    this.changeThemeClass(selectedTheme.name);
+    this.changeButtonsClasses(selectedTheme.name);
+    this.changeButtonsClasses(this.currentTheme.name);
     this.currentTheme = selectedTheme;
-    localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME, this.currentTheme);
-    this.cdr.detectChanges();
+    localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME, this.currentTheme.name);
   }
 
   private changeButtonsClasses(theme: string): void {
@@ -71,16 +82,24 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  private switchThemeClass(selectedTheme: string): void {
+  private changeThemeClass(selectedTheme: string): void {
     const body = document.getElementsByTagName('body')[0];
-    body.classList.remove(this.currentTheme);
+    body.classList.remove(this.currentTheme.name);
     body.classList.add(selectedTheme);
+  }
+
+  public enableLightTheme(): void {
+    this.changeTheme(this.themes.light);
+  }
+
+  public enableDarkTheme(): void {
+    this.changeTheme(this.themes.dark);
   }
 
   public logout(): void {
     this.auth.logout().subscribe(() => {
       this.localStorageManager.deleteLoginValues();
-      this.redirect(Constants.APP_ROUTES.AUTHENTICATION);
+      this.redirect(AppRoutes.AUTHENTICATION);
     });
   }
 }

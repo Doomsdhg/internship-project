@@ -3,10 +3,10 @@ import { TransactionsTableComponent } from '../../components/transactions-table/
 
 @Component({
   selector: 'intr-transactions-table-page',
-  templateUrl: './transactions-table-page.component.html',
-  styleUrls: []
+  templateUrl: './transactions-table-page.component.html'
 })
 export class TransactionsTablePageComponent {
+
   @ViewChild(TransactionsTableComponent) transactionsTableComponent!: TransactionsTableComponent;
   public get inputChanged(): boolean {
     return this.transactionsTableComponent.inputChanged;

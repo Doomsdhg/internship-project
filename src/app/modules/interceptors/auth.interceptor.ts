@@ -11,12 +11,11 @@ import { Observable, throwError, map, finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { AuthenticationResponse } from '../interfaces/authentication.interface';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
-import { environment } from 'src/environments/environment';
-import { Constants } from 'src/app/constants/main.constants';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { HttpStatusCode } from '../../enums/HttpStatusCode';
+import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -42,7 +41,7 @@ export class AuthInterceptor implements HttpInterceptor {
         this.localStorageManager.refreshToken(success);
       });
     }
-    if (request.url !== `${environment.serverUrl}${Constants.API_ENDPOINTS.LOGIN}`) {
+    if (request.url !== ApiEndpoints.LOGIN) {
       request = request.clone({
         headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
       });

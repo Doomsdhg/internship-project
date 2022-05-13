@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import { DecodedToken, AuthenticationResponse } from '../modules/interfaces/authentication.interface';
-import { Constants } from '../constants/main.constants';
+import { Constants } from '../constants/general.constants';
 import { AuthenticationData } from 'src/app/modules/interfaces/authentication.interface';
 
 @Injectable({

@@ -1,16 +1,17 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
-import { Column, Row, Sorted } from 'src/app/modules/interfaces/transactions-table.interface';
+import { Column, Row, Sorted, Translations } from './transactions-table.interfaces';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from '../../../services/notify.service';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
-import { Translations } from 'src/app/modules/interfaces/translations.interface';
-import { Constants } from 'src/app/constants/main.constants';
+import { Constants } from 'src/app/constants/general.constants';
+import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
+import { Columns } from './transactions-table.constants';
 
 @Component({
   selector: 'intr-transactions-table',
@@ -29,43 +30,9 @@ export class TransactionsTableComponent implements OnInit {
 
   public formsToggled = false;
 
-  public displayedColumns: string[] = [
-    Constants.COLUMNS.ID_EXTERNAL_ID,
-    Constants.COLUMNS.ID_PROVIDER,
-    Constants.COLUMNS.ID_STATUS,
-    Constants.COLUMNS.ID_AMOUNT,
-    Constants.COLUMNS.ID_commission_AMOUNT,
-    Constants.COLUMNS.ID_USER,
-    Constants.COLUMNS.ID_ACTIONS];
+  public displayedColumns: string[] = Columns.DISPLAYED_COLUMNS;
 
-  private columnNames: Column[] = [{
-    id: Constants.COLUMNS.ID_EXTERNAL_ID,
-    value: Constants.COLUMNS.NAME_EXTERNAL_ID,
-  },
-  {
-    id: Constants.COLUMNS.ID_PROVIDER,
-    value: Constants.COLUMNS.NAME_PROVIDER,
-  },
-  {
-    id: Constants.COLUMNS.ID_STATUS,
-    value: Constants.COLUMNS.NAME_STATUS,
-  },
-  {
-    id: Constants.COLUMNS.ID_AMOUNT,
-    value: Constants.COLUMNS.NAME_AMOUNT,
-  },
-  {
-    id: Constants.COLUMNS.ID_commission_AMOUNT,
-    value: Constants.COLUMNS.NAME_commission_AMOUNT,
-  },
-  {
-    id: Constants.COLUMNS.ID_USER,
-    value: Constants.COLUMNS.NAME_USER,
-  },
-  {
-    id: Constants.COLUMNS.ID_ACTIONS,
-    value: Constants.COLUMNS.NAME_ACTIONS
-  }];
+  private columnNames: Column[] = Columns.COLUMNS_NAMES;
 
   public sorted: Sorted | undefined;
 
@@ -103,21 +70,21 @@ export class TransactionsTableComponent implements OnInit {
 
   private translateColumnsNames(): void {
     this.translateService.get([
-      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
-      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
-      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_STATUS,
-      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
-      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT,
-      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_USER,
-      Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMMISSION_AMOUNT,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER,
+      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
       .subscribe((translations: Translations) => {
-        this.columnNames[0].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
-        this.columnNames[1].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
-        this.columnNames[2].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
-        this.columnNames[3].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
-        this.columnNames[4].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT];
-        this.columnNames[5].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_USER];
-        this.columnNames[6].value = translations[Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
+        this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
+        this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
+        this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
+        this.columnNames[3].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
+        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMMISSION_AMOUNT];
+        this.columnNames[5].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER];
+        this.columnNames[6].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
       });
   }
 
@@ -128,12 +95,12 @@ export class TransactionsTableComponent implements OnInit {
   public confirmTransaction = (e: Event): void => {
     e.stopPropagation();
     const currentTarget = e.currentTarget as HTMLButtonElement;
-    const externalId: string | undefined = currentTarget.dataset['external_id'];
-    const provider: string | undefined = currentTarget.dataset['provider'];
+    const externalId: string = currentTarget.dataset['external_id'] || '';
+    const provider: string = currentTarget.dataset['provider'] || '';
     this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
       next: () => {
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
         this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
@@ -182,7 +149,7 @@ export class TransactionsTableComponent implements OnInit {
       next: () => {
         this.toggleForms(e, row);
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(Constants.TRANSLATIONS_ENDPOINTS.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
         this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
@@ -192,15 +159,15 @@ export class TransactionsTableComponent implements OnInit {
 
   private setDefaultSorting(): void {
     this.sorted = undefined;
-    this.dataSource.sortColumn = Constants.SORTING_STRINGS.DEFAULT_COLUMN;
-    this.dataSource.sortOrder = Constants.SORTING_STRINGS.DEFAULT_ORDER;
+    this.dataSource.sortColumn = Columns.SORTING.DEFAULT_COLUMN;
+    this.dataSource.sortOrder = Columns.SORTING.DEFAULT_ORDER;
   }
 
   private setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
     if (this.sorted) {
       const columnSortedAlready = Boolean(this.sorted[columnName as keyof Sorted]);
-      this.dataSource.sortOrder = columnSortedAlready === true ? Constants.SORTING_STRINGS.DESC : Constants.SORTING_STRINGS.ASC;
+      this.dataSource.sortOrder = columnSortedAlready === true ? Columns.SORTING.DESC : Columns.SORTING.ASC;
     }
   }
 

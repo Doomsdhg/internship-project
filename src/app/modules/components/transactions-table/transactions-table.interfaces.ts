@@ -1,4 +1,4 @@
-import {Amount} from './transactions.interface';
+import { Amount } from '../../interfaces/transactions.interface';
 
 export interface Column {
     id: string;
@@ -24,4 +24,14 @@ export interface Sorted {
     amount?: boolean;
     commissionAmount?: boolean;
     user?: boolean;
+}
+
+export interface Translations {
+    'displayedColumns.externalId': string;
+    'displayedColumns.provider': string;
+    'displayedColumns.status': string;
+    'displayedColumns.amount': string;
+    'displayedColumns.commissionAmount': string;
+    'displayedColumns.user': string;
+    'displayedColumns.actions': string;
 }

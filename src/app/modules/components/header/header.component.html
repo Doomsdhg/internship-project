@@ -17,12 +17,12 @@
     </div>
     <div class="managing-tools-container">
         <div class="managing-tools-container__item">
-            <button mat-button class="light-theme-button" (click)="switchTheme('light-theme')">
+            <button mat-button class="light-theme-button" (click)="enableLightTheme()">
                 <span class="material-icons">
                     light_mode
                     </span>
             </button>
-            <button mat-button class="dark-theme-button" (click)="switchTheme('dark-theme')">
+            <button mat-button class="dark-theme-button" (click)="enableDarkTheme()">
                 <span class="material-icons">
                     dark_mode
                     </span>
@@ -38,12 +38,12 @@
         </button>
         <mat-menu #menu="matMenu">
             <div class="managing-tools-mobile__item">
-                <button mat-button class="light-theme-button" (click)="switchTheme('light-theme')">
+                <button mat-button class="light-theme-button" (click)="enableLightTheme()">
                     <span class="material-icons">
                         light_mode
                         </span>
                 </button>
-                <button mat-button class="dark-theme-button" (click)="switchTheme('dark-theme')">
+                <button mat-button class="dark-theme-button" (click)="enableDarkTheme()">
                     <span class="material-icons">
                         dark_mode
                         </span>

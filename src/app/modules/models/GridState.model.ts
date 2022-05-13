@@ -1,11 +1,11 @@
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { PageableDefaults } from 'src/app/constants/pageable.constants';
+import { Constants } from 'src/app/constants/general.constants';
 
 export class GridState {
   query: string | string[] = [];
-  resultsSize = PageableDefaults.resultsSize;
+  resultsSize = Constants.PAGEABLE_DEFAULTS.resultsSize;
   pageEvent: PageEvent = new PageEvent();
-  sortEvent: Sort = PageableDefaults.sortEvent as Sort;
-  pageSizeOptions = PageableDefaults.pageSizeOptions;
+  sortEvent: Sort = Constants.PAGEABLE_DEFAULTS.sortEvent as Sort;
+  pageSizeOptions = Constants.PAGEABLE_DEFAULTS.pageSizeOptions;
 }

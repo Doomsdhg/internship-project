@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate, UrlTree } from '@angular/router';
+import { CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { GuardDialogContentComponent } from 'src/app/modules/components/guard-dialog-content/guard-dialog-content.component';
-import { ComponentWithInput } from 'src/app/modules/interfaces/component-with-input.interface';
+import { ComponentWithInput } from './component-with-input.interface';
 import { TransactionsTablePageComponent } from 'src/app/modules/pages/transactions-table-page/transactions-table-page.component';
 
 @Injectable({

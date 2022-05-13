@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Constants } from 'src/app/constants/main.constants';
+import { Constants } from 'src/app/constants/general.constants';
 import { NotifyService } from 'src/app/services/notify.service';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 import { AuthenticationResponse, AuthenticationResponseError } from '../../interfaces/authentication.interface';

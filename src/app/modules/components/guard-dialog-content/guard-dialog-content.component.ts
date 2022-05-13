@@ -14,7 +14,7 @@ export class GuardDialogContentComponent {
     public dialogRef: MatDialogRef<TransactionsTableComponent>
   ) { }
 
-  public close(decision: boolean): void {
+  public closeDialog(decision: boolean): void {
     this.dialogRef.close(decision);
   }
 }

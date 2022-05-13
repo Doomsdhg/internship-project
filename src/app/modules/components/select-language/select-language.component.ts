@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormControl } from '@angular/forms';
-import { Constants } from 'src/app/constants/main.constants';
+import { Constants } from 'src/app/constants/general.constants';
 
 @Component({
   selector: 'intr-select-language',
@@ -15,16 +15,16 @@ export class SelectLanguageComponent {
 
   public selectLanguageForm: FormControl;
 
-  private language!: string | null;
+  private currentLanguage!: string | null;
 
   constructor(
     private translateService: TranslateService,
     public router: Router,
     public route: ActivatedRoute
   ) {
-    this.language = localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.LANGUAGE) || environment.defaultLocale;
-    this.translateService.use(this.language);
-    this.selectLanguageForm = new FormControl(this.language);
+    this.currentLanguage = localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.LANGUAGE) || environment.defaultLocale;
+    this.translateService.use(this.currentLanguage);
+    this.selectLanguageForm = new FormControl(this.currentLanguage);
   }
 
   public changeLanguage(): void {
