@@ -10,6 +10,6 @@ import { Page } from 'src/app/modules/types/Page.type';
 export class WebService extends HttpClient {
 
   public fetchTransactions(path: string): Observable<HttpResponse<Page<Transaction>>> {
-    return this.get(path) as Observable<HttpResponse<Page<Transaction>>>;
+    return this.get(path, {observe: 'response'}) as Observable<HttpResponse<Page<Transaction>>>;
   }
 }
