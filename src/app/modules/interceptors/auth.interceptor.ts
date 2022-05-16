@@ -9,37 +9,30 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError, map, finalize } from 'rxjs';
 import { AuthService } from 'src/app/services/web-services/auth.service';
-import { AuthenticationResponse } from '../interfaces/authentication.interface';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
-import { Router } from '@angular/router';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { HttpStatusCode } from '../../enums/HttpStatusCode';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
+import moment from 'moment';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    public web: AuthService,
-    public localStorageManager: LocalStorageManagerService,
-    public router: Router,
-    public spinnerService: SpinnerService
+    private authService: AuthService,
+    private localStorageManager: LocalStorageManagerService,
+    private spinnerService: SpinnerService
     ) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     this.spinnerService.displaySpinner();
+    const isNotAuthenticated = !this.localStorageManager.getAuthenticationInfo()?.authenticated;
     const isLogOutRequest = request.body && request.body.username;
-    if (isLogOutRequest) {
-      return next.handle(request)
-      .pipe(
-        finalize(() => this.spinnerService.hideSpinner())
-      );
+    if (isNotAuthenticated || isLogOutRequest) {
+      this.handleDefaultCase(request, next);
     }
-    if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration)) {
-      this.web.refreshToken().subscribe((success: AuthenticationResponse) => {
-        this.localStorageManager.refreshToken(success);
-      });
+    if (moment() > moment(Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration))) {
+      this.authService.refreshToken();
     }
     if (request.url !== ApiEndpoints.LOGIN) {
       request = request.clone({
@@ -51,7 +44,7 @@ export class AuthInterceptor implements HttpInterceptor {
       map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> | void => {
         if (response instanceof HttpErrorResponse) {
           if (response.status === HttpStatusCode.UNAUTHORIZED) {
-            this.logout();
+            this.authService.executeLogoutProcedures();
           }
           return this.handleError(response);
         } else if (response instanceof HttpResponse && response.status === HttpStatusCode.OK) {
@@ -62,9 +55,11 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 
-  private logout(): void {
-    this.localStorageManager.deleteLoginValues();
-    this.router.navigate([AppRoutes.AUTHENTICATION]);
+  private handleDefaultCase(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<void>> {
+    return next.handle(request)
+      .pipe(
+        finalize(() => this.spinnerService.hideSpinner())
+      );
   }
 
   private handleError(response: HttpErrorResponse): Observable<Error> {

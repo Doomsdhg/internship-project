@@ -183,7 +183,6 @@
     </mat-row>
   </table>
   <div class="pagination-pannel">
-    <span>{{dataSource.displayedTransactions}} {{'of' | translate}} {{dataSource.totalTransactions}}</span>
     <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(0)">
       << </button>
         <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
@@ -196,7 +195,6 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
-            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
+            <button mat-button (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
   </div>
 </div>

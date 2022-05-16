@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../../../../environments/environment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -11,17 +11,19 @@ import { Constants } from 'src/app/constants/general.constants';
   styleUrls: ['./select-language.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectLanguageComponent {
+export class SelectLanguageComponent implements OnInit {
 
-  public selectLanguageForm: FormControl;
+  public selectLanguageForm!: FormControl;
 
   private currentLanguage!: string | null;
 
   constructor(
-    private translateService: TranslateService,
     public router: Router,
-    public route: ActivatedRoute
-  ) {
+    public route: ActivatedRoute,
+    private translateService: TranslateService,
+  ) {}
+
+  public ngOnInit(): void {
     this.currentLanguage = localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.LANGUAGE) || environment.defaultLocale;
     this.translateService.use(this.currentLanguage);
     this.selectLanguageForm = new FormControl(this.currentLanguage);

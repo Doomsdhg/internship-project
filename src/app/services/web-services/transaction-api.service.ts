@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Page } from 'src/app/modules/types/Page.type';
-import {
-  HttpClient,
-  HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {
   TransactionUpdateData,
   Transaction,
@@ -18,32 +15,30 @@ export class TransactionApiService {
 
   constructor(
     public http: HttpClient,
-    public web: WebService
+    public webService: WebService
     ) { }
 
   public deleteTransaction(id: string): Observable<ApiTransactionResponse> {
-    return this.http.delete(ApiEndpoints.getDeletionPath(id));
+    return this.webService.superDelete<ApiTransactionResponse>(ApiEndpoints.getDeletionPath(id));
   }
 
   public getTransactions(
-    query: string[] | string = '',
     pageNumber = 1,
     pageSize = 3,
     sortColumn = 'id',
-    sortOrder = 'ASC'): Observable<HttpResponse<Page<Transaction>>> {
-    return this.web.fetchTransactions(ApiEndpoints.getTransactionsPageablePath(query, pageNumber, pageSize, sortColumn, sortOrder));
+    sortOrder = 'ASC'): Observable<Transaction[]> {
+    return this.webService.superGet<Transaction[]>(ApiEndpoints.getTransactionsPageablePath(
+      pageNumber,
+      pageSize,
+      sortColumn,
+      sortOrder));
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.http.put(ApiEndpoints.TRANSACTIONS, updateObj) as Observable<Transaction>;
+    return this.webService.superPut<Transaction>(ApiEndpoints.TRANSACTIONS, updateObj);
   }
 
-  public uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
-    return this.http.post(ApiEndpoints.TRANSACTIONS, transactionData) as Observable<Transaction>;
-  }
-
-  public confirmTransaction(externalId: string, provider: string): Observable<Transaction[]> {
-    return this.http.post(ApiEndpoints.getConfirmationPath(externalId, provider),
-       {}) as Observable<Transaction[]>;
+  public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
+    return this.webService.superPost<Transaction>(ApiEndpoints.getConfirmationPath(externalId, provider), {});
   }
 }

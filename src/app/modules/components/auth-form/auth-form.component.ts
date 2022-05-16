@@ -1,12 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Constants } from 'src/app/constants/general.constants';
-import { NotifyService } from 'src/app/services/notify.service';
 import { AuthService } from 'src/app/services/web-services/auth.service';
-import { AuthenticationResponse, AuthenticationResponseError } from '../../interfaces/authentication.interface';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
-import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
   selector: 'intr-auth-form',
@@ -22,22 +16,13 @@ export class AuthFormComponent {
   });
 
   constructor(
-    private auth: AuthService,
-    private notify: NotifyService,
-    private router: Router,
-    private localStorageManager: LocalStorageManagerService
+    private auth: AuthService
   ) { }
 
   public login(): void {
-    this.auth.login(this.authForms.controls['login'].value, this.authForms.controls['password'].value).subscribe({
-      next: (success: AuthenticationResponse) => {
-        this.localStorageManager.setLoginValues(success);
-        this.router.navigate([AppRoutes.TRANSACTIONS]);
-      },
-      error: (error: AuthenticationResponseError) => {
-        this.notify.showMessage(error.error.message, Constants.SNACKBAR.ERROR_TYPE);
-      }
-    });
+    const loginInput = this.authForms.controls['login'].value;
+    const passwordInput = this.authForms.controls['password'].value;
+    this.auth.login(loginInput, passwordInput);
   }
 }
 

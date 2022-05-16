@@ -5,7 +5,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'intr-guard-dialog-content',
   templateUrl: './guard-dialog-content.component.html',
-  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GuardDialogContentComponent {

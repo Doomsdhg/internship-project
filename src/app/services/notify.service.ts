@@ -9,7 +9,9 @@ import { Constants } from '../constants/general.constants';
 
 export class NotifyService {
 
-  constructor(private snackBar: MatSnackBar, private translateService: TranslateService) { }
+  constructor(
+    private snackBar: MatSnackBar,
+    private translateService: TranslateService) { }
 
   public showTranslatedMessage(messageAccessor: string, messageType: string): void {
     this.translateService.get(messageAccessor).subscribe((msg: string) => {

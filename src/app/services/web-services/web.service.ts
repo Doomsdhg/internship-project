@@ -1,15 +1,26 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Transaction } from 'src/app/modules/interfaces/transactions.interface';
-import { Page } from 'src/app/modules/types/Page.type';
+import { ApiTransactionResponse, TransactionUpdateData } from 'src/app/modules/interfaces/transactions.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WebService extends HttpClient {
 
-  public fetchTransactions(path: string): Observable<HttpResponse<Page<Transaction>>> {
-    return this.get(path, {observe: 'response'}) as Observable<HttpResponse<Page<Transaction>>>;
+  public superGet<T>(path: string): Observable<T> {
+    return this.get<T>(path);
+  }
+
+  public superPost<T>(path: string, data: TransactionUpdateData | Object): Observable<T> {
+    return this.post<T>(path, data);
+  }
+
+  public superPut<T>(path: string, updateData: TransactionUpdateData): Observable<T> {
+    return this.put<T>(path, updateData);
+  }
+
+  public superDelete<T>(path: string): Observable<ApiTransactionResponse> {
+    return this.delete<T>(path);
   }
 }

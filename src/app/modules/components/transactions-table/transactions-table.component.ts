@@ -1,13 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
-import { Column, Row, Sorted, Translations } from './transactions-table.interfaces';
+import { Column, Row, Sorted } from './transactions-table.interfaces';
 import { FormGroup, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from '../../../services/notify.service';
 import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
 import { Constants } from 'src/app/constants/general.constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
@@ -32,21 +31,16 @@ export class TransactionsTableComponent implements OnInit {
 
   public displayedColumns: string[] = Columns.DISPLAYED_COLUMNS;
 
-  private columnNames: Column[] = Columns.COLUMNS_NAMES;
-
   public sorted: Sorted | undefined;
 
   constructor(
-    public transactionApiService: TransactionApiService,
-    public translateService: TranslateService,
+    private transactionApiService: TransactionApiService,
     private notify: NotifyService,
-    private router: Router,
     private localStorageManager: LocalStorageManagerService
   ) { }
 
   public ngOnInit(): void {
     this.loadData();
-    this.translateColumnsNames();
   }
 
   public get inputChanged(): boolean {
@@ -59,37 +53,6 @@ export class TransactionsTableComponent implements OnInit {
   public setPageSize(pageSize: string): void {
     this.localStorageManager.setPageSize(pageSize);
     this.loadData();
-  }
-
-  private loadData(): void {
-    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify, this.router, this.localStorageManager);
-    this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.PAGE_SIZE)) ||
-    Constants.PAGEABLE_DEFAULTS.defaultPageSize;
-    this.dataSource.loadTransactions();
-  }
-
-  private translateColumnsNames(): void {
-    this.translateService.get([
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMMISSION_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
-      .subscribe((translations: Translations) => {
-        this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
-        this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
-        this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
-        this.columnNames[3].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
-        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_COMMISSION_AMOUNT];
-        this.columnNames[5].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER];
-        this.columnNames[6].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
-      });
-  }
-
-  private refreshTransactions = (): void => {
-    this.dataSource.loadTransactions();
   }
 
   public confirmTransaction = (e: Event): void => {
@@ -157,7 +120,22 @@ export class TransactionsTableComponent implements OnInit {
     });
   }
 
-  private setDefaultSorting(): void {
+  public sortify = (columnName: string): void => {
+    const isDefaultSorting = this.sorted === undefined;
+    this.sorted = isDefaultSorting ? {} : this.sorted;
+    if (this.sorted) {
+      const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
+      if (sortedBothOrders) {
+        this.resetSorting();
+      } else {
+        this.toggleSortingIcon(columnName);
+        this.setSorting(columnName);
+      }
+      this.dataSource.loadTransactions();
+    }
+  }
+
+  private resetSorting(): void {
     this.sorted = undefined;
     this.dataSource.sortColumn = Columns.SORTING.DEFAULT_COLUMN;
     this.dataSource.sortOrder = Columns.SORTING.DEFAULT_ORDER;
@@ -166,8 +144,8 @@ export class TransactionsTableComponent implements OnInit {
   private setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
     if (this.sorted) {
-      const columnSortedAlready = Boolean(this.sorted[columnName as keyof Sorted]);
-      this.dataSource.sortOrder = columnSortedAlready === true ? Columns.SORTING.DESC : Columns.SORTING.ASC;
+      const isColumnSorted = Boolean(this.sorted[columnName as keyof Sorted]);
+      this.dataSource.sortOrder = isColumnSorted ? Columns.SORTING.DESC : Columns.SORTING.ASC;
     }
   }
 
@@ -177,18 +155,14 @@ export class TransactionsTableComponent implements OnInit {
     }
   }
 
-  public sortify = (columnName: string): void => {
-    const isDefaultSorting = this.sorted === undefined;
-    this.sorted = isDefaultSorting ? new Object() : this.sorted;
-    if (this.sorted) {
-      const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
-      if (sortedBothOrders) {
-        this.setDefaultSorting();
-      } else {
-        this.toggleSortingIcon(columnName);
-        this.setSorting(columnName);
-      }
-      this.dataSource.loadTransactions();
-    }
+  private loadData(): void {
+    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify);
+    this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.PAGE_SIZE)) ||
+    Constants.PAGEABLE_DEFAULTS.defaultPageSize;
+    this.dataSource.loadTransactions();
+  }
+
+  private refreshTransactions = (): void => {
+    this.dataSource.loadTransactions();
   }
 }
