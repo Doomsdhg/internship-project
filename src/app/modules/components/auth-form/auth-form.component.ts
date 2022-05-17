@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/services/web-services/auth.service';
 
@@ -8,21 +8,25 @@ import { AuthService } from 'src/app/services/web-services/auth.service';
   styleUrls: ['./auth-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthFormComponent {
+export class AuthFormComponent implements OnInit {
 
-  public authForms: FormGroup = new FormGroup({
-    login: new FormControl(),
-    password: new FormControl(),
-  });
+  public authForms!: FormGroup;
 
   constructor(
-    private auth: AuthService
+    private authService: AuthService
   ) { }
+
+  ngOnInit(): void {
+    this.authForms = new FormGroup({
+      login: new FormControl(),
+      password: new FormControl(),
+    });
+  }
 
   public login(): void {
     const loginInput = this.authForms.controls['login'].value;
     const passwordInput = this.authForms.controls['password'].value;
-    this.auth.login(loginInput, passwordInput);
+    this.authService.login(loginInput, passwordInput);
   }
 }
 

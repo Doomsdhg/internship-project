@@ -8,5 +8,6 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 })
 
 export class AppComponent {
+
   public title = 'internship-project';
 }

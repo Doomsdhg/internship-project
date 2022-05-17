@@ -1,9 +1,8 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
 import { TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
-import { Column, Row, Sorted } from './transactions-table.interfaces';
+import { Row, Sorted } from './transactions-table.interfaces';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { NotifyService } from '../../../services/notify.service';
 import { MatSort } from '@angular/material/sort';
@@ -27,19 +26,21 @@ export class TransactionsTableComponent implements OnInit {
 
   public transactionUpdateForm!: FormGroup;
 
-  public formsToggled = false;
+  public formsToggled!: boolean;
 
-  public displayedColumns: string[] = Columns.DISPLAYED_COLUMNS;
+  public displayedColumns!: string[];
 
   public sorted: Sorted | undefined;
 
   constructor(
     private transactionApiService: TransactionApiService,
-    private notify: NotifyService,
-    private localStorageManager: LocalStorageManagerService
+    private notifyService: NotifyService,
+    private localStorageManagerService: LocalStorageManagerService
   ) { }
 
   public ngOnInit(): void {
+    this.displayedColumns = Columns.DISPLAYED_COLUMNS;
+    this.formsToggled = false;
     this.loadData();
   }
 
@@ -51,7 +52,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   public setPageSize(pageSize: string): void {
-    this.localStorageManager.setPageSize(pageSize);
+    this.localStorageManagerService.setPageSize(pageSize);
     this.loadData();
   }
 
@@ -63,10 +64,10 @@ export class TransactionsTableComponent implements OnInit {
     this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
       next: () => {
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
+        this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
   }
@@ -112,10 +113,10 @@ export class TransactionsTableComponent implements OnInit {
       next: () => {
         this.toggleForms(e, row);
         this.refreshTransactions();
-        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
+        this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
   }
@@ -156,8 +157,8 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   private loadData(): void {
-    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify);
-    this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.PAGE_SIZE)) ||
+    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notifyService);
+    this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE)) ||
     Constants.PAGEABLE_DEFAULTS.defaultPageSize;
     this.dataSource.loadTransactions();
   }

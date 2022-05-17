@@ -10,10 +10,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class GuardDialogContentComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<TransactionsTableComponent>
+    public matDialogRef: MatDialogRef<TransactionsTableComponent>
   ) { }
 
   public closeDialog(decision: boolean): void {
-    this.dialogRef.close(decision);
+    this.matDialogRef.close(decision);
   }
 }

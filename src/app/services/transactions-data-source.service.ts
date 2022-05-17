@@ -13,11 +13,11 @@ import { Constants } from '../constants/general.constants';
 export class TransactionsDataSource extends
   MatTableDataSource<Transaction> {
 
-  transactionMock!: Transaction;
+  emptyTransaction!: Transaction;
 
   constructor(
     private transactionApiService: TransactionApiService,
-    private notify: NotifyService) {
+    private notifyService: NotifyService) {
     super();
   }
 
@@ -31,7 +31,7 @@ export class TransactionsDataSource extends
 
   public sortOrder!: string;
 
-  private transactionsSubject = new BehaviorSubject<Transaction[]>([this.transactionMock]);
+  private transactionsSubject = new BehaviorSubject<Transaction[]>([this.emptyTransaction]);
 
   public loadTransactions(pageNumber = 0): void {
     this.currentPageNumber = pageNumber;
@@ -44,7 +44,7 @@ export class TransactionsDataSource extends
           });
         },
         error: (error: TransactionCrudResponseError) => {
-          this.notify.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
+          this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
         }
       });
   }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticationResponse, AuthenticationResponseError, LogoutResponse } from 'src/app/modules/interfaces/authentication.interface';
@@ -15,8 +15,8 @@ import { Constants } from 'src/app/constants/general.constants';
 export class AuthService {
 
   constructor(
-    private http: HttpClient,
-    private localStorageManager: LocalStorageManagerService,
+    private httpClient: HttpClient,
+    private localStorageManagerService: LocalStorageManagerService,
     private router: Router,
     private notifyService: NotifyService
   ) { }
@@ -24,7 +24,7 @@ export class AuthService {
   public login(username: string, password: string): void {
     this.sendLoginRequest(username, password).subscribe({
       next: (success: AuthenticationResponse) => {
-        this.localStorageManager.setLoginValues(success);
+        this.localStorageManagerService.setLoginValues(success);
         this.router.navigate([AppRoutes.TRANSACTIONS]);
       },
       error: (error: AuthenticationResponseError) => {
@@ -36,9 +36,12 @@ export class AuthService {
   public refreshToken(): void {
     this.sendRefreshTokenRequest().subscribe({
       next: (success: AuthenticationResponse) => {
-      this.localStorageManager.refreshToken(success);
+        this.localStorageManagerService.refreshToken(success);
       },
       error: (error: AuthenticationResponseError) => {
+        if (error.status === HttpStatusCode.Unauthorized) {
+          this.executeLogoutProcedures();
+        }
         this.notifyService.showMessage(error.error.message, Constants.SNACKBAR.ERROR_TYPE);
       }
     });
@@ -56,22 +59,22 @@ export class AuthService {
   }
 
   public executeLogoutProcedures(): void {
-    this.localStorageManager.deleteLoginValues();
+    this.localStorageManagerService.deleteLoginValues();
     this.router.navigate([AppRoutes.AUTHENTICATION]);
   }
 
   private sendRefreshTokenRequest(): Observable<AuthenticationResponse> {
-    return this.http.post<AuthenticationResponse>(ApiEndpoints.REFRESH, {
-      refreshToken: this.localStorageManager.getAuthenticationInfo()?.refreshToken});
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.REFRESH, {
+      refreshToken: this.localStorageManagerService.getAuthenticationInfo()?.refreshToken});
   }
 
   private sendLogoutRequest(): Observable<LogoutResponse> {
-    return this.http.post<LogoutResponse>(ApiEndpoints.LOGOUT, {
-      username: this.localStorageManager.getAuthenticationInfo()?.username});
+    return this.httpClient.post<LogoutResponse>(ApiEndpoints.LOGOUT, {
+      username: this.localStorageManagerService.getAuthenticationInfo()?.username});
   }
 
   private sendLoginRequest(username: string, password: string): Observable<AuthenticationResponse> {
-    return this.http.post<AuthenticationResponse>(ApiEndpoints.LOGIN, {
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.LOGIN, {
       username: username,
       password: password
     });

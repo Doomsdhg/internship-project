@@ -6,12 +6,12 @@ export interface AuthenticationResponse {
 }
 
 export interface AuthenticationData {
-    authenticated: string | null;
-    token: string | null;
-    refreshToken: string | null;
-    username: string | null;
-    tokenExpiration: string | null;
-    tokenCreated: string | null;
+    authenticated: string;
+    token: string;
+    refreshToken: string;
+    username: string;
+    tokenExpiration: string;
+    tokenCreated: string;
 }
 
 export interface LogoutResponse {
@@ -20,6 +20,7 @@ export interface LogoutResponse {
 
 export interface AuthenticationResponseError {
     error: ErrorObject;
+    status: number;
 }
 
 interface ErrorObject {

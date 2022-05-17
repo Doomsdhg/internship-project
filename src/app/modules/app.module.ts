@@ -26,7 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { CurrencyPipe } from '@angular/common';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
-import { NumericLengthDirective } from './directives/numeric-length.directive';
+import { NumericLengthDirective } from './directives/numbers-limit.directive';
 import { HeaderComponent } from './components/header/header.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';

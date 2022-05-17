@@ -6,20 +6,23 @@ import {
   Transaction,
   ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
-import { WebService } from './web.service';
+import { BaseApiService } from './base-api.service';
+import { LocalStorageManagerService } from '../local-storage-manager.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionApiService {
+export class TransactionApiService extends BaseApiService {
 
   constructor(
     public http: HttpClient,
-    public webService: WebService
-    ) { }
+    public localStorageManager: LocalStorageManagerService
+    ) {
+      super(http, localStorageManager);
+     }
 
   public deleteTransaction(id: string): Observable<ApiTransactionResponse> {
-    return this.webService.superDelete<ApiTransactionResponse>(ApiEndpoints.getDeletionPath(id));
+    return this.delete<ApiTransactionResponse>(ApiEndpoints.getDeletionPath(id));
   }
 
   public getTransactions(
@@ -27,7 +30,7 @@ export class TransactionApiService {
     pageSize = 3,
     sortColumn = 'id',
     sortOrder = 'ASC'): Observable<Transaction[]> {
-    return this.webService.superGet<Transaction[]>(ApiEndpoints.getTransactionsPageablePath(
+    return this.get<Transaction[]>(ApiEndpoints.getTransactionsPageableUrl(
       pageNumber,
       pageSize,
       sortColumn,
@@ -35,10 +38,10 @@ export class TransactionApiService {
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.webService.superPut<Transaction>(ApiEndpoints.TRANSACTIONS, updateObj);
+    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS, updateObj);
   }
 
   public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
-    return this.webService.superPost<Transaction>(ApiEndpoints.getConfirmationPath(externalId, provider), {});
+    return this.post<Transaction>(ApiEndpoints.getConfirmationPath(externalId, provider), {});
   }
 }

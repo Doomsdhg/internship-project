@@ -12,32 +12,27 @@ import { AuthService } from 'src/app/services/web-services/auth.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { HttpStatusCode } from '../../enums/HttpStatusCode';
-import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import moment from 'moment';
+import { Constants } from 'src/app/constants/general.constants';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
-    private localStorageManager: LocalStorageManagerService,
+    private localStorageManagerService: LocalStorageManagerService,
     private spinnerService: SpinnerService
     ) { }
 
   public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     this.spinnerService.displaySpinner();
-    const isNotAuthenticated = !this.localStorageManager.getAuthenticationInfo()?.authenticated;
+    const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
     const isLogOutRequest = request.body && request.body.username;
-    if (isNotAuthenticated || isLogOutRequest) {
-      this.handleDefaultCase(request, next);
+    if (!isAuthenticated || isLogOutRequest) {
+      return this.handleDefaultCase(request, next);
     }
-    if (moment() > moment(Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration))) {
+    if (isAuthenticated && moment() > moment(Number(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration))) {
       this.authService.refreshToken();
-    }
-    if (request.url !== ApiEndpoints.LOGIN) {
-      request = request.clone({
-        headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
-      });
     }
     return next.handle(request)
     .pipe(
@@ -63,7 +58,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handleError(response: HttpErrorResponse): Observable<Error> {
-    const errorText = 'status: ' + response.status + ', error: ' + response.message;
+    const errorText = Constants.SNACKBAR.MESSAGES.GET_ERROR_RESPONSE_MESSAGE(response.status, response.message);
     return throwError(() => new Error(errorText));
   }
 }

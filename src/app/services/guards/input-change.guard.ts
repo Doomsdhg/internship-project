@@ -11,11 +11,11 @@ import { TransactionsTablePageComponent } from 'src/app/modules/pages/transactio
 })
 export class InputChangeGuard implements CanDeactivate<ComponentWithInput> {
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private matDialog: MatDialog) { }
 
   public canDeactivate(component: TransactionsTablePageComponent): Observable<boolean> | boolean {
     if (component.inputChanged) {
-      return this.dialog.open(GuardDialogContentComponent).afterClosed();
+      return this.matDialog.open(GuardDialogContentComponent).afterClosed();
     }
     return true;
   }

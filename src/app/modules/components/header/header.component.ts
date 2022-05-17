@@ -22,12 +22,12 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private auth: AuthService,
-    private localStorageManager: LocalStorageManagerService
+    private authService: AuthService,
+    private localStorageManagerService: LocalStorageManagerService
   ) {}
 
   public get authenticated(): boolean {
-    return Boolean(this.localStorageManager.getAuthenticationInfo()?.authenticated);
+    return Boolean(this.localStorageManagerService.getAuthenticationInfo()?.authenticated);
   }
 
   public ngOnInit(): void {
@@ -51,22 +51,22 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout(): void {
-    this.auth.logout();
+    this.authService.logout();
   }
 
   private enableDefaultTheme(): void {
-    const theme = new Theme(localStorage.getItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.light.name);
+    const theme = new Theme(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.light.name);
     this.currentTheme = theme;
     document.getElementsByTagName('body')[0].classList.add(theme.name);
-    this.changeButtonsClasses(theme);
+    this.toggleButtonsDisplay(theme);
   }
 
   private changeTheme(selectedTheme: Theme): void {
     this.changeThemeClass(selectedTheme);
-    this.changeButtonsClasses(selectedTheme);
-    this.changeButtonsClasses(this.currentTheme);
+    this.toggleButtonsDisplay(selectedTheme);
+    this.toggleButtonsDisplay(this.currentTheme);
     this.currentTheme = selectedTheme;
-    localStorage.setItem(Constants.LOCAL_STORAGE_ACCESSORS.THEME, this.currentTheme.name);
+    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME, this.currentTheme.name);
   }
 
   private setCurrentRoute(): void {
@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  private changeButtonsClasses(theme: Theme): void {
+  private toggleButtonsDisplay(theme: Theme): void {
     const buttonsArray = document.getElementsByClassName(`${theme.name}-button`);
     Array.prototype.forEach.call(buttonsArray, function(button: HTMLElement): void {
       button.classList.toggle('display-none');

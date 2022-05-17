@@ -1,6 +1,7 @@
 import { Column } from './transactions-table.interfaces';
 
 export class Columns {
+
     static readonly ID_EXTERNAL_ID = 'externalId';
     static readonly ID_PROVIDER = 'provider';
     static readonly ID_AMOUNT = 'amount';

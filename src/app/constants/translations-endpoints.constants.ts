@@ -1,4 +1,5 @@
 export class TranslationsEndpoints {
+
     static readonly SNACKBAR_TRANSACTION_UPDATED = 'snackbar.transactionUpdated';
     static readonly SNACKBAR_INPUT_ISSUES = 'snackbar.inputIssues';
     static readonly SNACKBAR_SERVER_ERROR = 'snackbar.serverError';
@@ -8,6 +9,7 @@ export class TranslationsEndpoints {
     static readonly SNACKBAR_NUMBERS_LIMITED = 'snackbar.numbersLimited';
     static readonly SNACKBAR_UNIQUE = 'snackbar.unique';
     static readonly SNACKBAR_TRANSACTION_COMPLETED = 'snackbar.transactionCompleted';
+
     static readonly DISPLAYED_COLUMNS = {
         DISPLAYED_COLUMNS_EXTERNAL_ID: 'displayedColumns.externalId',
         DISPLAYED_COLUMNS_USER: 'displayedColumns.user',
