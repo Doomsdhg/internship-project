@@ -5,7 +5,7 @@
     <ng-container matColumnDef="externalId">
       <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('externalId')">
         <span class="column-header">
-          {{ 'displayedColumns.externalId' | translate }}{{sorted !== undefined && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
+          {{ 'displayedColumns.externalId' | translate }}{{sorted && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">

@@ -21,8 +21,8 @@ export class Pageable {
 
   constructor(
     q: QueryPredicates = new QueryPredicates(),
-    page = Constants.PAGEABLE_DEFAULTS.pageNumber,
-    size = Constants.PAGEABLE_DEFAULTS.defaultPageSize,
+    page = Constants.PAGEABLE_DEFAULTS.PAGE_NUMBER,
+    size = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE,
     sort: Sortable) {
     this.q = q;
     this.page = page;

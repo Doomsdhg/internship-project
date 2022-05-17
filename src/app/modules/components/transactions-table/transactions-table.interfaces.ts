@@ -24,6 +24,7 @@ export interface Sorted {
     amount?: boolean;
     commissionAmount?: boolean;
     user?: boolean;
+    default?: boolean;
 }
 
 export interface Translations {

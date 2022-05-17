@@ -4,10 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import {
   TransactionUpdateData,
   Transaction,
-  ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
+  ApiTransactionResponse
+} from 'src/app/modules/interfaces/transactions.interface';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { BaseApiService } from './base-api.service';
-import { LocalStorageManagerService } from '../local-storage-manager.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,26 +15,17 @@ import { LocalStorageManagerService } from '../local-storage-manager.service';
 export class TransactionApiService extends BaseApiService {
 
   constructor(
-    public http: HttpClient,
-    public localStorageManager: LocalStorageManagerService
-    ) {
-      super(http, localStorageManager);
-     }
-
-  public deleteTransaction(id: string): Observable<ApiTransactionResponse> {
-    return this.delete<ApiTransactionResponse>(ApiEndpoints.getDeletionPath(id));
+    public http: HttpClient
+  ) {
+    super(http);
   }
 
-  public getTransactions(
-    pageNumber = 1,
-    pageSize = 3,
-    sortColumn = 'id',
-    sortOrder = 'ASC'): Observable<Transaction[]> {
-    return this.get<Transaction[]>(ApiEndpoints.getTransactionsPageableUrl(
-      pageNumber,
-      pageSize,
-      sortColumn,
-      sortOrder));
+  public deleteTransaction(id: string): Observable<ApiTransactionResponse> {
+    return this.delete<ApiTransactionResponse>(ApiEndpoints.getDeletionUrl(id));
+  }
+
+  public getTransactions(pageNumber = 1, pageSize = 3, sortColumn = 'id', sortOrder = 'ASC'): Observable<Transaction[]> {
+    return this.get<Transaction[]>(ApiEndpoints.getTransactionsPageableUrl(pageNumber, pageSize, sortColumn, sortOrder));
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
@@ -42,6 +33,6 @@ export class TransactionApiService extends BaseApiService {
   }
 
   public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
-    return this.post<Transaction>(ApiEndpoints.getConfirmationPath(externalId, provider), {});
+    return this.post<Transaction>(ApiEndpoints.getConfirmationUrl(externalId, provider), {});
   }
 }

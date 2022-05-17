@@ -23,9 +23,8 @@ export class AuthService {
 
   public login(username: string, password: string): void {
     this.sendLoginRequest(username, password).subscribe({
-      next: (success: AuthenticationResponse) => {
-        this.localStorageManagerService.setLoginValues(success);
-        this.router.navigate([AppRoutes.TRANSACTIONS]);
+      next: (response: AuthenticationResponse) => {
+        this.executeLoginProcedures(response);
       },
       error: (error: AuthenticationResponseError) => {
         this.notifyService.showMessage(error.error.message, Constants.SNACKBAR.ERROR_TYPE);
@@ -61,6 +60,11 @@ export class AuthService {
   public executeLogoutProcedures(): void {
     this.localStorageManagerService.deleteLoginValues();
     this.router.navigate([AppRoutes.AUTHENTICATION]);
+  }
+
+  private executeLoginProcedures(response: AuthenticationResponse): void {
+    this.localStorageManagerService.setLoginValues(response);
+    this.router.navigate([AppRoutes.TRANSACTIONS]);
   }
 
   private sendRefreshTokenRequest(): Observable<AuthenticationResponse> {

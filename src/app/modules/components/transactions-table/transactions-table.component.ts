@@ -30,7 +30,7 @@ export class TransactionsTableComponent implements OnInit {
 
   public displayedColumns!: string[];
 
-  public sorted: Sorted | undefined;
+  public sorted!: Sorted;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -42,6 +42,7 @@ export class TransactionsTableComponent implements OnInit {
     this.displayedColumns = Columns.DISPLAYED_COLUMNS;
     this.formsToggled = false;
     this.loadData();
+    this.resetSorting();
   }
 
   public get inputChanged(): boolean {
@@ -64,7 +65,7 @@ export class TransactionsTableComponent implements OnInit {
     this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
       next: () => {
         this.refreshTransactions();
-        this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
         this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
@@ -113,7 +114,7 @@ export class TransactionsTableComponent implements OnInit {
       next: () => {
         this.toggleForms(e, row);
         this.refreshTransactions();
-        this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
+        this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
       },
       error: (error: TransactionCrudResponseError) => {
         this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
@@ -122,44 +123,36 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   public sortify = (columnName: string): void => {
-    const isDefaultSorting = this.sorted === undefined;
-    this.sorted = isDefaultSorting ? {} : this.sorted;
-    if (this.sorted) {
-      const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
-      if (sortedBothOrders) {
-        this.resetSorting();
-      } else {
-        this.toggleSortingIcon(columnName);
-        this.setSorting(columnName);
-      }
-      this.dataSource.loadTransactions();
+    const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
+    if (sortedBothOrders) {
+      this.resetSorting();
+    } else {
+      this.toggleSortingIcon(columnName);
+      this.setSorting(columnName);
     }
+    this.dataSource.loadTransactions();
   }
 
   private resetSorting(): void {
-    this.sorted = undefined;
+    this.sorted = {default: true};
     this.dataSource.sortColumn = Columns.SORTING.DEFAULT_COLUMN;
     this.dataSource.sortOrder = Columns.SORTING.DEFAULT_ORDER;
   }
 
   private setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
-    if (this.sorted) {
-      const isColumnSorted = Boolean(this.sorted[columnName as keyof Sorted]);
-      this.dataSource.sortOrder = isColumnSorted ? Columns.SORTING.DESC : Columns.SORTING.ASC;
-    }
+    const isColumnSorted = Boolean(this.sorted[columnName as keyof Sorted]);
+    this.dataSource.sortOrder = isColumnSorted ? Columns.SORTING.DESC : Columns.SORTING.ASC;
   }
 
   private toggleSortingIcon(columnName: string): void {
-    if (this.sorted) {
-      this.sorted[columnName as keyof Sorted] = !this.sorted[columnName as keyof Sorted];
-    }
+    this.sorted[columnName as keyof Sorted] = !this.sorted[columnName as keyof Sorted];
   }
 
   private loadData(): void {
     this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notifyService);
     this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE)) ||
-    Constants.PAGEABLE_DEFAULTS.defaultPageSize;
+    Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
     this.dataSource.loadTransactions();
   }
 

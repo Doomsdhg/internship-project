@@ -4,8 +4,7 @@ import { Constants } from 'src/app/constants/general.constants';
 
 export class GridState {
   query: string | string[] = [];
-  resultsSize = Constants.PAGEABLE_DEFAULTS.resultsSize;
   pageEvent: PageEvent = new PageEvent();
-  sortEvent: Sort = Constants.PAGEABLE_DEFAULTS.sortEvent as Sort;
-  pageSizeOptions = Constants.PAGEABLE_DEFAULTS.pageSizeOptions;
+  sortEvent: Sort = Constants.PAGEABLE_DEFAULTS.SORT_EVENT as Sort;
+  pageSizeOptions = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE_OPTIONS;
 }

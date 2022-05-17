@@ -14,6 +14,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 import { HttpStatusCode } from '../../enums/HttpStatusCode';
 import moment from 'moment';
 import { Constants } from 'src/app/constants/general.constants';
+import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -28,8 +29,14 @@ export class AuthInterceptor implements HttpInterceptor {
     this.spinnerService.displaySpinner();
     const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
     const isLogOutRequest = request.body && request.body.username;
-    if (!isAuthenticated || isLogOutRequest) {
+    const isRefreshRequest = request.body && request.body.refreshToken;
+    if (!isAuthenticated || isLogOutRequest || isRefreshRequest) {
       return this.handleDefaultCase(request, next);
+    }
+    if (request.url !== ApiEndpoints.LOGIN) {
+      request = request.clone({
+        headers: request.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
+      });
     }
     if (isAuthenticated && moment() > moment(Number(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration))) {
       this.authService.refreshToken();
@@ -58,7 +65,7 @@ export class AuthInterceptor implements HttpInterceptor {
   }
 
   private handleError(response: HttpErrorResponse): Observable<Error> {
-    const errorText = Constants.SNACKBAR.MESSAGES.GET_ERROR_RESPONSE_MESSAGE(response.status, response.message);
+    const errorText = Constants.SNACKBAR.MESSAGES.getErrorResponseMessage(response.status, response.message);
     return throwError(() => new Error(errorText));
   }
 }

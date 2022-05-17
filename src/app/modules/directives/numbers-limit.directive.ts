@@ -29,9 +29,9 @@ export class NumericLengthDirective {
     const maxLength: number = symbolsBeforeDecPointAllowed + symbolsAfterDecPointAllowed;
     if ((+numeric < -max || +numeric > +max) || (+numeric !== +element.value && element.value.length > maxLength)) {
       element.value = this.previousValue;
-      this.translateService.get(TranslationsEndpoints.SNACKBAR_NUMBERS_LIMITED)
+      this.translateService.get(TranslationsEndpoints.SNACKBAR.NUMBERS_LIMITED)
       .subscribe((msg: NumbersLimitMessage) => {
-        this.notifyService.showMessage(Constants.SNACKBAR.MESSAGES.GET_NUMBERS_LIMIT_MESSAGE(
+        this.notifyService.showMessage(Constants.SNACKBAR.MESSAGES.getNumbersLimitMessage(
           msg,
           symbolsBeforeDecPointAllowed,
           symbolsAfterDecPointAllowed),

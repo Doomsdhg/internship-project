@@ -23,9 +23,9 @@ export class TransactionsDataSource extends
 
   public currentPageNumber = 0;
 
-  public pageSizeOptions = Constants.PAGEABLE_DEFAULTS.pageSizeOptions;
+  public pageSizeOptions = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE_OPTIONS;
 
-  public selectedPageSize = Constants.PAGEABLE_DEFAULTS.defaultPageSize;
+  public selectedPageSize = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
 
   public sortColumn!: string;
 

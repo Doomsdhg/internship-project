@@ -14,7 +14,7 @@ export class NumbersOnlyDirective {
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     if (isNaN(+element.value)) {
       element.value = element.value.slice(0, -1);
-      this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_NUMBERS_ONLY_ERROR, Constants.SNACKBAR.ERROR_TYPE);
+      this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.NUMBERS_ONLY_ERROR, Constants.SNACKBAR.ERROR_TYPE);
     }
   }
 }

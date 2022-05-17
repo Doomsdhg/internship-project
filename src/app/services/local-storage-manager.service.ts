@@ -19,7 +19,7 @@ export class LocalStorageManagerService {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN_CREATION_DATE, String((decodedToken.iat - 10800) * 1000));
   }
 
-  public setPageSize(pageSize: string = String(Constants.PAGEABLE_DEFAULTS.defaultPageSize)): void {
+  public setPageSize(pageSize: string = String(Constants.PAGEABLE_DEFAULTS.PAGE_SIZE)): void {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE, pageSize);
   }
 

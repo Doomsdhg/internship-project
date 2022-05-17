@@ -18,11 +18,12 @@ export class Constants {
     };
 
     static readonly PAGEABLE_DEFAULTS = {
-        pageNumber: 0,
-        defaultPageSize: 10,
-        pageSizeOptions: [10, 20, 50, 100],
-        resultsSize: 0,
-        sortEvent: { active: '', direction: 'asc' },
+        PAGE_NUMBER: 0,
+        PAGE_SIZE: 10,
+        PAGE_SIZE_OPTIONS: [10, 20, 50, 100],
+        SORT_EVENT: {
+            active: '',
+            direction: 'asc' },
     };
 
     static readonly SNACKBAR = {
@@ -31,24 +32,22 @@ export class Constants {
         SUCCESS_TYPE: 'success',
         CLASSNAME_POSTFIX: '-snackbar',
         MESSAGES: {
-            GET_NUMBERS_LIMIT_MESSAGE: (
+            getNumbersLimitMessage: (
                 translatedMessage: NumbersLimitMessage,
                 digitsBeforeDecPoint: number,
-                digitsAfterDecPoint: number) => {
-                return translatedMessage.start +
+                digitsAfterDecPoint: number) =>
+                translatedMessage.start +
                 digitsBeforeDecPoint +
                 ' ' +
                 translatedMessage.middle +
                 ' ' +
                 digitsAfterDecPoint +
                 ' ' +
-                translatedMessage.end;
-            },
-            GET_ERROR_RESPONSE_MESSAGE: (
+                translatedMessage.end
+            ,
+            getErrorResponseMessage: (
                 status: number,
-                message: string) => {
-                    return 'status: ' + status + ', error: ' + message;
-            }
+                message: string) =>  'status: ' + status + ', error: ' + message
         }
     };
 }
