@@ -4,10 +4,12 @@ import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { NotifyService } from '../../services/notify.service';
 import { El, NumbersLimitMessage } from './directives.interface';
+
 // This directive limits the size of number you can type in input.
 // It receives an array containing 2 numbers:
 // first is a maximal allowed number of numeric symbols before decimal point
 // second is a maximal allowed number of numeric symbols after decimal point.
+
 @Directive({
   selector: '[intrNumericLength]'
 })

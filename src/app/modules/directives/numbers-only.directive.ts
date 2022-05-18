@@ -3,7 +3,9 @@ import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { NotifyService } from '../../services/notify.service';
 import { El } from './directives.interface';
+
 // This directive allows to type only numeric symbols in input.
+
 @Directive({
   selector: '[intrNumbersOnly]'
 })
