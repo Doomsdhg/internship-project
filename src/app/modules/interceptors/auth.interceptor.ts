@@ -1,75 +1,75 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
-  HttpInterceptor,
-  HttpErrorResponse,
-  HttpResponse,
-  HttpEvent,
+  HttpErrorResponse, HttpEvent, HttpHandler,
+  HttpInterceptor, HttpRequest, HttpResponse
 } from '@angular/common/http';
-import { Observable, throwError, map, finalize } from 'rxjs';
-import { AuthService } from 'src/app/services/web-services/auth.service';
-import { AuthenticationResponse } from '../interfaces/authentication.interface';
+import { Injectable } from '@angular/core';
+import moment from 'moment';
+import { finalize, map, Observable, throwError } from 'rxjs';
+import { Constants } from 'src/app/constants/constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
-import { environment } from 'src/environments/environment';
-import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
-import { Router } from '@angular/router';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { SpinnerService } from 'src/app/services/spinner.service';
+import { AuthService } from 'src/app/services/web-services/auth.service';
 import { HttpStatusCode } from '../../enums/HttpStatusCode';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   constructor(
-    public web: AuthService,
-    public localStorageManager: LocalStorageManagerService,
-    public router: Router,
-    public spinnerService: SpinnerService
-    ) { }
+    private authService: AuthService,
+    private localStorageManagerService: LocalStorageManagerService,
+    private spinnerService: SpinnerService
+  ) { }
 
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
+  private currentRequest!: HttpRequest<any>;
+
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
     this.spinnerService.displaySpinner();
+    this.currentRequest = request;
+    const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
     const isLogOutRequest = request.body && request.body.username;
-    if (isLogOutRequest) {
-      return next.handle(request)
-      .pipe(
-        finalize(() => this.spinnerService.hideSpinner())
-      );
+    const isRefreshRequest = request.body && request.body.refreshToken;
+    request = this.requestWithAuthHeader;
+    if (!isAuthenticated || isLogOutRequest || isRefreshRequest) {
+      return this.handleDefaultCase(request, next);
     }
-    if (Date.now() > Number(this.localStorageManager.getAuthenticationInfo()?.tokenExpiration)) {
-      this.web.refreshToken().subscribe((success: AuthenticationResponse) => {
-        this.localStorageManager.refreshToken(success);
-      });
-    }
-    if (request.url !== `${environment.serverUrl}${ApiEndpoints.LOGIN}`) {
-      request = request.clone({
-        headers: request.headers.append('Authorization', `Bearer ${this.localStorageManager.getAuthenticationInfo()?.token}`)
-      });
+    if (isAuthenticated && moment() > moment(Number(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration))) {
+      this.authService.refreshToken();
     }
     return next.handle(request)
-    .pipe(
-      map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> | void => {
-        if (response instanceof HttpErrorResponse) {
-          if (response.status === HttpStatusCode.UNAUTHORIZED) {
-            this.logout();
+      .pipe(
+        map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> | void => {
+          if (response instanceof HttpErrorResponse) {
+            if (response.status === HttpStatusCode.UNAUTHORIZED) {
+              this.authService.executeLogoutProcedures();
+            }
+            return this.handleError(response);
+          } else if (response instanceof HttpResponse && response.status === HttpStatusCode.OK) {
+            return response;
           }
-          return this.handleError(response);
-        } else if (response instanceof HttpResponse && response.status === HttpStatusCode.OK) {
-          return response;
-        }
-      }),
-      finalize(() => this.spinnerService.hideSpinner())
-    );
+        }),
+        finalize(() => this.executeFinalProcedures())
+      );
   }
 
-  private logout(): void {
-    this.localStorageManager.deleteLoginValues();
-    this.router.navigate([AppRoutes.AUTHENTICATION]);
+  private get requestWithAuthHeader(): HttpRequest<any> {
+    return this.currentRequest.clone({
+      headers: this.currentRequest.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
+    });
+  }
+
+  private handleDefaultCase(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<void>> {
+    return next.handle(request)
+      .pipe(
+        finalize(() => this.executeFinalProcedures())
+      );
+  }
+
+  private executeFinalProcedures(): void {
+    this.spinnerService.hideSpinner();
   }
 
   private handleError(response: HttpErrorResponse): Observable<Error> {
-    const errorText = 'status: ' + response.status + ', error: ' + response.message;
+    const errorText = Constants.SNACKBAR.MESSAGES.getErrorResponseMessage(response.status, response.message);
     return throwError(() => new Error(errorText));
   }
 }

@@ -23,8 +23,6 @@ export interface TransactionUpdateData {
   commissionAmount: Amount;
   user: string;
   additionalData?: string;
-  timestamp: number;
-  providerTimestamp: number;
 }
 
 export interface ApiTransactionResponse extends Object {

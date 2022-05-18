@@ -1,68 +1,49 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Transaction, TransactionCrudResponseError } from '../modules/interfaces/transactions.interface';
-import { TransactionApiService } from './web-services/transaction-api.service';
-import { NotifyService } from './notify.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { Snackbar } from '../constants/snackbar.constants';
-import { HttpResponse } from '@angular/common/http';
-import { PageableDefaults } from '../constants/pageable.constants';
-import { Page } from '../modules/types/Page.type';
-import { Router } from '@angular/router';
-import { AppRoutes } from '../constants/app-routes.constants';
-import { LocalStorageManagerService } from './local-storage-manager.service';
+import { BehaviorSubject } from 'rxjs';
+import { Constants } from '../constants/constants';
+import { Transaction, TransactionCrudResponseError } from '../modules/interfaces/transactions.interface';
+import { NotifyService } from './notify.service';
+import { TransactionApiService } from './web-services/transaction-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class TransactionsDataSource extends
   MatTableDataSource<Transaction> {
 
+  emptyTransaction!: Transaction;
+
   constructor(
-    public transactionApiService: TransactionApiService,
-    private notify: NotifyService,
-    private router: Router,
-    private localStorageManager: LocalStorageManagerService) {
+    private transactionApiService: TransactionApiService,
+    private notifyService: NotifyService) {
     super();
   }
 
-  public transactionsSubject = new BehaviorSubject<HttpResponse<Page<Transaction>>>(new HttpResponse());
-
-  public lastPage!: number;
-
   public currentPageNumber = 0;
 
-  public pageSizeOptions = PageableDefaults.pageSizeOptions;
+  public pageSizeOptions = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE_OPTIONS;
 
-  public selectedPageSize = PageableDefaults.defaultPageSize;
+  public selectedPageSize = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
 
-  public sortColumn!: string;
+  public sortColumn: string = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.active;
 
-  public sortOrder!: string;
+  public sortOrder: 'asc' | 'desc' | '' = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.direction;
 
-  public query!: string | string[];
+  private transactionsSubject = new BehaviorSubject<Transaction[]>([this.emptyTransaction]);
 
-  public totalTransactions!: number;
-
-  public displayedTransactions!: string;
-
-  loadTransactions(pageNumber = 0): void {
+  public loadTransactions(pageNumber = this.currentPageNumber): void {
     this.currentPageNumber = pageNumber;
-    this.transactionApiService.getTransactions(this.query, this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
+    this.transactionApiService.getTransactions(this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({
-        next: (transactions: HttpResponse<Page<Transaction>>) => {
+        next: (transactions: Transaction[]) => {
           this.transactionsSubject.next(transactions);
-          this.transactionsSubject.asObservable().subscribe((success: HttpResponse<Page<Transaction>>) => {
-            this.data = success.body as unknown as Transaction[];
+          this.transactionsSubject.asObservable().subscribe((success: Transaction[]) => {
+            this.data = success;
           });
         },
         error: (error: TransactionCrudResponseError) => {
-          this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
-          if (error.status === 401) {
-            this.localStorageManager.deleteLoginValues();
-            this.router.navigate([AppRoutes.AUTHENTICATION]);
-          }
+          this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
         }
       });
   }

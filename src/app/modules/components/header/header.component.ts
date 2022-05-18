@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
-import { Themes } from 'src/app/constants/themes.constants';
-import { AuthService } from 'src/app/services/web-services/auth.service';
-import { environment } from 'src/environments/environment.prod';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
+import { Constants } from 'src/app/constants/constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
+import { AuthService } from 'src/app/services/web-services/auth.service';
+import { HeaderConstants } from './header.constants';
+import { Theme } from './Theme.model';
 
 @Component({
   selector: 'intr-header',
@@ -17,62 +16,73 @@ export class HeaderComponent implements OnInit {
 
   public currentRoute!: string;
 
-  public environment = environment;
-
-  public theme!: string;
+  public currentTheme!: Theme;
 
   constructor(
     private router: Router,
     private cdr: ChangeDetectorRef,
-    private auth: AuthService,
-    private localStorageManager: LocalStorageManagerService
-  ) {
-    router.events.subscribe(() => {
+    private authService: AuthService,
+    private localStorageManagerService: LocalStorageManagerService
+  ) { }
+
+  public get isAuthenticated(): boolean {
+    return Boolean(this.localStorageManagerService.getAuthenticationInfo()?.authenticated);
+  }
+
+  public ngOnInit(): void {
+    this.router.events.subscribe(() => {
       this.setCurrentRoute();
     });
-  }
-
-  public get authenticated(): string | null | undefined {
-    return this.localStorageManager.getAuthenticationInfo()?.authenticated;
-  }
-
-  ngOnInit(): void {
     this.setCurrentRoute();
-    this.setTheme();
+    this.enableDefaultTheme();
   }
 
-  setTheme(): void {
-    this.theme = localStorage.getItem(LocalStorageAcessors.THEME) || Themes.LIGHT;
-    document.getElementsByTagName('body')[0].classList.add(this.theme);
+  public redirectTo(route: string): void {
+    this.router.navigate([route]);
   }
 
-  setCurrentRoute(): void {
+  public enableLightTheme(): void {
+    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.LIGHT);
+  }
+
+  public enableDarkTheme(): void {
+    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.DARK);
+  }
+
+  public logout(): void {
+    this.authService.logout();
+  }
+
+  private enableDefaultTheme(): void {
+    const theme = new Theme(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.LIGHT.name);
+    this.currentTheme = theme;
+    document.getElementsByTagName('body')[0].classList.add(theme.name);
+    this.toggleButtonsDisplay(theme);
+  }
+
+  private changeTheme(selectedTheme: Theme): void {
+    this.changeThemeClass(selectedTheme);
+    this.toggleButtonsDisplay(selectedTheme);
+    this.toggleButtonsDisplay(this.currentTheme);
+    this.currentTheme = selectedTheme;
+    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME, this.currentTheme.name);
+  }
+
+  private setCurrentRoute(): void {
     this.currentRoute = String(window.location.href);
     this.cdr.markForCheck();
   }
 
-  redirect(route: string): void {
-    this.router.navigate([route]);
-  }
-
-  switchTheme(): void {
-    this.replaceThemeClass();
-    this.theme = this.theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT;
-    localStorage.setItem(LocalStorageAcessors.THEME, this.theme);
-  }
-
-  replaceThemeClass(): void {
-    const currentTheme = this.theme;
-    const futureTheme = this.theme === Themes.DARK ? Themes.LIGHT : Themes.DARK;
-    const body = document.getElementsByTagName('body')[0];
-    body.classList.remove(currentTheme);
-    body.classList.add(futureTheme);
-  }
-
-  logout(): void {
-    this.auth.logout().subscribe(() => {
-      this.localStorageManager.deleteLoginValues();
-      this.redirect(AppRoutes.AUTHENTICATION);
+  private toggleButtonsDisplay(theme: Theme): void {
+    const buttonsArray = document.getElementsByClassName(`${theme.name}-button`);
+    Array.prototype.forEach.call(buttonsArray, function (button: HTMLElement): void {
+      button.classList.toggle('display-none');
     });
+  }
+
+  private changeThemeClass(selectedTheme: Theme): void {
+    const body = document.getElementsByTagName('body')[0];
+    body.classList.remove(this.currentTheme.name);
+    body.classList.add(selectedTheme.name);
   }
 }

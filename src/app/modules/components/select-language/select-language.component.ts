@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../../../environments/environment';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { Constants } from 'src/app/constants/constants';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'intr-select-language',
@@ -11,24 +10,24 @@ import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.
   styleUrls: ['./select-language.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectLanguageComponent {
+export class SelectLanguageComponent implements OnInit {
 
-  selectLanguageForm: FormControl;
+  public selectLanguageForm!: FormControl;
 
-  language!: string | null;
+  private currentLanguage!: string;
 
   constructor(
     private translateService: TranslateService,
-    public router: Router,
-    public route: ActivatedRoute
-  ) {
-    this.language = localStorage.getItem(LocalStorageAcessors.LANGUAGE) || environment.defaultLocale;
-    this.translateService.use(this.language);
-    this.selectLanguageForm = new FormControl(this.language);
+  ) { }
+
+  public ngOnInit(): void {
+    this.currentLanguage = localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE) || environment.defaultLocale;
+    this.translateService.use(this.currentLanguage);
+    this.selectLanguageForm = new FormControl(this.currentLanguage);
   }
 
-  changeLanguage(): void {
-    localStorage.setItem(LocalStorageAcessors.LANGUAGE, this.selectLanguageForm.value);
+  public changeLanguage(): void {
+    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE, this.selectLanguageForm.value);
     window.location.reload();
   }
 }

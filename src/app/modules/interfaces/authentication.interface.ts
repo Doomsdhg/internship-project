@@ -5,12 +5,22 @@ export interface AuthenticationResponse {
     type: string;
 }
 
+export interface AuthenticationData {
+    authenticated: string;
+    token: string;
+    refreshToken: string;
+    username: string;
+    tokenExpiration: string;
+    tokenCreated: string;
+}
+
 export interface LogoutResponse {
     message: string;
 }
 
 export interface AuthenticationResponseError {
     error: ErrorObject;
+    status: number;
 }
 
 interface ErrorObject {

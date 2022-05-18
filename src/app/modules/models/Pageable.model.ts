@@ -1,7 +1,7 @@
+import { Constants } from 'src/app/constants/constants';
 import { GridState } from './GridState.model';
-import { Sortable } from './Sortable.model';
 import { QueryPredicates } from './QueryPredicates.model';
-import { PageableDefaults } from 'src/app/constants/pageable.constants';
+import { Sortable } from './Sortable.model';
 
 export class Pageable {
 
@@ -21,8 +21,8 @@ export class Pageable {
 
   constructor(
     q: QueryPredicates = new QueryPredicates(),
-    page = PageableDefaults.pageNumber,
-    size = PageableDefaults.defaultPageSize,
+    page = Constants.PAGEABLE_DEFAULTS.PAGE_NUMBER,
+    size = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE,
     sort: Sortable) {
     this.q = q;
     this.page = page;

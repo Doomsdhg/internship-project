@@ -1,53 +1,42 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiEndpoints } from '../../constants/api-endpoints.constants';
-import { environment } from 'src/environments/environment';
-import { Pageable } from 'src/app/modules/models/Pageable.model';
-import { Sortable } from 'src/app/modules/models/Sortable.model';
-import { Page } from 'src/app/modules/types/Page.type';
-import { QueryPredicates } from 'src/app/modules/models/QueryPredicates.model';
+import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
+import { Constants } from 'src/app/constants/constants';
 import {
-  HttpClient,
-  HttpResponse } from '@angular/common/http';
-import {
-  TransactionUpdateData,
-  Transaction,
-  ApiTransactionResponse } from 'src/app/modules/interfaces/transactions.interface';
+  ApiTransactionResponse, Transaction, TransactionUpdateData
+} from 'src/app/modules/interfaces/transactions.interface';
+import { BaseApiService } from './base-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionApiService {
+export class TransactionApiService extends BaseApiService {
 
   constructor(
     public http: HttpClient
-    ) { }
-
-  deleteTransaction(id: string | undefined): Observable<ApiTransactionResponse> {
-    return this.http.delete(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}${id}`);
+  ) {
+    super(http);
   }
 
-  getTransactions(
-    query: string[] | string = '',
-    pageNumber = 1,
-    pageSize = 3,
-    sortColumn = 'id',
-    sortOrder = 'ASC'): Observable<HttpResponse<Page<Transaction>>> {
-    return this.http.get(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS
-    }${new Pageable(new QueryPredicates(query), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
-      , { observe: 'response' }) as Observable<HttpResponse<Page<Transaction>>>;
+  public deleteTransaction(id: string): Observable<ApiTransactionResponse> {
+    return this.delete<ApiTransactionResponse>(ApiEndpoints.TRANSACTIONS.getDeletionUrl(id));
   }
 
-  patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.http.put(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}`, updateObj) as Observable<Transaction>;
+  public getTransactions(
+    pageNumber = Constants.PAGEABLE_DEFAULTS.PAGE_NUMBER,
+    pageSize = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE,
+    sortColumn = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.active,
+    sortOrder = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.direction
+  ): Observable<Transaction[]> {
+    return this.get<Transaction[]>(ApiEndpoints.TRANSACTIONS.getPageableGettingUrl(pageNumber, pageSize, sortColumn, sortOrder));
   }
 
-  uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
-    return this.http.post(`${environment.serverUrl}${ApiEndpoints.TRANSACTIONS}`, transactionData) as Observable<Transaction>;
+  public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
+    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_GETTING_URL, updateObj);
   }
 
-  confirmTransaction(externalId: string | undefined, provider: string | undefined): Observable<Transaction[]> {
-    return this.http.post(`${environment.serverUrl}
-    ${ApiEndpoints.TRANSACTIONS}?external_id=${externalId}&provider=${provider}`, {}) as Observable<Transaction[]>;
+  public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
+    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider), {});
   }
 }

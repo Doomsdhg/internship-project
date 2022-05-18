@@ -1,12 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Snackbar } from 'src/app/constants/snackbar.constants';
-import { NotifyService } from 'src/app/services/notify.service';
 import { AuthService } from 'src/app/services/web-services/auth.service';
-import { AuthenticationResponse, AuthenticationResponseError } from '../../interfaces/authentication.interface';
-import { AppRoutes } from 'src/app/constants/app-routes.constants';
-import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Component({
   selector: 'intr-auth-form',
@@ -14,29 +8,28 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
   styleUrls: ['./auth-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthFormComponent {
+export class AuthFormComponent implements OnInit {
 
-  @Input() authForms: FormGroup = new FormGroup({
-    login: new FormControl(),
-    password: new FormControl(),
-  });
+  public authForms!: FormGroup;
 
   constructor(
-    private auth: AuthService,
-    private notify: NotifyService,
-    private router: Router,
-    private localStorageManager: LocalStorageManagerService
+    private authService: AuthService
   ) { }
 
-  login(): void {
-    this.auth.login(this.authForms.controls['login'].value, this.authForms.controls['password'].value).subscribe({
-      next: (success: AuthenticationResponse) => {
-        this.localStorageManager.setLoginValues(success);
-        this.router.navigate([AppRoutes.TRANSACTIONS]);
-      },
-      error: (error: AuthenticationResponseError) => {
-        this.notify.showMessage(error.error.message, Snackbar.ERROR_TYPE);
-      }
+  ngOnInit(): void {
+    this.buildAuthForms();
+  }
+
+  public login(): void {
+    const loginInput = this.authForms.controls['login'].value;
+    const passwordInput = this.authForms.controls['password'].value;
+    this.authService.login(loginInput, passwordInput);
+  }
+
+  private buildAuthForms(): void {
+    this.authForms = new FormGroup({
+      login: new FormControl(),
+      password: new FormControl(),
     });
   }
 }

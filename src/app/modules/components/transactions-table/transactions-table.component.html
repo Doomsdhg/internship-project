@@ -5,7 +5,7 @@
     <ng-container matColumnDef="externalId">
       <mat-header-cell class="onhover-pointer" *matHeaderCellDef (click)="sortify('externalId')">
         <span class="column-header">
-          {{ 'displayedColumns.externalId' | translate }}{{sorted !== undefined && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
+          {{ 'displayedColumns.externalId' | translate }}{{sorted && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
         </span>
       </mat-header-cell>
       <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
@@ -155,20 +155,20 @@
         <div class="flex-container-column">
           <div class="buttons-group">
             <button *ngIf="row.status === 'INITIAL'" mat-raised-button attr.data-external_id="{{row.externalId}}" attr.data-provider="{{row.provider}}"
-              [disabled]="formsToggled" (click)="confirmTransaction($event)">
+              [disabled]="formsToggled" (click)="confirmTransaction(row)">
               <mat-icon>check icon</mat-icon>
             </button>
-            <button *ngIf="row.status === 'INITIAL'" mat-raised-button [disabled]="formsToggled" (click)="toggleForms($event, row)">
+            <button *ngIf="row.status === 'INITIAL'" mat-raised-button [disabled]="formsToggled" (click)="toggleForms(row)">
               <mat-icon>edit</mat-icon>
             </button>
           </div>
           <div *ngIf="row.displayForms" class="buttons-group">
-            <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}" attr.data-external_id="{{row.externalId}}" (click)="updateTransaction($event, row)">
+            <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}" attr.data-external_id="{{row.externalId}}" (click)="updateTransaction(row)">
               {{'buttons.saveChanges' | translate}}
             </button>
           </div>
           <div *ngIf="row.displayForms" class="buttons-group">
-            <button mat-raised-button attr.data-id="{{row.id}}" (click)="toggleForms($event, row)">
+            <button mat-raised-button attr.data-id="{{row.id}}" (click)="toggleForms(row)">
               {{'buttons.cancelChanges' | translate}}
             </button>
           </div>
@@ -183,20 +183,18 @@
     </mat-row>
   </table>
   <div class="pagination-pannel">
-    <span>{{dataSource.displayedTransactions}} {{'of' | translate}} {{dataSource.totalTransactions}}</span>
-    <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(0)">
+    <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="loadFirstPage()">
       << </button>
-        <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber - 1)">
+        <button mat-button [disabled]="dataSource.currentPageNumber === 0 ? true : false" (click)="loadPreviousPage()">
           < </button>
             <mat-form-field appearance="fill">
               <mat-label>{{'pageSize' | translate}}</mat-label>
-              <mat-select [(value)]="dataSource.selectedPageSize" (valueChange)="setPageSize($event)">
+              <mat-select [(value)]="dataSource.selectedPageSize" (valueChange)="setNewPageSize($event)">
                 <mat-option *ngFor="let size of dataSource.pageSizeOptions" [value]="size">
                   {{size}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.currentPageNumber + 1)">></button>
-            <button mat-button [disabled]="dataSource.currentPageNumber === dataSource.lastPage ? true : false" (click)="dataSource.loadTransactions(dataSource.lastPage)">>></button>
+            <button mat-button (click)="loadNextPage()">></button>
   </div>
 </div>

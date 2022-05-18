@@ -1,7 +1,7 @@
-import { NumericLengthDirective } from './numeric-length.directive';
+import { NumericLengthDirective } from './numbers-limit.directive';
 import { TestBed } from '@angular/core/testing';
 import { NotifyService } from 'src/app/services/notify.service';
-import {  MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MissingTranslationHandler,
   TranslateCompiler,
   TranslateLoader,

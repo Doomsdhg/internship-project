@@ -1,46 +1,16 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, ViewChild } from '@angular/core';
-import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
-import { Amount, TransactionUpdateData, TransactionCrudResponseError } from 'src/app/modules/interfaces/transactions.interface';
-import { FormGroup, FormControl } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
-import { NotifyService } from '../../../services/notify.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
-import { Translations } from 'src/app/modules/interfaces/translations.interface';
-import { Snackbar } from 'src/app/constants/snackbar.constants';
+import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
-import { Columns } from 'src/app/constants/columns.constants';
-import { PageableDefaults } from '../../../constants/pageable.constants';
-import { LocalStorageAcessors } from 'src/app/constants/local-storage-accessors.constants';
-import { SortingStrings } from 'src/app/constants/sorting.constants';
+import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/modules/interfaces/transactions.interface';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
-
-export interface Column {
-  id: string;
-  value: string;
-}
-
-export interface Row {
-  displayForms: boolean;
-  provider: string;
-  user: string;
-  externalId: string;
-  status: string;
-  amount: Amount;
-  commissionAmount: Amount;
-  additionalData: string;
-  id: string;
-}
-
-interface Sorted {
-  externalId?: boolean;
-  provider?: boolean;
-  status?: boolean;
-  amount?: boolean;
-  commissionAmount?: boolean;
-  user?: boolean;
-}
+import { NotifyService } from '../../../services/notify.service';
+import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
+import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
+import { Columns, PossibleSortingDirections } from './transactions-table.constants';
+import { Row, Sorted } from './transactions-table.interfaces';
 
 @Component({
   selector: 'intr-transactions-table',
@@ -48,153 +18,115 @@ interface Sorted {
   styleUrls: ['./transactions-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class TransactionsTableComponent implements OnInit {
-
-  @Input() transactionUpdateForm!: FormGroup;
-
-  @Input() dataSource!: TransactionsDataSource;
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  formsToggled = false;
+  public dataSource!: TransactionsDataSource;
 
-  displayedColumns: string[] = [
-    Columns.ID_EXTERNAL_ID,
-    Columns.ID_PROVIDER,
-    Columns.ID_STATUS,
-    Columns.ID_AMOUNT,
-    Columns.ID_commission_AMOUNT,
-    Columns.ID_USER,
-    Columns.ID_ACTIONS];
+  public transactionUpdateForm!: FormGroup;
 
-  columnNames: Column[] = [{
-    id: Columns.ID_EXTERNAL_ID,
-    value: Columns.NAME_EXTERNAL_ID,
-  },
-  {
-    id: Columns.ID_PROVIDER,
-    value: Columns.NAME_PROVIDER,
-  },
-  {
-    id: Columns.ID_STATUS,
-    value: Columns.NAME_STATUS,
-  },
-  {
-    id: Columns.ID_AMOUNT,
-    value: Columns.NAME_AMOUNT,
-  },
-  {
-    id: Columns.ID_commission_AMOUNT,
-    value: Columns.NAME_commission_AMOUNT,
-  },
-  {
-    id: Columns.ID_USER,
-    value: Columns.NAME_USER,
-  },
-  {
-    id: Columns.ID_ACTIONS,
-    value: Columns.NAME_ACTIONS
-  }];
+  public displayedColumns!: string[];
 
-  @Input() sorted: Sorted | undefined;
+  public sorted!: Sorted;
+
+  public formsToggled = false;
 
   constructor(
-    public transactionApiService: TransactionApiService,
-    public translateService: TranslateService,
-    private notify: NotifyService,
-    private router: Router,
-    private localStorageManager: LocalStorageManagerService
+    private transactionApiService: TransactionApiService,
+    private notifyService: NotifyService,
+    private localStorageManagerService: LocalStorageManagerService
   ) { }
 
-  get getTransactionUpdateForm (): FormGroup {
-    return this.transactionUpdateForm;
-  }
-
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    this.displayedColumns = Columns.DISPLAYED_COLUMNS;
     this.loadData();
-    this.translateColumnsNames();
+    this.resetSorting();
   }
 
-  get inputChanged(): boolean {
-    return !this.transactionUpdateForm.dirty;
+  public get inputChanged(): boolean {
+    if (this.transactionUpdateForm) {
+      return this.transactionUpdateForm.dirty;
+    }
+    return false;
   }
 
-  setPageSize(pageSize: string): void {
-    this.localStorageManager.setPageSize(pageSize);
+  public setNewPageSize(pageSize: string): void {
+    this.localStorageManagerService.setPageSize(pageSize);
     this.loadData();
   }
 
-  loadData(): void {
-    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notify, this.router, this.localStorageManager);
-    this.dataSource.selectedPageSize = Number(localStorage.getItem(LocalStorageAcessors.PAGE_SIZE)) || PageableDefaults.defaultPageSize;
-    this.dataSource.loadTransactions();
-  }
-
-  translateColumnsNames(): void {
-    this.translateService.get([
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER,
-      TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS])
-      .subscribe((translations: Translations) => {
-        this.columnNames[0].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_EXTERNAL_ID];
-        this.columnNames[1].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_PROVIDER];
-        this.columnNames[2].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_STATUS];
-        this.columnNames[3].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_AMOUNT];
-        this.columnNames[4].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_commission_AMOUNT];
-        this.columnNames[5].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_USER];
-        this.columnNames[6].value = translations[TranslationsEndpoints.SNACKBAR_DISPLAYED_COLUMNS_ACTIONS];
-      });
-  }
-
-  refreshTransactions = (): void => {
-    this.dataSource.loadTransactions();
-  }
-
-  confirmTransaction = (e: Event): void => {
-    e.stopPropagation();
-    const currentTarget = e.currentTarget as HTMLButtonElement;
-    const externalId: string | undefined = currentTarget.dataset['external_id'];
-    const provider: string | undefined = currentTarget.dataset['provider'];
-    this.transactionApiService.confirmTransaction(externalId, provider).subscribe({
+  public confirmTransaction = (row: Row): void => {
+    this.transactionApiService.confirmTransaction(row.externalId, row.provider).subscribe({
       next: () => {
-        this.refreshTransactions();
-        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_COMPLETED, Snackbar.SUCCESS_TYPE);
+        this.handleSuccessfulConfirmation();
       },
       error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
+        this.handleError(error);
       }
     });
   }
 
-  toggleForms = (e: Event, row: Row): void => {
-    e.stopPropagation();
+  public toggleForms = (row: Row): void => {
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
-    this.transactionUpdateForm = new FormGroup({
-      user: new FormControl(row.user),
-      status: new FormControl(row.status),
-      amount: new FormControl(row.amount.amount),
-      currency: new FormControl(row.amount.currency),
-      commissionAmount: new FormControl(row.commissionAmount.amount),
-      commissionCurrency: new FormControl(row.commissionAmount.currency),
-      additionalData: new FormControl(row.additionalData)
+    this.buildTransactionUpdateForms(row);
+  }
+
+  public updateTransaction = (row: Row): void => {
+    const updateObj: TransactionUpdateData = this.createUpdateObject(row);
+    this.transactionApiService.patchTransaction(updateObj).subscribe({
+      next: () => {
+        this.handleSuccessfulUpdateResponse(row);
+      },
+      error: (error: TransactionCrudResponseError) => {
+        this.handleError(error);
+      }
     });
   }
 
-  updateTransaction = (e: Event, row: Row): void => {
-    e.stopPropagation();
-    const currentTarget = e.currentTarget as HTMLButtonElement;
-    const id: string  = currentTarget.dataset['id'] || 'no id';
-    const provider: string = currentTarget.dataset['provider'] || 'no provider';
-    const externalId: string = currentTarget.dataset['external_id'] || 'no external id';
-    const updateObj: TransactionUpdateData = {
-      id: id,
-      externalId: externalId,
+  public sortify = (columnName: string): void => {
+    const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
+    if (sortedBothOrders) {
+      this.resetSorting();
+    } else {
+      this.toggleSortingIcon(columnName);
+      this.setSorting(columnName);
+    }
+    this.dataSource.loadTransactions();
+  }
+
+  public loadNextPage = () => {
+    this.dataSource.loadTransactions(this.dataSource.currentPageNumber + 1);
+  }
+
+  public loadPreviousPage = () => {
+    this.dataSource.loadTransactions(this.dataSource.currentPageNumber - 1);
+  }
+
+  public loadFirstPage = () => {
+    this.dataSource.loadTransactions(0);
+  }
+
+  private handleSuccessfulConfirmation(): void {
+    this.refreshTransactions();
+    this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
+  }
+
+  private handleError(error: TransactionCrudResponseError): void {
+    this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
+  }
+
+  private handleSuccessfulUpdateResponse(row: Row): void {
+    this.toggleForms(row);
+    this.refreshTransactions();
+    this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
+  }
+
+  private createUpdateObject(row: Row): TransactionUpdateData {
+    return {
+      id: row.id,
+      externalId: row.externalId,
       user: this.transactionUpdateForm.value.user,
       status: this.transactionUpdateForm.value.status,
       amount: {
@@ -205,55 +137,46 @@ export class TransactionsTableComponent implements OnInit {
         amount: this.transactionUpdateForm.value.commissionAmount,
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
-      provider: provider,
-      timestamp: Date.now() / 1000,
-      providerTimestamp: Date.now() / 1000,
+      provider: row.provider,
       additionalData: this.transactionUpdateForm.value.additionalData
     };
-    this.transactionApiService.patchTransaction(updateObj).subscribe({
-      next: () => {
-        this.toggleForms(e, row);
-        this.refreshTransactions();
-        this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR_TRANSACTION_UPDATED, Snackbar.SUCCESS_TYPE);
-      },
-      error: (error: TransactionCrudResponseError) => {
-        this.notify.showMessage(error.error, Snackbar.ERROR_TYPE);
-      }
-    });
   }
 
-  setDefaultSorting(): void {
-    this.sorted = undefined;
-    this.dataSource.sortColumn = SortingStrings.DEFAULT_COLUMN;
-    this.dataSource.sortOrder = SortingStrings.DEFAULT_ORDER;
+  private resetSorting(): void {
+    this.sorted = { default: true };
+    this.dataSource.sortColumn = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.active;
+    this.dataSource.sortOrder = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.direction;
   }
 
-  setSorting(columnName: string): void {
+  private setSorting(columnName: string): void {
     this.dataSource.sortColumn = columnName;
-    if (this.sorted) {
-      const columnSortedAlready = Boolean(this.sorted[columnName as keyof Sorted]);
-      this.dataSource.sortOrder = columnSortedAlready === true ? SortingStrings.DESC : SortingStrings.ASC;
-    }
+    const isColumnSorted = Boolean(this.sorted[columnName as keyof Sorted]);
+    this.dataSource.sortOrder = isColumnSorted ? PossibleSortingDirections.DESC : PossibleSortingDirections.ASC;
   }
 
-  toggleSortingIcon(columnName: string): void {
-    if (this.sorted) {
-      this.sorted[columnName as keyof Sorted] = !this.sorted[columnName as keyof Sorted];
-    }
+  private toggleSortingIcon(columnName: string): void {
+    this.sorted[columnName as keyof Sorted] = !this.sorted[columnName as keyof Sorted];
   }
 
-  sortify = (columnName: string): void => {
-    const isDefaultSorting = this.sorted === undefined;
-    this.sorted = isDefaultSorting ? new Object() : this.sorted;
-    if (this.sorted) {
-      const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
-      if (sortedBothOrders) {
-        this.setDefaultSorting();
-      } else {
-        this.toggleSortingIcon(columnName);
-        this.setSorting(columnName);
-      }
-      this.dataSource.loadTransactions();
-    }
+  private loadData(): void {
+    this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notifyService);
+    this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE));
+    this.dataSource.loadTransactions();
+  }
+
+  private refreshTransactions = (): void => {
+    this.dataSource.loadTransactions();
+  }
+
+  private buildTransactionUpdateForms = (row: Row) => {
+    this.transactionUpdateForm = new FormGroup({
+      user: new FormControl(row.user),
+      status: new FormControl(row.status),
+      amount: new FormControl(row.amount.amount),
+      currency: new FormControl(row.amount.currency),
+      commissionAmount: new FormControl(row.commissionAmount.amount),
+      commissionCurrency: new FormControl(row.commissionAmount.currency),
+      additionalData: new FormControl(row.additionalData)
+    });
   }
 }

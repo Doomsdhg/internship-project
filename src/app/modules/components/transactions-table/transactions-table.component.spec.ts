@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Column, Row, TransactionsTableComponent } from './transactions-table.component';
+import { TransactionsTableComponent } from './transactions-table.component';
+import { Column, Row } from 'src/app/modules/interfaces/transactions-table.interface';
 import {
   TranslateModule,
   TranslateLoader,

@@ -12,6 +12,7 @@
         ]
     },
     "rules": {
+        "max-classes-per-file": [false],
         "component-class-suffix": true,
         "component-max-inline-declarations": true,
         "component-selector": [
@@ -51,7 +52,7 @@
         ],
         "template-cyclomatic-complexity": [
           true,
-          10
+          5
         ],
         "template-no-negated-async": true,
         "template-use-track-by-function": true,
@@ -172,7 +173,8 @@
           "check-decl",
           "check-operator",
           "check-separator",
-          "check-type"
+          "check-type",
+          "check-module"
         ]
       }
     }

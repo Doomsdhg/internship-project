@@ -16,7 +16,7 @@ export class Sortable {
 
   toString(): string {
     if (this.direction && this.direction.length) {
-      return `&sort=${this.field}&order=${this.direction}`;
+      return `&sort=${this.field}&order=${this.direction.toUpperCase()}`;
     }
     // skip sorting if no direction passed
     return '';

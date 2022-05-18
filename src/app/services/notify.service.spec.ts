@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Snackbar } from '../constants/snackbar.constants';
+import { Constants } from '../constants/constants';
 import { TransactionsTableComponent } from '../modules/components/transactions-table/transactions-table.component';
 import { NotifyService } from './notify.service';
 import {  MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -58,7 +58,7 @@ describe('NotifyService', () => {
 
   it('should call snackbar opening function', () => {
     spyOn(snackBar, 'open').and.callThrough();
-    service.showMessage('ok', Snackbar.SUCCESS_TYPE);
+    service.showMessage('ok', Constants.SNACKBAR.SUCCESS_TYPE);
     expect(snackBar.open).toHaveBeenCalled();
   });
 
@@ -72,7 +72,7 @@ describe('NotifyService', () => {
     spyOn(service, 'showMessage').and.callFake(() => {
       console.log('ok');
     });
-    service.showTranslatedMessage('ok', Snackbar.SUCCESS_TYPE);
+    service.showTranslatedMessage('ok', Constants.SNACKBAR.SUCCESS_TYPE);
     setTimeout(() => {
       expect(service.showMessage).toHaveBeenCalled();
       expect(snackBar.open).toHaveBeenCalled();

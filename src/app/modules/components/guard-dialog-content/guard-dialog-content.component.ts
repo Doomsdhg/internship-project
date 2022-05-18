@@ -1,20 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
 
 @Component({
   selector: 'intr-guard-dialog-content',
   templateUrl: './guard-dialog-content.component.html',
-  styleUrls: [],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GuardDialogContentComponent {
 
   constructor(
-    public dialogRef: MatDialogRef<TransactionsTableComponent>
+    public matDialogRef: MatDialogRef<TransactionsTableComponent>
   ) { }
 
-  close(decision: boolean): void {
-    this.dialogRef.close(decision);
+  public leaveCurrentPage(): void {
+    this.matDialogRef.close(true);
+  }
+
+  public stayOnCurrentPage(): void {
+    this.matDialogRef.close(false);
   }
 }
