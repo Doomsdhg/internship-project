@@ -1,13 +1,13 @@
 import { HttpClient, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AuthenticationResponse, AuthenticationResponseError, LogoutResponse } from 'src/app/modules/interfaces/authentication.interface';
-import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
-import { LocalStorageManagerService } from '../local-storage-manager.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
+import { Constants } from 'src/app/constants/constants';
+import { AuthenticationResponse, AuthenticationResponseError, LogoutResponse } from 'src/app/modules/interfaces/authentication.interface';
+import { LocalStorageManagerService } from '../local-storage-manager.service';
 import { NotifyService } from '../notify.service';
-import { Constants } from 'src/app/constants/general.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,7 @@ export class AuthService {
   public logout(): void {
     this.sendLogoutRequest().subscribe({
       next: () => {
-      this.executeLogoutProcedures();
+        this.executeLogoutProcedures();
       },
       error: (error: AuthenticationResponseError) => {
         this.notifyService.showMessage(error.error.message, Constants.SNACKBAR.ERROR_TYPE);
@@ -68,17 +68,19 @@ export class AuthService {
   }
 
   private sendRefreshTokenRequest(): Observable<AuthenticationResponse> {
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.REFRESH, {
-      refreshToken: this.localStorageManagerService.getAuthenticationInfo()?.refreshToken});
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL, {
+      refreshToken: this.localStorageManagerService.getAuthenticationInfo()?.refreshToken
+    });
   }
 
   private sendLogoutRequest(): Observable<LogoutResponse> {
-    return this.httpClient.post<LogoutResponse>(ApiEndpoints.LOGOUT, {
-      username: this.localStorageManagerService.getAuthenticationInfo()?.username});
+    return this.httpClient.post<LogoutResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL, {
+      username: this.localStorageManagerService.getAuthenticationInfo()?.username
+    });
   }
 
   private sendLoginRequest(username: string, password: string): Observable<AuthenticationResponse> {
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.LOGIN, {
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGINNING_URL, {
       username: username,
       password: password
     });

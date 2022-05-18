@@ -1,7 +1,7 @@
+import { Constants } from 'src/app/constants/constants';
 import { GridState } from './GridState.model';
-import { Sortable } from './Sortable.model';
 import { QueryPredicates } from './QueryPredicates.model';
-import { Constants } from 'src/app/constants/general.constants';
+import { Sortable } from './Sortable.model';
 
 export class Pageable {
 

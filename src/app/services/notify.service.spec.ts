@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Constants } from '../constants/general.constants';
+import { Constants } from '../constants/constants';
 import { TransactionsTableComponent } from '../modules/components/transactions-table/transactions-table.component';
 import { NotifyService } from './notify.service';
 import {  MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';

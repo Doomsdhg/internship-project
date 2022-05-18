@@ -1,13 +1,16 @@
-import { Theme } from './Theme.type';
+import { Theme } from './Theme.model';
+
+class AvailableThemes {
+
+  static readonly LIGHT: Theme = {
+    name: 'light-theme'
+  };
+  static readonly DARK: Theme = {
+    name: 'dark-theme'
+  };
+}
 
 export class HeaderConstants {
 
-    static readonly AVAILABLE_THEMES: {light: Theme, dark: Theme} = {
-        light: {
-          name: 'light-theme'
-        },
-        dark: {
-          name: 'dark-theme'
-        }
-      };
+  static readonly AVAILABLE_THEMES = AvailableThemes;
 }

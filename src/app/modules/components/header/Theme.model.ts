@@ -2,9 +2,9 @@ import { HeaderConstants } from './header.constants';
 
 export class Theme {
 
-    name: string;
+    name: string = HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
 
-    constructor(name: string = HeaderConstants.AVAILABLE_THEMES.light.name) {
+    constructor(name: string) {
         this.name = name;
     }
 }

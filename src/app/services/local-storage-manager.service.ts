@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
-import { DecodedToken, AuthenticationResponse } from '../modules/interfaces/authentication.interface';
-import { Constants } from '../constants/general.constants';
 import { AuthenticationData } from 'src/app/modules/interfaces/authentication.interface';
+import { Constants } from '../constants/constants';
+import { AuthenticationResponse, DecodedToken } from '../modules/interfaces/authentication.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +39,7 @@ export class LocalStorageManagerService {
       refreshToken: localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.REFRESH_TOKEN) || Constants.LOCAL_STORAGE.DEFAULT_VALUE,
       username: localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.USERNAME) || Constants.LOCAL_STORAGE.DEFAULT_VALUE,
       tokenExpiration: localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN_EXPIRATION_DATE)
-      || Constants.LOCAL_STORAGE.DEFAULT_VALUE,
+        || Constants.LOCAL_STORAGE.DEFAULT_VALUE,
       tokenCreated: localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN_CREATION_DATE) || Constants.LOCAL_STORAGE.DEFAULT_VALUE
     };
   }

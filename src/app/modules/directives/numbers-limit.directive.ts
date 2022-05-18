@@ -1,10 +1,13 @@
 import { Directive, HostListener, Input } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { Constants } from 'src/app/constants/constants';
+import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { NotifyService } from '../../services/notify.service';
 import { El, NumbersLimitMessage } from './directives.interface';
-import { Constants } from 'src/app/constants/general.constants';
-import { TranslateService } from '@ngx-translate/core';
-import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
-
+// This directive limits the size of number you can type in input.
+// It receives an array containing 2 numbers:
+// first is a maximal allowed number of numeric symbols before decimal point
+// second is a maximal allowed number of numeric symbols after decimal point.
 @Directive({
   selector: '[intrNumericLength]'
 })
@@ -24,19 +27,20 @@ export class NumericLengthDirective {
 
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     const [symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed]: number[] = this.options;
-    const numeric: string = (+element.value).toFixed(symbolsAfterDecPointAllowed);
-    const max: string = this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
+    const originalInput: string = element.value;
+    const fixedInputValue: number = +(+originalInput).toFixed(symbolsAfterDecPointAllowed);
+    const max: number = +this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
     const maxLength: number = symbolsBeforeDecPointAllowed + symbolsAfterDecPointAllowed;
-    if ((+numeric < -max || +numeric > +max) || (+numeric !== +element.value && element.value.length > maxLength)) {
+    if ((fixedInputValue < -max || fixedInputValue > max) || (fixedInputValue !== +originalInput && originalInput.length > maxLength)) {
       element.value = this.previousValue;
       this.translateService.get(TranslationsEndpoints.SNACKBAR.NUMBERS_LIMITED)
-      .subscribe((msg: NumbersLimitMessage) => {
-        this.notifyService.showMessage(Constants.SNACKBAR.MESSAGES.getNumbersLimitMessage(
-          msg,
-          symbolsBeforeDecPointAllowed,
-          symbolsAfterDecPointAllowed),
-        Constants.SNACKBAR.ERROR_TYPE);
-      });
+        .subscribe((msg: NumbersLimitMessage) => {
+          this.notifyService.showMessage(Constants.SNACKBAR.MESSAGES.getNumbersLimitMessage(
+            msg,
+            symbolsBeforeDecPointAllowed,
+            symbolsAfterDecPointAllowed),
+            Constants.SNACKBAR.ERROR_TYPE);
+        });
     }
   }
 

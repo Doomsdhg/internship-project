@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../../../environments/environment';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Constants } from 'src/app/constants/general.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { Constants } from 'src/app/constants/constants';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'intr-select-language',
@@ -19,7 +18,7 @@ export class SelectLanguageComponent implements OnInit {
 
   constructor(
     private translateService: TranslateService,
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.currentLanguage = localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE) || environment.defaultLocale;

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TransactionsTableComponent } from '../transactions-table/transactions-table.component';
 
 @Component({
   selector: 'intr-guard-dialog-content',
@@ -13,7 +13,11 @@ export class GuardDialogContentComponent {
     public matDialogRef: MatDialogRef<TransactionsTableComponent>
   ) { }
 
-  public closeDialog(decision: boolean): void {
-    this.matDialogRef.close(decision);
+  public leaveCurrentPage(): void {
+    this.matDialogRef.close(true);
+  }
+
+  public stayOnCurrentPage(): void {
+    this.matDialogRef.close(false);
   }
 }

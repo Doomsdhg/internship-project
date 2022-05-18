@@ -1,12 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import {
-  TransactionUpdateData,
-  Transaction,
-  ApiTransactionResponse
-} from 'src/app/modules/interfaces/transactions.interface';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
+import { Constants } from 'src/app/constants/constants';
+import {
+  ApiTransactionResponse, Transaction, TransactionUpdateData
+} from 'src/app/modules/interfaces/transactions.interface';
 import { BaseApiService } from './base-api.service';
 
 @Injectable({
@@ -21,18 +20,23 @@ export class TransactionApiService extends BaseApiService {
   }
 
   public deleteTransaction(id: string): Observable<ApiTransactionResponse> {
-    return this.delete<ApiTransactionResponse>(ApiEndpoints.getDeletionUrl(id));
+    return this.delete<ApiTransactionResponse>(ApiEndpoints.TRANSACTIONS.getDeletionUrl(id));
   }
 
-  public getTransactions(pageNumber = 1, pageSize = 3, sortColumn = 'id', sortOrder = 'ASC'): Observable<Transaction[]> {
-    return this.get<Transaction[]>(ApiEndpoints.getTransactionsPageableUrl(pageNumber, pageSize, sortColumn, sortOrder));
+  public getTransactions(
+    pageNumber = Constants.PAGEABLE_DEFAULTS.PAGE_NUMBER,
+    pageSize = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE,
+    sortColumn = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.active,
+    sortOrder = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.direction
+  ): Observable<Transaction[]> {
+    return this.get<Transaction[]>(ApiEndpoints.TRANSACTIONS.getPageableGettingUrl(pageNumber, pageSize, sortColumn, sortOrder));
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS, updateObj);
+    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_GETTING_URL, updateObj);
   }
 
   public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
-    return this.post<Transaction>(ApiEndpoints.getConfirmationUrl(externalId, provider), {});
+    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider), {});
   }
 }

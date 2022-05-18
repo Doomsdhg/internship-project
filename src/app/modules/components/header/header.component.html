@@ -1,11 +1,11 @@
 <div class="header-wrapper">
     <div class="links-container">
-        <button mat-button class="links-container__link" (click)="redirect('/')" color="primary">
+        <button mat-button class="links-container__link" (click)="redirectTo('/')" color="primary">
             <mat-icon id="home-icon" aria-hidden="false" color="primary">
                 home
             </mat-icon>
         </button>
-        <button mat-raised-button *ngIf="authenticated" class="links-container__link" (click)="logout()" color="primary">
+        <button mat-raised-button *ngIf="isAuthenticated" class="links-container__link" (click)="logout()" color="primary">
             {{'buttons.logout' | translate}}
         </button>
     </div>

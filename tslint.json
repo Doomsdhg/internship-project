@@ -12,6 +12,7 @@
         ]
     },
     "rules": {
+        "max-classes-per-file": [false],
         "component-class-suffix": true,
         "component-max-inline-declarations": true,
         "component-selector": [

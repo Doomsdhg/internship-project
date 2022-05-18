@@ -17,16 +17,20 @@ export class AuthFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authForms = new FormGroup({
-      login: new FormControl(),
-      password: new FormControl(),
-    });
+    this.buildAuthForms();
   }
 
   public login(): void {
     const loginInput = this.authForms.controls['login'].value;
     const passwordInput = this.authForms.controls['password'].value;
     this.authService.login(loginInput, passwordInput);
+  }
+
+  private buildAuthForms(): void {
+    this.authForms = new FormGroup({
+      login: new FormControl(),
+      password: new FormControl(),
+    });
   }
 }
 

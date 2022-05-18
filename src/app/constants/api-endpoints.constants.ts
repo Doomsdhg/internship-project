@@ -4,24 +4,35 @@ import { Pageable } from '../modules/models/Pageable.model';
 import { QueryPredicates } from '../modules/models/QueryPredicates.model';
 import { Sortable } from '../modules/models/Sortable.model';
 
-export class ApiEndpoints {
+class Base {
 
-    static readonly BASE_URL = environment.serverUrl;
-    static readonly PRODUCTION_BASE_URL = prodEnvironment.serverUrl;
-    static readonly TRANSACTIONS = `${this.BASE_URL || this.PRODUCTION_BASE_URL}admin/transactions`;
-    static readonly LOGIN = `${this.BASE_URL || this.PRODUCTION_BASE_URL}auth/login`;
-    static readonly LOGOUT = `${this.BASE_URL || this.PRODUCTION_BASE_URL}auth/logout`;
-    static readonly REFRESH = `${this.BASE_URL || this.PRODUCTION_BASE_URL}auth/refresh`;
+    static readonly URL = environment.serverUrl || prodEnvironment.serverUrl;
+}
+
+class TransactionsEndpoints {
+
+    static readonly BASE_GETTING_URL = `${Base.URL}admin/transactions`;
 
     static readonly getConfirmationUrl =
-    (externalId: string, provider: string): string => `${this.TRANSACTIONS}?external_id=${externalId}&provider=${provider}`
+        (externalId: string, provider: string): string => `${this.BASE_GETTING_URL}?external_id=${externalId}&provider=${provider}`
 
-    static readonly getDeletionUrl = (id: string): string =>  `${ApiEndpoints.TRANSACTIONS}${id}`;
+    static readonly getDeletionUrl = (id: string): string => `${this.BASE_GETTING_URL}${id}`;
 
-    static readonly getTransactionsPageableUrl = (
+    static readonly getPageableGettingUrl = (
         pageNumber: number,
         pageSize: number,
         sortColumn: string,
         sortOrder: string
-        ): string => `${this.TRANSACTIONS}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
+    ): string => `${this.BASE_GETTING_URL}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
+}
+
+class AuthEnpoints {
+    static readonly LOGINNING_URL = `${Base.URL}auth/login`;
+    static readonly LOGOUTTING_URL = `${Base.URL}auth/logout`;
+    static readonly TOKEN_REFRESHMENT_URL = `${Base.URL}auth/refresh`;
+}
+
+export class ApiEndpoints {
+    static readonly AUTH_ENDPOINTS = AuthEnpoints;
+    static readonly TRANSACTIONS = TransactionsEndpoints;
 }

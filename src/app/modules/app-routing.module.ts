@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AppRoutes } from '../constants/app-routes.constants';
 import { InputChangeGuard } from '../services/guards/input-change.guard';
-import { AuthPageComponent } from './pages/auth-page/auth-page.component';
-import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
 import { PreventAuthenticatedAccessGuard } from '../services/guards/prevent-authenticated-access.guard';
 import { PreventUnathenticatedAccessGuard } from '../services/guards/prevent-unathenticated-access.guard';
-import { AppRoutes } from '../constants/app-routes.constants';
+import { AuthPageComponent } from './pages/auth-page/auth-page.component';
+import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: AppRoutes.TRANSACTIONS, pathMatch: 'full' },
@@ -28,5 +28,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [TranslateModule]
 })
-
 export class AppRoutingModule { }

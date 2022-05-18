@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Constants } from '../constants/general.constants';
+import { Constants } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class NotifyService {
 
   constructor(

@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Transaction, TransactionCrudResponseError } from '../modules/interfaces/transactions.interface';
-import { TransactionApiService } from './web-services/transaction-api.service';
-import { NotifyService } from './notify.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { Constants } from '../constants/general.constants';
+import { BehaviorSubject } from 'rxjs';
+import { Constants } from '../constants/constants';
+import { Transaction, TransactionCrudResponseError } from '../modules/interfaces/transactions.interface';
+import { NotifyService } from './notify.service';
+import { TransactionApiService } from './web-services/transaction-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class TransactionsDataSource extends
   MatTableDataSource<Transaction> {
 
@@ -27,13 +26,13 @@ export class TransactionsDataSource extends
 
   public selectedPageSize = Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
 
-  public sortColumn!: string;
+  public sortColumn: string = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.active;
 
-  public sortOrder!: string;
+  public sortOrder: 'asc' | 'desc' | '' = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.direction;
 
   private transactionsSubject = new BehaviorSubject<Transaction[]>([this.emptyTransaction]);
 
-  public loadTransactions(pageNumber = 0): void {
+  public loadTransactions(pageNumber = this.currentPageNumber): void {
     this.currentPageNumber = pageNumber;
     this.transactionApiService.getTransactions(this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
       .subscribe({

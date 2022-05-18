@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
 import { GuardDialogContentComponent } from 'src/app/modules/components/guard-dialog-content/guard-dialog-content.component';
-import { ComponentWithInput } from './component-with-input.interface';
 import { TransactionsTablePageComponent } from 'src/app/modules/pages/transactions-table-page/transactions-table-page.component';
+import { ComponentWithInput } from './component-with-input.interface';
 
 @Injectable({
   providedIn: 'root'

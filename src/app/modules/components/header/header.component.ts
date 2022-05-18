@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Constants } from 'src/app/constants/general.constants';
-import { AuthService } from 'src/app/services/web-services/auth.service';
+import { Constants } from 'src/app/constants/constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
-import { Theme } from './Theme.type';
+import { AuthService } from 'src/app/services/web-services/auth.service';
 import { HeaderConstants } from './header.constants';
+import { Theme } from './Theme.model';
 
 @Component({
   selector: 'intr-header',
@@ -12,7 +12,6 @@ import { HeaderConstants } from './header.constants';
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class HeaderComponent implements OnInit {
 
   public currentRoute!: string;
@@ -24,9 +23,9 @@ export class HeaderComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private authService: AuthService,
     private localStorageManagerService: LocalStorageManagerService
-  ) {}
+  ) { }
 
-  public get authenticated(): boolean {
+  public get isAuthenticated(): boolean {
     return Boolean(this.localStorageManagerService.getAuthenticationInfo()?.authenticated);
   }
 
@@ -38,16 +37,16 @@ export class HeaderComponent implements OnInit {
     this.enableDefaultTheme();
   }
 
-  public redirect(route: string): void {
+  public redirectTo(route: string): void {
     this.router.navigate([route]);
   }
 
   public enableLightTheme(): void {
-    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.light);
+    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.LIGHT);
   }
 
   public enableDarkTheme(): void {
-    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.dark);
+    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.DARK);
   }
 
   public logout(): void {
@@ -55,7 +54,7 @@ export class HeaderComponent implements OnInit {
   }
 
   private enableDefaultTheme(): void {
-    const theme = new Theme(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.light.name);
+    const theme = new Theme(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.LIGHT.name);
     this.currentTheme = theme;
     document.getElementsByTagName('body')[0].classList.add(theme.name);
     this.toggleButtonsDisplay(theme);
@@ -76,7 +75,7 @@ export class HeaderComponent implements OnInit {
 
   private toggleButtonsDisplay(theme: Theme): void {
     const buttonsArray = document.getElementsByClassName(`${theme.name}-button`);
-    Array.prototype.forEach.call(buttonsArray, function(button: HTMLElement): void {
+    Array.prototype.forEach.call(buttonsArray, function (button: HTMLElement): void {
       button.classList.toggle('display-none');
     });
   }
