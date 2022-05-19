@@ -35,7 +35,7 @@ export class NumericLengthDirective {
     const leastPossibleDecimal: number = -this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
     const maxLength: number = symbolsBeforeDecPointAllowed + symbolsAfterDecPointAllowed;
     if ((+fixedInputValue < leastPossibleDecimal || +fixedInputValue > maxPossibleDecimal)
-     || (fixedInputValue !== originalInput && originalInput.length > maxLength)) {
+      || (fixedInputValue !== originalInput && originalInput.length > maxLength)) {
       element.value = this.previousValue;
       this.translateService.get(TranslationsEndpoints.SNACKBAR.NUMBERS_LIMITED)
         .subscribe((msg: NumbersLimitMessage) => {

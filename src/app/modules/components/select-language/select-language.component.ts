@@ -34,7 +34,7 @@ export class SelectLanguageComponent implements OnInit {
   private setCurrentLanguage(): void {
     const defaultLanguage = environment.defaultLocale;
     const previouslySelectedLanguage = localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE);
-    this.currentLanguage =  previouslySelectedLanguage || defaultLanguage;
+    this.currentLanguage = previouslySelectedLanguage || defaultLanguage;
   }
 
   private useLanguage(): void {
