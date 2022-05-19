@@ -26,14 +26,14 @@ class TransactionsEndpoints {
     ): string => `${this.BASE_GETTING_URL}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
 }
 
-class AuthEnpoints {
-    static readonly BASE_AUTH = `${Base.URL}auth`;
-    static readonly LOGINNING_URL = `${AuthEnpoints.BASE_AUTH}/login`;
-    static readonly LOGOUTTING_URL = `${AuthEnpoints.BASE_AUTH}/logout`;
-    static readonly TOKEN_REFRESHMENT_URL = `${AuthEnpoints.BASE_AUTH}/refresh`;
+class AuthEndpoints {
+    static readonly BASE = `${Base.URL}auth`;
+    static readonly LOGINNING_URL = `${AuthEndpoints.BASE}/login`;
+    static readonly LOGOUTTING_URL = `${AuthEndpoints.BASE}/logout`;
+    static readonly TOKEN_REFRESHMENT_URL = `${AuthEndpoints.BASE}/refresh`;
 }
 
 export class ApiEndpoints {
-    static readonly AUTH_ENDPOINTS = AuthEnpoints;
+    static readonly AUTH_ENDPOINTS = AuthEndpoints;
     static readonly TRANSACTIONS = TransactionsEndpoints;
 }
