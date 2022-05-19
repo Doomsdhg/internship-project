@@ -30,10 +30,12 @@ export class NumericLengthDirective {
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     const [symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed]: number[] = this.options;
     const originalInput: string = element.value;
-    const fixedInputValue: number = +(+originalInput).toFixed(symbolsAfterDecPointAllowed);
-    const max: number = +this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
+    const fixedInputValue: string = (+originalInput).toFixed(symbolsAfterDecPointAllowed);
+    const maxPossibleDecimal: number = +this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
+    const leastPossibleDecimal: number = -this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
     const maxLength: number = symbolsBeforeDecPointAllowed + symbolsAfterDecPointAllowed;
-    if ((fixedInputValue < -max || fixedInputValue > max) || (fixedInputValue !== +originalInput && originalInput.length > maxLength)) {
+    if ((+fixedInputValue < leastPossibleDecimal || +fixedInputValue > maxPossibleDecimal)
+     || (fixedInputValue !== originalInput && originalInput.length > maxLength)) {
       element.value = this.previousValue;
       this.translateService.get(TranslationsEndpoints.SNACKBAR.NUMBERS_LIMITED)
         .subscribe((msg: NumbersLimitMessage) => {

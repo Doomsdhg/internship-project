@@ -28,9 +28,9 @@ class TransactionsEndpoints {
 
 class AuthEnpoints {
     static readonly BASE_AUTH = `${Base.URL}auth`;
-    static readonly LOGINNING_URL = `${Base.URL}/login`;
-    static readonly LOGOUTTING_URL = `${Base.URL}/logout`;
-    static readonly TOKEN_REFRESHMENT_URL = `${Base.URL}/refresh`;
+    static readonly LOGINNING_URL = `${AuthEnpoints.BASE_AUTH}/login`;
+    static readonly LOGOUTTING_URL = `${AuthEnpoints.BASE_AUTH}/logout`;
+    static readonly TOKEN_REFRESHMENT_URL = `${AuthEnpoints.BASE_AUTH}/refresh`;
 }
 
 export class ApiEndpoints {

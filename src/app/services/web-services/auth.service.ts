@@ -68,21 +68,16 @@ export class AuthService {
   }
 
   private sendRefreshTokenRequest(): Observable<AuthenticationResponse> {
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL, {
-      refreshToken: this.localStorageManagerService.getAuthenticationInfo()?.refreshToken
-    });
+    const refreshToken = this.localStorageManagerService.getAuthenticationInfo()?.refreshToken;
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL, { refreshToken });
   }
 
   private sendLogoutRequest(): Observable<LogoutResponse> {
-    return this.httpClient.post<LogoutResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL, {
-      username: this.localStorageManagerService.getAuthenticationInfo()?.username
-    });
+    const username = this.localStorageManagerService.getAuthenticationInfo()?.username;
+    return this.httpClient.post<LogoutResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL, { username });
   }
 
   private sendLoginRequest(username: string, password: string): Observable<AuthenticationResponse> {
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGINNING_URL, {
-      username: username,
-      password: password
-    });
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGINNING_URL, { username, password });
   }
 }

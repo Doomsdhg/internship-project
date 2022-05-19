@@ -21,13 +21,27 @@ export class SelectLanguageComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.currentLanguage = localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE) || environment.defaultLocale;
-    this.translateService.use(this.currentLanguage);
-    this.selectLanguageForm = new FormControl(this.currentLanguage);
+    this.setCurrentLanguage();
+    this.useLanguage();
+    this.buildForms();
   }
 
   public changeLanguage(): void {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE, this.selectLanguageForm.value);
     window.location.reload();
+  }
+
+  private setCurrentLanguage(): void {
+    const defaultLanguage = environment.defaultLocale;
+    const previouslySelectedLanguage = localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE);
+    this.currentLanguage =  previouslySelectedLanguage || defaultLanguage;
+  }
+
+  private useLanguage(): void {
+    this.translateService.use(this.currentLanguage);
+  }
+
+  private buildForms(): void {
+    this.selectLanguageForm = new FormControl(this.currentLanguage);
   }
 }

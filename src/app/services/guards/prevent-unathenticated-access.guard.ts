@@ -12,6 +12,7 @@ export class PreventUnathenticatedAccessGuard implements CanActivate {
   }
 
   public canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return !!(this.localStorageManagerService.getAuthenticationInfo()?.authenticated);
+    const isAuthenticated = !!this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
+    return isAuthenticated;
   }
 }

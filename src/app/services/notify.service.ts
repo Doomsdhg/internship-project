@@ -18,10 +18,15 @@ export class NotifyService {
     });
   }
 
-  public showMessage(message: string, type: string): void {
+  public showMessage(message: string, messageType: string): void {
+    const config = this.createConfig(messageType);
+    this.matSnackBar.open(message, undefined, config);
+  }
+
+  private createConfig(messageType: string): MatSnackBarConfig {
     const config = new MatSnackBarConfig();
     config.duration = Constants.SNACKBAR.DURATION;
-    config.panelClass = [type + Constants.SNACKBAR.CLASSNAME_POSTFIX];
-    this.matSnackBar.open(message, undefined, config);
+    config.panelClass = [messageType + Constants.SNACKBAR.CLASSNAME_POSTFIX];
+    return config;
   }
 }

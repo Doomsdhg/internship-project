@@ -11,11 +11,17 @@ import { El } from './directives.interface';
 })
 export class NumbersOnlyDirective {
 
+  private previousValue!: string;
+
   constructor(private notifyService: NotifyService) { }
+
+  @HostListener('keydown', ['$event.target']) onKeydown(element: El): void {
+    this.previousValue = element.value;
+  }
 
   @HostListener('input', ['$event.target']) onInput(element: El): void {
     if (isNaN(+element.value)) {
-      element.value = element.value.slice(0, -1);
+      element.value = this.previousValue;
       this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.NUMBERS_ONLY_ERROR, Constants.SNACKBAR.ERROR_TYPE);
     }
   }

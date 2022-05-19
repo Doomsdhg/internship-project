@@ -11,12 +11,12 @@
     </div>
     <div class="managing-tools-container">
         <div class="managing-tools-container__item">
-            <button mat-button class="light-theme-button" (click)="enableLightTheme()">
+            <button mat-button *ngIf="currentTheme.name === 'dark-theme'" (click)="enableLightTheme()">
                 <span class="material-icons">
                     light_mode
                     </span>
             </button>
-            <button mat-button class="dark-theme-button" (click)="enableDarkTheme()">
+            <button mat-button *ngIf="currentTheme.name === 'light-theme'" (click)="enableDarkTheme()">
                 <span class="material-icons">
                     dark_mode
                     </span>
@@ -32,12 +32,12 @@
         </button>
         <mat-menu #menu="matMenu">
             <div class="managing-tools-mobile__item">
-                <button mat-button class="light-theme-button" (click)="enableLightTheme()">
+                <button mat-button *ngIf="currentTheme.name === 'dark-theme'" (click)="enableLightTheme()">
                     <span class="material-icons">
                         light_mode
                         </span>
                 </button>
-                <button mat-button class="dark-theme-button" (click)="enableDarkTheme()">
+                <button mat-button *ngIf="currentTheme.name === 'light-theme'" (click)="enableDarkTheme()">
                     <span class="material-icons">
                         dark_mode
                         </span>
