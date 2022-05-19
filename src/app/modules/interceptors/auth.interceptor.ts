@@ -38,12 +38,15 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> | void => {
-          if (response instanceof HttpErrorResponse) {
-            if (response.status === HttpStatusCode.UNAUTHORIZED) {
+          const isErrorResponse = response instanceof HttpErrorResponse;
+          const isOkResponse = response instanceof HttpResponse && response.status === HttpStatusCode.OK;
+          if (isErrorResponse) {
+            const isUnauthorizedResponse = response.status === HttpStatusCode.UNAUTHORIZED;
+            if (isUnauthorizedResponse) {
               this.authService.executeLogoutProcedures();
             }
             return this.handleError(response);
-          } else if (response instanceof HttpResponse && response.status === HttpStatusCode.OK) {
+          } else if (isOkResponse) {
             return response;
           }
         }),

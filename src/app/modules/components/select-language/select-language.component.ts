@@ -23,7 +23,7 @@ export class SelectLanguageComponent implements OnInit {
   public ngOnInit(): void {
     this.setCurrentLanguage();
     this.useLanguage();
-    this.buildForms();
+    this.buildSelectLanguageForm();
   }
 
   public changeLanguage(): void {
@@ -41,7 +41,7 @@ export class SelectLanguageComponent implements OnInit {
     this.translateService.use(this.currentLanguage);
   }
 
-  private buildForms(): void {
+  private buildSelectLanguageForm(): void {
     this.selectLanguageForm = new FormControl(this.currentLanguage);
   }
 }

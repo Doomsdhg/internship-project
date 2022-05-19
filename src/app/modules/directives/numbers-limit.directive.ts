@@ -34,8 +34,11 @@ export class NumericLengthDirective {
     const maxPossibleDecimal: number = +this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
     const leastPossibleDecimal: number = -this.getMaxPossibleDecimal(symbolsBeforeDecPointAllowed, symbolsAfterDecPointAllowed);
     const maxLength: number = symbolsBeforeDecPointAllowed + symbolsAfterDecPointAllowed;
-    if ((+fixedInputValue < leastPossibleDecimal || +fixedInputValue > maxPossibleDecimal)
-      || (fixedInputValue !== originalInput && originalInput.length > maxLength)) {
+    const lessThanMinimumPossibleNumber = +fixedInputValue < leastPossibleDecimal;
+    const greaterThanMaximumPossibleNumber = +fixedInputValue > maxPossibleDecimal;
+    const fixedValueDifferentFromOriginal = fixedInputValue !== originalInput && originalInput.length > maxLength;
+    if (( greaterThanMaximumPossibleNumber || lessThanMinimumPossibleNumber)
+      || (fixedValueDifferentFromOriginal)) {
       element.value = this.previousValue;
       this.translateService.get(TranslationsEndpoints.SNACKBAR.NUMBERS_LIMITED)
         .subscribe((msg: NumbersLimitMessage) => {

@@ -20,7 +20,8 @@ export class NumbersOnlyDirective {
   }
 
   @HostListener('input', ['$event.target']) onInput(element: El): void {
-    if (isNaN(+element.value)) {
+    const inputValueIsNumeric = !(isNaN(+element.value));
+    if (!inputValueIsNumeric) {
       element.value = this.previousValue;
       this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.NUMBERS_ONLY_ERROR, Constants.SNACKBAR.ERROR_TYPE);
     }
