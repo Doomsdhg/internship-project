@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
+import moment from 'moment';
 import { AuthenticationData } from 'src/app/modules/interfaces/authentication.interface';
 import { Constants } from '../constants/constants';
 import { AuthenticationResponse, DecodedToken } from '../modules/interfaces/authentication.interface';
+import { TimeFormatDifference } from './local-storage-manager.service.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +17,8 @@ export class LocalStorageManagerService {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN, loginObject.accessToken);
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.REFRESH_TOKEN, loginObject.refreshToken);
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.USERNAME, loginObject.username);
-    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN_EXPIRATION_DATE, String((decodedToken.exp - 10800) * 1000));
-    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN_CREATION_DATE, String((decodedToken.iat - 10800) * 1000));
+    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN_EXPIRATION_DATE, this.convertDateToLocalFormat(decodedToken.exp));
+    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN_CREATION_DATE, this.convertDateToLocalFormat(decodedToken.iat));
   }
 
   public setPageSize(pageSize: string = String(Constants.PAGEABLE_DEFAULTS.PAGE_SIZE)): void {
@@ -47,5 +49,9 @@ export class LocalStorageManagerService {
   public refreshToken(refreshResponse: AuthenticationResponse): void {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN, refreshResponse.accessToken);
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.REFRESH_TOKEN, refreshResponse.refreshToken);
+  }
+
+  private convertDateToLocalFormat(date: number): string {
+    return moment(((date + TimeFormatDifference.GMT_DIFFERENCE)) * TimeFormatDifference.MULTIPLIER).toString();
   }
 }

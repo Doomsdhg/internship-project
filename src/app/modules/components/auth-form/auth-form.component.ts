@@ -21,9 +21,9 @@ export class AuthFormComponent implements OnInit {
   }
 
   public login(): void {
-    const loginInput = this.authForms.controls['login'].value;
-    const passwordInput = this.authForms.controls['password'].value;
-    this.authService.login(loginInput, passwordInput);
+    const loginInputValue = this.authForms.controls['login'].value;
+    const passwordInputValue = this.authForms.controls['password'].value;
+    this.authService.login(loginInputValue, passwordInputValue);
   }
 
   private buildAuthForms(): void {

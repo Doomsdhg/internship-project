@@ -1,11 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/modules/interfaces/transactions.interface';
-import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from '../../../services/notify.service';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
@@ -34,13 +32,12 @@ export class TransactionsTableComponent implements OnInit {
 
   constructor(
     private transactionApiService: TransactionApiService,
-    private notifyService: NotifyService,
-    private localStorageManagerService: LocalStorageManagerService
+    private notifyService: NotifyService
   ) { }
 
   public ngOnInit(): void {
     this.displayedColumns = Columns.DISPLAYED_COLUMNS;
-    this.loadData();
+    this.loadTransactionsData();
     this.resetSorting();
   }
 
@@ -51,9 +48,9 @@ export class TransactionsTableComponent implements OnInit {
     return false;
   }
 
-  public setNewPageSize(pageSize: string): void {
-    this.localStorageManagerService.setPageSize(pageSize);
-    this.loadData();
+  public useNewPageSize(pageSize: string): void {
+    this.dataSource.selectedPageSize = Number(pageSize);
+    this.dataSource.loadTransactions();
   }
 
   public confirmTransaction = (row: Row): void => {
@@ -67,7 +64,7 @@ export class TransactionsTableComponent implements OnInit {
     });
   }
 
-  public toggleForms = (row: Row): void => {
+  public toggleFormsDisplay = (row: Row): void => {
     this.formsToggled = !this.formsToggled;
     row.displayForms = !row.displayForms;
     this.buildTransactionUpdateForms(row);
@@ -118,7 +115,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   private handleSuccessfulUpdateResponse(row: Row): void {
-    this.toggleForms(row);
+    this.toggleFormsDisplay(row);
     this.refreshTransactions();
     this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
   }
@@ -158,7 +155,7 @@ export class TransactionsTableComponent implements OnInit {
     this.sorted[columnName as keyof Sorted] = !this.sorted[columnName as keyof Sorted];
   }
 
-  private loadData(): void {
+  private loadTransactionsData(): void {
     this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notifyService);
     this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE));
     this.dataSource.loadTransactions();

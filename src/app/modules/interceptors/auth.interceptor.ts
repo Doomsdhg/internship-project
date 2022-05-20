@@ -1,6 +1,6 @@
 import {
   HttpErrorResponse, HttpEvent, HttpHandler,
-  HttpInterceptor, HttpRequest, HttpResponse
+  HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
@@ -38,12 +38,14 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         map((response: HttpEvent<any>): HttpEvent<any> | Observable<Error> | void => {
-          if (response instanceof HttpErrorResponse) {
-            if (response.status === HttpStatusCode.UNAUTHORIZED) {
+          const isErrorResponse = response instanceof HttpErrorResponse;
+          if (isErrorResponse) {
+            const isUnauthorizedResponse = response.status === HttpStatusCode.UNAUTHORIZED;
+            if (isUnauthorizedResponse) {
               this.authService.executeLogoutProcedures();
             }
             return this.handleError(response);
-          } else if (response instanceof HttpResponse && response.status === HttpStatusCode.OK) {
+          } else {
             return response;
           }
         }),
