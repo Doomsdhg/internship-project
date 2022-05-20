@@ -8,6 +8,7 @@ import { Constants } from 'src/app/constants/constants';
 import { AuthenticationResponse, AuthenticationResponseError, LogoutResponse } from 'src/app/modules/interfaces/authentication.interface';
 import { LocalStorageManagerService } from '../local-storage-manager.service';
 import { NotifyService } from '../notify.service';
+import { LoginRequestBody, LogoutRequestBody, RefreshTokenRequestBody } from './auth.service.interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -69,15 +70,18 @@ export class AuthService {
 
   private sendRefreshTokenRequest(): Observable<AuthenticationResponse> {
     const refreshToken = this.localStorageManagerService.getAuthenticationInfo()?.refreshToken;
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL, { refreshToken });
+    const refreshTokenRequestBody: RefreshTokenRequestBody = { refreshToken };
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL, refreshTokenRequestBody);
   }
 
   private sendLogoutRequest(): Observable<LogoutResponse> {
     const username = this.localStorageManagerService.getAuthenticationInfo()?.username;
-    return this.httpClient.post<LogoutResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL, { username });
+    const logoutRequestBody: LogoutRequestBody = { username };
+    return this.httpClient.post<LogoutResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL, logoutRequestBody);
   }
 
   private sendLoginRequest(username: string, password: string): Observable<AuthenticationResponse> {
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGINNING_URL, { username, password });
+    const loginRequestBody: LoginRequestBody = { username, password };
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGINNING_URL, loginRequestBody);
   }
 }
