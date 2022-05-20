@@ -12,8 +12,17 @@ import { El, NumbersLimitMessage } from './directives.interface';
 
 @Directive({
   selector: '[intrNumericLength]'
+  //TODO: selector: 'input[intrNumericLength]',
+  // providers: [
+  //   {
+  //     provide: NG_VALUE_ACCESSOR,
+  //     useExisting: NumericLengthDirective,
+  //     multi: true,
+  //   },
+  // ],
 })
 export class NumericLengthDirective {
+// export class NumericLengthDirective extends DefaultValueAccessor {
 
   private previousValue!: string;
 
