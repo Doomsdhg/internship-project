@@ -32,7 +32,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if (!isAuthenticated || isLogOutRequest || isRefreshRequest) {
       return this.handleDefaultCase(request, next);
     }
-    if (isAuthenticated && moment() > moment(Number(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration))) {
+    if (isAuthenticated && moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration)) {
       this.authService.refreshToken();
     }
     return next.handle(request)
