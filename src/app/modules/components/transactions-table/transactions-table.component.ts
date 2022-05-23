@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
@@ -34,8 +34,7 @@ export class TransactionsTableComponent implements OnInit {
 
   constructor(
     private transactionApiService: TransactionApiService,
-    private notifyService: NotifyService,
-    private cdr: ChangeDetectorRef
+    private notifyService: NotifyService
   ) { }
 
   public ngOnInit(): void {
