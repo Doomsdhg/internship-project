@@ -30,7 +30,7 @@ export class TransactionsTableComponent implements OnInit {
 
   public formsToggled = false;
 
-  public validationErrors: (ValidationErrors | null)[] = [];
+  private validationErrors: (ValidationErrors | null)[] = [];
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -111,11 +111,11 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   public get amountErrors(): ValidationErrors | null | undefined {
-    return this.transactionUpdateForm.get('amount')?.errors;
+    return this.transactionUpdateForm.get(Columns.ID_AMOUNT)?.errors;
   }
 
   public get commissionAmountErrors(): ValidationErrors | null | undefined {
-    return this.transactionUpdateForm.get('commissionAmount')?.errors;
+    return this.transactionUpdateForm.get(Columns.ID_COMMISSION_AMOUNT)?.errors;
   }
 
   private handleSuccessfulConfirmation(): void {
@@ -140,11 +140,11 @@ export class TransactionsTableComponent implements OnInit {
       user: this.transactionUpdateForm.value.user,
       status: this.transactionUpdateForm.value.status,
       amount: {
-        amount: this.transactionUpdateForm.get('amount')?.value,
+        amount: this.transactionUpdateForm.get(Columns.ID_AMOUNT)?.value,
         currency: this.transactionUpdateForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: this.transactionUpdateForm.get('commissionAmount')?.value,
+        amount: this.transactionUpdateForm.get(Columns.ID_COMMISSION_AMOUNT)?.value,
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       provider: row.provider,
