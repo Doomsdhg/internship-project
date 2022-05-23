@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
@@ -30,7 +30,7 @@ export class TransactionsTableComponent implements OnInit {
 
   public formsToggled = false;
 
-  public validationErrors: (ValidationErrors| null)[] = [];
+  public validationErrors: (ValidationErrors | null)[] = [];
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -74,10 +74,9 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   public updateTransaction = (row: Row): void => {
-    this.checkForValidationErrors();
-    this.cdr.detectChanges();
+    this.detectValidationErrors();
     if (this.validationErrors.length === 0) {
-        const updateObj: TransactionUpdateData = this.createUpdateObject(row);
+      const updateObj: TransactionUpdateData = this.createUpdateObject(row);
       this.transactionApiService.patchTransaction(updateObj).subscribe({
         next: () => {
           this.handleSuccessfulUpdateResponse(row);
@@ -184,19 +183,16 @@ export class TransactionsTableComponent implements OnInit {
     this.transactionUpdateForm = new FormGroup({
       user: new FormControl(row.user),
       status: new FormControl(row.status),
-      amount: new FormControl(row.amount.amount
-        ,
-        [
+      amount: new FormControl(row.amount.amount, [
         this.integerLengthValidator(),
         this.numbersOnlyValidator()
-        ]
+      ]
       ),
       currency: new FormControl(row.amount.currency),
-      commissionAmount: new FormControl(row.commissionAmount.amount
-        , [
+      commissionAmount: new FormControl(row.commissionAmount.amount, [
         this.integerLengthValidator(),
         this.numbersOnlyValidator()
-        ]
+      ]
       ),
       commissionCurrency: new FormControl(row.commissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
@@ -206,24 +202,24 @@ export class TransactionsTableComponent implements OnInit {
   private integerLengthValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const forbidden = (+control.value).toFixed().length > Validation.maxIntegerLength;
-      return forbidden ? {forbiddenIntegerLength: true} : null;
+      return forbidden ? { forbiddenIntegerLength: true } : null;
     };
   }
 
   private numbersOnlyValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const forbidden = isNaN(+control.value);
-      return forbidden ? {forbiddenNanInput: true} : null;
+      return forbidden ? { forbiddenNanInput: true } : null;
     };
   }
 
-  private checkForValidationErrors(): void {
+  private detectValidationErrors(): void {
     const errorsArray = [];
     const controls = this.transactionUpdateForm.controls;
     for (const name in controls) {
-        if (controls[name].errors) {
-          errorsArray.push(controls[name].errors);
-        }
+      if (controls[name].errors) {
+        errorsArray.push(controls[name].errors);
+      }
     }
     this.validationErrors = errorsArray;
   }

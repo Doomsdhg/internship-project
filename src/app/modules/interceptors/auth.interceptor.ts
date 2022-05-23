@@ -1,6 +1,6 @@
 import {
   HttpErrorResponse, HttpEvent, HttpHandler,
-  HttpInterceptor, HttpRequest, HttpResponse
+  HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
