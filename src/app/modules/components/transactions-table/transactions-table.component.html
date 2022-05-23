@@ -64,11 +64,19 @@
       <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
+          <div *ngIf="amountErrors">
+            <span *ngIf="amountErrors['forbiddenIntegerLength']">
+              {{'errors.forbiddenIntegerLength' | translate}}
+            </span>
+            <span *ngIf="amountErrors['forbiddenNanInput']">
+              {{'errors.forbiddenNanInput' | translate}}
+            </span>
+          </div>
           <div class="amount-form-container">
             <form [formGroup]="transactionUpdateForm">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-                <input required [intrNumericLength]="[10, 2]" intrNumbersOnly matInput formControlName="amount"
+                <input required matInput formControlName="amount"
                   value="{{row.amount.amount}}" placeholder="{{ 'placeholders.amount' | translate }}">
               </mat-form-field>
             </form>
@@ -97,11 +105,19 @@
       <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
+          <div *ngIf="commissionAmountErrors">
+            <span *ngIf="commissionAmountErrors['forbiddenIntegerLength']">
+              {{'errors.forbiddenIntegerLength' | translate}}
+            </span>
+            <span *ngIf="commissionAmountErrors['forbiddenNanInput']">
+              {{'errors.forbiddenNanInput' | translate}}
+            </span>
+          </div>
           <div class="amount-form-container">
             <form [formGroup]="transactionUpdateForm">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
-                <input required [intrNumericLength]="[10, 2]" intrNumbersOnly matInput formControlName="commissionAmount"
+                <input required matInput formControlName="commissionAmount"
                   value="{{row.commissionAmount.amount}}" placeholder="{{ 'placeholders.commissionAmount' | translate }}">
               </mat-form-field>
             </form>
@@ -154,7 +170,7 @@
       <mat-cell *matCellDef="let row" class="{{row.displayForms ? 'display-forms' : ''}}">
         <div class="flex-container-column">
           <div class="buttons-group">
-            <button *ngIf="row.status === 'INITIAL'" mat-raised-button attr.data-external_id="{{row.externalId}}" attr.data-provider="{{row.provider}}"
+            <button *ngIf="row.status === 'INITIAL'" mat-raised-button
               [disabled]="formsToggled" (click)="confirmTransaction(row)">
               <mat-icon>check icon</mat-icon>
             </button>
@@ -163,12 +179,12 @@
             </button>
           </div>
           <div *ngIf="row.displayForms" class="buttons-group">
-            <button mat-raised-button attr.data-id="{{row.id}}" attr.data-provider="{{row.provider}}" attr.data-external_id="{{row.externalId}}" (click)="updateTransaction(row)">
+            <button mat-raised-button (click)="updateTransaction(row)">
               {{'buttons.saveChanges' | translate}}
             </button>
           </div>
           <div *ngIf="row.displayForms" class="buttons-group">
-            <button mat-raised-button attr.data-id="{{row.id}}" (click)="toggleFormsDisplay(row)">
+            <button mat-raised-button (click)="toggleFormsDisplay(row)">
               {{'buttons.cancelChanges' | translate}}
             </button>
           </div>

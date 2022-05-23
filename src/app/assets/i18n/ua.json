@@ -54,6 +54,10 @@
     "warnings": {
         "leaveWithoutSave": "Ви впевнені, що хочете продовжити без збереження змін?"
     },
+    "errors": {
+        "forbiddenIntegerLength": "Ціла частина числа має бути не довшою за 10 символів",
+        "forbiddenNanInput": "Дозволено лише цифри"
+    },
     "transactionInfo": "Дані транзакції",
     "noData": "Немає даних",
     "snackbar": {

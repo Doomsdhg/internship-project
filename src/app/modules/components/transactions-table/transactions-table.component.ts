@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { FormControl, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
@@ -7,7 +7,7 @@ import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/mod
 import { NotifyService } from '../../../services/notify.service';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { TransactionApiService } from '../../../services/web-services/transaction-api.service';
-import { Columns, PossibleSortingDirections } from './transactions-table.constants';
+import { Columns, PossibleSortingDirections, Validation } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
 
 @Component({
@@ -30,9 +30,12 @@ export class TransactionsTableComponent implements OnInit {
 
   public formsToggled = false;
 
+  public validationErrors: (ValidationErrors| null)[] = [];
+
   constructor(
     private transactionApiService: TransactionApiService,
-    private notifyService: NotifyService
+    private notifyService: NotifyService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   public ngOnInit(): void {
@@ -71,15 +74,19 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   public updateTransaction = (row: Row): void => {
-    const updateObj: TransactionUpdateData = this.createUpdateObject(row);
-    this.transactionApiService.patchTransaction(updateObj).subscribe({
-      next: () => {
-        this.handleSuccessfulUpdateResponse(row);
-      },
-      error: (error: TransactionCrudResponseError) => {
-        this.handleError(error);
-      }
-    });
+    this.checkForValidationErrors();
+    this.cdr.detectChanges();
+    if (this.validationErrors.length === 0) {
+        const updateObj: TransactionUpdateData = this.createUpdateObject(row);
+      this.transactionApiService.patchTransaction(updateObj).subscribe({
+        next: () => {
+          this.handleSuccessfulUpdateResponse(row);
+        },
+        error: (error: TransactionCrudResponseError) => {
+          this.handleError(error);
+        }
+      });
+    }
   }
 
   public sortify = (columnName: string): void => {
@@ -105,6 +112,14 @@ export class TransactionsTableComponent implements OnInit {
     this.dataSource.loadTransactions(0);
   }
 
+  public get amountErrors(): ValidationErrors | null | undefined {
+    return this.transactionUpdateForm.get('amount')?.errors;
+  }
+
+  public get commissionAmountErrors(): ValidationErrors | null | undefined {
+    return this.transactionUpdateForm.get('commissionAmount')?.errors;
+  }
+
   private handleSuccessfulConfirmation(): void {
     this.refreshTransactions();
     this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
@@ -127,11 +142,11 @@ export class TransactionsTableComponent implements OnInit {
       user: this.transactionUpdateForm.value.user,
       status: this.transactionUpdateForm.value.status,
       amount: {
-        amount: this.transactionUpdateForm.value.amount,
+        amount: this.transactionUpdateForm.get('amount')?.value,
         currency: this.transactionUpdateForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: this.transactionUpdateForm.value.commissionAmount,
+        amount: this.transactionUpdateForm.get('commissionAmount')?.value,
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       provider: row.provider,
@@ -169,11 +184,47 @@ export class TransactionsTableComponent implements OnInit {
     this.transactionUpdateForm = new FormGroup({
       user: new FormControl(row.user),
       status: new FormControl(row.status),
-      amount: new FormControl(row.amount.amount),
+      amount: new FormControl(row.amount.amount
+        ,
+        [
+        this.integerLengthValidator(),
+        this.numbersOnlyValidator()
+        ]
+      ),
       currency: new FormControl(row.amount.currency),
-      commissionAmount: new FormControl(row.commissionAmount.amount),
+      commissionAmount: new FormControl(row.commissionAmount.amount
+        , [
+        this.integerLengthValidator(),
+        this.numbersOnlyValidator()
+        ]
+      ),
       commissionCurrency: new FormControl(row.commissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     });
+  }
+
+  private integerLengthValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = (+control.value).toFixed().length > Validation.maxIntegerLength;
+      return forbidden ? {forbiddenIntegerLength: true} : null;
+    };
+  }
+
+  private numbersOnlyValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const forbidden = isNaN(+control.value);
+      return forbidden ? {forbiddenNanInput: true} : null;
+    };
+  }
+
+  private checkForValidationErrors(): void {
+    const errorsArray = [];
+    const controls = this.transactionUpdateForm.controls;
+    for (const name in controls) {
+        if (controls[name].errors) {
+          errorsArray.push(controls[name].errors);
+        }
+    }
+    this.validationErrors = errorsArray;
   }
 }

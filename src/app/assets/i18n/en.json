@@ -55,6 +55,10 @@
     "warnings": {
         "leaveWithoutSave": "Are you sure you wanna leave without saving changes?"
     },
+    "errors": {
+        "forbiddenIntegerLength": "The integer part of the number must be no longer than 10 characters",
+        "forbiddenNanInput": "Only numerical symbols allowed"
+    },
     "transactionInfo": "Transaction info",
     "noData": "No data",
     "snackbar": {

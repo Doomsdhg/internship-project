@@ -1,5 +1,9 @@
 import { Column } from './transactions-table.interfaces';
 
+export class Validation {
+  static readonly maxIntegerLength = 10;
+}
+
 export class PossibleSortingDirections {
 
   static readonly ASC = 'asc';

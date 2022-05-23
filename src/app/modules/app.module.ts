@@ -30,8 +30,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { SelectLanguageComponent } from './components/select-language/select-language.component';
 import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 import { TransactionsTableComponent } from './components/transactions-table/transactions-table.component';
-import { NumericLengthDirective } from './directives/numbers-limit.directive';
-import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AuthPageComponent } from './pages/auth-page/auth-page.component';
 import { TransactionsTablePageComponent } from './pages/transactions-table-page/transactions-table-page.component';
@@ -50,9 +48,7 @@ export function tokenGetter(): string | null {
     TransactionsTableComponent,
     TransactionsTablePageComponent,
     GuardDialogContentComponent,
-    NumbersOnlyDirective,
     SelectLanguageComponent,
-    NumericLengthDirective,
     HeaderComponent,
     AuthPageComponent,
     AuthFormComponent,
