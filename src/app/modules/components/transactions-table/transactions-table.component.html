@@ -65,10 +65,10 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <div *ngIf="amountErrors">
-            <span *ngIf="amountErrors['forbiddenIntegerLength']">
+            <span *ngIf="amountErrors[forbiddenIntegerLengthError]">
               {{'errors.forbiddenIntegerLength' | translate}}
             </span>
-            <span *ngIf="amountErrors['forbiddenNanInput']">
+            <span *ngIf="amountErrors[forbiddenNanInputError]">
               {{'errors.forbiddenNanInput' | translate}}
             </span>
           </div>
@@ -106,10 +106,10 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData"></ng-template>
         <ng-template #editForms>
           <div *ngIf="commissionAmountErrors">
-            <span *ngIf="commissionAmountErrors['forbiddenIntegerLength']">
+            <span *ngIf="commissionAmountErrors[forbiddenIntegerLengthError]">
               {{'errors.forbiddenIntegerLength' | translate}}
             </span>
-            <span *ngIf="commissionAmountErrors['forbiddenNanInput']">
+            <span *ngIf="commissionAmountErrors[forbiddenNanInputError]">
               {{'errors.forbiddenNanInput' | translate}}
             </span>
           </div>

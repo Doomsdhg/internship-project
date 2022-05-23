@@ -1,8 +1,16 @@
 import { Column } from './transactions-table.interfaces';
 
+export class Errors {
+
+  static readonly FORBIDDEN_NAN_INPUT = 'forbiddenNanInput';
+  static readonly FORBIDDEN_INTEGER_LENGTH = 'forbiddenIntegerLength';
+}
+
 export class Validation {
 
-  static readonly maxIntegerLength = 10;
+  static readonly ALLOWED_INTEGERS_LENGTH = 10;
+  static readonly ALLOWED_LENGTH_AFTER_POINT = 2;
+  static readonly ERRORS = Errors;
 }
 
 export class PossibleSortingDirections {

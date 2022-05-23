@@ -30,6 +30,10 @@ export class TransactionsTableComponent implements OnInit {
 
   public formsToggled = false;
 
+  public forbiddenIntegerLengthError = Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH;
+
+  public forbiddenNanInputError = Validation.ERRORS.FORBIDDEN_NAN_INPUT;
+
   private validationErrors: (ValidationErrors | null)[] = [];
 
   constructor(
@@ -140,11 +144,11 @@ export class TransactionsTableComponent implements OnInit {
       user: this.transactionUpdateForm.value.user,
       status: this.transactionUpdateForm.value.status,
       amount: {
-        amount: this.transactionUpdateForm.get(Columns.ID_AMOUNT)?.value,
+        amount: +(+this.transactionUpdateForm.value.amount).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT),
         currency: this.transactionUpdateForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: this.transactionUpdateForm.get(Columns.ID_COMMISSION_AMOUNT)?.value,
+        amount: +(+this.transactionUpdateForm.value.commissionAmount).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT),
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       provider: row.provider,
@@ -200,15 +204,15 @@ export class TransactionsTableComponent implements OnInit {
 
   private integerLengthValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const forbidden = (+control.value).toFixed().length > Validation.maxIntegerLength;
-      return forbidden ? { forbiddenIntegerLength: true } : null;
+      const forbidden = (+control.value).toFixed().length > Validation.ALLOWED_INTEGERS_LENGTH;
+      return forbidden ? { [this.forbiddenIntegerLengthError]: true } : null;
     };
   }
 
   private numbersOnlyValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const forbidden = isNaN(+control.value);
-      return forbidden ? { forbiddenNanInput: true } : null;
+      return forbidden ? { [this.forbiddenNanInputError]: true } : null;
     };
   }
 
