@@ -54,6 +54,10 @@
     "warnings": {
         "leaveWithoutSave": "Вы ўпэўненыя што хочаце працягнуць без захавання змен?"
     },
+    "errors": {
+        "forbiddenIntegerLength": "Цэлая частка ліку павінна быць не даўжэй за 10 сімвалаў",
+        "forbiddenNanInput": "Дазволены толькі лічбы"
+    },
     "transactionInfo": "Дадзеныя транзакцыі",
     "noData": "Няма дадзеных",
     "snackbar": {

@@ -1,5 +1,4 @@
 import { Sort } from '@angular/material/sort';
-import { NumbersLimitMessage } from '../modules/directives/directives.interface';
 
 class LocalStorageAccessors {
 
@@ -32,19 +31,6 @@ class PageableDefaults {
 }
 
 class SnackbarMessages {
-
-    static readonly getNumbersLimitMessage = (
-        translatedMessage: NumbersLimitMessage,
-        digitsBeforeDecPoint: number,
-        digitsAfterDecPoint: number) =>
-        translatedMessage.start +
-        digitsBeforeDecPoint +
-        ' ' +
-        translatedMessage.middle +
-        ' ' +
-        digitsAfterDecPoint +
-        ' ' +
-        translatedMessage.end
 
     static readonly getErrorResponseMessage = (
         status: number,
