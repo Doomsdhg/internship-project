@@ -17,7 +17,7 @@ export class SelectLanguageComponent implements OnInit {
   private currentLanguage!: string;
 
   constructor(
-    private translateService: TranslateService,
+    private translateService: TranslateService
   ) { }
 
   public ngOnInit(): void {

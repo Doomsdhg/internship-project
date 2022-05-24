@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Constants } from 'src/app/constants/constants';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { AuthService } from 'src/app/services/web-services/auth.service';
+import { ThemeManagerService } from './../../../services/theme-manager.service';
 import { HeaderConstants } from './header.constants';
 import { Theme } from './Theme.model';
 
@@ -22,7 +22,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService,
-    private localStorageManagerService: LocalStorageManagerService
+    private localStorageManagerService: LocalStorageManagerService,
+    private themeManagerService: ThemeManagerService
   ) { }
 
   public get isAuthenticated(): boolean {
@@ -34,7 +35,6 @@ export class HeaderComponent implements OnInit {
       this.setCurrentRoute();
     });
     this.setCurrentTheme();
-    this.useCurrentThemeClass();
   }
 
   public redirectTo(route: string): void {
@@ -54,29 +54,18 @@ export class HeaderComponent implements OnInit {
   }
 
   private setCurrentTheme(): void {
-    const previouslySelectedThemeName = localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME);
+    const previouslySelectedThemeName = this.localStorageManagerService.chosenTheme;
     const defaultThemeName = HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
     this.currentTheme = new Theme(previouslySelectedThemeName || defaultThemeName);
   }
 
-  private useCurrentThemeClass(): void {
-    document.getElementsByTagName('body')[0].classList.add(this.currentTheme.name);
-  }
-
   private changeTheme(selectedTheme: Theme): void {
-    this.changeThemeClass(selectedTheme);
     this.currentTheme = selectedTheme;
-    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME, this.currentTheme.name);
+    this.themeManagerService.passNewTheme(this.currentTheme.name);
   }
 
   private setCurrentRoute(): void {
     this.currentRoute = String(window.location.href);
     this.changeDetectorRef.markForCheck();
-  }
-
-  private changeThemeClass(selectedTheme: Theme): void {
-    const body = document.getElementsByTagName('body')[0];
-    body.classList.remove(this.currentTheme.name);
-    body.classList.add(selectedTheme.name);
   }
 }

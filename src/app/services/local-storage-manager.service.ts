@@ -4,6 +4,7 @@ import moment from 'moment';
 import { AuthenticationData } from 'src/app/modules/interfaces/authentication.interface';
 import { Constants } from '../constants/constants';
 import { AuthenticationResponse, DecodedToken } from '../modules/interfaces/authentication.interface';
+import { HeaderConstants } from './../modules/components/header/header.constants';
 import { TimeFormatDifference } from './local-storage-manager.service.constants';
 
 @Injectable({
@@ -49,6 +50,10 @@ export class LocalStorageManagerService {
   public refreshToken(refreshResponse: AuthenticationResponse): void {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.TOKEN, refreshResponse.accessToken);
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.REFRESH_TOKEN, refreshResponse.refreshToken);
+  }
+
+  public get chosenTheme(): string {
+    return localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
   }
 
   private convertDateToLocalFormat(date: number): string {
