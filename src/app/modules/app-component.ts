@@ -1,3 +1,5 @@
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
+import { HeaderConstants } from './components/header/header.constants';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ThemeManagerService } from './../services/theme-manager.service';
 
@@ -13,7 +15,9 @@ export class AppComponent {
 
   public currentTheme!: string;
 
-  constructor(public themeManagerService: ThemeManagerService) {
+  constructor(private themeManagerService: ThemeManagerService) {
+    console.log(themeManagerService.themeSubject.value);
+    this.currentTheme = themeManagerService.themeSubject.value;
     this.subscribeToThemeChanges();
   }
 

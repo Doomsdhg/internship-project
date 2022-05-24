@@ -43,36 +43,13 @@ $success-color: mat-color($success-palette);
         color: $light-primary-color;
     }
 
-    .form-group {
-        border: 0.1rem solid $border-color;
-        box-shadow: 0.3rem 0.1rem 0.3rem $shadow-color;
-    }
-
     .header-wrapper {
         box-shadow: 0 0 1rem $border-color;
         -moz-box-shadow: 0 0 1rem $border-color;
         -webkit-box-shadow: 0 0 1rem $border-color;
     }
 
-    .form-wrapper {
-        border-bottom: 0.1rem solid $border-color;
-    }
-
-    .transaction-info-wrapper {
-        box-shadow: 0 0 1rem $shadow-color;
-        -moz-box-shadow: 0 0 1rem $shadow-color;
-        -webkit-box-shadow: 0 0 1rem $shadow-color;
-        margin-top: 3rem;
-    }
-
     .transactions-table-wrapper {
         box-shadow: 0 0 1rem $shadow-color;
     }
-
-    .add-transaction-wrapper {
-        .form-group {
-            box-shadow: 0 0 1rem $shadow-color;
-        }
-    }
-
 }

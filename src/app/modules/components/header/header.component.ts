@@ -61,7 +61,8 @@ export class HeaderComponent implements OnInit {
 
   private changeTheme(selectedTheme: Theme): void {
     this.currentTheme = selectedTheme;
-    this.themeManagerService.passNewTheme(this.currentTheme.name);
+    this.localStorageManagerService.setNewTheme(selectedTheme.name);
+    this.themeManagerService.passNewTheme(selectedTheme.name);
   }
 
   private setCurrentRoute(): void {

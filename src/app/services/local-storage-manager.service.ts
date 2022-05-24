@@ -52,6 +52,10 @@ export class LocalStorageManagerService {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.REFRESH_TOKEN, refreshResponse.refreshToken);
   }
 
+  public setNewTheme(newTheme: string): void {
+    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME, newTheme);
+  }
+
   public get chosenTheme(): string {
     return localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
   }
