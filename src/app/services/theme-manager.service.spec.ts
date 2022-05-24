@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { ThemeManagerService } from './theme-manager.service';
 
 describe('ThemeManagerService', () => {
