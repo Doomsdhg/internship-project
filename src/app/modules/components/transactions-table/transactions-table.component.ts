@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
+import { from, map } from 'rxjs';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/modules/interfaces/transactions.interface';
@@ -30,11 +31,7 @@ export class TransactionsTableComponent implements OnInit {
 
   public formsToggled = false;
 
-  public forbiddenIntegerLengthError = Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH;
-
-  public forbiddenNanInputError = Validation.ERRORS.FORBIDDEN_NAN_INPUT;
-
-  private validationErrors: (ValidationErrors | null)[] = [];
+  private validationErrors: ValidationErrors[] = [];
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -114,12 +111,24 @@ export class TransactionsTableComponent implements OnInit {
     this.dataSource.loadTransactions(0);
   }
 
-  public get amountErrors(): ValidationErrors | null | undefined {
-    return this.transactionUpdateForm.get(Columns.ID_AMOUNT)?.errors;
+  public get amountErrors(): ValidationErrors {
+    return this.transactionUpdateForm.get(Columns.ID_AMOUNT)?.errors || [];
   }
 
-  public get commissionAmountErrors(): ValidationErrors | null | undefined {
-    return this.transactionUpdateForm.get(Columns.ID_COMMISSION_AMOUNT)?.errors;
+  public get commissionAmountErrors(): ValidationErrors {
+    return this.transactionUpdateForm.get(Columns.ID_COMMISSION_AMOUNT)?.errors || [];
+  }
+
+  public isForbiddenLength(errorsObject: ValidationErrors): boolean {
+    return errorsObject[Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH];
+  }
+
+  public isForbiddenNan(errorsObject: ValidationErrors): boolean {
+    return errorsObject[Validation.ERRORS.FORBIDDEN_NAN_INPUT];
+  }
+
+  public get isFirstPage(): boolean {
+    return this.dataSource.currentPageNumber === 0;
   }
 
   private handleSuccessfulConfirmation(): void {
@@ -144,11 +153,11 @@ export class TransactionsTableComponent implements OnInit {
       user: this.transactionUpdateForm.value.user,
       status: this.transactionUpdateForm.value.status,
       amount: {
-        amount: +(+this.transactionUpdateForm.value.amount).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT),
+        amount: this.transformToFixed(this.transactionUpdateForm.value.amount),
         currency: this.transactionUpdateForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: +(+this.transactionUpdateForm.value.commissionAmount).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT),
+        amount: this.transformToFixed(this.transactionUpdateForm.value.commissionAmount),
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       provider: row.provider,
@@ -205,25 +214,33 @@ export class TransactionsTableComponent implements OnInit {
   private integerLengthValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const forbidden = (+control.value).toFixed().length > Validation.ALLOWED_INTEGERS_LENGTH;
-      return forbidden ? { [this.forbiddenIntegerLengthError]: true } : null;
+      return forbidden ? { [Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH]: true } : null;
     };
   }
 
   private numbersOnlyValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const forbidden = isNaN(+control.value);
-      return forbidden ? { [this.forbiddenNanInputError]: true } : null;
+      return forbidden ? { [Validation.ERRORS.FORBIDDEN_NAN_INPUT]: true } : null;
     };
   }
 
   private detectValidationErrors(): void {
-    const errorsArray = [];
+    const errorsArray: ValidationErrors[] = [];
     const controls = this.transactionUpdateForm.controls;
-    for (const name in controls) {
+    const controls$ = from(Object.keys(controls));
+    controls$
+    .pipe(map((name) => {
       if (controls[name].errors) {
-        errorsArray.push(controls[name].errors);
+        errorsArray.push(controls[name].errors as ValidationErrors);
       }
-    }
-    this.validationErrors = errorsArray;
+    }))
+    .subscribe(() => {
+      this.validationErrors = errorsArray;
+    });
+  }
+
+  private transformToFixed(value: string): number {
+    return +(+value).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT);
   }
 }
