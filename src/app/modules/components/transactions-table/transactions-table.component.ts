@@ -226,18 +226,14 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   private detectValidationErrors(): void {
-    const errorsArray: ValidationErrors[] = [];
+    const errorsArray = [];
     const controls = this.transactionUpdateForm.controls;
-    const controls$ = from(Object.keys(controls));
-    controls$
-    .pipe(map((name) => {
+    for (const name in controls) {
       if (controls[name].errors) {
         errorsArray.push(controls[name].errors as ValidationErrors);
       }
-    }))
-    .subscribe(() => {
-      this.validationErrors = errorsArray;
-    });
+    }
+    this.validationErrors = errorsArray;
   }
 
   private transformToFixed(value: string): number {
