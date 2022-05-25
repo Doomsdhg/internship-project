@@ -1,8 +1,8 @@
 import { environment } from 'src/environments/environment';
 import { environment as prodEnvironment } from 'src/environments/environment.prod';
-import { Pageable } from '../modules/models/Pageable.model';
-import { QueryPredicates } from '../modules/models/QueryPredicates.model';
-import { Sortable } from '../modules/models/Sortable.model';
+import { Pageable } from '../services/models/Pageable.model';
+import { QueryPredicates } from '../services/models/QueryPredicates.model';
+import { Sortable } from '../services/models/Sortable.model';
 
 class Base {
 

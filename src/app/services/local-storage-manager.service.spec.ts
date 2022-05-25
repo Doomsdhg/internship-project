@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { LocalStorageAcessors } from '../constants/local-storage-accessors.constants';
-import { AuthenticationResponse } from '../modules/interfaces/authentication.interface';
+import { AuthenticationResponse } from '../interfaces/authentication.interface';
 import { LocalStorageManagerService } from './local-storage-manager.service';
 
 describe('LocalStorageManagerService', () => {
