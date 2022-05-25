@@ -1,3 +1,5 @@
+import { SelectLanguageComponent } from 'src/app/layouts/base/pages/components/select-language/select-language.component';
+import { HeaderComponent } from 'src/app/layouts/base/pages/components/header/header.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -38,7 +40,9 @@ export function tokenGetter(): string | null {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    SelectLanguageComponent
   ],
   imports: [
     AuthLayoutModule,

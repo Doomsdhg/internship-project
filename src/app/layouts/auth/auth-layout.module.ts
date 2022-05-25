@@ -1,3 +1,4 @@
+import { AuthLayoutComponent } from './auth-layout.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -32,12 +33,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
 }
 
-export function tokenGetter(): string | null {
-  return localStorage.getItem('jwt');
-}
-
 @NgModule({
   declarations: [
+    AuthLayoutComponent,
     AuthPageComponent,
     AuthFormComponent
   ],
@@ -71,14 +69,6 @@ export function tokenGetter(): string | null {
       useDefaultLang: false,
     })
   ],
-  providers: [
-    MatSpinner,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    NotifyService,
-    TransactionApiService,
-    HttpClient,
-    CurrencyPipe
-  ],
-  bootstrap: [AppComponent],
+  bootstrap: [AuthLayoutComponent],
 })
 export class AuthLayoutModule { }

@@ -60,6 +60,10 @@ export class LocalStorageManagerService {
     return localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
   }
 
+  public get pageSize(): number {
+    return Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE)) || Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
+  }
+
   private convertDateToLocalFormat(date: number): string {
     return moment(((date + TimeFormatDifference.GMT_DIFFERENCE)) * TimeFormatDifference.MULTIPLIER).toString();
   }

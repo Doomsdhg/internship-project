@@ -37,19 +37,13 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
 }
 
-export function tokenGetter(): string | null {
-  return localStorage.getItem('jwt');
-}
-
 @NgModule({
   declarations: [
     BaseLayoutComponent,
     TransactionsTableComponent,
     TransactionsTablePageComponent,
     GuardDialogContentComponent,
-    SpinnerOverlayComponent,
-    HeaderComponent,
-    SelectLanguageComponent
+    SpinnerOverlayComponent
   ],
   imports: [
     MatProgressSpinnerModule,
@@ -80,14 +74,6 @@ export function tokenGetter(): string | null {
       },
       useDefaultLang: false,
     })
-  ],
-  providers: [
-    MatSpinner,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    NotifyService,
-    TransactionApiService,
-    HttpClient,
-    CurrencyPipe
   ],
   bootstrap: [BaseLayoutComponent],
 })

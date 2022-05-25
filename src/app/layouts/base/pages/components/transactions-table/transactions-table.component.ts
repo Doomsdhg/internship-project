@@ -1,3 +1,4 @@
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
@@ -34,7 +35,8 @@ export class TransactionsTableComponent implements OnInit {
 
   constructor(
     private transactionApiService: TransactionApiService,
-    private notifyService: NotifyService
+    private notifyService: NotifyService,
+    private localStorageManagerService: LocalStorageManagerService
   ) { }
 
   public ngOnInit(): void {
@@ -182,7 +184,7 @@ export class TransactionsTableComponent implements OnInit {
 
   private loadTransactionsData(): void {
     this.dataSource = new TransactionsDataSource(this.transactionApiService, this.notifyService);
-    this.dataSource.selectedPageSize = Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE));
+    this.dataSource.selectedPageSize = this.localStorageManagerService.pageSize;
     this.dataSource.loadTransactions();
   }
 
