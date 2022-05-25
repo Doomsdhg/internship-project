@@ -16,7 +16,6 @@ export class AppComponent implements OnInit{
   constructor(private themeManagerService: ThemeManagerService) {}
 
   public ngOnInit(): void {
-    this.currentTheme = this.themeManagerService.themeSubject.value;
     this.subscribeToThemeChanges();
   }
 
