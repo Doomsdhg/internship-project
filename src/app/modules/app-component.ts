@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ThemeManagerService } from './../services/theme-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -6,7 +7,21 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['app-component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   public title = 'internship-project';
+
+  public currentTheme!: string;
+
+  constructor(private themeManagerService: ThemeManagerService) {}
+
+  public ngOnInit(): void {
+    this.subscribeToThemeChanges();
+  }
+
+  private subscribeToThemeChanges(): void {
+    this.themeManagerService.themeSubject.asObservable().subscribe((newTheme) => {
+      this.currentTheme = newTheme;
+    });
+  }
 }
