@@ -1,8 +1,3 @@
-import { ErrorInterceptor } from 'src/app/layouts/error/interceptors/error.interceptor';
-import { ErrorLayoutModule } from './layouts/error/error-layout.module';
-import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
-import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
-import { HeaderComponent } from 'src/app/components/header/header.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -26,12 +21,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from 'src/app/app-routing.module';
+import { HeaderComponent } from 'src/app/components/header/header.component';
+import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
 import { AuthInterceptor } from 'src/app/layouts/auth/interceptors/auth.interceptor';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
+import { ErrorInterceptor } from 'src/app/layouts/error/interceptors/error.interceptor';
 import { NotifyService } from 'src/app/services/notify.service';
 import { AppComponent } from './app-component';
+import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 import { AuthLayoutModule } from './layouts/auth/auth-layout.module';
 import { BaseLayoutModule } from './layouts/base/base-layout.module';
+import { ErrorLayoutModule } from './layouts/error/error-layout.module';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');

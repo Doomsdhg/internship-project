@@ -4,21 +4,18 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter, last, map, Observable, takeLast, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { HttpStatusCode } from 'src/app/enums/HttpStatusCode';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
-    // if (request.url === 'http://localhost:4200/favicon.ico') {
-    //   return next.handle(request);
-    // }
     return next.handle(request)
-    .pipe(tap({
+      .pipe(tap({
         next: (response: any) => {
           return response;
         },
@@ -34,7 +31,6 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
           }
         }
-        }));
-    // last());
+      }));
   }
 }

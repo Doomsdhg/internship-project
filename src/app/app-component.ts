@@ -7,7 +7,7 @@ import { ThemeManagerService } from 'src/app/services/theme-manager.service';
   styleUrls: ['app-component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   public title = 'internship-project';
 
