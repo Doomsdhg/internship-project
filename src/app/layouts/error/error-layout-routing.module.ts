@@ -6,13 +6,17 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '**',
-    pathMatch: 'full',
+    path: AppRoutes.PAGE_NOT_FOUND,
     component: NotFoundPageComponent
   },
   {
     path: AppRoutes.INTERNAL_SERVER_ERROR,
     component: InternalServerErrorPageComponent
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    component: NotFoundPageComponent
   }
 ];
 

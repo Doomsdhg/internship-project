@@ -1,3 +1,4 @@
+import { ErrorInterceptor } from 'src/app/layouts/error/interceptors/error.interceptor';
 import { ErrorLayoutModule } from './layouts/error/error-layout.module';
 import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
@@ -79,6 +80,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   providers: [
     MatSpinner,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     NotifyService,
     TransactionApiService,
     HttpClient,

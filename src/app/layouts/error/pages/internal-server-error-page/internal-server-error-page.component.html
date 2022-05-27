@@ -2973,13 +2973,12 @@ class="internal-server-error-page-wrapper">
         <div 
         class="internal-server-error-text__content">
             <h1>500</h1>
-            <h2>Internal server error</h2>
-            <h3>Sorry, something unexpected happened.</h3>
-            <h3>Click on the button below to go to the home page.</h3>
+            <h2>{{'errors.internalServerError.h2' | translate}}</h2>
+            <h3>{{'errors.internalServerError.h3' | translate}}</h3>
             <button 
             mat-raised-button 
             (click)="redirectToHome()" 
-            class="internal-server-error-text__button">Home</button>
+            class="internal-server-error-text__button">{{'buttons.home' | translate}}</button>
         </div>
     </div>
 </div>
