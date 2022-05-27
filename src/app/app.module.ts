@@ -1,5 +1,7 @@
-import { SelectLanguageComponent } from 'src/app/layouts/base/pages/components/select-language/select-language.component';
-import { HeaderComponent } from 'src/app/layouts/base/pages/components/header/header.component';
+import { ErrorLayoutModule } from './layouts/error/error-layout.module';
+import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
+import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CurrencyPipe } from '@angular/common';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -34,19 +36,17 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
 }
 
-export function tokenGetter(): string | null {
-  return localStorage.getItem('jwt');
-}
-
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SelectLanguageComponent
+    SelectLanguageComponent,
+    SpinnerOverlayComponent
   ],
   imports: [
     AuthLayoutModule,
     BaseLayoutModule,
+    ErrorLayoutModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     MatSlideToggleModule,

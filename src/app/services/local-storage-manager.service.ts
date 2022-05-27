@@ -4,7 +4,7 @@ import moment from 'moment';
 import { AuthenticationData } from 'src/app/interfaces/authentication.interface';
 import { Constants } from '../constants/constants';
 import { AuthenticationResponse, DecodedToken } from '../interfaces/authentication.interface';
-import { HeaderConstants } from 'src/app/layouts/base/pages/components/header/header.constants';
+import { HeaderConstants } from 'src/app/components/header/header.constants';
 import { TimeFormatDifference } from './local-storage-manager.service.constants';
 
 @Injectable({
