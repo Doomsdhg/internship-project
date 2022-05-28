@@ -11,6 +11,7 @@ class LocalStorageAccessors {
     static readonly REFRESH_TOKEN = 'refreshToken';
     static readonly USERNAME = 'username';
     static readonly AUTHENTICATED = 'authenticated';
+    static readonly ERROR = 'error';
 }
 
 class LocalStorage {

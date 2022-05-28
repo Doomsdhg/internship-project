@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutes } from './../../constants/app-routes.constants';
-import { InternalServerErrorPageComponent } from './pages/internal-server-error-page/internal-server-error-page.component';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 
 const routes: Routes = [
   {
-    path: AppRoutes.PAGE_NOT_FOUND,
-    component: NotFoundPageComponent
+    path: AppRoutes.ERROR,
+    component: ErrorPageComponent
   },
   {
-    path: AppRoutes.INTERNAL_SERVER_ERROR,
-    component: InternalServerErrorPageComponent
-  },
-  {
-    path: '**',
+    path: AppRoutes.UNKNOWN_ROUTE,
     pathMatch: 'full',
     component: NotFoundPageComponent
   }

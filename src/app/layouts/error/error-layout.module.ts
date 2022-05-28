@@ -8,6 +8,7 @@ import { ErrorLayoutRoutingModule } from './error-layout-routing.module';
 import { ErrorLayoutComponent } from './error-layout.component';
 import { InternalServerErrorPageComponent } from './pages/internal-server-error-page/internal-server-error-page.component';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -17,7 +18,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   declarations: [
     ErrorLayoutComponent,
     NotFoundPageComponent,
-    InternalServerErrorPageComponent
+    InternalServerErrorPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     MatButtonModule,

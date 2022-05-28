@@ -1,3 +1,4 @@
+import { HttpStatusCode } from './../enums/HttpStatusCode';
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import moment from 'moment';
@@ -62,6 +63,14 @@ export class LocalStorageManagerService {
 
   public get pageSize(): number {
     return Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE)) || Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
+  }
+
+  public get error(): number {
+    return Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.ERROR) || Constants.LOCAL_STORAGE.DEFAULT_VALUE);
+  }
+
+  public set error(status: number) {
+    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.ERROR, String(status));
   }
 
   private convertDateToLocalFormat(date: number): string {

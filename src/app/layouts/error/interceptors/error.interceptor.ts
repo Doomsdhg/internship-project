@@ -6,12 +6,14 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
-import { HttpStatusCode } from 'src/app/enums/HttpStatusCode';
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private localStorageManagerService: LocalStorageManagerService) { }
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<any> {
     return next.handle(request)
@@ -20,16 +22,8 @@ export class ErrorInterceptor implements HttpInterceptor {
           return response;
         },
         error: (error: HttpErrorResponse) => {
-          switch (error.status) {
-            case HttpStatusCode.NOT_FOUND:
-              this.router.navigate([AppRoutes.PAGE_NOT_FOUND]);
-              break;
-            case HttpStatusCode.INTERNAL_SERVER_ERROR:
-              this.router.navigate([AppRoutes.INTERNAL_SERVER_ERROR]);
-              break;
-            default:
-              break;
-          }
+          this.localStorageManagerService.error = error.status;
+          this.router.navigate([AppRoutes.ERROR]);
         }
       }));
   }
