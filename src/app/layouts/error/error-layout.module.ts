@@ -6,9 +6,9 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ErrorLayoutRoutingModule } from './error-layout-routing.module';
 import { ErrorLayoutComponent } from './error-layout.component';
-import { InternalServerErrorPageComponent } from './pages/internal-server-error-page/internal-server-error-page.component';
-import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
+import { InternalServerErrorComponent } from './pages/components/internal-server-error/internal-server-error.component';
+import { NotFoundComponent } from './pages/components/not-found/not-found.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -17,8 +17,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
   declarations: [
     ErrorLayoutComponent,
-    NotFoundPageComponent,
-    InternalServerErrorPageComponent,
+    NotFoundComponent,
+    InternalServerErrorComponent,
     ErrorPageComponent
   ],
   imports: [

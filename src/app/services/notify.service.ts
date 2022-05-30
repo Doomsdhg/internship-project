@@ -20,6 +20,7 @@ export class NotifyService {
   }
 
   public showMessage(message: string, messageType: MessageType): void {
+    console.log(message + messageType);
     const config = this.createConfig(messageType);
     this.matSnackBar.open(message, undefined, config);
   }

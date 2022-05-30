@@ -1,14 +1,14 @@
 import {
   HttpErrorResponse, HttpEvent, HttpHandler,
-  HttpInterceptor, HttpRequest
+  HttpInterceptor, HttpRequest, HttpResponse
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import moment from 'moment';
-import { finalize, map, Observable, throwError } from 'rxjs';
+import { finalize, Observable, tap, throwError } from 'rxjs';
 import { Constants } from 'src/app/constants/constants';
+import { AuthService } from 'src/app/layouts/auth/services/auth.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
-import { AuthService } from 'src/app/layouts/auth/services/auth.service';
 import { HttpStatusCode } from '../../../enums/HttpStatusCode';
 
 @Injectable()
@@ -36,21 +36,17 @@ export class AuthInterceptor implements HttpInterceptor {
       this.authService.refreshToken();
     }
     return next.handle(request)
-      .pipe(
-        map((response: any): HttpEvent<any> | Observable<Error> | void => {
-          switch (response.status) {
-            case HttpStatusCode.UNAUTHORIZED:
-              this.authService.executeLogoutProcedures();
-              return this.handleError(response);
-              break;
-            case HttpStatusCode.OK:
-              return response;
-              break;
-            default:
-              return this.handleError(response);
-              break;
+      .pipe(tap({
+        next: (response: any): HttpResponse<any> => {
+          return response;
+        },
+        error: (response: any): Observable<Error> => {
+          if (response.status === HttpStatusCode.UNAUTHORIZED) {
+            this.authService.executeLogoutProcedures();
           }
-        }),
+          return this.handleError(response);
+        }
+      }),
         finalize(() => this.executeFinalProcedures())
       );
   }

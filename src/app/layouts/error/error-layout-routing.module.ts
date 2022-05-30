@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutes } from './../../constants/app-routes.constants';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
-import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
+import { NotFoundComponent } from './pages/components/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
   {
     path: AppRoutes.UNKNOWN_ROUTE,
     pathMatch: 'full',
-    component: NotFoundPageComponent
+    component: NotFoundComponent
   }
 ];
 

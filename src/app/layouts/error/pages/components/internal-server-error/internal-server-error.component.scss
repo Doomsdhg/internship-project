@@ -1,21 +1,20 @@
-.not-found-page-wrapper{
+.internal-server-error-page-wrapper{
     padding: 1rem;
     display: flex;
     flex-direction: row;
-    .not-found-image{
+    .internal-server-error-image{
         display: flex;
         flex: 1;
-        width: 30%;
-        height: 30%;
+        width: 50rem;
+        height: 50rem;
         justify-content: center;
-        margin-top: 15rem;
     }
-    .not-found-text{
+    .internal-server-error-text{
         display: flex;
         flex: 1;
         word-wrap: break-word;
         justify-content: center;
-        .not-found-text__content{
+        .internal-server-error-text__content{
             margin-top: 15%;
             margin-left: 1rem;
             *{
@@ -35,7 +34,7 @@
                 font-size: 2rem;
                 line-height: 3rem;
             }
-            .not-found-text__button{
+            .internal-server-error-text__button{
                 width: 7rem;
                 height: 3rem;
                 font-size: 1.5rem;
@@ -46,13 +45,13 @@
 }
 
 @media all and (max-width: 1024px) {
-    .not-found-page-wrapper{
+    .internal-server-error-page-wrapper{
         flex-direction: column;
-        .not-found-image{
+        .internal-server-error-image{
             margin-top: 0;
             width: 100%;
         }
-        .not-found-text__content{
+        .internal-server-error-text__content{
             margin-top: 0;
             h1{
                 line-height: 6rem !important;

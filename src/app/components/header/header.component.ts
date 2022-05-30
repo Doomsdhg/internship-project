@@ -4,7 +4,7 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
 import { AuthService } from 'src/app/layouts/auth/services/auth.service';
 import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 import { HeaderConstants } from './header.constants';
-import { Theme } from './Theme.model';
+import { Theme } from './theme.model';
 
 @Component({
   selector: 'intr-header',

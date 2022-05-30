@@ -1,4 +1,4 @@
-import { Theme } from './Theme.model';
+import { Theme } from './theme.model';
 
 class AvailableThemes {
 
