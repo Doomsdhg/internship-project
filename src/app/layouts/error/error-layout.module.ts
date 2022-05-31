@@ -6,7 +6,6 @@ import { ErrorLayoutRoutingModule } from './error-layout-routing.module';
 import { ErrorLayoutComponent } from './error-layout.component';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
 
-
 @NgModule({
   declarations: [
     ErrorLayoutComponent,
