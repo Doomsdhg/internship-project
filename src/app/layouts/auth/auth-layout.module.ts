@@ -28,14 +28,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HttpClientModule,
     AuthLayoutRoutingModule,
     BrowserAnimationsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      },
-      useDefaultLang: false,
-    })
+    TranslateModule
   ],
   bootstrap: [AuthLayoutComponent],
 })

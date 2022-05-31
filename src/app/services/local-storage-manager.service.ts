@@ -65,14 +65,6 @@ export class LocalStorageManagerService {
     return Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE)) || Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
   }
 
-  public get error(): number {
-    return Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.ERROR) || Constants.LOCAL_STORAGE.DEFAULT_VALUE);
-  }
-
-  public set error(status: number) {
-    localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.ERROR, String(status));
-  }
-
   private convertDateToLocalFormat(date: number): string {
     return moment(((date + TimeFormatDifference.GMT_DIFFERENCE)) * TimeFormatDifference.MULTIPLIER).toString();
   }

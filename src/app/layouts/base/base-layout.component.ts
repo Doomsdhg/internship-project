@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-base-layout',
-  templateUrl: './base-layout.component.html'
+  selector: 'intr-base-layout',
+  templateUrl: './base-layout.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BaseLayoutComponent { }

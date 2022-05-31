@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-error-layout',
-  templateUrl: './error-layout.component.html'
+  selector: 'intr-error-layout',
+  templateUrl: './error-layout.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorLayoutComponent { }

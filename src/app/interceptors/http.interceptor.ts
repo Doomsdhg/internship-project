@@ -1,33 +1,36 @@
 import {
   HttpErrorResponse, HttpEvent, HttpHandler,
-  HttpInterceptor, HttpRequest, HttpResponse
+  HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import moment from 'moment';
-import { finalize, Observable, tap, throwError } from 'rxjs';
-import { Constants } from 'src/app/constants/constants';
+import { finalize, Observable, tap } from 'rxjs';
+import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
+import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { AuthService } from 'src/app/layouts/auth/services/auth.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { SpinnerService } from 'src/app/services/spinner.service';
-import { HttpStatusCode } from '../../../enums/HttpStatusCode';
+import { HttpStatusCode } from '../enums/HttpStatusCode';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
+export class MainHttpInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
     private localStorageManagerService: LocalStorageManagerService,
-    private spinnerService: SpinnerService
+    private spinnerService: SpinnerService,
+    private router: Router
   ) { }
 
   private currentRequest!: HttpRequest<any>;
 
-  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
+  public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     this.spinnerService.displaySpinner();
     this.currentRequest = request;
     const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
-    const isLogOutRequest = request.body && request.body.username;
-    const isRefreshRequest = request.body && request.body.refreshToken;
+    const isLogOutRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL;
+    const isRefreshRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL;
     request = this.requestWithAuthHeader;
     if (!isAuthenticated || isLogOutRequest || isRefreshRequest) {
       return this.handleDefaultCase(request, next);
@@ -37,14 +40,23 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     return next.handle(request)
       .pipe(tap({
-        next: (response: any): HttpResponse<any> => {
+        next: (response: any): HttpEvent<unknown> => {
           return response;
         },
-        error: (response: any): Observable<Error> => {
-          if (response.status === HttpStatusCode.UNAUTHORIZED) {
-            this.authService.executeLogoutProcedures();
+        error: (response: any): HttpEvent<unknown> | void => {
+          switch (response.status) {
+            case HttpStatusCode.UNAUTHORIZED:
+              this.authService.executeLogoutProcedures();
+              break;
+            case HttpStatusCode.NOT_FOUND:
+              this.handleError(response);
+              break;
+            case HttpStatusCode.INTERNAL_SERVER_ERROR:
+              this.handleError(response);
+              break;
+            default:
+              return response;
           }
-          return this.handleError(response);
         }
       }),
         finalize(() => this.executeFinalProcedures())
@@ -68,8 +80,13 @@ export class AuthInterceptor implements HttpInterceptor {
     this.spinnerService.hideSpinner();
   }
 
-  private handleError(response: HttpErrorResponse): Observable<Error> {
-    const errorText = Constants.SNACKBAR.MESSAGES.getErrorResponseMessage(response.status, response.message);
-    return throwError(() => new Error(errorText));
+  public handleError(response: HttpErrorResponse): void {
+    this.router.navigateByUrl(AppRoutes.ERROR, {
+      state: {
+        status: response.status,
+        name: response.error.error,
+        message: response.error.message
+      }
+    });
   }
 }

@@ -43,14 +43,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatIconModule,
     BaseLayoutRoutingModule,
     BrowserAnimationsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      },
-      useDefaultLang: false,
-    })
+    TranslateModule
   ],
   bootstrap: [BaseLayoutComponent],
 })

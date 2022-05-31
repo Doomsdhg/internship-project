@@ -1,22 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { RedirectService } from 'src/app/services/redirect.service';
 import { HttpStatusCode } from './../../../../enums/HttpStatusCode';
-import { LocalStorageManagerService } from './../../../../services/local-storage-manager.service';
 
 @Component({
-  selector: 'app-error-page',
-  templateUrl: './error-page.component.html'
+  selector: 'intr-error-page',
+  templateUrl: './error-page.component.html',
+  styleUrls: ['./error-page.styles.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorPageComponent implements OnInit {
 
-  notFoundError = false;
+  public errorStatus!: number;
 
-  internalServerError = false;
+  public errorName!: string;
+
+  public errorMessage!: string;
+
+  public isPageNotFoundError!: boolean;
 
   constructor(
-    private localStorageManagerService: LocalStorageManagerService) { }
+    private redirectService: RedirectService) { }
 
   ngOnInit(): void {
-    this.notFoundError = this.localStorageManagerService.error === HttpStatusCode.NOT_FOUND ? true : false;
-    this.internalServerError = this.localStorageManagerService.error === HttpStatusCode.INTERNAL_SERVER_ERROR ? true : false;
+    this.getErrorInfo();
+  }
+
+  public redirectToHomePage(): void {
+    this.redirectService.goToHomePage();
+  }
+
+  private getErrorInfo(): void {
+    this.errorStatus = history.state.status;
+    this.errorName = history.state.name;
+    this.errorMessage = history.state.message;
+    this.isPageNotFoundError = history.state.status === HttpStatusCode.NOT_FOUND;
   }
 }
