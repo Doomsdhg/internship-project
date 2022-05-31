@@ -40,7 +40,7 @@ export class MainHttpInterceptor implements HttpInterceptor {
     }
     return next.handle(request)
       .pipe(
-        catchError((errorResponse: any): ObservableInput<any> => {
+        catchError((errorResponse: HttpErrorResponse): ObservableInput<any> => {
           switch (errorResponse.status) {
             case HttpStatusCode.UNAUTHORIZED:
               this.authService.executeLogoutProcedures();
@@ -54,7 +54,7 @@ export class MainHttpInterceptor implements HttpInterceptor {
             default:
               break;
           }
-          return errorResponse;
+          return [errorResponse];
         }),
         finalize(() => this.executeFinalProcedures())
       );
