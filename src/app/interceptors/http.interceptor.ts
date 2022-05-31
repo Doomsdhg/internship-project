@@ -5,7 +5,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import moment from 'moment';
-import { finalize, Observable, tap } from 'rxjs';
+import { catchError, finalize, Observable, ObservableInput } from 'rxjs';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { AuthService } from 'src/app/layouts/auth/services/auth.service';
@@ -39,26 +39,23 @@ export class MainHttpInterceptor implements HttpInterceptor {
       this.authService.refreshToken();
     }
     return next.handle(request)
-      .pipe(tap({
-        next: (response: any): HttpEvent<unknown> => {
-          return response;
-        },
-        error: (response: any): HttpEvent<unknown> | void => {
-          switch (response.status) {
+      .pipe(
+        catchError((errorResponse: any): ObservableInput<any> => {
+          switch (errorResponse.status) {
             case HttpStatusCode.UNAUTHORIZED:
               this.authService.executeLogoutProcedures();
               break;
             case HttpStatusCode.NOT_FOUND:
-              this.handleError(response);
+              this.handleError(errorResponse);
               break;
             case HttpStatusCode.INTERNAL_SERVER_ERROR:
-              this.handleError(response);
+              this.handleError(errorResponse);
               break;
             default:
-              return response;
+              break;
           }
-        }
-      }),
+          return errorResponse;
+        }),
         finalize(() => this.executeFinalProcedures())
       );
   }
