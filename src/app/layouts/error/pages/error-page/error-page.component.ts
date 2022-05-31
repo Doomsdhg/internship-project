@@ -12,10 +12,6 @@ export class ErrorPageComponent implements OnInit {
 
   public errorStatus!: number;
 
-  public errorName!: string;
-
-  public errorMessage!: string;
-
   public isPageNotFoundError!: boolean;
 
   constructor(
@@ -31,8 +27,6 @@ export class ErrorPageComponent implements OnInit {
 
   private getErrorInfo(): void {
     this.errorStatus = history.state.status;
-    this.errorName = history.state.name;
-    this.errorMessage = history.state.message;
     this.isPageNotFoundError = history.state.status === HttpStatusCode.NOT_FOUND;
   }
 }
