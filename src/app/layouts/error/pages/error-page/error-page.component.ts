@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { RedirectService } from 'src/app/services/redirect.service';
-import { HttpStatusCode } from './../../../../enums/HttpStatusCode';
+import { ErrorPageConstants } from './error-page.constants';
 
 @Component({
   selector: 'intr-error-page',
@@ -10,12 +12,19 @@ import { HttpStatusCode } from './../../../../enums/HttpStatusCode';
 })
 export class ErrorPageComponent implements OnInit {
 
-  public errorStatus!: number;
+  public errorCode!: number;
 
-  public isPageNotFoundError!: boolean;
+  public headLine!: string;
+
+  public message!: string;
+
+  public errorImageLink!: string;
+
+  public errorImageClass!: string;
 
   constructor(
-    private redirectService: RedirectService) { }
+    private redirectService: RedirectService,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.getErrorInfo();
@@ -26,7 +35,23 @@ export class ErrorPageComponent implements OnInit {
   }
 
   private getErrorInfo(): void {
-    this.errorStatus = history.state.status;
-    this.isPageNotFoundError = history.state.status === HttpStatusCode.NOT_FOUND;
+    this.errorCode = history.state.code;
+    this.getTranslatedErrorText();
+    this.getErrorImage();
+  }
+
+  private getTranslatedErrorText = (): void => {
+    const errorHeadlineEndpoint = TranslationsEndpoints.ERROR_PAGE.getErrorHeadlineEndpoint(this.errorCode);
+    const errorMessageEndPoint = TranslationsEndpoints.ERROR_PAGE.getErrorMessageEndpoint(this.errorCode);
+    this.translateService.get([errorHeadlineEndpoint, errorMessageEndPoint])
+      .subscribe((translation): void => {
+        this.headLine = translation[errorHeadlineEndpoint];
+        this.message = translation[errorMessageEndPoint];
+      });
+  }
+
+  private getErrorImage = (): void => {
+    this.errorImageLink = ErrorPageConstants.IMAGES_LINKS.getErrorImageLink(this.errorCode);
+    this.errorImageClass = ErrorPageConstants.CLASS_NAME.getErrorImageClass(this.errorCode);
   }
 }

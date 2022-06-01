@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TransactionApiService } from 'src/app/services/web-services/transaction-api.service';
-import { AuthInterceptor } from './http.interceptor';
+import { AuthInterceptor } from './base-http.interceptor';
 
 describe('AuthInterceptor', () => {
 

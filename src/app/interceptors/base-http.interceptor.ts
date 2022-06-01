@@ -1,3 +1,4 @@
+import { ErrorState } from './state.class';
 import {
   HttpErrorResponse, HttpEvent, HttpHandler,
   HttpInterceptor, HttpRequest
@@ -14,7 +15,7 @@ import { SpinnerService } from 'src/app/services/spinner.service';
 import { HttpStatusCode } from '../enums/HttpStatusCode';
 
 @Injectable()
-export class MainHttpInterceptor implements HttpInterceptor {
+export class BaseHttpInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
@@ -77,13 +78,7 @@ export class MainHttpInterceptor implements HttpInterceptor {
     this.spinnerService.hideSpinner();
   }
 
-  public handleError(response: HttpErrorResponse): void {
-    this.router.navigateByUrl(AppRoutes.ERROR, {
-      state: {
-        status: response.status,
-        name: response.error.error,
-        message: response.error.message
-      }
-    });
+  private handleError(response: HttpErrorResponse): void {
+    this.router.navigateByUrl(AppRoutes.ERROR, { state: new ErrorState(response.status) });
   }
 }

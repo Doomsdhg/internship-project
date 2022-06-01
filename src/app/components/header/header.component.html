@@ -8,21 +8,21 @@
         </button>
         <button class="links-container__link" mat-raised-button color="primary"
         *ngIf="isAuthenticated" 
-        (click)="logout()" >
+        (click)="logout()">
             {{'buttons.logout' | translate}}
         </button>
     </div>
     <div class="managing-tools-container">
         <div class="managing-tools-container__item">
             <button mat-button 
-            *ngIf="currentTheme.name === 'dark-theme'" 
+            *ngIf="isDarkTheme" 
             (click)="enableLightTheme()">
                 <span class="material-icons">
                     light_mode
                 </span>
             </button>
             <button mat-button 
-            *ngIf="currentTheme.name === 'light-theme'" 
+            *ngIf="isLightTheme" 
             (click)="enableDarkTheme()">
                 <span class="material-icons">
                     dark_mode
@@ -41,14 +41,14 @@
         <mat-menu #menu="matMenu">
             <div class="managing-tools-mobile__item">
                 <button mat-button 
-                *ngIf="currentTheme.name === 'dark-theme'" 
+                *ngIf="isDarkTheme" 
                 (click)="enableLightTheme()">
                     <span class="material-icons">
                         light_mode
                     </span>
                 </button>
                 <button mat-button 
-                *ngIf="currentTheme.name === 'light-theme'" 
+                *ngIf="isLightTheme" 
                 (click)="enableDarkTheme()">
                     <span class="material-icons">
                         dark_mode

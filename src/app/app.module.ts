@@ -15,7 +15,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { SelectLanguageComponent } from 'src/app/components/select-language/select-language.component';
-import { MainHttpInterceptor } from 'src/app/interceptors/http.interceptor';
+import { BaseHttpInterceptor } from 'src/app/interceptors/base-http.interceptor';
 import { AppComponent } from './app-component';
 import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 import { AuthLayoutModule } from './layouts/auth/auth-layout.module';
@@ -58,7 +58,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: MainHttpInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: BaseHttpInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
 })
