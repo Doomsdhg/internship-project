@@ -1,10 +1,11 @@
+import { HttpStatusCode } from './../enums/HttpStatusCode';
 import { Injectable } from '@angular/core';
 import jwtDecode from 'jwt-decode';
 import moment from 'moment';
-import { AuthenticationData } from 'src/app/modules/interfaces/authentication.interface';
+import { AuthenticationData } from 'src/app/interfaces/authentication.interface';
 import { Constants } from '../constants/constants';
-import { AuthenticationResponse, DecodedToken } from '../modules/interfaces/authentication.interface';
-import { HeaderConstants } from './../modules/components/header/header.constants';
+import { AuthenticationResponse, DecodedToken } from '../interfaces/authentication.interface';
+import { HeaderConstants } from 'src/app/components/header/header.constants';
 import { TimeFormatDifference } from './local-storage-manager.service.constants';
 
 @Injectable({
@@ -58,6 +59,10 @@ export class LocalStorageManagerService {
 
   public get chosenTheme(): string {
     return localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.THEME) || HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
+  }
+
+  public get pageSize(): number {
+    return Number(localStorage.getItem(Constants.LOCAL_STORAGE.ACCESSORS.PAGE_SIZE)) || Constants.PAGEABLE_DEFAULTS.PAGE_SIZE;
   }
 
   private convertDateToLocalFormat(date: number): string {

@@ -1,0 +1,19 @@
+<div class="auth-form-wrapper">
+    <form class="auth-form-wrapper__form"
+    [formGroup]="authForms" >
+        <mat-form-field class="auth-form-wrapper__input" appearance="fill">
+            <mat-label>{{'labels.login' | translate}}</mat-label>
+            <input matInput 
+            formControlName="login">
+        </mat-form-field>
+        <mat-form-field class="auth-form-wrapper__input" appearance="fill">
+            <mat-label>{{'labels.password' | translate}}</mat-label>
+            <input matInput type="password" 
+            formControlName="password">
+        </mat-form-field>
+        <button mat-raised-button color="primary"
+        (click)="login()" >
+            {{'buttons.login' | translate}}
+        </button>
+    </form>
+</div>
