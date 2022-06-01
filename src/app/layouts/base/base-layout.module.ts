@@ -15,13 +15,15 @@ import { GuardDialogContentComponent } from 'src/app/layouts/base/pages/componen
 import { TransactionsTableComponent } from 'src/app/layouts/base/pages/components/transactions-table/transactions-table.component';
 import { TransactionsTablePageComponent } from 'src/app/layouts/base/pages/transactions-table-page/transactions-table-page.component';
 import { BaseLayoutComponent } from './base-layout.component';
+import { AddTransactionComponent } from './pages/components/add-transaction/add-transaction.component';
 
 @NgModule({
   declarations: [
     BaseLayoutComponent,
     TransactionsTableComponent,
     TransactionsTablePageComponent,
-    GuardDialogContentComponent
+    GuardDialogContentComponent,
+    AddTransactionComponent
   ],
   imports: [
     MatSelectModule,

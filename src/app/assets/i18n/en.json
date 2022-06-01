@@ -4,13 +4,13 @@
     "currency": "Currency",
     "displayedColumns": {
         "externalId": "No.",
-        "user": "user",
+        "user": "User",
         "amount": "Amount",
-        "commissionAmount": "commission amount",
+        "commissionAmount": "Commission amount",
         "provider": "Provider",
         "actions": "Actions",
         "currency": "Currency",
-        "commissionCurrency": "commission currency",
+        "commissionCurrency": "Commission currency",
         "additionalData": "Additional data",
         "tools": "Tools",
         "status": "Status"

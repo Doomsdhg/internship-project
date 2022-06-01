@@ -13,6 +13,8 @@ class TransactionsEndpoints {
 
     static readonly BASE_GETTING_URL = `${Base.URL}admin/transactions`;
 
+    static readonly BASE_POSTING_URL = `${Base.URL}transactions`;
+
     static readonly getConfirmationUrl =
         (externalId: string, provider: string): string => `${this.BASE_GETTING_URL}?external_id=${externalId}&provider=${provider}`
 

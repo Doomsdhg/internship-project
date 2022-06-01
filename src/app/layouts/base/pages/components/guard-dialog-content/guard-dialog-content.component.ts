@@ -9,9 +9,7 @@ import { TransactionsTableComponent } from '../transactions-table/transactions-t
 })
 export class GuardDialogContentComponent {
 
-  constructor(
-    public matDialogRef: MatDialogRef<TransactionsTableComponent>
-  ) { }
+  constructor(private matDialogRef: MatDialogRef<TransactionsTableComponent>) { }
 
   public leaveCurrentPage(): void {
     this.matDialogRef.close(true);
