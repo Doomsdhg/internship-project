@@ -14,9 +14,9 @@ export class ErrorPageComponent implements OnInit {
 
   public errorCode!: number;
 
-  public headLine!: string;
+  public errorHeadLine!: string;
 
-  public message!: string;
+  public errorMessage!: string;
 
   public errorImageLink!: string;
 
@@ -45,8 +45,8 @@ export class ErrorPageComponent implements OnInit {
     const errorMessageEndPoint = TranslationsEndpoints.ERROR_PAGE.getErrorMessageEndpoint(this.errorCode);
     this.translateService.get([errorHeadlineEndpoint, errorMessageEndPoint])
       .subscribe((translation): void => {
-        this.headLine = translation[errorHeadlineEndpoint];
-        this.message = translation[errorMessageEndPoint];
+        this.errorHeadLine = translation[errorHeadlineEndpoint];
+        this.errorMessage = translation[errorMessageEndPoint];
       });
   }
 
