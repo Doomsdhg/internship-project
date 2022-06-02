@@ -82,11 +82,12 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData">
       </ng-template>
         <ng-template #editForms>
-          <div *ngIf="amountErrors">
-            <span *ngIf="isForbiddenLength(amountErrors)">
+          <div class="text-danger" 
+          *ngIf="getAmountErrors(transactionUpdateForm)">
+            <span *ngIf="isForbiddenLength(getAmountErrors(transactionUpdateForm))">
               {{'errors.forbiddenIntegerLength' | translate}}
             </span>
-            <span *ngIf="isForbiddenNan(amountErrors)">
+            <span *ngIf="isForbiddenNan(getAmountErrors(transactionUpdateForm))">
               {{'errors.forbiddenNanInput' | translate}}
             </span>
           </div>
@@ -131,11 +132,12 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData">
       </ng-template>
         <ng-template #editForms>
-          <div *ngIf="commissionAmountErrors">
-            <span *ngIf="isForbiddenLength(commissionAmountErrors)">
+          <div class="text-danger" 
+          *ngIf="getCommissionAmountErrors(transactionUpdateForm)">
+            <span *ngIf="isForbiddenLength(getCommissionAmountErrors(transactionUpdateForm))">
               {{'errors.forbiddenIntegerLength' | translate}}
             </span>
-            <span *ngIf="isForbiddenLength(commissionAmountErrors)">
+            <span *ngIf="isForbiddenNan(getCommissionAmountErrors(transactionUpdateForm))">
               {{'errors.forbiddenNanInput' | translate}}
             </span>
           </div>

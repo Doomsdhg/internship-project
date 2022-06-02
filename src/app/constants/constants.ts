@@ -47,9 +47,15 @@ class Snackbar {
     static readonly MESSAGES = SnackbarMessages;
 }
 
+class Forms {
+
+    static readonly DEFAULT_VALUE = '';
+}
+
 export class Constants {
 
     static readonly LOCAL_STORAGE = LocalStorage;
     static readonly PAGEABLE_DEFAULTS = PageableDefaults;
     static readonly SNACKBAR = Snackbar;
+    static readonly FORMS = Forms;
 }

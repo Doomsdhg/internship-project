@@ -5,7 +5,8 @@ import { TransactionsTableComponent } from 'src/app/layouts/base/pages/component
 
 @Component({
   selector: 'intr-transactions-table-page',
-  templateUrl: './transactions-table-page.component.html'
+  templateUrl: './transactions-table-page.component.html',
+  styleUrls: ['./transactions-table-page.component.scss']
 })
 export class TransactionsTablePageComponent {
 

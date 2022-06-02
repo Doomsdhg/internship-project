@@ -11,21 +11,25 @@ class Base {
 
 class TransactionsEndpoints {
 
-    static readonly BASE_GETTING_URL = `${Base.URL}admin/transactions`;
+    static readonly BASE_ADMIN_GETTING_URL = `${Base.URL}admin/transactions`;
 
-    static readonly BASE_POSTING_URL = `${Base.URL}transactions`;
+    static readonly BASE_GETTING_URL = `${Base.URL}transactions`;
 
     static readonly getConfirmationUrl =
-        (externalId: string, provider: string): string => `${this.BASE_GETTING_URL}?external_id=${externalId}&provider=${provider}`
+        (externalId: string, provider: string): string => `${this.BASE_ADMIN_GETTING_URL}?external_id=${externalId}&provider=${provider}`
 
-    static readonly getDeletionUrl = (id: string): string => `${this.BASE_GETTING_URL}${id}`;
+    static readonly getDeletionUrl = (id: string): string => `${this.BASE_ADMIN_GETTING_URL}${id}`;
 
     static readonly getPageableGettingUrl = (
         pageNumber: number,
         pageSize: number,
         sortColumn: string,
         sortOrder: string
-    ): string => `${this.BASE_GETTING_URL}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
+    ): string => `${this.BASE_ADMIN_GETTING_URL}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
+
+    static readonly getSearchingUrl = (id: string, provider: string): string => {
+        return this.BASE_GETTING_URL + '?id=' + id + 'provider=' +  provider;
+    }
 }
 
 class AuthEndpoints {

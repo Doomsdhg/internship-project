@@ -1,15 +1,60 @@
-import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
+import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
-import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { Columns, PossibleSortingDirections, Validation } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
+
+export function integerLengthValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const forbidden = (+control.value).toFixed().length > Validation.ALLOWED_INTEGERS_LENGTH;
+    return forbidden ? { [Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH]: true } : null;
+  };
+}
+
+export function numbersOnlyValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const forbidden = isNaN(+control.value);
+    return forbidden ? { [Validation.ERRORS.FORBIDDEN_NAN_INPUT]: true } : null;
+  };
+}
+
+export function transformToFixed(value: string): number {
+  return +(+value).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT);
+}
+
+export function isForbiddenLength(errorsObject: ValidationErrors): boolean {
+  return errorsObject[Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH];
+}
+
+export function isForbiddenNan(errorsObject: ValidationErrors): boolean {
+  return errorsObject[Validation.ERRORS.FORBIDDEN_NAN_INPUT];
+}
+
+export function getValidationErrors(formGroup: FormGroup): ValidationErrors[] {
+  const errorsArray = [];
+  const controls = formGroup.controls;
+  for (const name in controls) {
+    if (controls[name].errors) {
+      errorsArray.push(controls[name].errors as ValidationErrors);
+    }
+  }
+  return errorsArray;
+}
+
+export function getAmountErrors(formGroup: FormGroup): ValidationErrors {
+  return formGroup.get(Columns.ID_AMOUNT)?.errors || [];
+}
+
+export function getCommissionAmountErrors(formGroup: FormGroup): ValidationErrors {
+  return formGroup.get(Columns.ID_COMMISSION_AMOUNT)?.errors || [];
+}
 
 @Component({
   selector: 'intr-transactions-table',
@@ -30,6 +75,14 @@ export class TransactionsTableComponent implements OnInit {
   public sorted!: Sorted;
 
   public formsToggled = false;
+
+  public isForbiddenLength = isForbiddenLength;
+
+  public isForbiddenNan = isForbiddenNan;
+
+  public getAmountErrors = getAmountErrors;
+
+  public getCommissionAmountErrors = getCommissionAmountErrors;
 
   private validationErrors: ValidationErrors[] = [];
 
@@ -75,7 +128,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   public updateTransaction = (row: Row): void => {
-    this.detectValidationErrors();
+    this.validationErrors = getValidationErrors(this.transactionUpdateForm);
     if (this.validationErrors.length === 0) {
       const updateObj: TransactionUpdateData = this.createUpdateObject(row);
       this.transactionApiService.patchTransaction(updateObj).subscribe({
@@ -112,22 +165,6 @@ export class TransactionsTableComponent implements OnInit {
     this.dataSource.loadTransactions(0);
   }
 
-  public get amountErrors(): ValidationErrors {
-    return this.transactionUpdateForm.get(Columns.ID_AMOUNT)?.errors || [];
-  }
-
-  public get commissionAmountErrors(): ValidationErrors {
-    return this.transactionUpdateForm.get(Columns.ID_COMMISSION_AMOUNT)?.errors || [];
-  }
-
-  public isForbiddenLength(errorsObject: ValidationErrors): boolean {
-    return errorsObject[Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH];
-  }
-
-  public isForbiddenNan(errorsObject: ValidationErrors): boolean {
-    return errorsObject[Validation.ERRORS.FORBIDDEN_NAN_INPUT];
-  }
-
   public get isFirstPage(): boolean {
     return this.dataSource.currentPageNumber === 0;
   }
@@ -154,11 +191,11 @@ export class TransactionsTableComponent implements OnInit {
       user: this.transactionUpdateForm.value.user,
       status: this.transactionUpdateForm.value.status,
       amount: {
-        amount: this.transformToFixed(this.transactionUpdateForm.value.amount),
+        amount: transformToFixed(this.transactionUpdateForm.value.amount),
         currency: this.transactionUpdateForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: this.transformToFixed(this.transactionUpdateForm.value.commissionAmount),
+        amount: transformToFixed(this.transactionUpdateForm.value.commissionAmount),
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       provider: row.provider,
@@ -197,47 +234,18 @@ export class TransactionsTableComponent implements OnInit {
       user: new FormControl(row.user),
       status: new FormControl(row.status),
       amount: new FormControl(row.amount.amount, [
-        this.integerLengthValidator(),
-        this.numbersOnlyValidator()
+        integerLengthValidator(),
+        numbersOnlyValidator()
       ]
       ),
       currency: new FormControl(row.amount.currency),
       commissionAmount: new FormControl(row.commissionAmount.amount, [
-        this.integerLengthValidator(),
-        this.numbersOnlyValidator()
+        integerLengthValidator(),
+        numbersOnlyValidator()
       ]
       ),
       commissionCurrency: new FormControl(row.commissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     });
-  }
-
-  private integerLengthValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const forbidden = (+control.value).toFixed().length > Validation.ALLOWED_INTEGERS_LENGTH;
-      return forbidden ? { [Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH]: true } : null;
-    };
-  }
-
-  private numbersOnlyValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const forbidden = isNaN(+control.value);
-      return forbidden ? { [Validation.ERRORS.FORBIDDEN_NAN_INPUT]: true } : null;
-    };
-  }
-
-  private detectValidationErrors(): void {
-    const errorsArray = [];
-    const controls = this.transactionUpdateForm.controls;
-    for (const name in controls) {
-      if (controls[name].errors) {
-        errorsArray.push(controls[name].errors as ValidationErrors);
-      }
-    }
-    this.validationErrors = errorsArray;
-  }
-
-  private transformToFixed(value: string): number {
-    return +(+value).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT);
   }
 }

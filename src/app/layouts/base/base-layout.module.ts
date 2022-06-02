@@ -1,3 +1,4 @@
+import { HttpClientJsonpModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,6 +27,7 @@ import { AddTransactionComponent } from './pages/components/add-transaction/add-
     AddTransactionComponent
   ],
   imports: [
+    HttpClientJsonpModule,
     MatSelectModule,
     MatSortModule,
     FormsModule,

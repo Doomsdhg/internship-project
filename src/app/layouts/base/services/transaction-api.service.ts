@@ -33,29 +33,18 @@ export class TransactionApiService extends BaseApiService {
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_GETTING_URL, updateObj);
+    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_ADMIN_GETTING_URL, updateObj);
   }
 
   public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
     return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider), {});
   }
 
-  public uploadTransaction(updateData: TransactionUpdateData): Observable<Transaction> {
-    return this.post<Transaction>('http://localhost:8081/transactions?trace=true', {
-      id: 12345,
-      externalId: 'string',
-      provider: 'string',
-      status: 'INITIAL',
-      amount: {
-        amount: 10,
-        currency: 'string'
-      },
-      commissionAmount: {
-        amount: 1,
-        currency: 'string'
-      },
-      user: 'string',
-      additionalData: 'string'
-    });
+  public uploadTransaction(transactionData: TransactionUpdateData): Observable<Transaction> {
+    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_GETTING_URL, transactionData);
+  }
+
+  public findTransaction(id: string, provider: string): Observable<Transaction> {
+    return this.get<Transaction>(ApiEndpoints.TRANSACTIONS.getSearchingUrl(id, provider));
   }
 }
