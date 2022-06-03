@@ -1,22 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidationErrors } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Constants } from 'src/app/constants/constants';
 import { TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import { integerLengthValidator } from 'src/app/validators/integer-length.directive';
+import { numbersOnlyValidator } from 'src/app/validators/numbers-only.directive';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { TransactionsTablePageComponent } from '../../transactions-table-page/transactions-table-page.component';
-import {
-  getAmountErrors,
-  getCommissionAmountErrors,
-  getValidationErrors,
-  integerLengthValidator,
-  isForbiddenLength,
-  isForbiddenNan,
-  numbersOnlyValidator,
-  transformToFixed
-} from '../transactions-table/transactions-table.component';
+import { Validation } from '../transactions-table/transactions-table.constants';
 import { TranslationsEndpoints } from './../../../../../constants/translations-endpoints.constants';
 
 class TransactionConstants {
@@ -25,7 +18,7 @@ class TransactionConstants {
 }
 
 @Component({
-  selector: 'app-add-transaction',
+  selector: 'intr-add-transaction',
   templateUrl: './add-transaction.component.html',
   styleUrls: ['./add-transaction.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -33,16 +26,6 @@ class TransactionConstants {
 export class AddTransactionComponent implements OnInit {
 
   public transactionForm!: FormGroup;
-
-  public isForbiddenNan = isForbiddenNan;
-
-  public isForbiddenLength = isForbiddenLength;
-
-  public getAmountErrors = getAmountErrors;
-
-  public getCommissionAmountErrors = getCommissionAmountErrors;
-
-  private validationErrors: ValidationErrors[] = [];
 
   constructor(
     private transactionsDataSource: TransactionsDataSource,
@@ -56,16 +39,14 @@ export class AddTransactionComponent implements OnInit {
   }
 
   public addTransaction = (): void => {
-    this.validationErrors = getValidationErrors(this.transactionForm);
-    if (this.validationErrors.length === 0) {
-      const updateData = this.formTransactionData();
-      this.transactionApiService.uploadTransaction(updateData)
+    console.log(this.transactionForm);
+    if (this.transactionForm.valid) {
+      this.transactionApiService.uploadTransaction(this.buildTransactionData())
         .subscribe({
-          next: () => {
-            this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_ADDED, Constants.SNACKBAR.SUCCESS_TYPE);
+          complete: () => {
             this.transactionsDataSource.loadTransactions();
-            this.initFormGroup();
             this.matDialogRef.close();
+            this.notify.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_ADDED, Constants.SNACKBAR.SUCCESS_TYPE);
           }
         });
     }
@@ -77,12 +58,12 @@ export class AddTransactionComponent implements OnInit {
       username: new FormControl(Constants.FORMS.DEFAULT_VALUE),
       externalId: new FormControl(Constants.FORMS.DEFAULT_VALUE),
       amount: new FormControl(Constants.FORMS.DEFAULT_VALUE, [
-        integerLengthValidator(),
+        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]),
       currency: new FormControl(Constants.FORMS.DEFAULT_VALUE),
       commissionAmount: new FormControl(Constants.FORMS.DEFAULT_VALUE, [
-        integerLengthValidator(),
+        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]),
       commissionCurrency: new FormControl(Constants.FORMS.DEFAULT_VALUE),
@@ -90,21 +71,25 @@ export class AddTransactionComponent implements OnInit {
     });
   }
 
-  private formTransactionData = (): TransactionUpdateData => {
+  private buildTransactionData = (): TransactionUpdateData => {
     return {
       status: TransactionConstants.TRANSACTION_INITIAL_STATUS,
       externalId: this.transactionForm.value.externalId,
       provider: this.transactionForm.value.provider,
       amount: {
-        amount: transformToFixed(this.transactionForm.value.amount),
+        amount: this.transformToFixed(this.transactionForm.value.amount),
         currency: this.transactionForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: transformToFixed(this.transactionForm.value.commissionAmount),
+        amount: this.transformToFixed(this.transactionForm.value.commissionAmount),
         currency: this.transactionForm.value.commissionCurrency.toUpperCase()
       },
       user: this.transactionForm.value.username,
       additionalData: this.transactionForm.value.additionalData
     };
+  }
+
+  private transformToFixed(value: string): number {
+    return +(+value).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT);
   }
 }

@@ -28,14 +28,9 @@
                 required 
                 matInput 
                 placeholder="{{'placeholders.amount' | translate}}">
-                <div class="text-danger" 
-                *ngIf="getAmountErrors(transactionForm)">
-                    <span *ngIf="isForbiddenLength(getAmountErrors(transactionForm))">
-                      {{'errors.forbiddenIntegerLength' | translate}}
-                    </span>
-                    <span *ngIf="isForbiddenNan(getAmountErrors(transactionForm))">
-                      {{'errors.forbiddenNanInput' | translate}}
-                    </span>
+                <div [ngxErrors]="transactionForm.controls['amount']" class="text-danger">
+                    <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
+                    <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
                 </div>
             </mat-form-field>
             <mat-form-field class="form-group__form-input" appearance="fill">
@@ -53,14 +48,9 @@
                 required 
                 matInput
                 placeholder="{{'placeholders.commissionAmount' | translate}}">
-                <div class="text-danger" 
-                *ngIf="getCommissionAmountErrors(transactionForm)">
-                    <span *ngIf="isForbiddenLength(getCommissionAmountErrors(transactionForm))">
-                      {{'errors.forbiddenIntegerLength' | translate}}
-                    </span>
-                    <span *ngIf="isForbiddenNan(getCommissionAmountErrors(transactionForm))">
-                      {{'errors.forbiddenNanInput' | translate}}
-                    </span>
+                <div [ngxErrors]="transactionForm.controls['commissionAmount']" class="text-danger">
+                    <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
+                    <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
                 </div>
             </mat-form-field>
             <mat-form-field class="form-group__form-input" appearance="fill">

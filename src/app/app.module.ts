@@ -21,6 +21,8 @@ import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-ov
 import { AuthLayoutModule } from './layouts/auth/auth-layout.module';
 import { BaseLayoutModule } from './layouts/base/base-layout.module';
 import { ErrorLayoutModule } from './layouts/error/error-layout.module';
+import { IntegerLengthValidatorDirective } from './validators/integer-length.directive';
+import { NumbersOnlyValidatorDirective } from './validators/numbers-only.directive';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -31,7 +33,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppComponent,
     HeaderComponent,
     SelectLanguageComponent,
-    SpinnerOverlayComponent
+    SpinnerOverlayComponent,
+    NumbersOnlyValidatorDirective,
+    IntegerLengthValidatorDirective
   ],
   imports: [
     MatDialogModule,

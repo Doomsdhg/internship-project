@@ -59,6 +59,7 @@
     "errors": {
         "forbiddenIntegerLength": "The integer part of the number must be no longer than 10 characters",
         "forbiddenNanInput": "Only numerical symbols allowed",
+        "notUniqueIdProviderCombination": "Transaction with this №-provider combination already exists",
         "404": {
             "h2": "Woops!",
             "h3": "Page you are looking for was not found. Well, these things happen sometimes. Click on the button below to go to the home page."

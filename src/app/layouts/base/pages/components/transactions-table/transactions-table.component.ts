@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
@@ -7,54 +7,11 @@ import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/int
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import { integerLengthValidator } from 'src/app/validators/integer-length.directive';
+import { numbersOnlyValidator } from 'src/app/validators/numbers-only.directive';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { Columns, PossibleSortingDirections, Validation } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
-
-export function integerLengthValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const forbidden = (+control.value).toFixed().length > Validation.ALLOWED_INTEGERS_LENGTH;
-    return forbidden ? { [Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH]: true } : null;
-  };
-}
-
-export function numbersOnlyValidator(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const forbidden = isNaN(+control.value);
-    return forbidden ? { [Validation.ERRORS.FORBIDDEN_NAN_INPUT]: true } : null;
-  };
-}
-
-export function transformToFixed(value: string): number {
-  return +(+value).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT);
-}
-
-export function isForbiddenLength(errorsObject: ValidationErrors): boolean {
-  return errorsObject[Validation.ERRORS.FORBIDDEN_INTEGER_LENGTH];
-}
-
-export function isForbiddenNan(errorsObject: ValidationErrors): boolean {
-  return errorsObject[Validation.ERRORS.FORBIDDEN_NAN_INPUT];
-}
-
-export function getValidationErrors(formGroup: FormGroup): ValidationErrors[] {
-  const errorsArray = [];
-  const controls = formGroup.controls;
-  for (const name in controls) {
-    if (controls[name].errors) {
-      errorsArray.push(controls[name].errors as ValidationErrors);
-    }
-  }
-  return errorsArray;
-}
-
-export function getAmountErrors(formGroup: FormGroup): ValidationErrors {
-  return formGroup.get(Columns.ID_AMOUNT)?.errors || [];
-}
-
-export function getCommissionAmountErrors(formGroup: FormGroup): ValidationErrors {
-  return formGroup.get(Columns.ID_COMMISSION_AMOUNT)?.errors || [];
-}
 
 @Component({
   selector: 'intr-transactions-table',
@@ -75,16 +32,6 @@ export class TransactionsTableComponent implements OnInit {
   public sorted!: Sorted;
 
   public formsToggled = false;
-
-  public isForbiddenLength = isForbiddenLength;
-
-  public isForbiddenNan = isForbiddenNan;
-
-  public getAmountErrors = getAmountErrors;
-
-  public getCommissionAmountErrors = getCommissionAmountErrors;
-
-  private validationErrors: ValidationErrors[] = [];
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -128,8 +75,7 @@ export class TransactionsTableComponent implements OnInit {
   }
 
   public updateTransaction = (row: Row): void => {
-    this.validationErrors = getValidationErrors(this.transactionUpdateForm);
-    if (this.validationErrors.length === 0) {
+    if (this.transactionUpdateForm.valid) {
       const updateObj: TransactionUpdateData = this.createUpdateObject(row);
       this.transactionApiService.patchTransaction(updateObj).subscribe({
         next: () => {
@@ -191,11 +137,11 @@ export class TransactionsTableComponent implements OnInit {
       user: this.transactionUpdateForm.value.user,
       status: this.transactionUpdateForm.value.status,
       amount: {
-        amount: transformToFixed(this.transactionUpdateForm.value.amount),
+        amount: this.transformToFixed(this.transactionUpdateForm.value.amount),
         currency: this.transactionUpdateForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: transformToFixed(this.transactionUpdateForm.value.commissionAmount),
+        amount: this.transformToFixed(this.transactionUpdateForm.value.commissionAmount),
         currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
       },
       provider: row.provider,
@@ -234,18 +180,22 @@ export class TransactionsTableComponent implements OnInit {
       user: new FormControl(row.user),
       status: new FormControl(row.status),
       amount: new FormControl(row.amount.amount, [
-        integerLengthValidator(),
+        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]
       ),
       currency: new FormControl(row.amount.currency),
       commissionAmount: new FormControl(row.commissionAmount.amount, [
-        integerLengthValidator(),
+        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]
       ),
       commissionCurrency: new FormControl(row.commissionAmount.currency),
       additionalData: new FormControl(row.additionalData)
     });
+  }
+
+  private transformToFixed(value: string): number {
+    return +(+value).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT);
   }
 }

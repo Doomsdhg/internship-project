@@ -27,8 +27,8 @@ class TransactionsEndpoints {
         sortOrder: string
     ): string => `${this.BASE_ADMIN_GETTING_URL}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
 
-    static readonly getSearchingUrl = (id: string, provider: string): string => {
-        return this.BASE_GETTING_URL + '?id=' + id + 'provider=' +  provider;
+    static readonly getSearchingUrl = (id: string = 'qwe', provider: string = 'asd'): string => {
+        return this.BASE_GETTING_URL + '?external_id=' + id + '&provider=' +  provider;
     }
 }
 

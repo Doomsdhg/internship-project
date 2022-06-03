@@ -44,7 +44,7 @@ export class TransactionApiService extends BaseApiService {
     return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_GETTING_URL, transactionData);
   }
 
-  public findTransaction(id: string, provider: string): Observable<Transaction> {
-    return this.get<Transaction>(ApiEndpoints.TRANSACTIONS.getSearchingUrl(id, provider));
+  public findTransaction(id: string, provider: string): Observable<Transaction[]> {
+    return this.get<Transaction[]>(ApiEndpoints.TRANSACTIONS.getSearchingUrl(id, provider));
   }
 }

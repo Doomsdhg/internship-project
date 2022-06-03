@@ -17,6 +17,7 @@ import { TransactionsTableComponent } from 'src/app/layouts/base/pages/component
 import { TransactionsTablePageComponent } from 'src/app/layouts/base/pages/transactions-table-page/transactions-table-page.component';
 import { BaseLayoutComponent } from './base-layout.component';
 import { AddTransactionComponent } from './pages/components/add-transaction/add-transaction.component';
+import { NgxErrorsModule } from '@ngspot/ngx-errors';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AddTransactionComponent } from './pages/components/add-transaction/add-
     MatIconModule,
     BaseLayoutRoutingModule,
     BrowserAnimationsModule,
-    TranslateModule
+    TranslateModule,
+    NgxErrorsModule
   ],
   bootstrap: [BaseLayoutComponent],
 })
