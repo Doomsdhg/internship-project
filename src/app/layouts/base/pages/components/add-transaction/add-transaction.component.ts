@@ -39,7 +39,6 @@ export class AddTransactionComponent implements OnInit {
   }
 
   public addTransaction = (): void => {
-    console.log(this.transactionForm);
     if (this.transactionForm.valid) {
       this.transactionApiService.uploadTransaction(this.buildTransactionData())
         .subscribe({
