@@ -1,21 +1,18 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Constants } from 'src/app/constants/constants';
-import { TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
+import { CreateTransactionData } from 'src/app/interfaces/transactions.interface';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { integerLengthValidator } from 'src/app/validators/integer-length.directive';
-import { numbersOnlyValidator } from 'src/app/validators/numbers-only.directive';
+import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.validator';
+import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { TransactionsTablePageComponent } from '../../transactions-table-page/transactions-table-page.component';
 import { Validation } from '../transactions-table/transactions-table.constants';
 import { TranslationsEndpoints } from './../../../../../constants/translations-endpoints.constants';
-
-class TransactionConstants {
-
-  static readonly TRANSACTION_INITIAL_STATUS = 'INITIAL';
-}
+import { ControlName } from './../transactions-table/transactions-table.interfaces';
 
 @Component({
   selector: 'intr-add-transaction',
@@ -24,6 +21,8 @@ class TransactionConstants {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddTransactionComponent implements OnInit {
+
+  public readonly TRANSACTION_INITIAL_STATUS = 'INITIAL';
 
   public transactionForm!: FormGroup;
 
@@ -42,6 +41,9 @@ export class AddTransactionComponent implements OnInit {
     if (this.transactionForm.valid) {
       this.transactionApiService.uploadTransaction(this.buildTransactionData())
         .subscribe({
+          error: (errorResponse: HttpErrorResponse) => {
+            this.notify.showMessage(errorResponse.message, Constants.SNACKBAR.ERROR_TYPE);
+          },
           complete: () => {
             this.transactionsDataSource.loadTransactions();
             this.matDialogRef.close();
@@ -51,18 +53,22 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
+  public getControl(controlName: ControlName): AbstractControl {
+    return this.transactionForm.controls[controlName];
+  }
+
   private initFormGroup = (): void => {
     this.transactionForm = new FormGroup({
       provider: new FormControl(Constants.FORMS.DEFAULT_VALUE),
       username: new FormControl(Constants.FORMS.DEFAULT_VALUE),
       externalId: new FormControl(Constants.FORMS.DEFAULT_VALUE),
       amount: new FormControl(Constants.FORMS.DEFAULT_VALUE, [
-        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
+        maxIntegerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]),
       currency: new FormControl(Constants.FORMS.DEFAULT_VALUE),
       commissionAmount: new FormControl(Constants.FORMS.DEFAULT_VALUE, [
-        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
+        maxIntegerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]),
       commissionCurrency: new FormControl(Constants.FORMS.DEFAULT_VALUE),
@@ -70,9 +76,9 @@ export class AddTransactionComponent implements OnInit {
     });
   }
 
-  private buildTransactionData = (): TransactionUpdateData => {
+  private buildTransactionData = (): CreateTransactionData => {
     return {
-      status: TransactionConstants.TRANSACTION_INITIAL_STATUS,
+      status: this.TRANSACTION_INITIAL_STATUS,
       externalId: this.transactionForm.value.externalId,
       provider: this.transactionForm.value.provider,
       amount: {

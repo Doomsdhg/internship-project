@@ -15,7 +15,17 @@ export interface Transaction extends Object {
 }
 
 export interface TransactionUpdateData {
-  id?: string;
+  id: string;
+  externalId: string;
+  provider: string;
+  status: string;
+  amount: Amount;
+  commissionAmount: Amount;
+  user: string;
+  additionalData?: string;
+}
+
+export interface CreateTransactionData {
   externalId: string;
   provider: string;
   status: string;

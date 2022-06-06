@@ -54,7 +54,11 @@
         }
     }
 
-    .text-danger {
+    .required-text {
+        color: red;
+    }
+
+    .validation-error-text {
         color: red;
     }
 }

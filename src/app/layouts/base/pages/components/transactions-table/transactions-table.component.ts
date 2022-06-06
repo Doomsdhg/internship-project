@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
@@ -7,11 +7,11 @@ import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/int
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { integerLengthValidator } from 'src/app/validators/integer-length.directive';
-import { numbersOnlyValidator } from 'src/app/validators/numbers-only.directive';
+import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.validator';
+import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { Columns, PossibleSortingDirections, Validation } from './transactions-table.constants';
-import { Row, Sorted } from './transactions-table.interfaces';
+import { ControlName, Row, Sorted } from './transactions-table.interfaces';
 
 @Component({
   selector: 'intr-transactions-table',
@@ -111,6 +111,10 @@ export class TransactionsTableComponent implements OnInit {
     this.dataSource.loadTransactions(0);
   }
 
+  public getControl(controlName: ControlName): AbstractControl {
+    return this.transactionUpdateForm.controls[controlName];
+  }
+
   public get isFirstPage(): boolean {
     return this.dataSource.currentPageNumber === 0;
   }
@@ -180,13 +184,13 @@ export class TransactionsTableComponent implements OnInit {
       user: new FormControl(row.user),
       status: new FormControl(row.status),
       amount: new FormControl(row.amount.amount, [
-        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
+        maxIntegerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]
       ),
       currency: new FormControl(row.amount.currency),
       commissionAmount: new FormControl(row.commissionAmount.amount, [
-        integerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
+        maxIntegerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
         numbersOnlyValidator()
       ]
       ),

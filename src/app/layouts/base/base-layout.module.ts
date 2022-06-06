@@ -1,4 +1,3 @@
-import { HttpClientJsonpModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +9,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxErrorsModule } from '@ngspot/ngx-errors';
 import { TranslateModule } from '@ngx-translate/core';
 import { BaseLayoutRoutingModule } from 'src/app/layouts/base/base-layout-routing.module';
 import { GuardDialogContentComponent } from 'src/app/layouts/base/pages/components/guard-dialog-content/guard-dialog-content.component';
@@ -17,7 +17,6 @@ import { TransactionsTableComponent } from 'src/app/layouts/base/pages/component
 import { TransactionsTablePageComponent } from 'src/app/layouts/base/pages/transactions-table-page/transactions-table-page.component';
 import { BaseLayoutComponent } from './base-layout.component';
 import { AddTransactionComponent } from './pages/components/add-transaction/add-transaction.component';
-import { NgxErrorsModule } from '@ngspot/ngx-errors';
 
 @NgModule({
   declarations: [
@@ -28,7 +27,6 @@ import { NgxErrorsModule } from '@ngspot/ngx-errors';
     AddTransactionComponent
   ],
   imports: [
-    HttpClientJsonpModule,
     MatSelectModule,
     MatSortModule,
     FormsModule,

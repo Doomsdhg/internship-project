@@ -1,6 +1,6 @@
 <div class="add-transaction-wrapper">
     <div class="form-group">
-        <p class="required-text text-danger" >{{'requiredInputs' | translate}}</p>
+        <p class="form-group__required-text" >{{'requiredInputs' | translate}}</p>
         <form class="form-group__form" 
         [formGroup]="transactionForm">
             <mat-form-field class="form-group__form-input" appearance="fill">
@@ -28,7 +28,7 @@
                 required 
                 matInput 
                 placeholder="{{'placeholders.amount' | translate}}">
-                <div [ngxErrors]="transactionForm.controls['amount']" class="text-danger">
+                <div [ngxErrors]="getControl('amount')" class="validation-error-text">
                     <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
                     <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
                 </div>
@@ -48,7 +48,7 @@
                 required 
                 matInput
                 placeholder="{{'placeholders.commissionAmount' | translate}}">
-                <div [ngxErrors]="transactionForm.controls['commissionAmount']" class="text-danger">
+                <div [ngxErrors]="getControl('commissionAmount')" class="validation-error-text">
                     <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
                     <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
                 </div>
@@ -76,7 +76,6 @@
                 matInput
                 placeholder="{{'placeholders.additionalData' | translate}}"></textarea>
             </mat-form-field>
-
         </form>
         <button 
         mat-raised-button 
