@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { RedirectService } from 'src/app/services/redirect.service';
 import { ErrorPageConstants } from './error-page.constants';
@@ -13,15 +14,17 @@ export class ErrorPageComponent implements OnInit {
 
   public errorCode!: number;
 
-  public titleTranslationEndpoint!: string;
+  public errorHeadLine!: string;
 
-  public messageTranslationEndpoint!: string;
+  public errorMessage!: string;
 
   public errorImageLink!: string;
 
   public errorImageClass!: string;
 
-  constructor(private redirectService: RedirectService) { }
+  constructor(
+    private redirectService: RedirectService,
+    private translateService: TranslateService) { }
 
   ngOnInit(): void {
     this.getErrorInfo();
@@ -33,13 +36,18 @@ export class ErrorPageComponent implements OnInit {
 
   private getErrorInfo(): void {
     this.errorCode = history.state.code;
-    this.getTextTranslationEndpoints();
+    this.getTranslatedErrorText();
     this.getErrorImage();
   }
 
-  private getTextTranslationEndpoints = (): void => {
-    this.titleTranslationEndpoint = TranslationsEndpoints.ERROR_PAGE.getErrorHeadlineEndpoint(this.errorCode);
-    this.messageTranslationEndpoint = TranslationsEndpoints.ERROR_PAGE.getErrorMessageEndpoint(this.errorCode);
+  private getTranslatedErrorText = (): void => {
+    const errorHeadlineEndpoint = TranslationsEndpoints.ERROR_PAGE.getErrorHeadlineEndpoint(this.errorCode);
+    const errorMessageEndPoint = TranslationsEndpoints.ERROR_PAGE.getErrorMessageEndpoint(this.errorCode);
+    this.translateService.get([errorHeadlineEndpoint, errorMessageEndPoint])
+      .subscribe((translation): void => {
+        this.errorHeadLine = translation[errorHeadlineEndpoint];
+        this.errorMessage = translation[errorMessageEndPoint];
+      });
   }
 
   private getErrorImage = (): void => {
