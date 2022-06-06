@@ -79,6 +79,6 @@ export class BaseHttpInterceptor implements HttpInterceptor {
   }
 
   private handleError(response: HttpErrorResponse): void {
-    this.router.navigateByUrl(AppRoutes.ERROR, { state: new ErrorState(response.status) });
+    this.router.navigateByUrl(AppRoutes.getErrorPageRoute(response.status));
   }
 }

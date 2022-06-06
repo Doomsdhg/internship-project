@@ -4,13 +4,13 @@
     "currency": "Currency",
     "displayedColumns": {
         "externalId": "No.",
-        "user": "user",
+        "user": "User",
         "amount": "Amount",
-        "commissionAmount": "commission amount",
+        "commissionAmount": "Commission amount",
         "provider": "Provider",
         "actions": "Actions",
         "currency": "Currency",
-        "commissionCurrency": "commission currency",
+        "commissionCurrency": "Commission currency",
         "additionalData": "Additional data",
         "tools": "Tools",
         "status": "Status"
@@ -59,13 +59,14 @@
     "errors": {
         "forbiddenIntegerLength": "The integer part of the number must be no longer than 10 characters",
         "forbiddenNanInput": "Only numerical symbols allowed",
+        "notUniqueIdProviderCombination": "Transaction with this №-provider combination already exists",
         "404": {
-            "h2": "Woops!",
-            "h3": "Page you are looking for was not found. Well, these things happen sometimes. Click on the button below to go to the home page."
+            "title": "Woops!",
+            "message": "Page you are looking for was not found. Well, these things happen sometimes. Click on the button below to go to the home page."
         },
         "500": {
-            "h2": "Internal server error",
-            "h3": "Sorry, something unexpected happened. Click on the button below to go to the home page."
+            "title": "Internal server error",
+            "message": "Sorry, something unexpected happened. Click on the button below to go to the home page."
         }
     },
     "transactionInfo": "Transaction info",

@@ -15,11 +15,11 @@ class Snackbar {
 class ErrorPage {
 
     static readonly ERRORS_TRANSLATIONS_CONTAINER = 'errors';
-    static readonly HEADLINE = 'h2';
-    static readonly MESSAGE = 'h3';
+    static readonly TITLE = 'title';
+    static readonly MESSAGE = 'message';
 
     static readonly getErrorHeadlineEndpoint = (errorCode: number): string => {
-        return `${this.ERRORS_TRANSLATIONS_CONTAINER}.${errorCode}.${this.HEADLINE}`;
+        return `${this.ERRORS_TRANSLATIONS_CONTAINER}.${errorCode}.${this.TITLE}`;
     }
 
     static readonly getErrorMessageEndpoint = (errorCode: number): string => {

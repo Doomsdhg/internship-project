@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { AppRoutes } from 'src/app/constants/app-routes.constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { RedirectService } from 'src/app/services/redirect.service';
 import { ErrorPageConstants } from './error-page.constants';
@@ -14,9 +15,9 @@ export class ErrorPageComponent implements OnInit {
 
   public errorCode!: number;
 
-  public errorHeadLine!: string;
+  public titleTranslationEndpoint!: string;
 
-  public errorMessage!: string;
+  public messageTranslationEndpoint!: string;
 
   public errorImageLink!: string;
 
@@ -24,7 +25,8 @@ export class ErrorPageComponent implements OnInit {
 
   constructor(
     private redirectService: RedirectService,
-    private translateService: TranslateService) { }
+    private activatedRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
     this.getErrorInfo();
@@ -35,19 +37,17 @@ export class ErrorPageComponent implements OnInit {
   }
 
   private getErrorInfo(): void {
-    this.errorCode = history.state.code;
-    this.getTranslatedErrorText();
-    this.getErrorImage();
+    this.activatedRoute.queryParams
+      .subscribe((params: Params) => {
+        this.errorCode = params[AppRoutes.CODE_PARAM];
+        this.getTextTranslationEndpoints();
+        this.getErrorImage();
+      });
   }
 
-  private getTranslatedErrorText = (): void => {
-    const errorHeadlineEndpoint = TranslationsEndpoints.ERROR_PAGE.getErrorHeadlineEndpoint(this.errorCode);
-    const errorMessageEndPoint = TranslationsEndpoints.ERROR_PAGE.getErrorMessageEndpoint(this.errorCode);
-    this.translateService.get([errorHeadlineEndpoint, errorMessageEndPoint])
-      .subscribe((translation): void => {
-        this.errorHeadLine = translation[errorHeadlineEndpoint];
-        this.errorMessage = translation[errorMessageEndPoint];
-      });
+  private getTextTranslationEndpoints = (): void => {
+    this.titleTranslationEndpoint = TranslationsEndpoints.ERROR_PAGE.getErrorHeadlineEndpoint(this.errorCode);
+    this.messageTranslationEndpoint = TranslationsEndpoints.ERROR_PAGE.getErrorMessageEndpoint(this.errorCode);
   }
 
   private getErrorImage = (): void => {
