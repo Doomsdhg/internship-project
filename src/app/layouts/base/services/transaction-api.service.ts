@@ -29,7 +29,7 @@ export class TransactionApiService extends BaseApiService {
     sortColumn = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.active,
     sortOrder = Constants.PAGEABLE_DEFAULTS.SORT_EVENT.direction
   ): Observable<Transaction[]> {
-    return this.get<Transaction[]>(ApiEndpoints.TRANSACTIONS.getPageableGettingUrl(-1, pageSize, sortColumn, sortOrder));
+    return this.get<Transaction[]>(ApiEndpoints.TRANSACTIONS.getPageableGettingUrl(pageNumber, pageSize, sortColumn, sortOrder));
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
