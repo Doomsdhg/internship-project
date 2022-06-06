@@ -40,11 +40,16 @@ class SnackbarMessages {
 
 class Snackbar {
 
-    static readonly DURATION = 200000;
+    static readonly DURATION = 3000;
     static readonly ERROR_TYPE = 'error';
     static readonly SUCCESS_TYPE = 'success';
     static readonly CLASSNAME_POSTFIX = '-snackbar';
     static readonly MESSAGES = SnackbarMessages;
+}
+
+class Forms {
+
+    static readonly DEFAULT_VALUE = '';
 }
 
 export class Constants {
@@ -52,4 +57,5 @@ export class Constants {
     static readonly LOCAL_STORAGE = LocalStorage;
     static readonly PAGEABLE_DEFAULTS = PageableDefaults;
     static readonly SNACKBAR = Snackbar;
+    static readonly FORMS = Forms;
 }

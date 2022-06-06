@@ -9,31 +9,34 @@ class Base {
     static readonly URL = environment.serverUrl || prodEnvironment.serverUrl;
 }
 
-class TransactionsEndpoints {
+class Transactions {
 
-    static readonly BASE_GETTING_URL = `${Base.URL}admin/transactions`;
+    static readonly BASE = Base.URL;
+    static readonly TRANSACTIONS_ADMIN = `${this.BASE}admin/transactions`;
+    static readonly TRANSACTIONS_CORE = `${this.BASE}transactions`;
 
     static readonly getConfirmationUrl =
-        (externalId: string, provider: string): string => `${this.BASE_GETTING_URL}?external_id=${externalId}&provider=${provider}`
+        (externalId: string, provider: string): string => `${this.TRANSACTIONS_ADMIN}?external_id=${externalId}&provider=${provider}`
 
-    static readonly getDeletionUrl = (id: string): string => `${this.BASE_GETTING_URL}${id}`;
+    static readonly getDeletionUrl = (id: string): string => `${this.TRANSACTIONS_ADMIN}${id}`;
 
     static readonly getPageableGettingUrl = (
         pageNumber: number,
         pageSize: number,
         sortColumn: string,
         sortOrder: string
-    ): string => `${this.BASE_GETTING_URL}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
+    ): string => `${this.TRANSACTIONS_ADMIN}${new Pageable(new QueryPredicates(), pageNumber, pageSize, new Sortable(sortColumn, sortOrder)).toString()}`
 }
 
 class AuthEndpoints {
+
     static readonly BASE = `${Base.URL}auth`;
-    static readonly LOGINNING_URL = `${AuthEndpoints.BASE}/login`;
-    static readonly LOGOUTTING_URL = `${AuthEndpoints.BASE}/logout`;
-    static readonly TOKEN_REFRESHMENT_URL = `${AuthEndpoints.BASE}/refresh`;
+    static readonly LOGIN = `${AuthEndpoints.BASE}/login`;
+    static readonly LOGOUT = `${AuthEndpoints.BASE}/logout`;
+    static readonly REFRESH_TOKEN = `${AuthEndpoints.BASE}/refresh`;
 }
 
 export class ApiEndpoints {
     static readonly AUTH_ENDPOINTS = AuthEndpoints;
-    static readonly TRANSACTIONS = TransactionsEndpoints;
+    static readonly TRANSACTIONS = Transactions;
 }

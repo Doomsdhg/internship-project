@@ -31,7 +31,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     AppComponent,
     HeaderComponent,
     SelectLanguageComponent,
-    SpinnerOverlayComponent
+    SpinnerOverlayComponent,
   ],
   imports: [
     MatDialogModule,

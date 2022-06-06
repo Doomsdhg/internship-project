@@ -13,7 +13,7 @@
       </mat-header-cell>
       <mat-cell class="{{row.displayForms ? 'display-forms' : ''}}"
       *matCellDef="let row" >
-        <p class="required-text text-danger" 
+        <p class="required-text" 
         *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
         <p>
           {{row.externalId}}
@@ -82,14 +82,6 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData">
       </ng-template>
         <ng-template #editForms>
-          <div *ngIf="amountErrors">
-            <span *ngIf="isForbiddenLength(amountErrors)">
-              {{'errors.forbiddenIntegerLength' | translate}}
-            </span>
-            <span *ngIf="isForbiddenNan(amountErrors)">
-              {{'errors.forbiddenNanInput' | translate}}
-            </span>
-          </div>
           <div class="amount-form-container">
             <form [formGroup]="transactionUpdateForm">
               <mat-form-field class="amount-form-container__input" appearance="fill">
@@ -98,6 +90,10 @@
                 formControlName="amount"
                 value="{{row.amount.amount}}" 
                 placeholder="{{ 'placeholders.amount' | translate }}">
+                <div [ngxErrors]="getControl('amount')" class="validation-error-text">
+                  <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
+                  <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
+                </div>
               </mat-form-field>
             </form>
             <form [formGroup]="transactionUpdateForm">
@@ -131,22 +127,18 @@
         <ng-template *ngIf="row.displayForms; then editForms else rowData">
       </ng-template>
         <ng-template #editForms>
-          <div *ngIf="commissionAmountErrors">
-            <span *ngIf="isForbiddenLength(commissionAmountErrors)">
-              {{'errors.forbiddenIntegerLength' | translate}}
-            </span>
-            <span *ngIf="isForbiddenLength(commissionAmountErrors)">
-              {{'errors.forbiddenNanInput' | translate}}
-            </span>
-          </div>
           <div class="amount-form-container">
             <form [formGroup]="transactionUpdateForm">
               <mat-form-field class="amount-form-container__input" appearance="fill">
                 <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
-                <input required matInput 
+                <input required matInput
                 formControlName="commissionAmount"
                 value="{{row.commissionAmount.amount}}" 
                 placeholder="{{ 'placeholders.commissionAmount' | translate }}">
+                <div [ngxErrors]="getControl('commissionAmount')" class="validation-error-text">
+                  <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
+                  <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
+                </div>
               </mat-form-field>
             </form>
             <form [formGroup]="transactionUpdateForm">

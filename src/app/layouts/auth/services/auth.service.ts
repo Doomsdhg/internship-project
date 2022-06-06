@@ -71,17 +71,17 @@ export class AuthService {
   private sendRefreshTokenRequest(): Observable<AuthenticationResponse> {
     const refreshToken = this.localStorageManagerService.getAuthenticationInfo()?.refreshToken;
     const refreshTokenRequestBody: RefreshTokenRequestBody = { refreshToken };
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL, refreshTokenRequestBody);
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN, refreshTokenRequestBody);
   }
 
   private sendLogoutRequest(): Observable<LogoutResponse> {
     const username = this.localStorageManagerService.getAuthenticationInfo()?.username;
     const logoutRequestBody: LogoutRequestBody = { username };
-    return this.httpClient.post<LogoutResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL, logoutRequestBody);
+    return this.httpClient.post<LogoutResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGOUT, logoutRequestBody);
   }
 
   private sendLoginRequest(username: string, password: string): Observable<AuthenticationResponse> {
     const loginRequestBody: LoginRequestBody = { username, password };
-    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGINNING_URL, loginRequestBody);
+    return this.httpClient.post<AuthenticationResponse>(ApiEndpoints.AUTH_ENDPOINTS.LOGIN, loginRequestBody);
   }
 }

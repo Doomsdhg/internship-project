@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { Constants } from 'src/app/constants/constants';
 import {
-  ApiTransactionResponse, Transaction, TransactionUpdateData
+  ApiTransactionResponse, CreateTransactionData, Transaction, TransactionUpdateData
 } from 'src/app/interfaces/transactions.interface';
 import { BaseApiService } from './base-api.service';
 
@@ -33,10 +33,14 @@ export class TransactionApiService extends BaseApiService {
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_GETTING_URL, updateObj);
+    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_ADMIN, updateObj);
   }
 
   public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
     return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider), {});
+  }
+
+  public uploadTransaction(transactionData: CreateTransactionData): Observable<Transaction> {
+    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE, transactionData);
   }
 }

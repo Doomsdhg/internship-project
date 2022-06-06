@@ -9,19 +9,22 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxErrorsModule } from '@ngspot/ngx-errors';
 import { TranslateModule } from '@ngx-translate/core';
 import { BaseLayoutRoutingModule } from 'src/app/layouts/base/base-layout-routing.module';
 import { GuardDialogContentComponent } from 'src/app/layouts/base/pages/components/guard-dialog-content/guard-dialog-content.component';
 import { TransactionsTableComponent } from 'src/app/layouts/base/pages/components/transactions-table/transactions-table.component';
 import { TransactionsTablePageComponent } from 'src/app/layouts/base/pages/transactions-table-page/transactions-table-page.component';
 import { BaseLayoutComponent } from './base-layout.component';
+import { AddTransactionComponent } from './pages/components/add-transaction/add-transaction.component';
 
 @NgModule({
   declarations: [
     BaseLayoutComponent,
     TransactionsTableComponent,
     TransactionsTablePageComponent,
-    GuardDialogContentComponent
+    GuardDialogContentComponent,
+    AddTransactionComponent
   ],
   imports: [
     MatSelectModule,
@@ -36,7 +39,8 @@ import { BaseLayoutComponent } from './base-layout.component';
     MatIconModule,
     BaseLayoutRoutingModule,
     BrowserAnimationsModule,
-    TranslateModule
+    TranslateModule,
+    NgxErrorsModule
   ],
   bootstrap: [BaseLayoutComponent],
 })

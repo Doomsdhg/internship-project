@@ -36,3 +36,5 @@ export interface Translations {
     'displayedColumns.user': string;
     'displayedColumns.actions': string;
 }
+
+export type ControlName = 'amount' | 'commissionAmount';
