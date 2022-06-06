@@ -33,7 +33,7 @@ export class TransactionApiService extends BaseApiService {
   }
 
   public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_ADMIN_GETTING_URL, updateObj);
+    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_ADMIN, updateObj);
   }
 
   public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
@@ -41,6 +41,6 @@ export class TransactionApiService extends BaseApiService {
   }
 
   public uploadTransaction(transactionData: CreateTransactionData): Observable<Transaction> {
-    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.BASE_GETTING_URL, transactionData);
+    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE, transactionData);
   }
 }

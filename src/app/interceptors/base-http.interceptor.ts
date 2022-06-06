@@ -30,8 +30,8 @@ export class BaseHttpInterceptor implements HttpInterceptor {
     this.spinnerService.displaySpinner();
     this.currentRequest = request;
     const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
-    const isLogOutRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.LOGOUTTING_URL;
-    const isRefreshRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.TOKEN_REFRESHMENT_URL;
+    const isLogOutRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.LOGOUT;
+    const isRefreshRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN;
     request = this.requestWithAuthHeader;
     if (!isAuthenticated || isLogOutRequest || isRefreshRequest) {
       return this.handleDefaultCase(request, next);
