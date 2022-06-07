@@ -10,7 +10,7 @@ import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.val
 import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { TransactionsTablePageComponent } from '../../transactions-table-page/transactions-table-page.component';
-import { Validation } from '../transactions-table/transactions-table.constants';
+import { TransactionFieldsNames, Validation } from '../transactions-table/transactions-table.constants';
 import { TranslationsEndpoints } from './../../../../../constants/translations-endpoints.constants';
 import { ControlName, Row } from './../transactions-table/transactions-table.interfaces';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -100,7 +100,7 @@ export class AddTransactionComponent implements OnInit {
   private buildTransactionData = (): CreateTransactionData => {
     return {
       externalId: this.transactionForm.value.externalId,
-      user: this.transactionForm.value.username,
+      user: this.transactionForm.value.user,
       status: this.TRANSACTION_INITIAL_STATUS,
       amount: {
         amount: this.transformToFixed(this.transactionForm.value.amount),
@@ -118,19 +118,19 @@ export class AddTransactionComponent implements OnInit {
   private buildUpdateData(): TransactionUpdateData {
     return {
       id: this.data.rowData.id,
-      externalId: this.transactionForm.get('externalId')?.value,
-      user: this.transactionForm.get('user')?.value,
-      status: this.transactionForm.get('status')?.value,
+      externalId: this.transactionForm.get(TransactionFieldsNames.EXTERNAL_ID)?.value,
+      user: this.transactionForm.get(TransactionFieldsNames.USER)?.value,
+      status: this.transactionForm.get(TransactionFieldsNames.STATUS)?.value,
       amount: {
-        amount: this.transformToFixed(this.transactionForm.get('amount')?.value),
-        currency: this.transactionForm.get('currency')?.value.toUpperCase()
+        amount: this.transformToFixed(this.transactionForm.get(TransactionFieldsNames.AMOUNT)?.value),
+        currency: this.transactionForm.get(TransactionFieldsNames.CURRENCY)?.value.toUpperCase()
       },
       commissionAmount: {
-        amount: this.transformToFixed(this.transactionForm.get('commissionAmount')?.value),
-        currency: this.transactionForm.get('commissionCurrency')?.value.toUpperCase()
+        amount: this.transformToFixed(this.transactionForm.get(TransactionFieldsNames.COMMISSION_AMOUNT)?.value),
+        currency: this.transactionForm.get(TransactionFieldsNames.COMMISSION_CURRENCY)?.value.toUpperCase()
       },
-      provider: this.transactionForm.get('provider')?.value,
-      additionalData: this.transactionForm.get('additionalData')?.value
+      provider: this.transactionForm.get(TransactionFieldsNames.PROVIDER)?.value,
+      additionalData: this.transactionForm.get(TransactionFieldsNames.ADDITIONAL_DATA)?.value
     };
   }
 
