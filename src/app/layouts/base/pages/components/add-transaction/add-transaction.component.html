@@ -1,6 +1,5 @@
 <div class="add-transaction-wrapper">
     <div class="form-group">
-        <p class="form-group__required-text" >{{'requiredInputs' | translate}}</p>
         <form class="form-group__form" 
         [formGroup]="transactionForm">
             <mat-form-field class="form-group__form-input" appearance="fill">
@@ -11,8 +10,7 @@
                 matInput
                 placeholder="{{'placeholders.externalId' | translate}}">
             </mat-form-field>
-            <mat-form-field class="form-group__form-input" 
-            appearance="fill">
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
                 <input 
                 formControlName="provider" 
@@ -20,8 +18,7 @@
                 matInput
                 placeholder="{{'placeholders.provider' | translate}}">
             </mat-form-field>
-            <mat-form-field class="form-group__form-input" 
-            appearance="fill">
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
                 <input 
                 formControlName="amount" 
@@ -41,8 +38,7 @@
                 matInput
                 placeholder="{{'placeholders.currency' | translate}}">
             </mat-form-field>
-            <mat-form-field class="form-group__form-input" 
-            appearance="fill">
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
                 <input formControlName="commissionAmount" 
                 required 
@@ -64,12 +60,12 @@
             <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.user' | translate}}</mat-label>
                 <input 
-                formControlName="username" 
+                formControlName="user" 
                 required 
                 matInput
                 placeholder="{{'placeholders.user' | translate}}">
             </mat-form-field>
-            <mat-form-field appearance="fill">
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.additionalData' | translate}}</mat-label>
                 <textarea 
                 formControlName="additionalData" 
@@ -77,9 +73,13 @@
                 placeholder="{{'placeholders.additionalData' | translate}}"></textarea>
             </mat-form-field>
         </form>
-        <button 
+        <button *ngIf="isAddDialog"
         mat-raised-button 
         color="primary" 
-        (click)="addTransaction()">{{'buttons.uploadTransaction' | translate}}</button>
+        (click)="uploadTransaction()">{{'buttons.uploadTransaction' | translate}}</button>
+        <button *ngIf="isEditDialog"
+        mat-raised-button 
+        color="primary" 
+        (click)="updateTransaction()">{{'buttons.saveChanges' | translate}}</button>
     </div>
 </div>

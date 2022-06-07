@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
@@ -10,6 +11,7 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.validator';
 import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
+import { AddTransactionComponent } from '../add-transaction/add-transaction.component';
 import { Columns, PossibleSortingDirections, Validation } from './transactions-table.constants';
 import { ControlName, Row, Sorted } from './transactions-table.interfaces';
 
@@ -36,7 +38,8 @@ export class TransactionsTableComponent implements OnInit {
   constructor(
     private transactionApiService: TransactionApiService,
     private notifyService: NotifyService,
-    private localStorageManagerService: LocalStorageManagerService
+    private localStorageManagerService: LocalStorageManagerService,
+    private matDialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
@@ -115,6 +118,16 @@ export class TransactionsTableComponent implements OnInit {
     return this.transactionUpdateForm.controls[controlName];
   }
 
+  public openTransactionEditor(row: Row): void {
+    this.buildTransactionUpdateForms(row);
+    this.matDialog.open(AddTransactionComponent, {
+      data: {
+        rowData: row,
+        type: 'editTransaction'
+      }
+    });
+  }
+
   public get isFirstPage(): boolean {
     return this.dataSource.currentPageNumber === 0;
   }
@@ -181,6 +194,8 @@ export class TransactionsTableComponent implements OnInit {
 
   private buildTransactionUpdateForms = (row: Row) => {
     this.transactionUpdateForm = new FormGroup({
+      externalId: new FormControl(row.externalId),
+      provider: new FormControl(row.provider),
       user: new FormControl(row.user),
       status: new FormControl(row.status),
       amount: new FormControl(row.amount.amount, [

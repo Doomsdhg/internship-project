@@ -11,10 +11,7 @@
           {{ 'displayedColumns.externalId' | translate }}{{sorted && sorted.externalId !== undefined ? sorted!.externalId?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell class="{{row.displayForms ? 'display-forms' : ''}}"
-      *matCellDef="let row" >
-        <p class="required-text" 
-        *ngIf="row.displayForms">{{'requiredInputs' | translate}}</p>
+      <mat-cell *matCellDef="let row" >
         <p>
           {{row.externalId}}
         </p>
@@ -30,8 +27,7 @@
           {{ 'displayedColumns.provider' | translate }}{{sorted !== undefined && sorted.provider !== undefined ? sorted!.provider?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell class="{{row.displayForms ? 'display-forms' : ''}}"
-      *matCellDef="let row" >
+      <mat-cell *matCellDef="let row" >
         <p>
           {{row.provider}}
         </p>
@@ -47,24 +43,10 @@
           {{ 'displayedColumns.status' | translate }}{{sorted !== undefined && sorted.status !== undefined ? sorted!.status?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell class="{{row.displayForms ? 'display-forms' : ''}}" 
-      *matCellDef="let row" >
-        <ng-template *ngIf="row.displayForms; then editForms else rowData">
-        </ng-template>
-        <ng-template #editForms>
-          <form [formGroup]="transactionUpdateForm">
-            <mat-form-field class="amount-form-container__input" appearance="fill">
-              <mat-label>{{'displayedColumns.status' | translate}}</mat-label>
-              <input required matInput 
-              formControlName="status" 
-              value="{{row.status}}"
-              placeholder="{{ 'placeholders.status' | translate }}">
-            </mat-form-field>
-          </form>
-        </ng-template>
-        <ng-template #rowData>
+      <mat-cell *matCellDef="let row" >
+        <div>
           {{row.status}}
-        </ng-template>
+        </div>
       </mat-cell>
     </ng-container>
 
@@ -77,39 +59,10 @@
           {{ 'displayedColumns.amount' | translate }}{{sorted !== undefined && sorted.amount !== undefined ? sorted!.amount?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell class="{{row.displayForms ? 'display-forms' : ''}}"
-      *matCellDef="let row" >
-        <ng-template *ngIf="row.displayForms; then editForms else rowData">
-      </ng-template>
-        <ng-template #editForms>
-          <div class="amount-form-container">
-            <form [formGroup]="transactionUpdateForm">
-              <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
-                <input required matInput 
-                formControlName="amount"
-                value="{{row.amount.amount}}" 
-                placeholder="{{ 'placeholders.amount' | translate }}">
-                <div [ngxErrors]="getControl('amount')" class="validation-error-text">
-                  <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
-                  <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
-                </div>
-              </mat-form-field>
-            </form>
-            <form [formGroup]="transactionUpdateForm">
-              <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
-                <input required matInput 
-                formControlName="currency" 
-                value="{{row.amount.currency}}"
-                placeholder="{{ 'placeholders.currency' | translate }}">
-              </mat-form-field>
-            </form>
-          </div>
-        </ng-template>
-        <ng-template #rowData>
+      <mat-cell *matCellDef="let row" >
+        <div>
           {{row.amount.amount | currency: row.amount.currency}}
-        </ng-template>
+        </div>
       </mat-cell>
     </ng-container>
 
@@ -122,39 +75,10 @@
           {{ 'displayedColumns.commissionAmount' | translate }}{{sorted !== undefined && sorted.commissionAmount !== undefined ? sorted!.commissionAmount?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell class="{{row.displayForms ? 'display-forms' : ''}}"
-      *matCellDef="let row" >
-        <ng-template *ngIf="row.displayForms; then editForms else rowData">
-      </ng-template>
-        <ng-template #editForms>
-          <div class="amount-form-container">
-            <form [formGroup]="transactionUpdateForm">
-              <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
-                <input required matInput
-                formControlName="commissionAmount"
-                value="{{row.commissionAmount.amount}}" 
-                placeholder="{{ 'placeholders.commissionAmount' | translate }}">
-                <div [ngxErrors]="getControl('commissionAmount')" class="validation-error-text">
-                  <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
-                  <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
-                </div>
-              </mat-form-field>
-            </form>
-            <form [formGroup]="transactionUpdateForm">
-              <mat-form-field class="amount-form-container__input" appearance="fill">
-                <mat-label>{{'displayedColumns.commissionCurrency' | translate}}</mat-label>
-                <input required matInput 
-                formControlName="commissionCurrency" 
-                value="{{row.commissionAmount.currency}}"
-                placeholder="{{ 'placeholders.commissionCurrency' | translate }}">
-              </mat-form-field>
-            </form>
-          </div>
-        </ng-template>
-        <ng-template #rowData>
+      <mat-cell *matCellDef="let row" >
+        <div>
           {{row.commissionAmount.amount | currency: row.commissionAmount.currency}}
-        </ng-template>
+        </div>
       </mat-cell>
     </ng-container>
 
@@ -167,24 +91,10 @@
           {{ 'displayedColumns.user' | translate }}{{sorted !== undefined && sorted.user !== undefined ? sorted!.user?'▲':'▼':''}}
         </span>
       </mat-header-cell>
-      <mat-cell class="{{row.displayForms ? 'display-forms' : ''}}"
-      *matCellDef="let row" >
-        <ng-template *ngIf="row.displayForms; then editForms else rowData">
-        </ng-template>
-        <ng-template #editForms>
-          <form [formGroup]="transactionUpdateForm">
-            <mat-form-field class="amount-form-container__input" appearance="fill">
-              <mat-label>{{'displayedColumns.user' | translate}}</mat-label>
-              <input required matInput 
-              formControlName="user" 
-              value="{{row.user}}"
-              placeholder="{{ 'placeholders.user' | translate }}">
-            </mat-form-field>
-          </form>
-        </ng-template>
-        <ng-template #rowData>
+      <mat-cell *matCellDef="let row" >
+        <div>
           {{row.user}}
-        </ng-template>
+        </div>
       </mat-cell>
     </ng-container>
 
@@ -209,7 +119,7 @@
             <button mat-raised-button  
             *ngIf="row.status === 'INITIAL'" 
             [disabled]="formsToggled" 
-            (click)="toggleFormsDisplay(row)">
+            (click)="openTransactionEditor(row)">
               <mat-icon>edit</mat-icon>
             </button>
           </div>

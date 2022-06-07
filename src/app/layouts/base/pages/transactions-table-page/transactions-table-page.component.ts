@@ -20,6 +20,6 @@ export class TransactionsTablePageComponent {
   }
 
   public openAddingWindow(): void {
-    this.matDialog.open(AddTransactionComponent);
+    this.matDialog.open(AddTransactionComponent, {data: {type: 'addTransaction'}});
   }
 }
