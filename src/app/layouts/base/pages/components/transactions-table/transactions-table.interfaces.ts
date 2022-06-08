@@ -38,3 +38,5 @@ export interface Translations {
 }
 
 export type ControlName = 'amount' | 'commissionAmount';
+
+export type TransactionOperation = 'createTransaction' | 'editTransaction';
