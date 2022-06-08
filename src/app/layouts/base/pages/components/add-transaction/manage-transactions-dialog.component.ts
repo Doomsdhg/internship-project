@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Constants } from 'src/app/constants/constants';
-import { CreateTransactionData, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
+import { TransactionCreationData, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
 import { TransactionsTableComponent } from 'src/app/layouts/base/pages/components/transactions-table/transactions-table.component';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -11,7 +11,7 @@ import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.val
 import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
 import { TranslationsEndpoints } from '../../../../../constants/translations-endpoints.constants';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
-import { TransactionFieldsNames, Validation } from '../transactions-table/transactions-table.constants';
+import { Validation } from '../transactions-table/transactions-table.constants';
 import { ControlName, Row, TransactionOperation } from '../transactions-table/transactions-table.interfaces';
 import { TransactionOperationTypes } from './../transactions-table/transactions-table.constants';
 
@@ -112,7 +112,7 @@ export class ManageTransactionsDialogComponent implements OnInit {
     });
   }
 
-  private buildCreationData = (): CreateTransactionData => {
+  private buildCreationData = (): TransactionCreationData => {
     return {
       externalId: this.transactionForm.value.externalId,
       user: this.transactionForm.value.user,
@@ -133,24 +133,23 @@ export class ManageTransactionsDialogComponent implements OnInit {
   private buildUpdateData(): TransactionUpdateData {
     return {
       id: this.data.rowData.id,
-      externalId: this.transactionForm.get(TransactionFieldsNames.EXTERNAL_ID)?.value,
-      user: this.transactionForm.get(TransactionFieldsNames.USER)?.value,
-      status: this.transactionForm.get(TransactionFieldsNames.STATUS)?.value,
+      externalId: this.transactionForm.value.externalId,
+      user: this.transactionForm.value.user,
+      status: this.transactionForm.value.status,
       amount: {
-        amount: this.transformToFixed(this.transactionForm.get(TransactionFieldsNames.AMOUNT)?.value),
-        currency: this.transactionForm.get(TransactionFieldsNames.CURRENCY)?.value.toUpperCase()
+        amount: this.transformToFixed(this.transactionForm.value.amount),
+        currency: this.transactionForm.value.currency.toUpperCase()
       },
       commissionAmount: {
-        amount: this.transformToFixed(this.transactionForm.get(TransactionFieldsNames.COMMISSION_AMOUNT)?.value),
-        currency: this.transactionForm.get(TransactionFieldsNames.COMMISSION_CURRENCY)?.value.toUpperCase()
+        amount: this.transformToFixed(this.transactionForm.value.commissionAmount),
+        currency: this.transactionForm.value.commissionCurrency.toUpperCase()
       },
-      provider: this.transactionForm.get(TransactionFieldsNames.PROVIDER)?.value,
-      additionalData: this.transactionForm.get(TransactionFieldsNames.ADDITIONAL_DATA)?.value
+      provider: this.transactionForm.value.provider,
+      additionalData: this.transactionForm.value.additionalData
     };
   }
 
   private handleSuccessfulResponse = (messageTranslationEndpoint: string): void => {
-    this.transactionsDataSource.loadTransactions();
     this.notifyService.showTranslatedMessage(messageTranslationEndpoint, Constants.SNACKBAR.SUCCESS_TYPE);
     this.matDialogRef.close();
   }

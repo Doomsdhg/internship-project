@@ -25,7 +25,7 @@ export interface TransactionUpdateData {
   additionalData?: string;
 }
 
-export interface CreateTransactionData {
+export interface TransactionCreationData {
   externalId: string;
   provider: string;
   status: string;

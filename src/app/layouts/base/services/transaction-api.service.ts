@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { Constants } from 'src/app/constants/constants';
 import {
-  ApiTransactionResponse, CreateTransactionData, Transaction, TransactionUpdateData
+  ApiTransactionResponse, TransactionCreationData, Transaction, TransactionUpdateData
 } from 'src/app/interfaces/transactions.interface';
 import { BaseApiService } from './base-api.service';
 
@@ -40,7 +40,7 @@ export class TransactionApiService extends BaseApiService {
     return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider), {});
   }
 
-  public uploadTransaction(transactionData: CreateTransactionData): Observable<Transaction> {
+  public uploadTransaction(transactionData: TransactionCreationData): Observable<Transaction> {
     return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE, transactionData);
   }
 }
