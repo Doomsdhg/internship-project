@@ -1,10 +1,8 @@
-import { CdkOverlayOrigin, FullscreenOverlayContainer, OverlayContainer, OverlayModule, OverlayRef } from '@angular/cdk/overlay';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
@@ -22,7 +20,6 @@ import { AppComponent } from './app-component';
 import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-overlay.component';
 import { AuthLayoutModule } from './layouts/auth/auth-layout.module';
 import { BaseLayoutModule } from './layouts/base/base-layout.module';
-import { ManageTransactionsDialogComponent } from './layouts/base/pages/components/add-transaction/manage-transactions-dialog.component';
 import { ErrorLayoutModule } from './layouts/error/error-layout.module';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -37,8 +34,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     SpinnerOverlayComponent,
   ],
   imports: [
-    ScrollingModule,
-    OverlayModule,
     MatDialogModule,
     AuthLayoutModule,
     BaseLayoutModule,
@@ -63,7 +58,6 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     })
   ],
   providers: [
-    {provide: OverlayContainer, useClass: FullscreenOverlayContainer},
     { provide: HTTP_INTERCEPTORS, useClass: BaseHttpInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],

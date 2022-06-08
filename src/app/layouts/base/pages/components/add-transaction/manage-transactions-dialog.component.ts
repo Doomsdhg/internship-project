@@ -12,7 +12,7 @@ import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator'
 import { TranslationsEndpoints } from '../../../../../constants/translations-endpoints.constants';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { TransactionFieldsNames, Validation } from '../transactions-table/transactions-table.constants';
-import { ControlName, Row } from '../transactions-table/transactions-table.interfaces';
+import { ControlName, Row, TransactionOperation } from '../transactions-table/transactions-table.interfaces';
 import { TransactionOperationTypes } from './../transactions-table/transactions-table.constants';
 
 @Component({
@@ -27,7 +27,7 @@ export class ManageTransactionsDialogComponent implements OnInit {
 
   public transactionForm!: FormGroup;
 
-  public operationType!: string;
+  public operationType!: TransactionOperation;
 
   constructor(
     private transactionsDataSource: TransactionsDataSource,

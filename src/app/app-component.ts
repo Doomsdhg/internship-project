@@ -1,4 +1,4 @@
-import { CdkConnectedOverlay, OverlayContainer, OverlayRef } from '@angular/cdk/overlay';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 
@@ -14,8 +14,9 @@ export class AppComponent implements OnInit {
 
   public currentTheme!: string;
 
-  constructor(private themeManagerService: ThemeManagerService,
-    public overlay: OverlayContainer) {}
+  constructor(
+    private themeManagerService: ThemeManagerService,
+    public overlay: OverlayContainer) { }
 
   public ngOnInit(): void {
     this.subscribeToThemeChanges();

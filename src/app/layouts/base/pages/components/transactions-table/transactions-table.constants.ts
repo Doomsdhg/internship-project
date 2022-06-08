@@ -1,4 +1,4 @@
-import { Column } from './transactions-table.interfaces';
+import { Column, TransactionOperation } from './transactions-table.interfaces';
 
 export class Errors {
 
@@ -35,8 +35,8 @@ export class TransactionFieldsNames {
 
 export class TransactionOperationTypes {
 
-  static readonly CREATE = 'createTransaction';
-  static readonly EDIT = 'editTransaction';
+  static readonly CREATE: TransactionOperation = 'createTransaction';
+  static readonly EDIT: TransactionOperation = 'editTransaction';
 }
 
 export class Columns {

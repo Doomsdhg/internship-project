@@ -2,8 +2,7 @@
     <form
     [formControl]="selectLanguageForm" 
     (ngSubmit)="changeLanguage()">
-        <mat-form-field appearance="fill"
-        panelClass="language-select-box">
+        <mat-form-field appearance="fill">
             <mat-select
             [formControl]="selectLanguageForm" 
             (selectionChange)="changeLanguage()">

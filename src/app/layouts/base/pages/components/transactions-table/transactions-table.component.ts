@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
@@ -11,7 +11,7 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { ManageTransactionsDialogComponent } from '../add-transaction/manage-transactions-dialog.component';
 import { Columns, PossibleSortingDirections, TransactionOperationTypes } from './transactions-table.constants';
-import { ControlName, Row, Sorted } from './transactions-table.interfaces';
+import { Row, Sorted } from './transactions-table.interfaces';
 
 @Component({
   selector: 'intr-transactions-table',
@@ -90,10 +90,6 @@ export class TransactionsTableComponent implements OnInit {
 
   public loadFirstPage = () => {
     this.dataSource.loadTransactions(0);
-  }
-
-  public getControl(controlName: ControlName): AbstractControl {
-    return this.transactionUpdateForm.controls[controlName];
   }
 
   public openTransactionEditingDialog(row: Row): void {
