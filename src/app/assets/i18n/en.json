@@ -2,6 +2,11 @@
     "selectLanguage": "Select language",
     "amount": "Amount",
     "currency": "Currency",
+    "titles": {
+        "transactions": "Transactions",
+        "createTransaction": "Transaction creation",
+        "editTransaction": "Transaction editing"
+    },
     "displayedColumns": {
         "externalId": "No.",
         "user": "User",
@@ -16,6 +21,7 @@
         "status": "Status"
     },
     "required": {
+        "clear": "Clear",
         "externalId": "No. is required",
         "user": "user is required",
         "amount": "Amount is required",
@@ -59,14 +65,13 @@
     "errors": {
         "forbiddenIntegerLength": "The integer part of the number must be no longer than 10 characters",
         "forbiddenNanInput": "Only numerical symbols allowed",
-        "notUniqueIdProviderCombination": "Transaction with this №-provider combination already exists",
         "404": {
-            "title": "Woops!",
-            "message": "Page you are looking for was not found. Well, these things happen sometimes. Click on the button below to go to the home page."
+            "h2": "Woops!",
+            "h3": "Page you are looking for was not found. Well, these things happen sometimes. Click on the button below to go to the home page."
         },
         "500": {
-            "title": "Internal server error",
-            "message": "Sorry, something unexpected happened. Click on the button below to go to the home page."
+            "h2": "Internal server error",
+            "h3": "Sorry, something unexpected happened. Click on the button below to go to the home page."
         }
     },
     "transactionInfo": "Transaction info",
