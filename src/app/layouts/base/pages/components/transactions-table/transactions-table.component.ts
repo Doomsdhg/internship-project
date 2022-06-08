@@ -1,10 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
-import { TransactionCrudResponseError } from 'src/app/interfaces/transactions.interface';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -63,7 +63,7 @@ export class TransactionsTableComponent implements OnInit {
       next: () => {
         this.handleSuccessfulConfirmation();
       },
-      error: (error: TransactionCrudResponseError) => {
+      error: (error: HttpErrorResponse) => {
         this.handleError(error);
       }
     });
@@ -124,7 +124,7 @@ export class TransactionsTableComponent implements OnInit {
     this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_COMPLETED, Constants.SNACKBAR.SUCCESS_TYPE);
   }
 
-  private handleError(error: TransactionCrudResponseError): void {
+  private handleError(error: HttpErrorResponse): void {
     this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
   }
 
