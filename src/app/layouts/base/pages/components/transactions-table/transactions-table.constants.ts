@@ -1,4 +1,4 @@
-import { Column } from './transactions-table.interfaces';
+import { Column, TransactionOperation } from './transactions-table.interfaces';
 
 export class Errors {
 
@@ -17,6 +17,26 @@ export class PossibleSortingDirections {
 
   static readonly ASC = 'asc';
   static readonly DESC = 'desc';
+}
+
+export class TransactionFieldsNames {
+
+  static readonly ID = 'id';
+  static readonly EXTERNAL_ID = 'externalId';
+  static readonly USER = 'user';
+  static readonly STATUS = 'status';
+  static readonly AMOUNT = 'amount';
+  static readonly CURRENCY = 'currency';
+  static readonly COMMISSION_AMOUNT = 'commissionAmount';
+  static readonly COMMISSION_CURRENCY = 'commissionCurrency';
+  static readonly PROVIDER = 'provider';
+  static readonly ADDITIONAL_DATA = 'additionalData';
+}
+
+export class TransactionOperationTypes {
+
+  static readonly CREATE: TransactionOperation = 'createTransaction';
+  static readonly EDIT: TransactionOperation = 'editTransaction';
 }
 
 export class Columns {

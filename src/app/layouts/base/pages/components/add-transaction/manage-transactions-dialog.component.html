@@ -1,6 +1,6 @@
-<div class="add-transaction-wrapper">
+<div class="manage-transaction-dialog-wrapper">
+    <h1 class="dialog-title">{{'titles.' + operationType | translate}}</h1>
     <div class="form-group">
-        <p class="form-group__required-text" >{{'requiredInputs' | translate}}</p>
         <form class="form-group__form" 
         [formGroup]="transactionForm">
             <mat-form-field class="form-group__form-input" appearance="fill">
@@ -11,8 +11,7 @@
                 matInput
                 placeholder="{{'placeholders.externalId' | translate}}">
             </mat-form-field>
-            <mat-form-field class="form-group__form-input" 
-            appearance="fill">
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.provider' | translate}}</mat-label>
                 <input 
                 formControlName="provider" 
@@ -20,18 +19,19 @@
                 matInput
                 placeholder="{{'placeholders.provider' | translate}}">
             </mat-form-field>
-            <mat-form-field class="form-group__form-input" 
-            appearance="fill">
+            <div class="validation-error-container">
+                <div [ngxErrors]="getControl('amount')" class="validation-error-container__text">
+                    <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
+                    <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
+                </div>
+            </div>
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
                 <input 
                 formControlName="amount" 
                 required 
                 matInput 
                 placeholder="{{'placeholders.amount' | translate}}">
-                <div [ngxErrors]="getControl('amount')" class="validation-error-text">
-                    <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
-                    <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
-                </div>
             </mat-form-field>
             <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
@@ -41,18 +41,20 @@
                 matInput
                 placeholder="{{'placeholders.currency' | translate}}">
             </mat-form-field>
-            <mat-form-field class="form-group__form-input" 
-            appearance="fill">
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.commissionAmount' | translate}}</mat-label>
-                <input formControlName="commissionAmount" 
+                <input 
+                formControlName="commissionAmount" 
                 required 
                 matInput
                 placeholder="{{'placeholders.commissionAmount' | translate}}">
-                <div [ngxErrors]="getControl('commissionAmount')" class="validation-error-text">
+            </mat-form-field>
+            <div class="validation-error-container">
+                <div [ngxErrors]="getControl('commissionAmount')" class="validation-error-container__text">
                     <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
                     <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
                 </div>
-            </mat-form-field>
+            </div>
             <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.commissionCurrency' | translate}}</mat-label>
                 <input 
@@ -64,12 +66,12 @@
             <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.user' | translate}}</mat-label>
                 <input 
-                formControlName="username" 
+                formControlName="user" 
                 required 
                 matInput
                 placeholder="{{'placeholders.user' | translate}}">
             </mat-form-field>
-            <mat-form-field appearance="fill">
+            <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.additionalData' | translate}}</mat-label>
                 <textarea 
                 formControlName="additionalData" 
@@ -77,9 +79,21 @@
                 placeholder="{{'placeholders.additionalData' | translate}}"></textarea>
             </mat-form-field>
         </form>
-        <button 
-        mat-raised-button 
-        color="primary" 
-        (click)="addTransaction()">{{'buttons.uploadTransaction' | translate}}</button>
+        <div class="buttons-group"
+        *ngIf="isCreateDialog">
+            <button mat-raised-button color="primary" 
+            disabled="{{!formIsValid}}"
+            (click)="uploadTransaction()">{{'buttons.uploadTransaction' | translate}}</button>
+            <button class="clear-button" mat-raised-button color="primary" 
+            (click)="clearForms()">{{'buttons.clear' | translate}}</button>
+        </div>
+        <div class="buttons-group"
+        *ngIf="isEditDialog">
+            <button mat-raised-button color="primary" 
+            disabled="{{!formIsValid}}"
+            (click)="patchTransaction()">{{'buttons.saveChanges' | translate}}</button>
+            <button class="cancel-button" mat-raised-button color="primary" 
+            (click)="cancelChanges()">{{'buttons.cancel' | translate}}</button>
+        </div>
     </div>
 </div>
