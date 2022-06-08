@@ -1,5 +1,8 @@
 <div class="transactions-table-wrapper">
-  <table mat-table matSort class="w-100-percents"
+  <h1 class="transactions-title">{{'titles.transactions' | translate}}</h1>
+  <button mat-raised-button class="add-transaction-button" color="primary"
+  (click)="openTransactionAddingDialog()">+</button>
+  <table mat-table matSort class="w-100-percents transactions-table"
   [dataSource]="dataSource">
 
     <!-- External id Column -->
@@ -119,22 +122,8 @@
             <button mat-raised-button  
             *ngIf="row.status === 'INITIAL'" 
             [disabled]="formsToggled" 
-            (click)="openTransactionEditor(row)">
+            (click)="openTransactionEditingDialog(row)">
               <mat-icon>edit</mat-icon>
-            </button>
-          </div>
-          <div class="buttons-group"
-          *ngIf="row.displayForms" >
-            <button mat-raised-button 
-            (click)="updateTransaction(row)">
-              {{'buttons.saveChanges' | translate}}
-            </button>
-          </div>
-          <div class="buttons-group"
-          *ngIf="row.displayForms" >
-            <button mat-raised-button 
-            (click)="toggleFormsDisplay(row)">
-              {{'buttons.cancelChanges' | translate}}
             </button>
           </div>
         </div>

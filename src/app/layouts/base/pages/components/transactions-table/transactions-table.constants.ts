@@ -33,6 +33,12 @@ export class TransactionFieldsNames {
   static readonly ADDITIONAL_DATA = 'additionalData';
 }
 
+export class TransactionOperationTypes {
+
+  static readonly CREATE = 'createTransaction';
+  static readonly EDIT = 'editTransaction';
+}
+
 export class Columns {
 
   static readonly ID_EXTERNAL_ID = 'externalId';

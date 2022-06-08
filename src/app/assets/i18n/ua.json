@@ -2,6 +2,11 @@
     "selectLanguage": "Оберіть мову",
     "amount": "Сума",
     "currency": "Валюта",
+    "titles": {
+        "transactions": "Транзакції",
+        "createTransaction": "Створення транзакції", 
+        "editTransaction": "Редагування даних транзакції"
+    },
     "displayedColumns": {
         "externalId": "Номер",
         "user": "Ім'я користувача",
@@ -16,6 +21,7 @@
         "status": "Статус"
     },
     "buttons": {
+        "clear": "Очистити",
         "delete": "Видалити",
         "edit": "Редагувати",
         "cancel": "Скасувати",

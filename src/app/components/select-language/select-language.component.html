@@ -1,10 +1,10 @@
 <div class="select-language-form-wrapper">
-    <form 
+    <form
     [formControl]="selectLanguageForm" 
     (ngSubmit)="changeLanguage()">
-        <mat-form-field appearance="fill">
-            <mat-label>{{'selectLangugae' | translate}}</mat-label>
-            <mat-select 
+        <mat-form-field appearance="fill"
+        panelClass="language-select-box">
+            <mat-select
             [formControl]="selectLanguageForm" 
             (selectionChange)="changeLanguage()">
                 <mat-option value="en">English</mat-option>

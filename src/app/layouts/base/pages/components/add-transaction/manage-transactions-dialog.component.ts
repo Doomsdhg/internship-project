@@ -1,47 +1,50 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Constants } from 'src/app/constants/constants';
-import { CreateTransactionData, TransactionCrudResponseError, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
+import { CreateTransactionData, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
+import { TransactionsTableComponent } from 'src/app/layouts/base/pages/components/transactions-table/transactions-table.component';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.validator';
 import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
+import { TranslationsEndpoints } from '../../../../../constants/translations-endpoints.constants';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
-import { TransactionsTablePageComponent } from '../../transactions-table-page/transactions-table-page.component';
 import { TransactionFieldsNames, Validation } from '../transactions-table/transactions-table.constants';
-import { TranslationsEndpoints } from './../../../../../constants/translations-endpoints.constants';
-import { ControlName, Row } from './../transactions-table/transactions-table.interfaces';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ControlName, Row } from '../transactions-table/transactions-table.interfaces';
+import { TransactionOperationTypes } from './../transactions-table/transactions-table.constants';
 
 @Component({
   selector: 'intr-add-transaction',
-  templateUrl: './add-transaction.component.html',
-  styleUrls: ['./add-transaction.component.scss'],
+  templateUrl: './manage-transactions-dialog.component.html',
+  styleUrls: ['./manage-transactions-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AddTransactionComponent implements OnInit {
+export class ManageTransactionsDialogComponent implements OnInit {
 
   public readonly TRANSACTION_INITIAL_STATUS = 'INITIAL';
 
   public transactionForm!: FormGroup;
 
+  public operationType!: string;
+
   constructor(
     private transactionsDataSource: TransactionsDataSource,
     private transactionApiService: TransactionApiService,
     private notifyService: NotifyService,
-    private matDialogRef: MatDialogRef<TransactionsTablePageComponent>,
+    private matDialogRef: MatDialogRef<TransactionsTableComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
+    this.operationType = this.data.operationType;
     this.initFormGroup(this.data.rowData);
   }
 
   public uploadTransaction = (): void => {
     if (this.transactionForm.valid) {
-      this.transactionApiService.uploadTransaction(this.buildTransactionData())
+      this.transactionApiService.uploadTransaction(this.buildCreationData())
         .subscribe({
           next: () => {
             this.handleSuccessfulResponse(TranslationsEndpoints.SNACKBAR.TRANSACTION_ADDED);
@@ -53,7 +56,7 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
-  public updateTransaction = (): void => {
+  public patchTransaction = (): void => {
     if (this.transactionForm.valid) {
       this.transactionApiService.patchTransaction(this.buildUpdateData()).subscribe({
         next: () => {
@@ -66,16 +69,28 @@ export class AddTransactionComponent implements OnInit {
     }
   }
 
+  public cancelChanges = (): void => {
+    this.matDialogRef.close();
+  }
+
+  public clearForms(): void {
+    this.initFormGroup();
+  }
+
   public getControl(controlName: ControlName): AbstractControl {
     return this.transactionForm.controls[controlName];
   }
 
-  public get isAddDialog(): boolean {
-    return this.data.type === 'addTransaction';
+  public get isCreateDialog(): boolean {
+    return this.operationType === TransactionOperationTypes.CREATE;
   }
 
   public get isEditDialog(): boolean {
-    return this.data.type === 'editTransaction';
+    return this.operationType === TransactionOperationTypes.EDIT;
+  }
+
+  public get formIsValid(): boolean {
+    return this.transactionForm.valid;
   }
 
   private initFormGroup = (row?: Row): void => {
@@ -97,7 +112,7 @@ export class AddTransactionComponent implements OnInit {
     });
   }
 
-  private buildTransactionData = (): CreateTransactionData => {
+  private buildCreationData = (): CreateTransactionData => {
     return {
       externalId: this.transactionForm.value.externalId,
       user: this.transactionForm.value.user,

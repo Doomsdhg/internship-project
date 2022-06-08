@@ -1,4 +1,5 @@
-<div class="add-transaction-wrapper">
+<div class="manage-transaction-dialog-wrapper">
+    <h1 class="dialog-title">{{'titles.' + operationType | translate}}</h1>
     <div class="form-group">
         <form class="form-group__form" 
         [formGroup]="transactionForm">
@@ -18,6 +19,12 @@
                 matInput
                 placeholder="{{'placeholders.provider' | translate}}">
             </mat-form-field>
+            <div class="validation-error-container">
+                <div [ngxErrors]="getControl('amount')" class="validation-error-container__text">
+                    <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
+                    <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
+                </div>
+            </div>
             <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.amount' | translate}}</mat-label>
                 <input 
@@ -25,10 +32,6 @@
                 required 
                 matInput 
                 placeholder="{{'placeholders.amount' | translate}}">
-                <div [ngxErrors]="getControl('amount')" class="validation-error-text">
-                    <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
-                    <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
-                </div>
             </mat-form-field>
             <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.currency' | translate}}</mat-label>
@@ -44,11 +47,13 @@
                 required 
                 matInput
                 placeholder="{{'placeholders.commissionAmount' | translate}}">
-                <div [ngxErrors]="getControl('commissionAmount')" class="validation-error-text">
+            </mat-form-field>
+            <div class="validation-error-container">
+                <div [ngxErrors]="getControl('commissionAmount')" class="validation-error-container__text">
                     <div ngxError="forbiddenNanInput">{{'errors.forbiddenNanInput' | translate}}</div>
                     <div ngxError="forbiddenIntegerLength">{{'errors.forbiddenIntegerLength' | translate}}</div>
                 </div>
-            </mat-form-field>
+            </div>
             <mat-form-field class="form-group__form-input" appearance="fill">
                 <mat-label>{{'displayedColumns.commissionCurrency' | translate}}</mat-label>
                 <input 
@@ -73,13 +78,21 @@
                 placeholder="{{'placeholders.additionalData' | translate}}"></textarea>
             </mat-form-field>
         </form>
-        <button *ngIf="isAddDialog"
-        mat-raised-button 
-        color="primary" 
-        (click)="uploadTransaction()">{{'buttons.uploadTransaction' | translate}}</button>
-        <button *ngIf="isEditDialog"
-        mat-raised-button 
-        color="primary" 
-        (click)="updateTransaction()">{{'buttons.saveChanges' | translate}}</button>
+        <div class="buttons-group"
+        *ngIf="isCreateDialog">
+            <button mat-raised-button color="primary" 
+            disabled="{{!formIsValid}}"
+            (click)="uploadTransaction()">{{'buttons.uploadTransaction' | translate}}</button>
+            <button class="clear-button" mat-raised-button color="primary" 
+            (click)="clearForms()">{{'buttons.clear' | translate}}</button>
+        </div>
+        <div class="buttons-group"
+        *ngIf="isEditDialog">
+            <button mat-raised-button color="primary" 
+            disabled="{{!formIsValid}}"
+            (click)="patchTransaction()">{{'buttons.saveChanges' | translate}}</button>
+            <button class="cancel-button" mat-raised-button color="primary" 
+            (click)="cancelChanges()">{{'buttons.cancel' | translate}}</button>
+        </div>
     </div>
 </div>

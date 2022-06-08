@@ -1,18 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
-import { TransactionCrudResponseError, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
+import { TransactionCrudResponseError } from 'src/app/interfaces/transactions.interface';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.validator';
-import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
-import { AddTransactionComponent } from '../add-transaction/add-transaction.component';
-import { Columns, PossibleSortingDirections, Validation } from './transactions-table.constants';
+import { ManageTransactionsDialogComponent } from '../add-transaction/manage-transactions-dialog.component';
+import { Columns, PossibleSortingDirections, TransactionOperationTypes } from './transactions-table.constants';
 import { ControlName, Row, Sorted } from './transactions-table.interfaces';
 
 @Component({
@@ -71,26 +69,6 @@ export class TransactionsTableComponent implements OnInit {
     });
   }
 
-  public toggleFormsDisplay = (row: Row): void => {
-    this.formsToggled = !this.formsToggled;
-    row.displayForms = !row.displayForms;
-    this.buildTransactionUpdateForms(row);
-  }
-
-  public updateTransaction = (row: Row): void => {
-    if (this.transactionUpdateForm.valid) {
-      const updateObj: TransactionUpdateData = this.createUpdateObject(row);
-      this.transactionApiService.patchTransaction(updateObj).subscribe({
-        next: () => {
-          this.handleSuccessfulUpdateResponse(row);
-        },
-        error: (error: TransactionCrudResponseError) => {
-          this.handleError(error);
-        }
-      });
-    }
-  }
-
   public sortify = (columnName: string): void => {
     const sortedBothOrders = this.sorted[columnName as keyof Sorted] === false;
     if (sortedBothOrders) {
@@ -118,14 +96,27 @@ export class TransactionsTableComponent implements OnInit {
     return this.transactionUpdateForm.controls[controlName];
   }
 
-  public openTransactionEditor(row: Row): void {
-    this.buildTransactionUpdateForms(row);
-    this.matDialog.open(AddTransactionComponent, {
+  public openTransactionEditingDialog(row: Row): void {
+    this.matDialog.open(ManageTransactionsDialogComponent, {
       data: {
         rowData: row,
-        type: 'editTransaction'
+        operationType: TransactionOperationTypes.EDIT
       }
-    });
+    })
+      .afterClosed().subscribe(() => {
+        this.refreshTransactions();
+      });
+  }
+
+  public openTransactionAddingDialog(): void {
+    this.matDialog.open(ManageTransactionsDialogComponent, {
+      data: {
+        operationType: TransactionOperationTypes.CREATE
+      }
+    })
+      .afterClosed().subscribe(() => {
+        this.refreshTransactions();
+      });
   }
 
   public get isFirstPage(): boolean {
@@ -139,31 +130,6 @@ export class TransactionsTableComponent implements OnInit {
 
   private handleError(error: TransactionCrudResponseError): void {
     this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);
-  }
-
-  private handleSuccessfulUpdateResponse(row: Row): void {
-    this.toggleFormsDisplay(row);
-    this.refreshTransactions();
-    this.notifyService.showTranslatedMessage(TranslationsEndpoints.SNACKBAR.TRANSACTION_UPDATED, Constants.SNACKBAR.SUCCESS_TYPE);
-  }
-
-  private createUpdateObject(row: Row): TransactionUpdateData {
-    return {
-      id: row.id,
-      externalId: row.externalId,
-      user: this.transactionUpdateForm.value.user,
-      status: this.transactionUpdateForm.value.status,
-      amount: {
-        amount: this.transformToFixed(this.transactionUpdateForm.value.amount),
-        currency: this.transactionUpdateForm.value.currency.toUpperCase()
-      },
-      commissionAmount: {
-        amount: this.transformToFixed(this.transactionUpdateForm.value.commissionAmount),
-        currency: this.transactionUpdateForm.value.commissionCurrency.toUpperCase()
-      },
-      provider: row.provider,
-      additionalData: this.transactionUpdateForm.value.additionalData
-    };
   }
 
   private resetSorting(): void {
@@ -190,31 +156,5 @@ export class TransactionsTableComponent implements OnInit {
 
   private refreshTransactions = (): void => {
     this.dataSource.loadTransactions();
-  }
-
-  private buildTransactionUpdateForms = (row: Row) => {
-    this.transactionUpdateForm = new FormGroup({
-      externalId: new FormControl(row.externalId),
-      provider: new FormControl(row.provider),
-      user: new FormControl(row.user),
-      status: new FormControl(row.status),
-      amount: new FormControl(row.amount.amount, [
-        maxIntegerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
-        numbersOnlyValidator()
-      ]
-      ),
-      currency: new FormControl(row.amount.currency),
-      commissionAmount: new FormControl(row.commissionAmount.amount, [
-        maxIntegerLengthValidator(Validation.ALLOWED_INTEGERS_LENGTH),
-        numbersOnlyValidator()
-      ]
-      ),
-      commissionCurrency: new FormControl(row.commissionAmount.currency),
-      additionalData: new FormControl(row.additionalData)
-    });
-  }
-
-  private transformToFixed(value: string): number {
-    return +(+value).toFixed(Validation.ALLOWED_LENGTH_AFTER_POINT);
   }
 }

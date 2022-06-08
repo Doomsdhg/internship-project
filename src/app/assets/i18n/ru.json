@@ -2,6 +2,11 @@
     "selectLanguage": "Выберите язык",
     "amount": "Количество",
     "currency": "Валюта",
+    "titles": {
+        "transactions": "Транзакции",
+        "createTransaction": "Создание транзакции",
+        "editTransaction": "Редактирование данных транзакции"
+    },
     "displayedColumns": {
         "externalId": "Номер",
         "user": "Имя пользователя",
@@ -16,6 +21,7 @@
         "status": "Статус"
     },
     "buttons": {
+        "clear": "Очистить",
         "delete": "Удалить",
         "edit": "Редактировать",
         "cancel": "Отменить",
