@@ -1,5 +1,10 @@
-<div class="transactions-table-wrapper">
+<div class="transactions-table-wrapper" 
+cdkDropList
+[cdkDropListData]="dataSource.data"
+cdkDropListSortingDisabled
+[cdkDropListEnterPredicate]="forbidEnterPredicate">
   <h1 class="transactions-title">{{'titles.transactions' | translate}}</h1>
+  <h2 class="transactions-table-title">{{'titles.currentTransactions' | translate}}</h2>
   <button mat-raised-button class="add-transaction-button" color="primary"
   (click)="openTransactionAddingDialog()">+</button>
   <table mat-table matSort class="transactions-table"
@@ -133,7 +138,18 @@
     <!-- Header row -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row class="onhover-pointer"
-    *matRowDef="let row; columns: displayedColumns;">
+    *matRowDef="let row; columns: displayedColumns;"
+    cdkDrag>
+    <mat-card class="drag-card-preview" 
+        *cdkDragPreview>
+            <span></span>
+            <div class="transaction-card-flex-container">
+                <img class="transaction-card-flex-container__image" 
+                src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"/>
+                <div class="transaction-card-flex-container__transaction-info"></div>
+            </div>
+            <span></span>
+        </mat-card>
     </mat-row>
   </table>
   <div class="pagination-pannel">

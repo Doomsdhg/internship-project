@@ -115,6 +115,10 @@ export class TransactionsTableComponent implements OnInit {
       });
   }
 
+  public forbidEnterPredicate(): boolean {
+    return false;
+  }
+
   public get isFirstPage(): boolean {
     return this.dataSource.currentPageNumber === 0;
   }

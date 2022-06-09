@@ -8,8 +8,14 @@
     }
 
     .transactions-title {
+        margin-bottom: 10rem;
         line-height: 3rem;
         font-size: 4rem;
+    }
+
+    .transactions-table-title {
+        font-size: 2.5rem;
+        color: rgb(141, 141, 141);
     }
 
     .add-transaction-button {
@@ -75,4 +81,14 @@
     .validation-error-text {
         color: red;
     }
+
+
+
+    .cdk-drag-placeholder {
+        opacity: 0.5;
+    }
+}
+
+.cdk-drag-preview {
+    opacity: 0.5;
 }

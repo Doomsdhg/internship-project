@@ -1,0 +1,20 @@
+.aplied-transactions-list-wrapper {
+    margin: 0 auto;
+    margin-top: 10rem;
+    width: 80%;
+    height: 10rem;
+
+    .applied-transactions-title {
+        font-size: 2.5rem;
+    }
+
+    .applied-transactions-list {
+        background-color: pink;
+    }
+
+    .applied-transactions-list__item {
+        .transaction-card-flex-container {
+            display: flex;
+        }
+    }
+}

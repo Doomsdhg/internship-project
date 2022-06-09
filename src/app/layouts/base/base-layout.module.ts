@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +18,8 @@ import { TransactionsTableComponent } from 'src/app/layouts/base/pages/component
 import { TransactionsTablePageComponent } from 'src/app/layouts/base/pages/transactions-table-page/transactions-table-page.component';
 import { BaseLayoutComponent } from './base-layout.component';
 import { ManageTransactionsDialogComponent } from './pages/components/add-transaction/manage-transactions-dialog.component';
+import { AppliedTransactionsListComponent } from './pages/components/applied-transactions-list/applied-transactions-list.component';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -24,9 +27,11 @@ import { ManageTransactionsDialogComponent } from './pages/components/add-transa
     TransactionsTableComponent,
     TransactionsTablePageComponent,
     GuardDialogContentComponent,
-    ManageTransactionsDialogComponent
+    ManageTransactionsDialogComponent,
+    AppliedTransactionsListComponent
   ],
   imports: [
+    MatCardModule,
     MatSelectModule,
     MatSortModule,
     FormsModule,
@@ -40,7 +45,8 @@ import { ManageTransactionsDialogComponent } from './pages/components/add-transa
     BaseLayoutRoutingModule,
     BrowserAnimationsModule,
     TranslateModule,
-    NgxErrorsModule
+    NgxErrorsModule,
+    DragDropModule
   ],
   bootstrap: [BaseLayoutComponent],
 })
