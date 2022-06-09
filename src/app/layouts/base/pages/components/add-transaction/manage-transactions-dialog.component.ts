@@ -10,13 +10,12 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { maxIntegerLengthValidator } from 'src/app/validators/integer-length.validator';
 import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator';
 import { TranslationsEndpoints } from '../../../../../constants/translations-endpoints.constants';
-import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { Validation } from '../transactions-table/transactions-table.constants';
 import { ControlName, Row, TransactionOperation } from '../transactions-table/transactions-table.interfaces';
 import { TransactionOperationTypes } from './../transactions-table/transactions-table.constants';
 
 @Component({
-  selector: 'intr-add-transaction',
+  selector: 'intr-manage-transaction',
   templateUrl: './manage-transactions-dialog.component.html',
   styleUrls: ['./manage-transactions-dialog.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -30,7 +29,6 @@ export class ManageTransactionsDialogComponent implements OnInit {
   public operationType!: TransactionOperation;
 
   constructor(
-    private transactionsDataSource: TransactionsDataSource,
     private transactionApiService: TransactionApiService,
     private notifyService: NotifyService,
     private matDialogRef: MatDialogRef<TransactionsTableComponent>,
@@ -43,17 +41,15 @@ export class ManageTransactionsDialogComponent implements OnInit {
   }
 
   public uploadTransaction = (): void => {
-    if (this.transactionForm.valid) {
-      this.transactionApiService.uploadTransaction(this.buildCreationData())
-        .subscribe({
-          next: () => {
-            this.handleSuccessfulResponse(TranslationsEndpoints.SNACKBAR.TRANSACTION_ADDED);
-          },
-          error: (errorResponse: HttpErrorResponse) => {
-            this.handleError(errorResponse);
-          }
-        });
-    }
+    this.transactionApiService.uploadTransaction(this.buildCreationData())
+      .subscribe({
+        next: () => {
+          this.handleSuccessfulResponse(TranslationsEndpoints.SNACKBAR.TRANSACTION_ADDED);
+        },
+        error: (errorResponse: HttpErrorResponse) => {
+          this.handleError(errorResponse);
+        }
+      });
   }
 
   public patchTransaction = (): void => {
