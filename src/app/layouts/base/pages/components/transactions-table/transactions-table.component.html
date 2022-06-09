@@ -1,7 +1,11 @@
 <div class="transactions-table-wrapper">
   <h1 class="transactions-title">{{'titles.transactions' | translate}}</h1>
-  <button mat-raised-button class="add-transaction-button" color="primary"
-  (click)="openTransactionAddingDialog()">+</button>
+  <button mat-button class="add-transaction-button"
+  (click)="openTransactionAddingDialog()">
+        <span class="material-icons">
+          add
+        </span>
+  </button>
   <table mat-table matSort class="transactions-table"
   [dataSource]="dataSource">
 
