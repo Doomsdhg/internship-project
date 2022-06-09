@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 
@@ -13,7 +14,9 @@ export class AppComponent implements OnInit {
 
   public currentTheme!: string;
 
-  constructor(private themeManagerService: ThemeManagerService) {}
+  constructor(
+    private themeManagerService: ThemeManagerService,
+    public overlayContainer: OverlayContainer) { }
 
   public ngOnInit(): void {
     this.subscribeToThemeChanges();
@@ -21,7 +24,9 @@ export class AppComponent implements OnInit {
 
   private subscribeToThemeChanges(): void {
     this.themeManagerService.themeSubject.asObservable().subscribe((newTheme) => {
+      this.overlayContainer.getContainerElement().classList.remove(this.currentTheme);
       this.currentTheme = newTheme;
+      this.overlayContainer.getContainerElement().classList.add(newTheme);
     });
   }
 }
