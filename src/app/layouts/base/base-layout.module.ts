@@ -20,6 +20,7 @@ import { BaseLayoutComponent } from './base-layout.component';
 import { ManageTransactionsDialogComponent } from './pages/components/add-transaction/manage-transactions-dialog.component';
 import { AppliedTransactionsListComponent } from './pages/components/applied-transactions-list/applied-transactions-list.component';
 import { MatCardModule } from '@angular/material/card';
+import { TransactionCardComponent } from './pages/components/transaction-card/transaction-card.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MatCardModule } from '@angular/material/card';
     TransactionsTablePageComponent,
     GuardDialogContentComponent,
     ManageTransactionsDialogComponent,
-    AppliedTransactionsListComponent
+    AppliedTransactionsListComponent,
+    TransactionCardComponent
   ],
   imports: [
     MatCardModule,

@@ -140,16 +140,8 @@ cdkDropListSortingDisabled
     <mat-row class="onhover-pointer"
     *matRowDef="let row; columns: displayedColumns;"
     cdkDrag>
-    <mat-card class="drag-card-preview" 
-        *cdkDragPreview>
-            <span></span>
-            <div class="transaction-card-flex-container">
-                <img class="transaction-card-flex-container__image" 
-                src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"/>
-                <div class="transaction-card-flex-container__transaction-info"></div>
-            </div>
-            <span></span>
-        </mat-card>
+      <intr-transaction-card *cdkDragPreview [transaction]="row"></intr-transaction-card>
+      <intr-transaction-card *cdkDragPlaceholder [transaction]="row"></intr-transaction-card>
     </mat-row>
   </table>
   <div class="pagination-pannel">

@@ -1,37 +1,22 @@
 <div class="aplied-transactions-list-wrapper">
-    <h1 class="applied-transactions-title">{{'titles.appliedTransactions' | translate}}</h1>
-    <div class="applied-transactions-list"
+  <h1 class="applied-transactions-title">
+    {{ "titles.appliedTransactions" | translate }}
+  </h1>
+  <div
+    class="applied-transactions-list"
     cdkDropList
     [cdkDropListData]="appliedTransactionsArray"
-    (cdkDropListDropped)="handleDrop($event)">
-        <mat-card class="applied-transactions-list__item" 
-        *ngFor="let transaction of appliedTransactionsArray; index as i"
-        cdkDrag>
-            <span>#{{i + 1}}</span>
-            <div class="transaction-card-flex-container">
-                <img class="transaction-card-flex-container__image" 
-                src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"/>
-                <div class="transaction-card-flex-container__transaction-info">
-                    <div>{{transaction.externalId}}</div>
-                    <div>{{transaction.provider}}</div>
-                    <div>{{transaction.status}}</div>
-                </div>
-            </div>
-            <mat-card class="applied-transactions-list__item" 
-            *cdkDragPreview>
-                <span></span>
-                <div class="transaction-card-flex-container">
-                    <img class="transaction-card-flex-container__image" 
-                    src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"/>
-                    <div class="transaction-card-flex-container__transaction-info">
-                        <div>{{transaction.externalId}}</div>
-                        <div>{{transaction.provider}}</div>
-                        <div>{{transaction.status}}</div>
-                    </div>
-                </div>
-                <span></span>
-            </mat-card>
-            <span>{{transaction.user}}</span>
-        </mat-card>
-    </div>
+    (cdkDropListDropped)="handleDrop($event)"
+  >
+    <intr-transaction-card
+      *ngFor="let transaction of appliedTransactionsArray; index as i"
+      class="applied-transactions-list__item"
+      [transaction]="transaction"
+      [index]="i"
+      cdkDrag
+    >
+        
+    </intr-transaction-card>
+    
+  </div>
 </div>

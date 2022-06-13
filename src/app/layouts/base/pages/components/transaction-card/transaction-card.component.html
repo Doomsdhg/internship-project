@@ -1,0 +1,15 @@
+<mat-card>
+  <span>{{index ? '#' + index + 1 : '#index number'}}</span>
+  <div class="transaction-card-flex-container">
+    <img
+      class="transaction-card-flex-container__image"
+      src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"
+    />
+    <div class="transaction-card-flex-container__transaction-info">
+      <div>{{ transaction.externalId }}</div>
+      <div>{{ transaction.provider }}</div>
+      <div>{{ transaction.status }}</div>
+    </div>
+  </div>
+  <span>{{ transaction.user }}</span>
+</mat-card>

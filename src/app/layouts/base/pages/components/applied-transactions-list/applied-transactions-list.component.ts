@@ -9,23 +9,7 @@ import { Row } from '../transactions-table/transactions-table.interfaces';
 })
 export class AppliedTransactionsListComponent implements OnInit {
 
-  public appliedTransactionsArray: Row[] = [{
-    displayForms: false,
-    provider: 'qiwi',
-    user: 'test user',
-    externalId: 'qwe123',
-    status: 'INITIAL',
-    amount: {
-      amount: 100,
-      currency: 'USD'
-    },
-    commissionAmount: {
-      amount: 10,
-      currency: 'USD'
-    },
-    additionalData: 'qwe',
-    id: '123'
-  }];
+  public appliedTransactionsArray: Row[] = [];
 
   constructor() { }
 
