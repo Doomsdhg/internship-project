@@ -6,17 +6,12 @@
     class="applied-transactions-list"
     cdkDropList
     [cdkDropListData]="appliedTransactionsArray"
-    (cdkDropListDropped)="handleDrop($event)"
-  >
+    (cdkDropListDropped)="handleDrop($event)">
     <intr-transaction-card
       *ngFor="let transaction of appliedTransactionsArray; index as i"
       class="applied-transactions-list__item"
       [transaction]="transaction"
-      [index]="i"
-      cdkDrag
-    >
-        
+      [index]="i">
     </intr-transaction-card>
-    
   </div>
 </div>

@@ -2,7 +2,7 @@
     margin: 0 auto;
     margin-top: 10rem;
     width: 80%;
-    height: 10rem;
+    min-height: 10rem;
 
     .applied-transactions-title {
         font-size: 2.5rem;
@@ -10,7 +10,8 @@
 
     .applied-transactions-list {
         background-color: pink;
-        height: 5rem;
+        min-height: 5rem;
+        height: fit-content;
     }
 
     .applied-transactions-list__item {

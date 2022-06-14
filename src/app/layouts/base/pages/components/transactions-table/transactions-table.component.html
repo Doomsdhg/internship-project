@@ -139,9 +139,12 @@ cdkDropListSortingDisabled
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row class="onhover-pointer"
     *matRowDef="let row; columns: displayedColumns;"
-    cdkDrag>
+    cdkDrag
+    (cdkDragEntered)="handleDragEnter($event)">
       <intr-transaction-card *cdkDragPreview [transaction]="row"></intr-transaction-card>
-      <intr-transaction-card *cdkDragPlaceholder [transaction]="row"></intr-transaction-card>
+      <div *cdkDragPlaceholder>
+        <intr-transaction-card *ngIf="!isDraggingInsideSourceList" [transaction]="row"></intr-transaction-card>
+      </div>
     </mat-row>
   </table>
   <div class="pagination-pannel">

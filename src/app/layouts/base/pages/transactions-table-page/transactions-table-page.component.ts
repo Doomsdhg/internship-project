@@ -15,4 +15,8 @@ export class TransactionsTablePageComponent {
   public get inputChanged(): boolean {
     return this.transactionsTableComponent.inputChanged;
   }
+
+  public setDragPreviewToDefault(): void {
+    this.transactionsTableComponent.isDraggingInsideSourceList = true;
+  }
 }

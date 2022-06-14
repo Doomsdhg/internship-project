@@ -1,5 +1,5 @@
-<mat-card>
-  <span>{{index ? '#' + index + 1 : '#index number'}}</span>
+<mat-card cdkDrag>
+  <span>#{{ index + 1 }}</span>
   <div class="transaction-card-flex-container">
     <img
       class="transaction-card-flex-container__image"
@@ -12,4 +12,8 @@
     </div>
   </div>
   <span>{{ transaction.user }}</span>
+  <intr-transaction-card
+    *cdkDragPreview
+    [transaction]="transaction"
+  ></intr-transaction-card>
 </mat-card>

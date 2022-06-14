@@ -1,5 +1,5 @@
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Row } from '../transactions-table/transactions-table.interfaces';
 
 @Component({
@@ -11,13 +11,13 @@ export class AppliedTransactionsListComponent implements OnInit {
 
   public appliedTransactionsArray: Row[] = [];
 
+  @Output() onDropEvent = new EventEmitter<boolean>();
+
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public handleDrop = (event: CdkDragDrop<Row[]>): void => {
-    console.log(event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -28,5 +28,6 @@ export class AppliedTransactionsListComponent implements OnInit {
         event.currentIndex,
       );
     }
+    this.onDropEvent.emit(true);
   }
 }
