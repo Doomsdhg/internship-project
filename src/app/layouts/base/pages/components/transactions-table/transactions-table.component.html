@@ -1,13 +1,13 @@
-<div class="transactions-table-wrapper" 
-cdkDropList
-[cdkDropListData]="dataSource.data"
-cdkDropListSortingDisabled
-[cdkDropListEnterPredicate]="forbidEnterPredicate">
+<div class="transactions-table-wrapper">
   <h1 class="transactions-title">{{'titles.transactions' | translate}}</h1>
   <h2 class="transactions-table-title">{{'titles.currentTransactions' | translate}}</h2>
   <button mat-raised-button class="add-transaction-button" color="primary"
   (click)="openTransactionAddingDialog()">+</button>
   <table mat-table matSort class="transactions-table"
+  cdkDropList
+  [cdkDropListData]="dataSource.data"
+  cdkDropListSortingDisabled
+  [cdkDropListEnterPredicate]="forbidEnterPredicate"
   [dataSource]="dataSource">
 
     <!-- External id Column -->
@@ -143,7 +143,8 @@ cdkDropListSortingDisabled
     (cdkDragEntered)="handleDragEnter($event)">
       <intr-transaction-card *cdkDragPreview [transaction]="row"></intr-transaction-card>
       <div *cdkDragPlaceholder>
-        <intr-transaction-card *ngIf="!isDraggingInsideSourceList" [transaction]="row"></intr-transaction-card>
+        <div *ngIf="!isDraggingInsideSourceList"
+        class="drop-placeholder"></div>
       </div>
     </mat-row>
   </table>

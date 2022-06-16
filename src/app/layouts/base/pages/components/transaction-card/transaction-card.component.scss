@@ -1,3 +1,18 @@
-.transaction-card-flex-container {
+.transaction-card-wrapper {
     display: flex;
-}
+    padding: 1rem;
+    flex-direction: column;
+
+    .flex-container {
+        display: flex;
+
+        .flex-container__image {
+            width: 10rem;
+        }
+    }
+
+    .transaction-card-wrapper__username {
+        text-align: center;
+        width: 10rem;
+    }
+}    

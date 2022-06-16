@@ -1,4 +1,4 @@
-import { CdkDragDrop, CdkDragEnter } from '@angular/cdk/drag-drop';
+import { CdkDragEnter } from '@angular/cdk/drag-drop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';

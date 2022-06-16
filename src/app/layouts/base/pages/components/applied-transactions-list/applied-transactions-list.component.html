@@ -1,17 +1,28 @@
-<div class="aplied-transactions-list-wrapper">
+<div class="applied-transactions-list-wrapper">
   <h1 class="applied-transactions-title">
     {{ "titles.appliedTransactions" | translate }}
   </h1>
   <div
     class="applied-transactions-list"
+    id="applied-transactions-list"
     cdkDropList
     [cdkDropListData]="appliedTransactionsArray"
-    (cdkDropListDropped)="handleDrop($event)">
-    <intr-transaction-card
+    (cdkDropListDropped)="handleDrop($event)"
+  >
+    <div
       *ngFor="let transaction of appliedTransactionsArray; index as i"
       class="applied-transactions-list__item"
-      [transaction]="transaction"
-      [index]="i">
-    </intr-transaction-card>
+      cdkDrag
+    >
+      <intr-transaction-card [transaction]="transaction" [index]="i">
+        <div *cdkDragPlaceholder>
+          <div class="drop-placeholder"></div></div
+      ></intr-transaction-card>
+      <intr-transaction-card
+        *cdkDragPreview
+        [transaction]="transaction"
+        [index]="i"
+      ></intr-transaction-card>
+    </div>
   </div>
 </div>

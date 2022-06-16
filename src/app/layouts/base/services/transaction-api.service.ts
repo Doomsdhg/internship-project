@@ -1,15 +1,17 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
-import { Constants } from 'src/app/constants/constants';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { ApiEndpoints } from "src/app/constants/api-endpoints.constants";
+import { Constants } from "src/app/constants/constants";
 import {
   ApiTransactionResponse, TransactionCreationData, Transaction, TransactionUpdateData
-} from 'src/app/interfaces/transactions.interface';
-import { BaseApiService } from './base-api.service';
+} from "src/app/interfaces/transactions.interface";
+import { AppliedTransactionsListResponse } from "../pages/components/applied-transactions-list/applied-transactions-list.interfaces";
+import { Row } from "../pages/components/transactions-table/transactions-table.interfaces";
+import { BaseApiService } from "./base-api.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TransactionApiService extends BaseApiService {
 
@@ -42,5 +44,13 @@ export class TransactionApiService extends BaseApiService {
 
   public uploadTransaction(transactionData: TransactionCreationData): Observable<Transaction> {
     return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE, transactionData);
+  }
+
+  public getAppliedTransactions(): Observable<AppliedTransactionsListResponse> {
+    return this.get<AppliedTransactionsListResponse>(ApiEndpoints.APPLIED_TRANSACTIONS.GETTING_URL);
+  }
+
+  public refreshAppliedTransactionsList(appliedTransactionsArray: Row[]): Observable<Row[]> {
+    return this.put<Row[]>(ApiEndpoints.APPLIED_TRANSACTIONS.GETTING_URL, {value: appliedTransactionsArray});
   }
 }

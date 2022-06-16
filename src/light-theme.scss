@@ -23,8 +23,10 @@ $success-color: mat-color($success-palette);
 @include angular-material-theme($light-theme);
 
 .light-theme {
-    $border-color: #777;
+    $header-border-color: #777;
+    $border-color: rgb(81, 81, 81);
     $shadow-color: #000;
+    $drop-placeholder-bg-color: rgb(237, 237, 237);
     @include angular-material-theme($light-theme);
     
     .error-snackbar {
@@ -44,12 +46,35 @@ $success-color: mat-color($success-palette);
     }
 
     .header-wrapper {
-        box-shadow: 0 0 1rem $border-color;
-        -moz-box-shadow: 0 0 1rem $border-color;
-        -webkit-box-shadow: 0 0 1rem $border-color;
+        box-shadow: 0 0 1rem $header-border-color;
+        -moz-box-shadow: 0 0 1rem $header-border-color;
+        -webkit-box-shadow: 0 0 1rem $header-border-color;
     }
 
     .transactions-table {
         box-shadow: 0 0 1rem $shadow-color;
+    }
+
+    .applied-transactions-list {
+        box-shadow: 0 0 1rem $shadow-color;
+    }
+
+    .transaction-card-wrapper {
+        border: 1px solid $border-color;
+    }
+
+    .cdk-drag-preview {
+        opacity: 0.5;
+        background-color: $drop-placeholder-bg-color;
+        width: 80%;
+    }
+    
+    .cdk-drag-placeholder {
+        
+        .drop-placeholder{
+            background-color: $drop-placeholder-bg-color;
+            height: 14.5rem;
+            width: 100%;
+        }
     }
 }

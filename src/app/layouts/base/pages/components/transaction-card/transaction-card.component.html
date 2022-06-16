@@ -1,19 +1,20 @@
-<mat-card cdkDrag>
-  <span>#{{ index + 1 }}</span>
-  <div class="transaction-card-flex-container">
+<div
+class="transaction-card-wrapper">
+  <span>#{{ index }}</span>
+  <div class="flex-container">
     <img
-      class="transaction-card-flex-container__image"
+      class="flex-container__image"
       src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"
     />
-    <div class="transaction-card-flex-container__transaction-info">
-      <div>{{ transaction.externalId }}</div>
-      <div>{{ transaction.provider }}</div>
-      <div>{{ transaction.status }}</div>
+    <div class="flex-container__transaction-info">
+      <div>{{'displayedColumns.externalId' | translate}} : {{ transaction.externalId }}</div>
+      <div>{{'displayedColumns.provider' | translate}} : {{ transaction.provider }}</div>
+      <div>{{'displayedColumns.status' | translate}} : {{ transaction.status }}</div>
+      <div>{{ 'displayedColumns.amount' | translate }} : 
+        {{transaction.amount.amount | currency: transaction.amount.currency}}</div>
+      <div>{{ 'displayedColumns.commissionAmount' | translate }} : 
+        {{transaction.commissionAmount.amount | currency: transaction.commissionAmount.currency}}</div>
     </div>
   </div>
-  <span>{{ transaction.user }}</span>
-  <intr-transaction-card
-    *cdkDragPreview
-    [transaction]="transaction"
-  ></intr-transaction-card>
-</mat-card>
+  <span class="transaction-card-wrapper__username">{{'displayedColumns.user' | translate}} : {{ transaction.user }}</span>
+</div>

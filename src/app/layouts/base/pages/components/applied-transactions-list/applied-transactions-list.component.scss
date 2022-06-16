@@ -1,22 +1,37 @@
-.aplied-transactions-list-wrapper {
+.applied-transactions-list-wrapper {
     margin: 0 auto;
     margin-top: 10rem;
     width: 80%;
-    min-height: 10rem;
 
     .applied-transactions-title {
         font-size: 2.5rem;
+        color: grey;
+        font-weight: 100;
     }
 
     .applied-transactions-list {
-        background-color: pink;
-        min-height: 5rem;
         height: fit-content;
     }
 
     .applied-transactions-list__item {
-        .transaction-card-flex-container {
+
+        .flex-container {
             display: flex;
         }
     }
 }
+
+// .cdk-drag-placeholder {
+
+//     .drop-placeholder{
+//         background-color: grey;
+//         height: 14.5rem;
+//         width: 100%;
+//     }
+// }
+
+// .cdk-drag-preview {
+//     opacity: 0.5;
+//     background-color:rgb(141, 141, 141);
+//     width: 80%;
+// }
