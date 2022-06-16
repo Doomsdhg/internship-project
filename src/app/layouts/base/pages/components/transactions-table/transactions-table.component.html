@@ -5,9 +5,9 @@
   (click)="openTransactionAddingDialog()">+</button>
   <table mat-table matSort class="transactions-table"
   cdkDropList
-  [cdkDropListData]="dataSource.data"
   cdkDropListSortingDisabled
-  [cdkDropListEnterPredicate]="forbidEnterPredicate"
+  [cdkDropListEnterPredicate]="forbiddEnterPredicate"
+  [cdkDropListData]="dataSource.data"
   [dataSource]="dataSource">
 
     <!-- External id Column -->
@@ -141,9 +141,12 @@
     *matRowDef="let row; columns: displayedColumns;"
     cdkDrag
     (cdkDragEntered)="handleDragEnter($event)">
-      <intr-transaction-card *cdkDragPreview [transaction]="row"></intr-transaction-card>
+      <intr-transaction-card 
+      *cdkDragPreview 
+      [transaction]="row"
+      class="drag-preview"></intr-transaction-card>
       <div *cdkDragPlaceholder>
-        <div *ngIf="!isDraggingInsideSourceList"
+        <div
         class="drop-placeholder"></div>
       </div>
     </mat-row>

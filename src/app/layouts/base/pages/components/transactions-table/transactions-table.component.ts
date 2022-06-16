@@ -1,4 +1,4 @@
-import { CdkDragEnter } from '@angular/cdk/drag-drop';
+import { CdkDragEnter, CdkDragExit, CdkDragStart } from '@angular/cdk/drag-drop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -127,7 +127,7 @@ export class TransactionsTableComponent implements OnInit {
     this.isDraggingInsideSourceList = event.container === event.item.dropContainer;
   }
 
-  public forbidEnterPredicate(): boolean {
+  public forbiddEnterPredicate(): boolean {
     return false;
   }
 

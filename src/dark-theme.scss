@@ -66,12 +66,6 @@ $success-color: mat-color($success-palette);
     .transaction-card-wrapper {
         border: 0.01rem solid $border-color;
     }
-
-    .cdk-drag-preview {
-        opacity: 0.5;
-        background-color: $drop-placeholder-bg-color;
-        width: 80%;
-    }
     
     .cdk-drag-placeholder {
         

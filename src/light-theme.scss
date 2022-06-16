@@ -63,7 +63,7 @@ $success-color: mat-color($success-palette);
         border: 1px solid $border-color;
     }
 
-    .cdk-drag-preview {
+    .drag-preview {
         opacity: 0.5;
         background-color: $drop-placeholder-bg-color;
         width: 80%;

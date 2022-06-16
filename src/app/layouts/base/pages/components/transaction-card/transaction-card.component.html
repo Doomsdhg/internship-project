@@ -1,6 +1,6 @@
 <div
 class="transaction-card-wrapper">
-  <span>#{{ index }}</span>
+  <span>#<span *ngIf="indexExists">{{ index + 1 }}</span></span>
   <div class="flex-container">
     <img
       class="flex-container__image"
