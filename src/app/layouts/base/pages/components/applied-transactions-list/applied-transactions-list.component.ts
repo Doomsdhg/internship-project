@@ -31,15 +31,10 @@ export class AppliedTransactionsListComponent implements OnInit {
   }
 
   public handleDrop = (event: CdkDragDrop<Row[]>): void => {
-    console.log(event);
-    console.log(event.previousContainer === event.container);
     if (!event.isPointerOverContainer) {
       this.appliedTransactionsArray.splice(event.previousIndex, 1);
     }
     if (event.previousContainer === event.container) {
-      console.log(this.appliedTransactionsArray);
-      console.log(event.previousIndex);
-      console.log(event.currentIndex);
       moveItemInArray(this.appliedTransactionsArray, event.previousIndex, event.currentIndex);
       console.log(this.appliedTransactionsArray);
     } else {
@@ -51,9 +46,19 @@ export class AppliedTransactionsListComponent implements OnInit {
       );
     }
     this.onDropEvent.emit(true);
-    this.transactionApiService.refreshAppliedTransactionsList(this.appliedTransactionsArray)
-    .subscribe(() => {
-      this.changeDetectorRef.detectChanges()
-    });
+    this.refreshAppliedTransactions();
+  }
+
+  public deleteTransaction(index: number): void {
+    this.appliedTransactionsArray.splice(index, 1);
+    this.refreshAppliedTransactions();
+  }
+
+  public get listIsEmpty(): boolean {
+    return this.appliedTransactionsArray.length === 0;
+  }
+
+  private refreshAppliedTransactions(): void {
+    this.transactionApiService.refreshAppliedTransactionsList(this.appliedTransactionsArray).subscribe();
   }
 }

@@ -57,6 +57,10 @@ $success-color: mat-color($success-palette);
 
     .applied-transactions-list {
         box-shadow: 0 0 1rem $shadow-color;
+        
+        &.no-shadow {
+            box-shadow: none;
+        }
     }
 
     .transaction-card-wrapper {

@@ -6,6 +6,7 @@
     class="applied-transactions-list"
     id="applied-transactions-list"
     cdkDropList
+    [ngClass]="{'no-shadow': listIsEmpty}"
     [cdkDropListData]="appliedTransactionsArray"
     (cdkDropListDropped)="handleDrop($event)"
   >
@@ -14,7 +15,8 @@
       class="applied-transactions-list__item"
       cdkDrag
     >
-      <intr-transaction-card [transaction]="transaction" [index]="i">
+      <intr-transaction-card [transaction]="transaction" [index]="i"
+      (onDeleteCardEvent)="deleteTransaction($event)">
         <div *cdkDragPlaceholder>
           <div class="drop-placeholder"></div></div
       ></intr-transaction-card>

@@ -1,20 +1,44 @@
-<div
-class="transaction-card-wrapper">
-  <span>#<span *ngIf="indexExists">{{ index + 1 }}</span></span>
+<div class="transaction-card-wrapper">
+  <div class="transaction-card-wrapper__header">
+    <span class="index"
+      >#<span *ngIf="indexExists">{{ index + 1 }}</span></span
+    >
+    <span class="deletion-container"
+      ><mat-icon class="icon"
+      (click)="deleteCard()">delete</mat-icon></span
+    >
+  </div>
   <div class="flex-container">
     <img
       class="flex-container__image"
       src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"
     />
     <div class="flex-container__transaction-info">
-      <div>{{'displayedColumns.externalId' | translate}} : {{ transaction.externalId }}</div>
-      <div>{{'displayedColumns.provider' | translate}} : {{ transaction.provider }}</div>
-      <div>{{'displayedColumns.status' | translate}} : {{ transaction.status }}</div>
-      <div>{{ 'displayedColumns.amount' | translate }} : 
-        {{transaction.amount.amount | currency: transaction.amount.currency}}</div>
-      <div>{{ 'displayedColumns.commissionAmount' | translate }} : 
-        {{transaction.commissionAmount.amount | currency: transaction.commissionAmount.currency}}</div>
+      <div>
+        {{ "displayedColumns.externalId" | translate }} :
+        {{ transaction.externalId }}
+      </div>
+      <div>
+        {{ "displayedColumns.provider" | translate }} :
+        {{ transaction.provider }}
+      </div>
+      <div>
+        {{ "displayedColumns.status" | translate }} : {{ transaction.status }}
+      </div>
+      <div>
+        {{ "displayedColumns.amount" | translate }} :
+        {{ transaction.amount.amount | currency: transaction.amount.currency }}
+      </div>
+      <div>
+        {{ "displayedColumns.commissionAmount" | translate }} :
+        {{
+          transaction.commissionAmount.amount
+            | currency: transaction.commissionAmount.currency
+        }}
+      </div>
     </div>
   </div>
-  <span class="transaction-card-wrapper__username">{{'displayedColumns.user' | translate}} : {{ transaction.user }}</span>
+  <span class="transaction-card-wrapper__username"
+    >{{ "displayedColumns.user" | translate }} : {{ transaction.user }}</span
+  >
 </div>

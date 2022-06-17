@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Row } from '../transactions-table/transactions-table.interfaces';
 
 @Component({
@@ -13,11 +13,17 @@ export class TransactionCardComponent {
 
   @Input() index!: number;
 
+  @Output() onDeleteCardEvent = new EventEmitter<number>();
+
   public get indexExists(): boolean {
     if (this.index || this.index === 0) {
       return true
     } else {
       return false
     }
+  }
+
+  public deleteCard(): void {
+    this.onDeleteCardEvent.emit(this.index);
   }
 }
