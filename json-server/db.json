@@ -225,5 +225,30 @@
       "additionalData": null,
       "id": "rHy2ogi"
     }
+  ],
+  "applied_transactions": [
+    {
+      "value": [
+        {
+          "id": 1,
+          "externalId": "123qwe",
+          "provider": "qiwi",
+          "status": "INITIAL",
+          "amount": {
+            "amount": 10,
+            "currency": "USD"
+          },
+          "commissionAmount": {
+            "amount": 1,
+            "currency": "USD"
+          },
+          "user": "test123",
+          "timestamp": 1655388456,
+          "providerTimestamp": null,
+          "additionalData": ""
+        }
+      ],
+      "id": "list"
+    }
   ]
 }
