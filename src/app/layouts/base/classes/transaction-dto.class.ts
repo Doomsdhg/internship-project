@@ -1,5 +1,5 @@
-import { Transaction } from "src/app/interfaces/transactions.interface";
-import { Row } from "../pages/components/transactions-table/transactions-table.interfaces";
+import { Transaction } from 'src/app/interfaces/transactions.interface';
+import { Row } from '../pages/components/transactions-table/transactions-table.interfaces';
 
 export class TransactionDto {
 

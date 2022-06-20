@@ -50,7 +50,7 @@ export class AppliedTransactionsListComponent implements OnInit {
       );
     }
     this.refreshAppliedTransactions();
-  };
+  }
 
   public handleCardDeletion(index: number): void {
     this.deleteTransaction(index);

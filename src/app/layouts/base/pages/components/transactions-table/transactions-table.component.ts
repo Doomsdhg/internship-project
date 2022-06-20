@@ -117,7 +117,7 @@ export class TransactionsTableComponent implements OnInit {
   }
   public buildTransactionDto(row: Row, index?: number): TransactionDto {
     return new TransactionDto(row, index);
-  };
+  }
 
   public forbiddEnterPredicate(): boolean {
     return false;
