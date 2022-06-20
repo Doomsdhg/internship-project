@@ -1,7 +1,7 @@
 <div class="transaction-card-wrapper">
   <div class="transaction-card-wrapper__header">
     <span class="index"
-      >#<span *ngIf="indexExists">{{ index + 1 }}</span></span
+      >#<span *ngIf="indexExists">{{ index | intrIncreaseByOne }}</span></span
     >
     <span class="deletion-container"
       ><mat-icon class="icon"
@@ -11,7 +11,7 @@
   <div class="flex-container">
     <img
       class="flex-container__image"
-      src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-26.jpg"
+      src="/app/assets/jpg/no-user-image-icon.jpg"
     />
     <div class="flex-container__transaction-info">
       <div>

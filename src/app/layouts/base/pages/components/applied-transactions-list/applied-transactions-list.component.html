@@ -14,6 +14,7 @@
       *ngFor="let transaction of appliedTransactionsArray; index as i"
       class="applied-transactions-list__item"
       cdkDrag
+      (cdkDragReleased)="handleDragRelease($event)"
     >
       <intr-transaction-card [transaction]="transaction" [index]="i"
       (onDeleteCardEvent)="deleteTransaction($event)">

@@ -21,6 +21,7 @@ import { ManageTransactionsDialogComponent } from './pages/components/add-transa
 import { AppliedTransactionsListComponent } from './pages/components/applied-transactions-list/applied-transactions-list.component';
 import { MatCardModule } from '@angular/material/card';
 import { TransactionCardComponent } from './pages/components/transaction-card/transaction-card.component';
+import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { TransactionCardComponent } from './pages/components/transaction-card/tr
     GuardDialogContentComponent,
     ManageTransactionsDialogComponent,
     AppliedTransactionsListComponent,
-    TransactionCardComponent
+    TransactionCardComponent,
+    IncreaseByOnePipe
   ],
   imports: [
     MatCardModule,
