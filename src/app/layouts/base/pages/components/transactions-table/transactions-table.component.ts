@@ -8,9 +8,9 @@ import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import { TransactionDto } from '../../../classes/transaction-dto.class';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { ManageTransactionsDialogComponent } from '../add-transaction/manage-transactions-dialog.component';
-import { buildTransactionDto } from '../applied-transactions-list/applied-transactions-list.component';
 import { Columns, PossibleSortingDirections, TransactionOperationTypes } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
 
@@ -33,8 +33,6 @@ export class TransactionsTableComponent implements OnInit {
   public sorted!: Sorted;
 
   public formsToggled = false;
-
-  public buildTransactionDto = buildTransactionDto;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -117,6 +115,9 @@ export class TransactionsTableComponent implements OnInit {
         this.refreshTransactions();
       });
   }
+  public buildTransactionDto(row: Row, index?: number): TransactionDto {
+    return new TransactionDto(row, index);
+  };
 
   public forbiddEnterPredicate(): boolean {
     return false;

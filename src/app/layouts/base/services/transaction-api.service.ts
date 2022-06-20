@@ -4,10 +4,9 @@ import { Observable } from 'rxjs';
 import { ApiEndpoints } from 'src/app/constants/api-endpoints.constants';
 import { Constants } from 'src/app/constants/constants';
 import {
-  ApiTransactionResponse, TransactionCreationData, Transaction, TransactionUpdateData
+  ApiTransactionResponse, Transaction, TransactionCreationData, TransactionUpdateData
 } from 'src/app/interfaces/transactions.interface';
-import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.interfaces';
-import { Row, TransactionDto } from '../pages/components/transactions-table/transactions-table.interfaces';
+import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.class';
 import { BaseApiService } from './base-api.service';
 
 @Injectable({
@@ -51,6 +50,8 @@ export class TransactionApiService extends BaseApiService {
   }
 
   public replenishServerData(appliedTransactionsArray: Transaction[]): Observable<Transaction[]> {
-    return this.put<Transaction[]>(ApiEndpoints.APPLIED_TRANSACTIONS.GETTING_URL, {value: appliedTransactionsArray});
+    return this.put<Transaction[]>(
+      ApiEndpoints.APPLIED_TRANSACTIONS.GETTING_URL, 
+      new AppliedTransactionsListResponse(appliedTransactionsArray));
   }
 }

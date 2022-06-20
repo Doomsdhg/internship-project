@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TransactionCardComponent } from './transaction-card.component';
 
 describe('TransactionCardComponent', () => {

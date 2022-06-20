@@ -1,21 +1,9 @@
 import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Transaction } from 'src/app/interfaces/transactions.interface';
+import { TransactionDto } from '../../../classes/transaction-dto.class';
 import { TransactionApiService } from '../../../services/transaction-api.service';
-import { Row, TransactionDto } from '../transactions-table/transactions-table.interfaces';
-import { AppliedTransactionsListResponse } from './applied-transactions-list.interfaces';
-
-export function buildTransactionDto(transaction: Row | Transaction, index?: number): TransactionDto {
-  return {
-    index: index,
-    provider: transaction.provider,
-    user: transaction.user,
-    externalId: transaction.externalId,
-    status: transaction.status,
-    amount: transaction.amount.amount + ' ' + transaction.amount.currency,
-    commissionAmount: transaction.commissionAmount.amount + ' ' + transaction.commissionAmount.currency
-  };
-}
+import { AppliedTransactionsListResponse } from './applied-transactions-list.class';
 
 @Component({
   selector: 'intr-applied-transactions-list',
@@ -27,15 +15,13 @@ export class AppliedTransactionsListComponent implements OnInit {
 
   public appliedTransactionsArray: Transaction[] = [];
 
-  public buildTransactionDto = buildTransactionDto;
-
   constructor(
     private transactionApiService: TransactionApiService,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.getAppliedTransactions();
+    this.refreshTransactionList();
   }
 
   public handleDrop = (event: CdkDragDrop<Transaction[]>): void => {
@@ -59,6 +45,10 @@ export class AppliedTransactionsListComponent implements OnInit {
     this.refreshAppliedTransactions();
   }
 
+  public buildTransactionDto(transaction: Transaction, index: number): TransactionDto {
+    return new TransactionDto(transaction, index);
+  }
+
   public identify(index: number, item: Object): Object {
     return item;
   }
@@ -71,7 +61,7 @@ export class AppliedTransactionsListComponent implements OnInit {
     this.appliedTransactionsArray.splice(index, 1);
   }
 
-  private getAppliedTransactions(): void {
+  private refreshTransactionList(): void {
     this.transactionApiService.getAppliedTransactions()
     .subscribe((appliedTransactionsListResponse: AppliedTransactionsListResponse) => {
       this.appliedTransactionsArray = appliedTransactionsListResponse.value;
@@ -82,7 +72,7 @@ export class AppliedTransactionsListComponent implements OnInit {
   private refreshAppliedTransactions(): void {
     this.transactionApiService.replenishServerData(this.appliedTransactionsArray)
     .subscribe(() => {
-      this.getAppliedTransactions();
+      this.refreshTransactionList();
     });
   }
 }

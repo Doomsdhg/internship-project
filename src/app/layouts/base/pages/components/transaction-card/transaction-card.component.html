@@ -1,6 +1,6 @@
 <div class="transaction-card-wrapper">
   <div class="transaction-card-wrapper__header">
-    <span *ngIf="indexExists">#{{ transaction.index | intrIncreaseByOne }}</span>
+    <span *ngIf="indexisDefined">#{{ transaction.index | intrIncreaseByOne }}</span>
     <span class="deletion-container"
       ><mat-icon class="icon"
       (click)="deleteCard()">delete</mat-icon></span

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { ApiTransactionResponse, Transaction, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
-import { Row, TransactionDto } from '../pages/components/transactions-table/transactions-table.interfaces';
+import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.class';
 
 export abstract class BaseApiService {
 
@@ -25,7 +25,7 @@ export abstract class BaseApiService {
 
   public put<T>(
     url: string,
-    updateData: TransactionUpdateData | {value: Transaction[]},
+    updateData: TransactionUpdateData | AppliedTransactionsListResponse,
     headers?: HttpHeaders,
     params?: HttpParams
     ): Observable<T> {
