@@ -1,9 +1,21 @@
-import { CdkDragDrop, CdkDragRelease, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { CdkDragDrop, copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Transaction } from 'src/app/interfaces/transactions.interface';
 import { TransactionApiService } from '../../../services/transaction-api.service';
-import { Row } from '../transactions-table/transactions-table.interfaces';
+import { Row, TransactionDto } from '../transactions-table/transactions-table.interfaces';
 import { AppliedTransactionsListResponse } from './applied-transactions-list.interfaces';
-import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+
+export function buildTransactionDto(transaction: Row | Transaction, index?: number): TransactionDto {
+  return {
+    index: index,
+    provider: transaction.provider,
+    user: transaction.user,
+    externalId: transaction.externalId,
+    status: transaction.status,
+    amount: transaction.amount.amount + ' ' + transaction.amount.currency,
+    commissionAmount: transaction.commissionAmount.amount + ' ' + transaction.commissionAmount.currency
+  };
+}
 
 @Component({
   selector: 'intr-applied-transactions-list',
@@ -13,9 +25,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 })
 export class AppliedTransactionsListComponent implements OnInit {
 
-  public appliedTransactionsArray: Row[] = [];
+  public appliedTransactionsArray: Transaction[] = [];
 
-  @Output() onDropEvent = new EventEmitter<boolean>();
+  public buildTransactionDto = buildTransactionDto;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -23,20 +35,15 @@ export class AppliedTransactionsListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.transactionApiService.getAppliedTransactions()
-    .subscribe((appliedTransactionsListResponse: AppliedTransactionsListResponse) => {
-      this.appliedTransactionsArray = appliedTransactionsListResponse.value;
-      this.changeDetectorRef.detectChanges();
-    })
+    this.getAppliedTransactions();
   }
 
-  public handleDrop = (event: CdkDragDrop<Row[]>): void => {
+  public handleDrop = (event: CdkDragDrop<Transaction[]>): void => {
     if (!event.isPointerOverContainer) {
-      this.appliedTransactionsArray.splice(event.previousIndex, 1);
-    }
-    if (event.previousContainer === event.container) {
+      this.deleteTransaction(event.previousIndex);
+    } else if (event.previousContainer === event.container) {
       moveItemInArray(this.appliedTransactionsArray, event.previousIndex, event.currentIndex);
-    } else {
+    } else if (event.previousContainer !== event.container) {
       copyArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -44,36 +51,38 @@ export class AppliedTransactionsListComponent implements OnInit {
         event.currentIndex,
       );
     }
-    this.onDropEvent.emit(true);
     this.refreshAppliedTransactions();
   }
 
-  public deleteTransaction(index: number): void {
-    this.appliedTransactionsArray.splice(index, 1);
+  public handleCardDeletion(index: number): void {
+    this.deleteTransaction(index);
     this.refreshAppliedTransactions();
   }
 
-  public handleDragRelease(event: CdkDragRelease<Row>): void {
-    console.log(event.source.element.nativeElement);
-    console.log(document.querySelector('.cdk-drag-animating'));
-    setTimeout(() => {
-      
-    // event.source.element.nativeElement.remove();
-    // event.source.getRootElement().remove();
-    // document.querySelector('.cdk-drag-animating')?.remove();
-    console.log(document.querySelector('.cdk-drag-animating'));
-    event.source.element.nativeElement.style.transitionDuration = '0ms';
-    event.source.getRootElement().style.transitionDuration = '0ms';
-    event.source.getRootElement().style.transition = 'transform 10ms cubic-bezier(0, 0, 0.2, 1) !important';
-      console.log(event);
-    }, 50)
+  public identify(index: number, item: Object): Object {
+    return item;
   }
 
   public get listIsEmpty(): boolean {
     return this.appliedTransactionsArray.length === 0;
   }
 
+  private deleteTransaction(index: number): void {
+    this.appliedTransactionsArray.splice(index, 1);
+  }
+
+  private getAppliedTransactions(): void {
+    this.transactionApiService.getAppliedTransactions()
+    .subscribe((appliedTransactionsListResponse: AppliedTransactionsListResponse) => {
+      this.appliedTransactionsArray = appliedTransactionsListResponse.value;
+      this.changeDetectorRef.detectChanges();
+    });
+  }
+
   private refreshAppliedTransactions(): void {
-    this.transactionApiService.refreshAppliedTransactionsList(this.appliedTransactionsArray).subscribe();
+    this.transactionApiService.replenishServerData(this.appliedTransactionsArray)
+    .subscribe(() => {
+      this.getAppliedTransactions();
+    });
   }
 }

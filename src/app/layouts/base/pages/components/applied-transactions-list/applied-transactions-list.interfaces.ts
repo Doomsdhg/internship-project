@@ -1,5 +1,5 @@
-import { Row } from '../transactions-table/transactions-table.interfaces';
+import { Transaction } from 'src/app/interfaces/transactions.interface';
 
 export interface AppliedTransactionsListResponse {
-    value: Row[]
+    value: Transaction[];
 }

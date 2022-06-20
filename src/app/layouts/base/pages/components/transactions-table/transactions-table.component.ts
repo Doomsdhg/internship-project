@@ -1,4 +1,3 @@
-import { CdkDragEnter, CdkDragExit, CdkDragStart } from '@angular/cdk/drag-drop';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -6,12 +5,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
-import { Transaction } from 'src/app/interfaces/transactions.interface';
 import { TransactionApiService } from 'src/app/layouts/base/services/transaction-api.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { ManageTransactionsDialogComponent } from '../add-transaction/manage-transactions-dialog.component';
+import { buildTransactionDto } from '../applied-transactions-list/applied-transactions-list.component';
 import { Columns, PossibleSortingDirections, TransactionOperationTypes } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
 
@@ -35,7 +34,7 @@ export class TransactionsTableComponent implements OnInit {
 
   public formsToggled = false;
 
-  private draggingInsideSourceList: boolean = true;
+  public buildTransactionDto = buildTransactionDto;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -119,28 +118,12 @@ export class TransactionsTableComponent implements OnInit {
       });
   }
 
-  public handleDrop(): void {
-    this.isDraggingInsideSourceList = true;
-  }
-
-  public handleDragEnter(event: CdkDragEnter<Transaction[]>): void {
-    this.isDraggingInsideSourceList = event.container === event.item.dropContainer;
-  }
-
   public forbiddEnterPredicate(): boolean {
     return false;
   }
 
   public get isFirstPage(): boolean {
     return this.dataSource.currentPageNumber === 0;
-  }
-  
-  public get isDraggingInsideSourceList(): boolean {
-    return this.draggingInsideSourceList;
-  }
-
-  public set isDraggingInsideSourceList(flag: boolean) {
-    this.draggingInsideSourceList = flag; 
   }
 
   private handleSuccessfulConfirmation(): void {

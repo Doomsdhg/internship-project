@@ -36,6 +36,16 @@ export interface Translations {
     'displayedColumns.actions': string;
 }
 
+export interface TransactionDto {
+    index?: number;
+    provider: string;
+    user: string;
+    externalId: string;
+    status: string;
+    amount: string;
+    commissionAmount: string;
+}
+
 export type ControlName = 'amount' | 'commissionAmount';
 
 export type TransactionOperation = 'createTransaction' | 'editTransaction';

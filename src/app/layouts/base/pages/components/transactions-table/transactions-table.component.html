@@ -3,12 +3,15 @@
   <h2 class="transactions-table-title">{{'titles.currentTransactions' | translate}}</h2>
   <button mat-raised-button class="add-transaction-button" color="primary"
   (click)="openTransactionAddingDialog()">+</button>
-  <table mat-table matSort class="transactions-table"
+  <table mat-table matSort 
+  class="transactions-table"
+  id="transactions-table"
   cdkDropList
   cdkDropListSortingDisabled
   [cdkDropListEnterPredicate]="forbiddEnterPredicate"
   [cdkDropListData]="dataSource.data"
-  [dataSource]="dataSource">
+  [dataSource]="dataSource"
+  [cdkDropListConnectedTo]="['applied-transactions-list']">
 
     <!-- External id Column -->
     <ng-container matColumnDef="externalId">
@@ -139,11 +142,10 @@
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row class="onhover-pointer"
     *matRowDef="let row; columns: displayedColumns;"
-    cdkDrag
-    (cdkDragEntered)="handleDragEnter($event)">
+    cdkDrag>
       <intr-transaction-card 
       *cdkDragPreview 
-      [transaction]="row"
+      [transaction]="buildTransactionDto(row)"
       class="drag-preview"></intr-transaction-card>
       <div *cdkDragPlaceholder>
         <div

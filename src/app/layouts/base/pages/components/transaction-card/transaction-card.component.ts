@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Row } from '../transactions-table/transactions-table.interfaces';
+import { TransactionDto } from '../transactions-table/transactions-table.interfaces';
 
 @Component({
   selector: 'intr-transaction-card',
@@ -9,21 +9,21 @@ import { Row } from '../transactions-table/transactions-table.interfaces';
 })
 export class TransactionCardComponent {
 
-  @Input() transaction!: Row;
+  @Input() transaction!: TransactionDto;
 
   @Input() index!: number;
 
-  @Output() onDeleteCardEvent = new EventEmitter<number>();
+  @Output() readonly deleteCardEvent = new EventEmitter<number>();
 
   public get indexExists(): boolean {
-    if (this.index || this.index === 0) {
-      return true
+    if (this.transaction.index || this.transaction.index === 0) {
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
   public deleteCard(): void {
-    this.onDeleteCardEvent.emit(this.index);
+    this.deleteCardEvent.emit(this.index);
   }
 }
