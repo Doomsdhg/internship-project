@@ -1,14 +1,19 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { TransactionDto } from '../../../classes/transaction-dto.class';
 
 @Component({
   selector: 'intr-transaction-card',
   templateUrl: './transaction-card.component.html',
   styleUrls: ['./transaction-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionCardComponent {
-
   @Input() transaction!: TransactionDto;
 
   @Output() readonly deleteCardEvent = new EventEmitter<number>();
