@@ -21,10 +21,10 @@ import { AppliedTransactionsListResponse } from './applied-transactions-list.cla
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppliedTransactionsListComponent implements OnInit {
-  
+
   public appliedTransactionsArray: Transaction[] = [];
 
-  public pointerIsOverDropList: boolean = false;
+  public pointerIsOverDropList = false;
 
   constructor(
     private transactionApiService: TransactionApiService,
