@@ -66,7 +66,7 @@ export class ManageTransactionsDialogComponent implements OnInit {
   }
 
   public cancelChanges = (): void => {
-    this.matDialogRef.close();
+    this.initFormGroup(this.data.rowData);
   }
 
   public clearForms(): void {
