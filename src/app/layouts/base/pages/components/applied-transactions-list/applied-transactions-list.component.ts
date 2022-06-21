@@ -21,6 +21,7 @@ import { AppliedTransactionsListResponse } from './applied-transactions-list.cla
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppliedTransactionsListComponent implements OnInit {
+  
   public appliedTransactionsArray: Transaction[] = [];
 
   constructor(
@@ -33,15 +34,17 @@ export class AppliedTransactionsListComponent implements OnInit {
   }
 
   public handleDrop = (event: CdkDragDrop<Transaction[]>): void => {
-    if (!event.isPointerOverContainer) {
+    const { isPointerOverContainer, previousContainer, container } = event;
+    const isDroppedInSource = previousContainer === container;
+    if (!isPointerOverContainer) {
       this.deleteTransaction(event.previousIndex);
-    } else if (event.previousContainer === event.container) {
+    } else if (isDroppedInSource) {
       moveItemInArray(
         this.appliedTransactionsArray,
         event.previousIndex,
         event.currentIndex
       );
-    } else if (event.previousContainer !== event.container) {
+    } else if (!isDroppedInSource) {
       copyArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -64,7 +67,7 @@ export class AppliedTransactionsListComponent implements OnInit {
     return new TransactionDto(transaction, index);
   }
 
-  public identify(index: number, item: Object): Object {
+  public identify(index: number, item: Transaction): Transaction {
     return item;
   }
 

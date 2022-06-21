@@ -3,10 +3,10 @@
     {{ "titles.appliedTransactions" | translate }}
   </h1>
   <div
+    [ngClass]="{ 'no-shadow': listIsEmpty }"
     class="applied-transactions-list"
     id="applied-transactions-list"
     cdkDropList
-    [ngClass]="{ 'no-shadow': listIsEmpty }"
     [cdkDropListData]="appliedTransactionsArray"
     (cdkDropListDropped)="handleDrop($event)"
     [cdkDropListConnectedTo]="['transactions-table']"
@@ -21,8 +21,9 @@
         (deleteCardEvent)="handleCardDeletion($event)"
       >
         <div *cdkDragPlaceholder>
-          <div class="drop-placeholder"></div></div
-      ></intr-transaction-card>
+          <div class="drop-placeholder"></div>
+        </div>
+      </intr-transaction-card>
       <intr-transaction-card
         class="drag-preview"
         *cdkDragPreview

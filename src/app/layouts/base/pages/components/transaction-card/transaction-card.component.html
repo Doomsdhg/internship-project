@@ -1,10 +1,11 @@
 <div class="transaction-card-wrapper">
   <div class="transaction-card-wrapper__header">
-    <span *ngIf="indexisDefined">#{{ transaction.index | intrIncreaseByOne }}</span>
-    <span class="deletion-container"
-      ><mat-icon class="icon"
-      (click)="deleteCard()">delete</mat-icon></span
-    >
+    <span *ngIf="indexIsDefined">#{{ transaction.index | intrIncreaseByOne }}</span>
+    <span class="deletion-container">
+      <mat-icon class="icon"
+      (click)="deleteCard()"
+      >delete</mat-icon>
+    </span>
   </div>
   <div class="flex-container">
     <img
@@ -33,7 +34,7 @@
       </div>
     </div>
   </div>
-  <span class="transaction-card-wrapper__username"
-    >{{ "displayedColumns.user" | translate }} : {{ transaction.user }}</span
-  >
+  <span class="transaction-card-wrapper__username">
+    {{ "displayedColumns.user" | translate }} : {{ transaction.user }}
+  </span>
 </div>

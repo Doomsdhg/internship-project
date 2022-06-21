@@ -10,8 +10,8 @@
   cdkDropListSortingDisabled
   [cdkDropListEnterPredicate]="forbiddEnterPredicate"
   [cdkDropListData]="dataSource.data"
-  [dataSource]="dataSource"
-  [cdkDropListConnectedTo]="['applied-transactions-list']">
+  [cdkDropListConnectedTo]="['applied-transactions-list']"
+  [dataSource]="dataSource">
 
     <!-- External id Column -->
     <ng-container matColumnDef="externalId">
@@ -140,19 +140,18 @@
 
     <!-- Header row -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row class="onhover-pointer"
-    *matRowDef="let row; columns: displayedColumns;"
-    cdkDrag>
-      <intr-transaction-card 
-      *cdkDragPreview 
-      [transaction]="buildTransactionDto(row)"
-      class="drag-preview"></intr-transaction-card>
+
+    <!-- Regular rows -->
+    <mat-row class="onhover-pointer" cdkDrag
+    *matRowDef="let row; columns: displayedColumns;">
+      <intr-transaction-card *cdkDragPreview class="drag-preview"
+      [transaction]="buildTransactionDto(row)"></intr-transaction-card>
       <div *cdkDragPlaceholder>
-        <div
-        class="drop-placeholder"></div>
+        <div class="drop-placeholder"></div>
       </div>
     </mat-row>
   </table>
+  
   <div class="pagination-pannel">
     <button mat-button 
     [disabled]="isFirstPage" 
