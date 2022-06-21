@@ -230,74 +230,20 @@
     {
       "value": [
         {
-          "id": 3,
-          "externalId": "qwerty",
+          "id": 2,
+          "externalId": "zxc",
           "provider": "qiwi",
           "status": "INITIAL",
           "amount": {
-            "amount": 12,
+            "amount": 11,
             "currency": "USD"
           },
           "commissionAmount": {
             "amount": 1,
             "currency": "USD"
           },
-          "user": "testtttt",
-          "timestamp": 1655388510,
-          "providerTimestamp": null,
-          "additionalData": ""
-        },
-        {
-          "id": 1,
-          "externalId": "123qwe",
-          "provider": "qiwi",
-          "status": "INITIAL",
-          "amount": {
-            "amount": 10,
-            "currency": "USD"
-          },
-          "commissionAmount": {
-            "amount": 1,
-            "currency": "USD"
-          },
-          "user": "test123",
-          "timestamp": 1655388456,
-          "providerTimestamp": null,
-          "additionalData": ""
-        },
-        {
-          "id": 3,
-          "externalId": "qwerty",
-          "provider": "qiwi",
-          "status": "INITIAL",
-          "amount": {
-            "amount": 12,
-            "currency": "USD"
-          },
-          "commissionAmount": {
-            "amount": 1,
-            "currency": "USD"
-          },
-          "user": "testtttt",
-          "timestamp": 1655388510,
-          "providerTimestamp": null,
-          "additionalData": ""
-        },
-        {
-          "id": 3,
-          "externalId": "qwerty",
-          "provider": "qiwi",
-          "status": "INITIAL",
-          "amount": {
-            "amount": 12,
-            "currency": "USD"
-          },
-          "commissionAmount": {
-            "amount": 1,
-            "currency": "USD"
-          },
-          "user": "testtttt",
-          "timestamp": 1655388510,
+          "user": "testt",
+          "timestamp": 1655388488,
           "providerTimestamp": null,
           "additionalData": ""
         },

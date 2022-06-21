@@ -8,13 +8,15 @@
     id="applied-transactions-list"
     cdkDropList
     [cdkDropListData]="appliedTransactionsArray"
-    (cdkDropListDropped)="handleDrop($event)"
     [cdkDropListConnectedTo]="['transactions-table']"
+    (cdkDropListDropped)="handleDrop($event)"
+    (mouseleave)="handleMouseLeave()"
+    (mouseenter)="handleMouseEnter()"
   >
-    <div
-      *ngFor="let transaction of appliedTransactionsArray; index as i; trackBy: identify"
+    <div *ngFor="let transaction of appliedTransactionsArray; index as i; trackBy: identify"
       class="applied-transactions-list__item"
       cdkDrag
+      (cdkDragReleased)="handleRelease($event)"
     >
       <intr-transaction-card
         [transaction]="buildTransactionDto(transaction, i)"
@@ -26,6 +28,7 @@
       </intr-transaction-card>
       <intr-transaction-card
         class="drag-preview"
+        [ngClass]="{'no-animation': !pointerIsOverDropList}"
         *cdkDragPreview
         [transaction]="buildTransactionDto(transaction, i)"
       ></intr-transaction-card>

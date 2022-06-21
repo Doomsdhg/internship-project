@@ -24,6 +24,8 @@ export class AppliedTransactionsListComponent implements OnInit {
   
   public appliedTransactionsArray: Transaction[] = [];
 
+  public pointerIsOverDropList: boolean = false;
+
   constructor(
     private transactionApiService: TransactionApiService,
     private changeDetectorRef: ChangeDetectorRef
@@ -65,6 +67,20 @@ export class AppliedTransactionsListComponent implements OnInit {
     index: number
   ): TransactionDto {
     return new TransactionDto(transaction, index);
+  }
+
+  public handleRelease(event: any): void {
+    if (!this.pointerIsOverDropList) {
+      console.log(event);
+    }
+  }
+
+  public handleMouseLeave (): void {
+    this.pointerIsOverDropList = false;
+  }
+
+  public handleMouseEnter (): void {
+    this.pointerIsOverDropList = true;
   }
 
   public identify(index: number, item: Transaction): Transaction {
