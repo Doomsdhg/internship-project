@@ -4,8 +4,10 @@
     "currency": "Валюта",
     "titles": {
         "transactions": "Транзакции",
+        "currentTransactions": "Текущие транзакции",
         "createTransaction": "Создание транзакции",
-        "editTransaction": "Редактирование данных транзакции"
+        "editTransaction": "Редактирование данных транзакции",
+        "appliedTransactions": "Принятые транзакции"
     },
     "displayedColumns": {
         "externalId": "Номер",

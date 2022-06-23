@@ -1,12 +1,20 @@
 <div class="transactions-table-wrapper">
   <h1 class="transactions-title">{{'titles.transactions' | translate}}</h1>
+  <h2 class="transactions-table-title">{{'titles.currentTransactions' | translate}}</h2>
   <button mat-button class="add-transaction-button"
   (click)="openTransactionAddingDialog()">
         <span class="material-icons">
           add
         </span>
   </button>
-  <table mat-table matSort class="transactions-table"
+  <table mat-table matSort 
+  class="transactions-table"
+  id="transactions-table"
+  cdkDropList
+  cdkDropListSortingDisabled
+  [cdkDropListEnterPredicate]="forbiddEnterPredicate"
+  [cdkDropListData]="dataSource.data"
+  [cdkDropListConnectedTo]="['applied-transactions-list']"
   [dataSource]="dataSource">
 
     <!-- External id Column -->
@@ -136,10 +144,18 @@
 
     <!-- Header row -->
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row class="onhover-pointer"
+
+    <!-- Regular rows -->
+    <mat-row class="onhover-pointer" cdkDrag
     *matRowDef="let row; columns: displayedColumns;">
+      <intr-transaction-card *cdkDragPreview class="drag-preview"
+      [transaction]="buildTransactionDto(row)"></intr-transaction-card>
+      <div *cdkDragPlaceholder>
+        <div class="drop-placeholder"></div>
+      </div>
     </mat-row>
   </table>
+  
   <div class="pagination-pannel">
     <button mat-button 
     [disabled]="isFirstPage" 

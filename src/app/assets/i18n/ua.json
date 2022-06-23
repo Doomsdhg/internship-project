@@ -3,9 +3,11 @@
     "amount": "Сума",
     "currency": "Валюта",
     "titles": {
+        "currentTransactions": "Поточні транзакції",
         "transactions": "Транзакції",
         "createTransaction": "Створення транзакції", 
-        "editTransaction": "Редагування даних транзакції"
+        "editTransaction": "Редагування даних транзакції",
+        "appliedTransactions": "Прийняті транзакції"
     },
     "displayedColumns": {
         "externalId": "Номер",

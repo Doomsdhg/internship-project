@@ -4,8 +4,10 @@
     "currency": "Currency",
     "titles": {
         "transactions": "Transactions",
+        "currentTransactions": "Current transactions",
         "createTransaction": "Transaction creation",
-        "editTransaction": "Transaction editing"
+        "editTransaction": "Transaction editing",
+        "appliedTransactions": "Applied transactions"
     },
     "displayedColumns": {
         "externalId": "No.",
@@ -32,6 +34,7 @@
         "additionalData": "Additional data"
     },
     "buttons": {
+        "clear": "Clear",
         "delete": "Delete",
         "edit": "Edit",
         "cancel": "Cancel",

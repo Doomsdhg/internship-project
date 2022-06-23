@@ -1,0 +1,36 @@
+<div class="applied-transactions-list-wrapper">
+  <h1 class="applied-transactions-title">
+    {{ "titles.appliedTransactions" | translate }}
+  </h1>
+  <div
+    [ngClass]="{ 'no-shadow': listIsEmpty }"
+    class="applied-transactions-list"
+    id="applied-transactions-list"
+    cdkDropList
+    [cdkDropListData]="appliedTransactionsArray"
+    [cdkDropListConnectedTo]="['transactions-table']"
+    (cdkDropListDropped)="handleDrop($event)"
+    (mouseleave)="handleMouseLeave()"
+    (mouseenter)="handleMouseEnter()"
+  >
+    <div *ngFor="let transaction of appliedTransactionsArray; index as i; trackBy: identify"
+      class="applied-transactions-list__item"
+      cdkDrag
+    >
+      <intr-transaction-card
+        [transaction]="buildTransactionDto(transaction, i)"
+        (deleteCardEvent)="handleCardDeletion($event)"
+      >
+        <div *cdkDragPlaceholder>
+          <div class="drop-placeholder"></div>
+        </div>
+      </intr-transaction-card>
+      <intr-transaction-card
+        class="drag-preview"
+        [ngClass]="{'no-animation': !pointerIsOverDropList}"
+        *cdkDragPreview
+        [transaction]="buildTransactionDto(transaction, i)"
+      ></intr-transaction-card>
+    </div>
+  </div>
+</div>

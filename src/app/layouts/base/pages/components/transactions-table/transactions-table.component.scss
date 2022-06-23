@@ -8,8 +8,15 @@
     }
 
     .transactions-title {
+        margin-bottom: 10rem;
         line-height: 3rem;
         font-size: 4rem;
+    }
+
+    .transactions-table-title {
+        font-size: 2.5rem;
+        color: grey;
+        font-weight: 100;
     }
 
     .add-transaction-button {
@@ -74,5 +81,9 @@
 
     .validation-error-text {
         color: red;
+    }
+
+    .drop-placeholder {
+        display: none;
     }
 }

@@ -6,12 +6,13 @@ import { Sortable } from '../services/models/Sortable.model';
 
 class Base {
 
-    static readonly URL = environment.serverUrl || prodEnvironment.serverUrl;
+    static readonly SERVER_URL = environment.serverUrl || prodEnvironment.serverUrl;
+    static readonly MOCK_SERVER_URL = 'http://localhost:3000';
 }
 
 class Transactions {
 
-    static readonly BASE = Base.URL;
+    static readonly BASE = Base.SERVER_URL;
     static readonly TRANSACTIONS_ADMIN = `${this.BASE}admin/transactions`;
     static readonly TRANSACTIONS_CORE = `${this.BASE}transactions`;
 
@@ -30,13 +31,20 @@ class Transactions {
 
 class AuthEndpoints {
 
-    static readonly BASE = `${Base.URL}auth`;
+    static readonly BASE = `${Base.SERVER_URL}auth`;
     static readonly LOGIN = `${AuthEndpoints.BASE}/login`;
     static readonly LOGOUT = `${AuthEndpoints.BASE}/logout`;
     static readonly REFRESH_TOKEN = `${AuthEndpoints.BASE}/refresh`;
 }
 
+class AppliedTransactions {
+
+    static readonly GETTING_URL = `${Base.MOCK_SERVER_URL}/applied_transactions/list`;
+}
+
 export class ApiEndpoints {
+
     static readonly AUTH_ENDPOINTS = AuthEndpoints;
     static readonly TRANSACTIONS = Transactions;
+    static readonly APPLIED_TRANSACTIONS = AppliedTransactions;
 }

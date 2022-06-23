@@ -6,7 +6,6 @@ export interface Column {
 }
 
 export interface Row {
-    displayForms: boolean;
     provider: string;
     user: string;
     externalId: string;
