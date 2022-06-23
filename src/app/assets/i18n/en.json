@@ -34,6 +34,7 @@
         "additionalData": "Additional data"
     },
     "buttons": {
+        "clear": "Clear",
         "delete": "Delete",
         "edit": "Edit",
         "cancel": "Cancel",

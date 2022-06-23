@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { ApiTransactionResponse, Transaction, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
-import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.class';
+import { ApiTransactionResponse, TransactionUpdateData } from 'src/app/interfaces/transactions.interface';
+import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.interfaces';
 
 export abstract class BaseApiService {
 

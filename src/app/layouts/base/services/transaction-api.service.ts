@@ -9,7 +9,7 @@ import {
   TransactionCreationData,
   TransactionUpdateData,
 } from 'src/app/interfaces/transactions.interface';
-import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.class';
+import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.interfaces';
 import { BaseApiService } from './base-api.service';
 import { AppliedTransactionsReplenishRequest } from './classes/replenish-applied-transactions-request.class';
 

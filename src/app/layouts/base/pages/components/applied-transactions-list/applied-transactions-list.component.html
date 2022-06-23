@@ -16,7 +16,6 @@
     <div *ngFor="let transaction of appliedTransactionsArray; index as i; trackBy: identify"
       class="applied-transactions-list__item"
       cdkDrag
-      (cdkDragReleased)="handleRelease($event)"
     >
       <intr-transaction-card
         [transaction]="buildTransactionDto(transaction, i)"

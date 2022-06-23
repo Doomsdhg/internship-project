@@ -1,8 +1,4 @@
-import {
-  CdkDragDrop,
-  copyArrayItem,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import { copyArrayItem, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,7 +8,10 @@ import {
 import { Transaction } from 'src/app/interfaces/transactions.interface';
 import { TransactionDto } from '../../../classes/transaction-dto.class';
 import { TransactionApiService } from '../../../services/transaction-api.service';
-import { AppliedTransactionsListResponse } from './applied-transactions-list.class';
+import {
+  AppliedTransactionsListResponse,
+  HandleDropRequiredData,
+} from './applied-transactions-list.interfaces';
 
 @Component({
   selector: 'intr-applied-transactions-list',
@@ -21,7 +20,6 @@ import { AppliedTransactionsListResponse } from './applied-transactions-list.cla
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppliedTransactionsListComponent implements OnInit {
-
   public appliedTransactionsArray: Transaction[] = [];
 
   public pointerIsOverDropList = false;
@@ -35,23 +33,28 @@ export class AppliedTransactionsListComponent implements OnInit {
     this.refreshTransactionList();
   }
 
-  public handleDrop = (event: CdkDragDrop<Transaction[]>): void => {
-    const { isPointerOverContainer, previousContainer, container } = event;
+  public handleDrop({
+    isPointerOverContainer,
+    currentIndex,
+    previousIndex,
+    container,
+    previousContainer,
+  }: HandleDropRequiredData): void {
     const isDroppedInSource = previousContainer === container;
     if (!isPointerOverContainer) {
-      this.deleteTransaction(event.previousIndex);
+      this.deleteTransaction(previousIndex);
     } else if (isDroppedInSource) {
       moveItemInArray(
         this.appliedTransactionsArray,
-        event.previousIndex,
-        event.currentIndex
+        previousIndex,
+        currentIndex
       );
     } else if (!isDroppedInSource) {
       copyArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
+        previousContainer.data,
+        container.data,
+        previousIndex,
+        currentIndex
       );
     }
     this.refreshAppliedTransactions();
@@ -69,17 +72,11 @@ export class AppliedTransactionsListComponent implements OnInit {
     return new TransactionDto(transaction, index);
   }
 
-  public handleRelease(event: any): void {
-    if (!this.pointerIsOverDropList) {
-      console.log(event);
-    }
-  }
-
-  public handleMouseLeave (): void {
+  public handleMouseLeave(): void {
     this.pointerIsOverDropList = false;
   }
 
-  public handleMouseEnter (): void {
+  public handleMouseEnter(): void {
     this.pointerIsOverDropList = true;
   }
 
