@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
 
   public currentTheme!: Theme;
 
+  public unseenNotificationsAmount!: number;
+
   constructor(
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,

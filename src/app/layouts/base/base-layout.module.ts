@@ -22,6 +22,7 @@ import { AppliedTransactionsListComponent } from './pages/components/applied-tra
 import { MatCardModule } from '@angular/material/card';
 import { TransactionCardComponent } from './pages/components/transaction-card/transaction-card.component';
 import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
+import { NotificationsDialogComponent } from './pages/components/notifications-dialog/notifications-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
     ManageTransactionsDialogComponent,
     AppliedTransactionsListComponent,
     TransactionCardComponent,
-    IncreaseByOnePipe
+    IncreaseByOnePipe,
+    NotificationsDialogComponent
   ],
   imports: [
     MatCardModule,

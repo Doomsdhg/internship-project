@@ -21,6 +21,7 @@ import { SpinnerOverlayComponent } from './components/spinner-overlay/spinner-ov
 import { AuthLayoutModule } from './layouts/auth/auth-layout.module';
 import { BaseLayoutModule } from './layouts/base/base-layout.module';
 import { ErrorLayoutModule } from './layouts/error/error-layout.module';
+import { MatBadgeModule } from '@angular/material/badge';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -48,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     MatIconModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatBadgeModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

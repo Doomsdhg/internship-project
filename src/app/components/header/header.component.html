@@ -1,63 +1,73 @@
 <div class="header-wrapper">
-    <div class="links-container">
-        <button class="links-container__link" mat-button color="primary"
-        (click)="redirectTo('/')">
-            <mat-icon id="home-icon" aria-hidden="false" color="primary">
-                home
-            </mat-icon>
-        </button>
-        <button class="links-container__link" mat-raised-button color="primary"
-        *ngIf="isAuthenticated" 
-        (click)="logout()">
-            {{'buttons.logout' | translate}}
-        </button>
+  <div class="links-container">
+    <button class="links-container__link"
+      mat-button
+      color="primary"
+      (click)="redirectTo('/')"
+    >
+      <mat-icon id="home-icon" 
+      aria-hidden="false"
+      color="primary">
+        home
+      </mat-icon>
+    </button>
+    <button
+      class="links-container__link"
+      mat-raised-button
+      color="primary"
+      *ngIf="isAuthenticated"
+      (click)="logout()"
+    >
+      {{ "buttons.logout" | translate }}
+    </button>
+  </div>
+  <div class="clickables-container">
+    <div class="notifications-bell-container">
+      <mat-icon
+        matBadge="{{unseenNotificationsAmount}}"
+        matBadgeColor="warn"
+        class="notifications-bell-container__image"
+        >notifications</mat-icon>
     </div>
     <div class="managing-tools-container">
-        <div class="managing-tools-container__item">
-            <button mat-button 
-            *ngIf="isDarkTheme" 
-            (click)="enableLightTheme()">
-                <span class="material-icons">
-                    light_mode
-                </span>
-            </button>
-            <button mat-button 
-            *ngIf="isLightTheme" 
-            (click)="enableDarkTheme()">
-                <span class="material-icons">
-                    dark_mode
-                </span>
-            </button>
-        </div>
-        <div class="managing-tools-container__item">
-            <intr-select-language></intr-select-language>
-        </div>
+      <div class="managing-tools-container__item">
+        <button mat-button 
+        *ngIf="isDarkTheme" 
+        (click)="enableLightTheme()">
+          <span class="material-icons"> light_mode </span>
+        </button>
+        <button mat-button 
+        *ngIf="isLightTheme" 
+        (click)="enableDarkTheme()">
+          <span class="material-icons"> dark_mode </span>
+        </button>
+      </div>
+      <div class="managing-tools-container__item">
+        <intr-select-language></intr-select-language>
+      </div>
     </div>
     <div mat-icon-button class="managing-tools-mobile">
-        <button mat-button 
-        [matMenuTriggerFor]="menu">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-            <div class="managing-tools-mobile__item">
-                <button mat-button 
-                *ngIf="isDarkTheme" 
-                (click)="enableLightTheme()">
-                    <span class="material-icons">
-                        light_mode
-                    </span>
-                </button>
-                <button mat-button 
-                *ngIf="isLightTheme" 
-                (click)="enableDarkTheme()">
-                    <span class="material-icons">
-                        dark_mode
-                    </span>
-                </button>
-            </div>
-            <div class="managing-tools-mobile__item">
-                <intr-select-language></intr-select-language>
-            </div>
-        </mat-menu>
+      <button mat-button 
+      [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div class="managing-tools-mobile__item">
+          <button mat-button 
+          *ngIf="isDarkTheme" 
+          (click)="enableLightTheme()">
+            <span class="material-icons"> light_mode </span>
+          </button>
+          <button mat-button 
+          *ngIf="isLightTheme" 
+          (click)="enableDarkTheme()">
+            <span class="material-icons"> dark_mode </span>
+          </button>
+        </div>
+        <div class="managing-tools-mobile__item">
+          <intr-select-language></intr-select-language>
+        </div>
+      </mat-menu>
     </div>
+  </div>
 </div>
