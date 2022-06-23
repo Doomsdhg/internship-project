@@ -5,6 +5,10 @@ import { AuthService } from 'src/app/layouts/auth/services/auth.service';
 import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 import { HeaderConstants } from './header.constants';
 import { Theme } from './theme.model';
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationsDialogComponent } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.component';
+import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
+import { NotificationAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
 
 @Component({
   selector: 'intr-header',
@@ -25,7 +29,9 @@ export class HeaderComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService,
     private localStorageManagerService: LocalStorageManagerService,
-    private themeManagerService: ThemeManagerService
+    private themeManagerService: ThemeManagerService,
+    private matDialog: MatDialog,
+    private notificationsApiService: NotificationsApiService
   ) { }
 
   public get isAuthenticated(): boolean {
@@ -45,6 +51,7 @@ export class HeaderComponent implements OnInit {
       this.setCurrentRoute();
     });
     this.setCurrentTheme();
+    this.getUnseenNotificationsAmount();
   }
 
   public redirectTo(route: string): void {
@@ -61,6 +68,28 @@ export class HeaderComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout();
+  }
+
+  public handleBellClick(): void {
+    this.nullifyUnseenNotificationsAmount();
+    this.openNotificationsDialog();
+  }
+
+  public getUnseenNotificationsAmount(): void {
+    this.notificationsApiService.getNotificationsAmount()
+    .subscribe((response: NotificationAmountResponse) => {
+      this.unseenNotificationsAmount = +response.amount;
+    })
+  }
+
+  private nullifyUnseenNotificationsAmount(): void {
+
+  }
+
+  private openNotificationsDialog(): void {
+    this.matDialog.open(NotificationsDialogComponent, {
+      panelClass: 'notifications-dialog', 
+      backdropClass: 'notification-backrop'})
   }
 
   private setCurrentTheme(): void {

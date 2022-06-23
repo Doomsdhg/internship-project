@@ -67,3 +67,18 @@ body {
     background-color: grey;
     width: 80%;
 }
+
+.notifications-dialog{
+    margin-left: 40%;
+    margin-top: -33rem;
+    width: 30%;
+    min-width: 20rem;
+}
+
+@media all and (max-width: 44rem) {
+
+    .notifications-dialog{
+        margin-left: 0;
+        width: 100%;
+    }
+}

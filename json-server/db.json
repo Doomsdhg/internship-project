@@ -286,5 +286,45 @@
       ],
       "id": "list"
     }
+  ],
+  "notifications_list": [
+      {
+        "id": "admin",
+        "notifications": [
+          {
+            "user" : {
+              "firstName" : "vasia",
+              "secondName" : "pupkin"
+            },
+            "text" : "Bla bla `blaba` at `blabla`",
+            "isRead" : "true",
+            "isDeleted" : "true"
+          },
+          {
+            "user" : {
+              "firstName" : "vasia",
+              "secondName" : "pupkin"
+            },
+            "text" : "Bla bla `blaba` at `blabla`",
+            "isRead" : "true",
+            "isDeleted" : "true"
+          },
+          {
+            "user" : {
+              "firstName" : "vasia",
+              "secondName" : "pupkin"
+            },
+            "text" : "Bla bla `blaba` at `blabla`",
+            "isRead" : "true",
+            "isDeleted" : "true"
+          }
+      ]
+    }
+  ],
+  "unseen_notifications_amount": [
+    {
+      "id": "admin",
+      "amount": "3"
+    }
   ]
 }

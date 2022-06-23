@@ -42,9 +42,21 @@ class AppliedTransactions {
     static readonly GETTING_URL = `${Base.MOCK_SERVER_URL}/applied_transactions/list`;
 }
 
+class Notifications {
+
+    static getListUrl(username: string){
+        return `${Base.MOCK_SERVER_URL}/notifications_list/${username}`;
+    }
+
+    static getUnseenAmountUrl(username: string){
+        return `${Base.MOCK_SERVER_URL}/unseen_notifications_amount/${username}`;
+    }
+}
+
 export class ApiEndpoints {
 
     static readonly AUTH_ENDPOINTS = AuthEndpoints;
     static readonly TRANSACTIONS = Transactions;
     static readonly APPLIED_TRANSACTIONS = AppliedTransactions;
+    static readonly NOTIFICATIONS = Notifications;
 }
