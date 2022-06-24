@@ -1,0 +1,20 @@
+<div class="notification-card-wrapper">
+    <div class="notification-info-wrapper">
+        <div class="notification-user-image">
+            <span>{{initials}}</span>
+        </div>
+        <div class="notification-info">
+            <span>{{messageToDisplay}}</span>
+        </div>
+    </div>
+    <div class="more-container">
+        <button mat-button 
+        [matMenuTriggerFor]="menu">
+            <mat-icon class="more-container__image">more_vert</mat-icon>
+        </button>
+        <mat-menu class="notification-actions-menu" #menu="matMenu">
+          <button mat-button>read/unread</button>
+          <button mat-button>read/unread</button>
+        </mat-menu>
+    </div>
+</div>

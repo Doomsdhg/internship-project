@@ -23,6 +23,8 @@ import { MatCardModule } from '@angular/material/card';
 import { TransactionCardComponent } from './pages/components/transaction-card/transaction-card.component';
 import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
 import { NotificationsDialogComponent } from './pages/components/notifications-dialog/notifications-dialog.component';
+import { NotificationCardComponent } from './pages/components/notification-card/notification-card.component';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { NotificationsDialogComponent } from './pages/components/notifications-d
     AppliedTransactionsListComponent,
     TransactionCardComponent,
     IncreaseByOnePipe,
-    NotificationsDialogComponent
+    NotificationsDialogComponent,
+    NotificationCardComponent
   ],
   imports: [
     MatCardModule,
@@ -52,7 +55,8 @@ import { NotificationsDialogComponent } from './pages/components/notifications-d
     BrowserAnimationsModule,
     TranslateModule,
     NgxErrorsModule,
-    DragDropModule
+    DragDropModule,
+    MatMenuModule
   ],
   bootstrap: [BaseLayoutComponent],
 })

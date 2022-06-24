@@ -68,16 +68,22 @@ body {
     width: 80%;
 }
 
-.notifications-dialog{
+.notifications-dialog {
     margin-left: 40%;
-    margin-top: -33rem;
+    margin-top: -10rem;
     width: 30%;
+    height: fit-content;
     min-width: 20rem;
+    max-height: 30rem;
+
+    .mat-dialog-container {
+        padding: 0;
+    }
 }
 
 @media all and (max-width: 44rem) {
 
-    .notifications-dialog{
+    .notifications-dialog {
         margin-left: 0;
         width: 100%;
     }

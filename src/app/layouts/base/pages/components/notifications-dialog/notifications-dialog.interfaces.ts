@@ -1,4 +1,4 @@
-interface UserInfo {
+export interface UserInfo {
     firstName : string,
     secondName : string
 }
@@ -12,4 +12,8 @@ export interface NotificationDto {
 
 export interface NotificationAmountResponse {
     amount: string
+}
+
+export interface NotificationsListResponse {
+    notifications: NotificationDto[]
 }

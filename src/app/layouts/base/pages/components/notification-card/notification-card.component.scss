@@ -1,0 +1,40 @@
+.notification-card-wrapper {
+    display: flex;
+
+    .notification-info-wrapper {
+        padding: 2rem;
+        display: flex;
+        .notification-user-image {
+            display: inline-flex;
+            background-color: teal;
+            width: 4rem;
+            height: 4rem;
+            font-size: 2rem;
+            justify-content: center;
+            align-items: center;
+        }
+        .notification-info {
+            margin-left: 2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            word-break: normal;
+        }
+    }
+    .more-container {
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+
+        .more-container__image {
+            display: none;
+        }
+    }
+    &:hover {
+        .more-container {
+            .more-container__image {
+                display: inline-flex;
+            }
+        }
+    }
+}

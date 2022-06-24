@@ -3,6 +3,7 @@
     "amount": "Amount",
     "currency": "Currency",
     "titles": {
+        "notifications": "Notifications",
         "transactions": "Transactions",
         "currentTransactions": "Current transactions",
         "createTransaction": "Transaction creation",
