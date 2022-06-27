@@ -22,9 +22,11 @@
     </button>
   </div>
   <div class="clickables-container">
-    <div class="notifications-bell-container">
+    <div class="notifications-bell-container"
+    *ngIf="isAuthenticated">
       <mat-icon
         matBadge="{{unseenNotificationsAmount}}"
+        matBadgeHidden="{{!unseenNotificationsAmount}}"
         matBadgeColor="warn"
         class="notifications-bell-container__image"
         (click)="handleBellClick()"

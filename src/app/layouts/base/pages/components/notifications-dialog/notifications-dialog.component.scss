@@ -1,9 +1,10 @@
 .notifications-dialog-wrapper {
-    width: 100%;
-    height: 100%;
+    width: fit-content;
 
     .notifications-title {
         margin-top: 1rem;
-        text-align: center;
+        padding-left: 1rem;
+        text-align: left;
+        font-size: 1.3rem;
     }
 }

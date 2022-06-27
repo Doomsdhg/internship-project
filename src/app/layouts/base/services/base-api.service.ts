@@ -11,6 +11,9 @@ import {
   TransactionUpdateData,
 } from 'src/app/interfaces/transactions.interface';
 import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.interfaces';
+import { NotificationDto } from '../pages/components/notifications-dialog/notifications-dialog.interfaces';
+import { ReplenishNotViewedAmountRequest } from './classes/replenish-notifications-amount.class';
+import { NotificationsReplenishRequest } from './classes/replenish-notifications.class';
 
 export abstract class BaseApiService {
   constructor(private httpClient: HttpClient) {}
@@ -38,12 +41,23 @@ export abstract class BaseApiService {
 
   public put<T>(
     url: string,
-    updateData: TransactionUpdateData | AppliedTransactionsListResponse,
+    updateData: TransactionUpdateData | AppliedTransactionsListResponse | NotificationsReplenishRequest,
     headers?: HttpHeaders,
     params?: HttpParams
   ): Observable<T> {
     return this.httpClient
       .put<T>(url, updateData, { headers, params })
+      .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
+  }
+
+  public patch<T>(
+    url: string,
+    updateData: ReplenishNotViewedAmountRequest,
+    headers?: HttpHeaders,
+    params?: HttpParams
+  ): Observable<T> {
+    return this.httpClient
+      .patch<T>(url, updateData, { headers, params })
       .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 

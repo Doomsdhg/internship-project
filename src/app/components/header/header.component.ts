@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NotificationsDialogComponent } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.component';
 import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
 import { NotificationAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
+import { ReplenishNotViewedAmountRequest } from 'src/app/layouts/base/services/classes/replenish-notifications-amount.class';
 
 @Component({
   selector: 'intr-header',
@@ -71,8 +72,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public handleBellClick(): void {
-    this.nullifyUnseenNotificationsAmount();
     this.openNotificationsDialog();
+    this.nullifyUnseenNotificationsAmount();
   }
 
   public getUnseenNotificationsAmount(): void {
@@ -83,13 +84,17 @@ export class HeaderComponent implements OnInit {
   }
 
   private nullifyUnseenNotificationsAmount(): void {
-
+    this.notificationsApiService.nullifyUnseenNotificationsAmount()
+    .subscribe((success: NotificationAmountResponse) => {
+      this.unseenNotificationsAmount = +success.amount;
+      this.changeDetectorRef.detectChanges();
+    })
   }
 
   private openNotificationsDialog(): void {
     this.matDialog.open(NotificationsDialogComponent, {
       panelClass: 'notifications-dialog', 
-      backdropClass: 'notification-backrop'})
+      backdropClass: 'notification-backrop',})
   }
 
   private setCurrentTheme(): void {

@@ -26,8 +26,10 @@ $success-color: mat-color($success-palette);
     $header-border-color: #777;
     $border-color: rgb(174, 174, 174);
     $shadow-color: #000;
-    $hovered-notification-color: rgb(241, 241, 241);
+    $not-read-notification-color: rgb(241, 241, 241);
     $drop-placeholder-bg-color: rgb(237, 237, 237);
+    $scroll-bar-thumb: rgb(198, 198, 198);
+    $scroll-bar-hover: #e7e7e7;
     @include angular-material-theme($light-theme);
     
     .error-snackbar {
@@ -87,10 +89,21 @@ $success-color: mat-color($success-palette);
         .notifications-list {
             .notifications-list__item {
                 border-top: 0.01rem solid $border-color;
-                &:hover{
-                    background-color: $hovered-notification-color;
+                &.not-read-notification{
+                    background-color: $not-read-notification-color;
                 }
             }
+        }
+    }
+
+    .notifications-dialog {
+        
+        ::-webkit-scrollbar-thumb {
+            background: $scroll-bar-thumb; 
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: $scroll-bar-hover; 
         }
     }
 }

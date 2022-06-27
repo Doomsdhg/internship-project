@@ -70,14 +70,40 @@ body {
 
 .notifications-dialog {
     margin-left: 40%;
-    margin-top: -10rem;
+    margin-top: -12rem;
     width: 30%;
-    height: fit-content;
-    min-width: 20rem;
-    max-height: 30rem;
+    height: 25rem;
+    min-width: 30rem;
 
     .mat-dialog-container {
         padding: 0;
+    }
+}
+
+.notification-actions-menu {
+    .mat-menu-content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.notifications-dialog {
+    position: fixed;
+    
+    .mat-dialog-container {
+        overflow-x: hidden;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+    
+    ::-webkit-scrollbar-track {
+        border-radius: 0.3rem;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        border-radius: 0.3rem;
     }
 }
 

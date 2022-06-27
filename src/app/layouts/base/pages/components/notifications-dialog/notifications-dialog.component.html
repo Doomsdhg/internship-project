@@ -1,12 +1,22 @@
-<div class="notifications-dialog-wrapper">
+<div class="notifications-dialog-wrapper" mat-input-container>
     <h1 class="notifications-title">
         {{'titles.notifications' | translate}}
     </h1>
     <div class="notifications-list">
         <div class="notifications-list__item"
+        [ngClass]="{'not-read-notification': checkIfNotificationIsRead(notificationData)}"
         *ngFor="let notificationData of notificationsArray; index as i;">
-            <intr-notification-card [notification]="notificationData">
+            <intr-notification-card 
+            [notification]="notificationData"
+            [index]="i"
+            (unreadNotificationEvent)="pushChangesToServer()"
+            (readNotificationEvent)="pushChangesToServer()"
+            (deleteNotificationEvent)="deleteNotification($event)">
             </intr-notification-card>
         </div>
     </div>
+    <button mat-button
+    (click)="addNotification()">add notification</button>
+    <button mat-button
+    (click)="incrementNotViewedNotificationsAmount()">increment not viewed notifications amount</button>
 </div>

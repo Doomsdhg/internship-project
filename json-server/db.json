@@ -288,43 +288,62 @@
     }
   ],
   "notifications_list": [
-      {
-        "id": "admin",
-        "notifications": [
-          {
-            "user" : {
-              "firstName" : "vasia",
-              "secondName" : "pupkin"
-            },
-            "text" : "Bla bla `blaba` at `blabla`",
-            "isRead" : "true",
-            "isDeleted" : "true"
+    {
+      "notifications": [
+        {
+          "user": {
+            "firstName": "vasia",
+            "secondName": "pupkin"
           },
-          {
-            "user" : {
-              "firstName" : "vasia",
-              "secondName" : "pupkin"
-            },
-            "text" : "Bla bla `blaba` at `blabla`",
-            "isRead" : "true",
-            "isDeleted" : "true"
+          "text": "Bla bla `blaba` at `blabla` фывфывфыафыльфы9швофыг9тв 1г2рц81нр28нц12 вгш128г9вр12рв81",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "user": {
+            "firstName": "vasia",
+            "secondName": "pupkin"
           },
-          {
-            "user" : {
-              "firstName" : "vasia",
-              "secondName" : "pupkin"
-            },
-            "text" : "Bla bla `blaba` at `blabla`",
-            "isRead" : "true",
-            "isDeleted" : "true"
-          }
-      ]
+          "text": "Bla bla `blaba` at `blabla`",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "user": {
+            "firstName": "vasia",
+            "secondName": "pupkin"
+          },
+          "text": "Bla bla `blaba` at `blabla`",
+          "isRead": "false",
+          "isDeleted": "true"
+        },
+        {
+          "user": {
+            "firstName": "vasia",
+            "secondName": "pupkin"
+          },
+          "text": "Bla bla `blaba` at `blabla` фывфывфыафыльфы9швофыг9тв 1г2рц81нр28нц12 вгш128г9вр12рв81",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "user": {
+            "firstName": "vasia",
+            "secondName": "pupkin"
+          },
+          "text": "Bla bla `blaba` at `blabla` фывфывфыафыльфы9швофыг9тв 1г2рц81нр28нц12 вгш128г9вр12рв81",
+          "isRead": "true",
+          "isDeleted": "true"
+        }
+      ],
+      "id": "admin"
     }
   ],
   "unseen_notifications_amount": [
     {
       "id": "admin",
-      "amount": "3"
+      "amount": 0,
+      "notViewed": 0
     }
   ]
 }

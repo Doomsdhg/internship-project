@@ -6,7 +6,7 @@ export interface UserInfo {
 export interface NotificationDto {
     user : UserInfo
     text : string,
-    isReaded : string,
+    isRead : string,
     isDeleted : string
 }
 
@@ -15,5 +15,6 @@ export interface NotificationAmountResponse {
 }
 
 export interface NotificationsListResponse {
+    id: string;
     notifications: NotificationDto[]
 }

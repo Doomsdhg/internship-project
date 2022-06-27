@@ -6,15 +6,17 @@
         <div class="notification-info">
             <span>{{messageToDisplay}}</span>
         </div>
-    </div>
-    <div class="more-container">
-        <button mat-button 
-        [matMenuTriggerFor]="menu">
-            <mat-icon class="more-container__image">more_vert</mat-icon>
-        </button>
+        <mat-icon class="more-container__icon"
+        [matMenuTriggerFor]="menu">more_vert</mat-icon>
         <mat-menu class="notification-actions-menu" #menu="matMenu">
-          <button mat-button>read/unread</button>
-          <button mat-button>read/unread</button>
+          <button mat-button
+          *ngIf="notificationReadAlready"
+          (click)="unreadNotification()">{{'buttons.unread' | translate}}</button>
+          <button mat-button
+          *ngIf="!notificationReadAlready"
+          (click)="readNotification()">{{'buttons.read' | translate}}</button>
+          <button mat-button
+          (click)="deleteNotification()">{{'buttons.delete' | translate}}</button>
         </mat-menu>
     </div>
 </div>

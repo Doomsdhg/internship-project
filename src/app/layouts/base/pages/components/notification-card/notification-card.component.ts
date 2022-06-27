@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NotificationConstants } from '../notifications-dialog/notification.constants';
 import { NotificationDto, UserInfo } from '../notifications-dialog/notifications-dialog.interfaces';
 
 interface NotificationDataRequiredForMessage {
@@ -20,11 +21,38 @@ export class NotificationCardComponent implements OnInit {
 
   @Input() notification!: NotificationDto;
 
+  @Input() index!: number;
+
+  @Output() unreadNotificationEvent = new EventEmitter();
+
+  @Output() readNotificationEvent = new EventEmitter();
+
+  @Output() deleteNotificationEvent = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit(): void {
     this.formMessageToDisplay();
     this.getInitials();
+  }
+
+  public get notificationReadAlready(): boolean {
+    return this.notification.isRead === NotificationConstants.TRUTHY_VALUE;
+  }
+
+  public unreadNotification(): void {
+    this.notification.isRead = NotificationConstants.FALSY_VALUE;
+    this.unreadNotificationEvent.emit();
+  }
+
+  public readNotification(): void {
+    this.notification.isRead = NotificationConstants.TRUTHY_VALUE;
+    this.readNotificationEvent.emit();
+  }
+
+  public deleteNotification(): void {
+    this.notification.isDeleted = NotificationConstants.TRUTHY_VALUE;
+    this.deleteNotificationEvent.emit(this.index);
   }
 
   private formMessageToDisplay(): void {

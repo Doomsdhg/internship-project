@@ -50,7 +50,9 @@
         "auth": "Authentication",
         "login": "Login",
         "logout": "Log out",
-        "home": "home"
+        "home": "home",
+        "read": "Mark as read",
+        "unread": "Mark as not read"
     },
     "placeholders": {
         "externalId": "E.g. '123'",

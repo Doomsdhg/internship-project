@@ -2,12 +2,13 @@
     display: flex;
 
     .notification-info-wrapper {
-        padding: 2rem;
+        padding: 1rem;
         display: flex;
         .notification-user-image {
             display: inline-flex;
             background-color: teal;
             width: 4rem;
+            min-width: 4rem;
             height: 4rem;
             font-size: 2rem;
             justify-content: center;
@@ -18,23 +19,22 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            word-break: normal;
+            width: 18rem;
+            word-break: break-all;
         }
-    }
-    .more-container {
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-
-        .more-container__image {
-            display: none;
+        .more-container__icon{
+            visibility: hidden;
+            display: inline-flex;
+            margin-left: 2rem;
+            width: 2rem;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
         }
-    }
-    &:hover {
-        .more-container {
-            .more-container__image {
-                display: inline-flex;
+        &:hover {
+            .more-container__icon {
+                visibility: visible;
             }
         }
-    }
+    }   
 }
