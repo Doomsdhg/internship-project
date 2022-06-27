@@ -5,7 +5,7 @@
     <div class="notifications-list">
         <div class="notifications-list__item"
         [ngClass]="{'not-read-notification': checkIfNotificationIsRead(notificationData)}"
-        *ngFor="let notificationData of notificationsArray; index as i;">
+        *ngFor="let notificationData of notificationsArray; index as i; trackBy: identify">
             <intr-notification-card 
             [notification]="notificationData"
             [index]="i"

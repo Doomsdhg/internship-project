@@ -80,7 +80,7 @@ export class HeaderComponent implements OnInit {
     this.notificationsApiService.getNotificationsAmount()
     .subscribe((response: NotificationAmountResponse) => {
       this.unseenNotificationsAmount = +response.amount;
-    })
+    });
   }
 
   private nullifyUnseenNotificationsAmount(): void {
@@ -88,13 +88,13 @@ export class HeaderComponent implements OnInit {
     .subscribe((success: NotificationAmountResponse) => {
       this.unseenNotificationsAmount = +success.amount;
       this.changeDetectorRef.detectChanges();
-    })
+    });
   }
 
   private openNotificationsDialog(): void {
     this.matDialog.open(NotificationsDialogComponent, {
-      panelClass: 'notifications-dialog', 
-      backdropClass: 'notification-backrop',})
+      panelClass: 'notifications-dialog',
+      backdropClass: 'notification-backrop', });
   }
 
   private setCurrentTheme(): void {

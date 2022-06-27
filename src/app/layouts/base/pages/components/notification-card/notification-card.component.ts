@@ -23,11 +23,11 @@ export class NotificationCardComponent implements OnInit {
 
   @Input() index!: number;
 
-  @Output() unreadNotificationEvent = new EventEmitter();
+  @Output() readonly unreadNotificationEvent = new EventEmitter();
 
-  @Output() readNotificationEvent = new EventEmitter();
+  @Output() readonly readNotificationEvent = new EventEmitter();
 
-  @Output() deleteNotificationEvent = new EventEmitter<number>();
+  @Output() readonly deleteNotificationEvent = new EventEmitter<number>();
 
   constructor() { }
 

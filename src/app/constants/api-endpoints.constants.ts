@@ -44,11 +44,11 @@ class AppliedTransactions {
 
 class Notifications {
 
-    static getListUrl(username: string){
+    static getListUrl(username: string): string {
         return `${Base.MOCK_SERVER_URL}/notifications_list/${username}`;
     }
 
-    static getUnseenAmountUrl(username: string){
+    static getUnseenAmountUrl(username: string): string {
         return `${Base.MOCK_SERVER_URL}/unseen_notifications_amount/${username}`;
     }
 }

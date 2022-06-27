@@ -29,7 +29,7 @@ export class NotificationsDialogComponent implements OnInit {
     .subscribe();
   }
 
-  public deleteNotification(index: number) {
+  public deleteNotification(index: number): void {
     this.notificationsArray.splice(index, 1);
     this.pushChangesToServer();
   }
@@ -41,7 +41,11 @@ export class NotificationsDialogComponent implements OnInit {
 
   public incrementNotViewedNotificationsAmount(): void {
     this.notificationsApiService.incrementUnseenNotificationsAmount()
-    .subscribe()
+    .subscribe();
+  }
+
+  public identify(index: number, item: NotificationDto): NotificationDto {
+    return item;
   }
 
   private loadNotifications(): void {
@@ -49,6 +53,6 @@ export class NotificationsDialogComponent implements OnInit {
     .subscribe((response: NotificationsListResponse) => {
       this.notificationsArray = response.notifications;
       this.changeDetectorRef.detectChanges();
-    })
+    });
   }
 }

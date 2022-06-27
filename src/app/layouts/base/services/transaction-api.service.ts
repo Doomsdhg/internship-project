@@ -47,13 +47,13 @@ export class TransactionApiService extends BaseApiService {
     return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_ADMIN, updateObj);
   }
 
-  public confirmTransaction(externalId: string,provider: string): Observable<Transaction> {
+  public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
     return this.post<Transaction>(
       ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider), {});
   }
 
   public uploadTransaction(transactionData: TransactionCreationData): Observable<Transaction> {
-    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE,transactionData);
+    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE, transactionData);
   }
 
   public getAppliedTransactions(): Observable<AppliedTransactionsListResponse> {

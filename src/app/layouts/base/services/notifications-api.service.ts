@@ -33,20 +33,20 @@ export class NotificationsApiService extends BaseApiService {
     return this.put<NotificationsListResponse>(
       ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username),
       new NotificationsReplenishRequest(notificationArray, this.localStorageManagerService.getAuthenticationInfo()?.username)
-    )
+    );
   }
 
   public nullifyUnseenNotificationsAmount(): Observable<NotificationAmountResponse> {
     return this.patch<NotificationAmountResponse>(
       ApiEndpoints.NOTIFICATIONS.getUnseenAmountUrl(this.localStorageManagerService.getAuthenticationInfo()?.username),
       new ReplenishNotViewedAmountRequest(0)
-    )
+    );
   }
 
   public incrementUnseenNotificationsAmount(): Observable<NotificationAmountResponse> {
     return this.patch<NotificationAmountResponse>(
       ApiEndpoints.NOTIFICATIONS.getUnseenAmountUrl(this.localStorageManagerService.getAuthenticationInfo()?.username),
       new ReplenishNotViewedAmountRequest(3)
-    )
+    );
   }
 }
