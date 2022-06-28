@@ -31,7 +31,7 @@ export class NotificationsApiService extends BaseApiService {
 
   public updateServerData(notificationArray: NotificationDto[]): Observable<NotificationsListResponse> {
     return this.put<NotificationsListResponse>(
-      ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username),
+      ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username) + 'throwerror',
       new NotificationsReplenishRequest(notificationArray, this.localStorageManagerService.getAuthenticationInfo()?.username)
     );
   }

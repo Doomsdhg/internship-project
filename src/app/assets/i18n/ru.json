@@ -88,6 +88,7 @@
         "transactionDeleted": "Транзакция успешно удалена",
         "numbersOnlyError": "В это поле можно вводить только цифры",
         "transactionCompleted": "Транзакция завершена!",
+        "operationDidNotSucceed": "Произошла какая-то ошибка. Операция не может быть выполнена.",
         "numbersLimited": {
             "start": "Это поле ограничено",
             "middle": "Цифрами(ой) до запятой и",

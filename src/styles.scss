@@ -107,6 +107,17 @@ body {
     }
 }
 
+.fake-word {
+    width:100%;
+    display:inline-block;
+}
+
+
+.notification-actions-menu {
+    margin-top: -2rem;           
+    margin-left: -7rem;
+}
+
 @media all and (max-width: 44rem) {
 
     .notifications-dialog {

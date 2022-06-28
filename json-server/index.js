@@ -24,6 +24,8 @@ server.use((req, res, next) => {
         totalElements: totalTransactions
       });
     };
+  } else if (req.originalUrl.includes('throwerror')) {
+    throw new Error('qweqwe');
   } else {
     router.render = function (req, res) {
       res.jsonp(res.locals.data);

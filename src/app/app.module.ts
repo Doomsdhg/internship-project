@@ -22,6 +22,7 @@ import { AuthLayoutModule } from './layouts/auth/auth-layout.module';
 import { BaseLayoutModule } from './layouts/base/base-layout.module';
 import { ErrorLayoutModule } from './layouts/error/error-layout.module';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MarkdownModule } from 'ngx-markdown';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -57,7 +58,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
         deps: [HttpClient]
       },
       useDefaultLang: false,
-    })
+    }),
+    MarkdownModule.forRoot()
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BaseHttpInterceptor, multi: true }

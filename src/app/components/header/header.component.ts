@@ -25,6 +25,10 @@ export class HeaderComponent implements OnInit {
 
   public unseenNotificationsAmount!: number;
 
+  private PANEL_CLASS = 'notifications-dialog';
+  
+  private BACKDROP_CLASS = 'notification-backdrop';
+
   constructor(
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
@@ -93,8 +97,10 @@ export class HeaderComponent implements OnInit {
 
   private openNotificationsDialog(): void {
     this.matDialog.open(NotificationsDialogComponent, {
-      panelClass: 'notifications-dialog',
-      backdropClass: 'notification-backrop', });
+      panelClass: this.PANEL_CLASS,
+      backdropClass: this.BACKDROP_CLASS,
+      closeOnNavigation: true
+    });
   }
 
   private setCurrentTheme(): void {

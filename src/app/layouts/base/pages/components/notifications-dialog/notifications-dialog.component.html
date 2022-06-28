@@ -9,8 +9,8 @@
             <intr-notification-card 
             [notification]="notificationData"
             [index]="i"
-            (unreadNotificationEvent)="pushChangesToServer()"
-            (readNotificationEvent)="pushChangesToServer()"
+            (unreadNotificationEvent)="unreadNotification($event)"
+            (readNotificationEvent)="readNotification($event)"
             (deleteNotificationEvent)="deleteNotification($event)">
             </intr-notification-card>
         </div>

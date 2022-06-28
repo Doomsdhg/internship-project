@@ -90,6 +90,7 @@
         "transactionDeleted": "Transaction deleted successfully!",
         "numbersOnlyError": "This field is numbers only",
         "transactionCompleted": "Transaction completed!",
+        "operationDidNotSucceed": "Some error occured. Operation could not succeed.",
         "numbersLimited": {
             "start": "This field is limited to",
             "middle": "Digits before decimal point and",

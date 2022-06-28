@@ -25,6 +25,7 @@ import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
 import { NotificationsDialogComponent } from './pages/components/notifications-dialog/notifications-dialog.component';
 import { NotificationCardComponent } from './pages/components/notification-card/notification-card.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { MatMenuModule } from '@angular/material/menu';
     TranslateModule,
     NgxErrorsModule,
     DragDropModule,
-    MatMenuModule
+    MatMenuModule,
+    MarkdownModule
   ],
   bootstrap: [BaseLayoutComponent],
 })
