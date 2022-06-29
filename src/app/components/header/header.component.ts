@@ -98,8 +98,7 @@ export class HeaderComponent implements OnInit {
   private openNotificationsDialog(): void {
     this.matDialog.open(NotificationsDialogComponent, {
       panelClass: this.PANEL_CLASS,
-      backdropClass: this.BACKDROP_CLASS,
-      closeOnNavigation: true
+      backdropClass: this.BACKDROP_CLASS
     });
   }
 

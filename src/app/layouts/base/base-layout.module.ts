@@ -26,6 +26,7 @@ import { NotificationsDialogComponent } from './pages/components/notifications-d
 import { NotificationCardComponent } from './pages/components/notification-card/notification-card.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MarkdownModule } from 'ngx-markdown';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { MarkdownModule } from 'ngx-markdown';
     NgxErrorsModule,
     DragDropModule,
     MatMenuModule,
-    MarkdownModule
+    MarkdownModule,
+    OverlayModule
   ],
   bootstrap: [BaseLayoutComponent],
 })

@@ -1,11 +1,14 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit,
+  OnInit
 } from '@angular/core';
-import { catchError, finalize, map, pipe, tap } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
+import { catchError, Observable, ObservableInput, tap } from 'rxjs';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
@@ -13,7 +16,7 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { NotificationConstants } from './notification.constants';
 import {
   NotificationDto,
-  NotificationsListResponse,
+  NotificationsListResponse
 } from './notifications-dialog.interfaces';
 @Component({
   selector: 'intr-notifications-dialog',
@@ -22,6 +25,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsDialogComponent implements OnInit {
+
+  private readonly OVERLAY_CUSTOM_CLASS = 'notifications-dialog-container';
+
   public notificationsArray: NotificationDto[] = [];
 
   private notificationsBackup!: NotificationDto[];
@@ -29,11 +35,17 @@ export class NotificationsDialogComponent implements OnInit {
   constructor(
     private notificationsApiService: NotificationsApiService,
     private changeDetectorRef: ChangeDetectorRef,
-    private notifyService: NotifyService
+    private notifyService: NotifyService,
+    private matDialogRef: MatDialogRef<HeaderComponent>,
+    private overlay: OverlayContainer
   ) {}
 
   ngOnInit(): void {
+    this.addOverlayClass();
     this.loadNotifications();
+    this.matDialogRef.afterClosed().subscribe(() => {
+      this.removeOverlayClass();
+    });
   }
 
   public checkIfNotificationIsRead(notification: NotificationDto): boolean {
@@ -58,17 +70,6 @@ export class NotificationsDialogComponent implements OnInit {
     this.pushChangesToServer();
   }
 
-  public addNotification(): void {
-    this.notificationsArray.push(this.notificationsArray[0]);
-    this.pushChangesToServer();
-  }
-
-  public incrementNotViewedNotificationsAmount(): void {
-    this.notificationsApiService
-      .incrementUnseenNotificationsAmount()
-      .subscribe();
-  }
-
   public identify(index: number, item: NotificationDto): NotificationDto {
     return item;
   }
@@ -83,24 +84,16 @@ export class NotificationsDialogComponent implements OnInit {
   }
 
   private pushChangesToServer(): void {
-    let operationIsSuccessful = false;
-    this.notificationsApiService
-      .updateServerData(this.notificationsArray)
+    this.notificationsApiService.updateServerData(this.notificationsArray)
       .pipe(
-        tap({
-          next: () => {
-            operationIsSuccessful = true;
-          },
-          finalize: () => {
-            if (!operationIsSuccessful) {
-              this.notificationsArray = JSON.parse(JSON.stringify(this.notificationsBackup));
-              this.notifyService.showTranslatedMessage(
-                TranslationsEndpoints.SNACKBAR.OPERATION_DID_NOT_SUCCEED,
-                Constants.SNACKBAR.ERROR_TYPE
-              );
-              this.changeDetectorRef.detectChanges();
-            }
-          }
+        catchError((error: HttpErrorResponse): ObservableInput<HttpErrorResponse> => {
+          this.notificationsArray = JSON.parse(JSON.stringify(this.notificationsBackup));
+          this.notifyService.showTranslatedMessage(
+            TranslationsEndpoints.SNACKBAR.OPERATION_DID_NOT_SUCCEED,
+            Constants.SNACKBAR.ERROR_TYPE
+          );
+          this.changeDetectorRef.detectChanges();
+          return [error];
         })
       )
       .subscribe();
@@ -108,5 +101,13 @@ export class NotificationsDialogComponent implements OnInit {
 
   private createArrayBackup(): void {
     this.notificationsBackup = JSON.parse(JSON.stringify(this.notificationsArray));
+  }
+
+  private addOverlayClass(): void {
+    this.overlay.getContainerElement().classList.add(this.OVERLAY_CUSTOM_CLASS);
+  }
+
+  private removeOverlayClass(): void {
+    this.overlay.getContainerElement().classList.remove(this.OVERLAY_CUSTOM_CLASS);
   }
 }

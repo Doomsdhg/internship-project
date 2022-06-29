@@ -296,7 +296,7 @@
             "secondName": "pupkin"
           },
           "text": "Bla bla `blaba` at `blabla` фывфывфыафыльфы9швофыг9тв 1г2рц81нр28нц12 вгш128г9вр12рв81",
-          "isRead": "false",
+          "isRead": "true",
           "isDeleted": "true"
         },
         {
@@ -308,7 +308,7 @@
           "isDeleted": "true"
         },
         {
-          "text": "Bla bla `blaba` at `blabla` фывфывфыафыльфы9швофыг9тв 1г2рц81нр28нц12 вгш128г9вр12рв81",
+          "text": "Bla bla `blaba` at `blabla` фывфывфыафыльфы9швофыг9тв 1г2рц81нр28нц12 вгш128г9вр12рв81 dqwdqwdqw dqwf qwfqwfqwd qwdqwfqwdqw dqwfqwwdq sdqwdqwd qwfqwfq qwfqwfq wfqwf qwfqwdqsdqsd qwfqw qwfqwd qw qwdqsqsd",
           "isRead": "true",
           "isDeleted": "true"
         },
@@ -318,6 +318,15 @@
             "secondName": "pupkin"
           },
           "text": "Bla bla `blaba` at `blabla` **фывфывфыафыльфы9швофыг9тв** 1г2рц81нр28нц12 вгш128г9вр12рв81",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "user": {
+            "firstName": "vasia",
+            "secondName": "pupkin"
+          },
+          "text": "Bla bla `blaba` at `blabla` фывфывфыафыльфы9швофыг9тв 1г2рц81нр28нц12 вгш128г9вр12рв81",
           "isRead": "true",
           "isDeleted": "true"
         }

@@ -1,4 +1,3 @@
-import { ErrorState } from './state.class';
 import {
   HttpErrorResponse, HttpEvent, HttpHandler,
   HttpInterceptor, HttpRequest
@@ -27,6 +26,12 @@ export class BaseHttpInterceptor implements HttpInterceptor {
   private currentRequest!: HttpRequest<any>;
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const isNotificationsRequest = request.url === ApiEndpoints.NOTIFICATIONS.getListUrl(
+      this.localStorageManagerService.getAuthenticationInfo()?.username
+    );
+    if (isNotificationsRequest) {
+      return next.handle(request);
+    }
     this.spinnerService.displaySpinner();
     this.currentRequest = request;
     const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;

@@ -68,15 +68,10 @@ body {
     width: 80%;
 }
 
-.notifications-dialog {
-    margin-left: 40%;
-    margin-top: -12rem;
-    width: 30%;
-    height: 25rem;
-    min-width: 30rem;
-
-    .mat-dialog-container {
-        padding: 0;
+.cdk-overlay-container.notifications-dialog-container {
+    .cdk-global-overlay-wrapper {
+        align-items: start !important;
+        justify-content: end !important;
     }
 }
 
@@ -88,10 +83,23 @@ body {
 }
 
 .notifications-dialog {
+    margin-top: 4rem;
+    margin-right: 10rem;
+    padding: 0;
+    width: 30rem;
+    height: 30rem;
+    min-width: 30rem;
     position: fixed;
     
     .mat-dialog-container {
+        width: 27rem;
         overflow-x: hidden;
+        padding: 0;
+        intr-notifications-dialog {
+            .notifications-dialog-wrapper {
+                width: 100%;
+            }
+        }
     }
     
     ::-webkit-scrollbar {
@@ -107,12 +115,6 @@ body {
     }
 }
 
-.fake-word {
-    width:100%;
-    display:inline-block;
-}
-
-
 .notification-actions-menu {
     margin-top: -2rem;           
     margin-left: -7rem;
@@ -121,7 +123,13 @@ body {
 @media all and (max-width: 44rem) {
 
     .notifications-dialog {
-        margin-left: 0;
         width: 100%;
+        margin-right: 0;
+        margin-left: 2rem;
+        .mat-dialog-container {
+            width: fit-content;
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
     }
 }

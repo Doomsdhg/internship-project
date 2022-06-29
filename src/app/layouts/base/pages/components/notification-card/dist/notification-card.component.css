@@ -22,11 +22,17 @@
 }
 .notification-card-wrapper .notification-info-wrapper .notification-info {
   margin-left: 2rem;
-  width: 18rem;
+  width: 15rem;
   word-break: break-all;
+  text-align: justify;
+  text-align-last: justify;
 }
 .notification-card-wrapper .notification-info-wrapper .notification-info .notification-info__message {
-  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 .notification-card-wrapper .notification-info-wrapper .more-container__icon {
   visibility: hidden;

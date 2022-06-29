@@ -21,11 +21,17 @@
         }
         .notification-info {
             margin-left: 2rem;
-            width: 18rem;
+            width: 15rem;
             word-break: break-all;
+            text-align: justify;
+            text-align-last: justify;
 
             .notification-info__message {
-                text-align: justify;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
             }
         }
         .more-container__icon{
