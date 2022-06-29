@@ -80,6 +80,7 @@
     },
     "transactionInfo": "Дані транзакції",
     "noData": "Немає даних",
+    "noNotifications": "Відомості відсутні",
     "snackbar": {
         "inputIssues": "Одна або більше помилок допущені у введених даних",
         "transactionUpdated": "Дані транзакції оновлено",

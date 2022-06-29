@@ -26,9 +26,9 @@ import {
 })
 export class NotificationsDialogComponent implements OnInit {
 
-  private readonly OVERLAY_CUSTOM_CLASS = 'notifications-dialog-container';
-
   public notificationsArray: NotificationDto[] = [];
+
+  private readonly OVERLAY_CUSTOM_CLASS = 'notifications-dialog-container';
 
   private notificationsBackup!: NotificationDto[];
 
@@ -72,6 +72,10 @@ export class NotificationsDialogComponent implements OnInit {
 
   public identify(index: number, item: NotificationDto): NotificationDto {
     return item;
+  }
+
+  public get notificationArrayIsEmpty(): boolean {
+    return this.notificationsArray.length === 0;
   }
 
   private loadNotifications(): void {

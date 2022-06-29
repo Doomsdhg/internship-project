@@ -82,6 +82,7 @@
     },
     "transactionInfo": "Transaction info",
     "noData": "No data",
+    "noNotifications": "There are no notifications",
     "snackbar": {
         "inputIssues": "There is 1 or more mistakes about your inputs values.",
         "transactionUpdated": "Transaction data updated succesfully!",

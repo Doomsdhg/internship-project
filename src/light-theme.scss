@@ -67,7 +67,7 @@ $success-color: mat-color($success-palette);
     }
 
     .transaction-card-wrapper {
-        border: 1px solid $border-color;
+        border: 0.01rem solid $border-color;
     }
 
     .drag-preview {
@@ -93,6 +93,12 @@ $success-color: mat-color($success-palette);
                     background-color: $not-read-notification-color;
                 }
             }
+        }
+    }
+
+    .notifications-dialog-wrapper {
+        .notifications-title {
+            border-bottom: 0.01rem solid $border-color;
         }
     }
 

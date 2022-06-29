@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { AuthService } from 'src/app/layouts/auth/services/auth.service';
+import { NotificationsDialogComponent } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.component';
+import { NotificationAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
+import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 import { HeaderConstants } from './header.constants';
 import { Theme } from './theme.model';
-import { MatDialog } from '@angular/material/dialog';
-import { NotificationsDialogComponent } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.component';
-import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
-import { NotificationAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
-import { ReplenishNotViewedAmountRequest } from 'src/app/layouts/base/services/classes/replenish-notifications-amount.class';
 
 @Component({
   selector: 'intr-header',
@@ -26,7 +25,7 @@ export class HeaderComponent implements OnInit {
   public unseenNotificationsAmount!: number;
 
   private PANEL_CLASS = 'notifications-dialog';
-  
+
   private BACKDROP_CLASS = 'notification-backdrop';
 
   constructor(

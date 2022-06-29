@@ -3,6 +3,10 @@
         {{'titles.notifications' | translate}}
     </h1>
     <div class="notifications-list">
+        <div class="no-notifications-text"
+        *ngIf="notificationArrayIsEmpty">
+        {{'noNotifications' | translate}}
+        </div>
         <div class="notifications-list__item"
         [ngClass]="{'not-read-notification': checkIfNotificationIsRead(notificationData)}"
         *ngFor="let notificationData of notificationsArray; index as i; trackBy: identify">

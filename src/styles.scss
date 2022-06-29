@@ -76,9 +76,15 @@ body {
 }
 
 .notification-actions-menu {
+    margin-top: -2rem;           
+    margin-left: -7rem;
     .mat-menu-content {
         display: flex;
         flex-direction: column;
+        button {
+            width: 100%;
+            text-align: start;
+        }
     }
 }
 
@@ -92,6 +98,7 @@ body {
     position: fixed;
     
     .mat-dialog-container {
+        height: fit-content;
         width: 27rem;
         overflow-x: hidden;
         padding: 0;
@@ -113,11 +120,6 @@ body {
     ::-webkit-scrollbar-thumb {
         border-radius: 0.3rem;
     }
-}
-
-.notification-actions-menu {
-    margin-top: -2rem;           
-    margin-left: -7rem;
 }
 
 @media all and (max-width: 44rem) {
