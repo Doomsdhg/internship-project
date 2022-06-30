@@ -50,6 +50,10 @@ export class HeaderComponent implements OnInit {
     return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
   }
 
+  public get themeIcon(): string {
+    return this.isLightTheme ? HeaderConstants.THEMES_ICONS.DARK : HeaderConstants.THEMES_ICONS.LIGHT;
+  }
+
   public ngOnInit(): void {
     this.router.events.subscribe(() => {
       this.setCurrentRoute();
@@ -62,12 +66,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-  public enableLightTheme(): void {
-    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.LIGHT);
-  }
-
-  public enableDarkTheme(): void {
-    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.DARK);
+  public toggleTheme(): void {
+    this.changeTheme(
+      this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name
+      ? HeaderConstants.AVAILABLE_THEMES.DARK
+      : HeaderConstants.AVAILABLE_THEMES.LIGHT
+      );
   }
 
   public logout(): void {

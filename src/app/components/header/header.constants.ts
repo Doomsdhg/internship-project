@@ -10,7 +10,14 @@ class AvailableThemes {
   };
 }
 
+class ThemesIcons {
+
+  static readonly LIGHT = 'light_mode';
+  static readonly DARK = 'dark_mode';
+}
+
 export class HeaderConstants {
 
   static readonly AVAILABLE_THEMES = AvailableThemes;
+  static readonly THEMES_ICONS = ThemesIcons;
 }
