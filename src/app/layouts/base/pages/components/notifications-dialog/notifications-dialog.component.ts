@@ -30,7 +30,7 @@ export class NotificationsDialogComponent implements OnInit {
 
   private readonly OVERLAY_CUSTOM_CLASS = 'notifications-dialog-container';
 
-  private notificationsBackup!: NotificationDto[];
+  private notificationsArrayBackup!: NotificationDto[];
 
   constructor(
     private notificationsApiService: NotificationsApiService,
@@ -91,7 +91,7 @@ export class NotificationsDialogComponent implements OnInit {
     this.notificationsApiService.updateServerData(this.notificationsArray)
       .pipe(
         catchError((error: HttpErrorResponse): ObservableInput<HttpErrorResponse> => {
-          this.notificationsArray = JSON.parse(JSON.stringify(this.notificationsBackup));
+          this.notificationsArray = JSON.parse(JSON.stringify(this.notificationsArrayBackup));
           this.notifyService.showTranslatedMessage(
             TranslationsEndpoints.SNACKBAR.OPERATION_DID_NOT_SUCCEED,
             Constants.SNACKBAR.ERROR_TYPE
@@ -104,7 +104,7 @@ export class NotificationsDialogComponent implements OnInit {
   }
 
   private createArrayBackup(): void {
-    this.notificationsBackup = JSON.parse(JSON.stringify(this.notificationsArray));
+    this.notificationsArrayBackup = JSON.parse(JSON.stringify(this.notificationsArray));
   }
 
   private addOverlayClass(): void {

@@ -24,9 +24,9 @@ export class HeaderComponent implements OnInit {
 
   public unseenNotificationsAmount!: number;
 
-  private PANEL_CLASS = 'notifications-dialog';
+  private readonly PANEL_CLASS = 'notifications-dialog';
 
-  private BACKDROP_CLASS = 'notification-backdrop';
+  private readonly BACKDROP_CLASS = 'notification-backdrop';
 
   constructor(
     private router: Router,
@@ -46,7 +46,7 @@ export class HeaderComponent implements OnInit {
     return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
   }
 
-  public get themeIcon(): string {
+  public get themeIconName(): string {
     return this.isLightTheme ? HeaderConstants.THEMES_ICONS.DARK : HeaderConstants.THEMES_ICONS.LIGHT;
   }
 
@@ -88,8 +88,8 @@ export class HeaderComponent implements OnInit {
 
   private nullifyUnseenNotificationsAmount(): void {
     this.notificationsApiService.nullifyUnseenNotificationsAmount()
-    .subscribe((success: NotificationAmountResponse) => {
-      this.unseenNotificationsAmount = +success.amount;
+    .subscribe((response: NotificationAmountResponse) => {
+      this.unseenNotificationsAmount = +response.amount;
       this.changeDetectorRef.detectChanges();
     });
   }
