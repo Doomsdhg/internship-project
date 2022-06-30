@@ -7,7 +7,7 @@ import {
   OnInit
 } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { catchError, Observable, ObservableInput, tap } from 'rxjs';
+import { catchError, ObservableInput } from 'rxjs';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
@@ -43,7 +43,8 @@ export class NotificationsDialogComponent implements OnInit {
   ngOnInit(): void {
     this.addOverlayClass();
     this.loadNotifications();
-    this.matDialogRef.afterClosed().subscribe(() => {
+    this.matDialogRef.afterClosed()
+    .subscribe(() => {
       this.removeOverlayClass();
     });
   }
@@ -79,8 +80,7 @@ export class NotificationsDialogComponent implements OnInit {
   }
 
   private loadNotifications(): void {
-    this.notificationsApiService
-      .getNotifications()
+    this.notificationsApiService.getNotifications()
       .subscribe((response: NotificationsListResponse) => {
         this.notificationsArray = response.notifications;
         this.changeDetectorRef.detectChanges();

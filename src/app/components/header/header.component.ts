@@ -42,10 +42,6 @@ export class HeaderComponent implements OnInit {
     return Boolean(this.localStorageManagerService.getAuthenticationInfo()?.authenticated);
   }
 
-  public get isDarkTheme(): boolean {
-    return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.DARK.name;
-  }
-
   public get isLightTheme(): boolean {
     return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
   }

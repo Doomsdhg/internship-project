@@ -24,6 +24,7 @@ interface NotificationDataRequiredForMessage {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationCardComponent implements OnInit {
+  
   public messageToDisplay!: string;
 
   public initials!: string;

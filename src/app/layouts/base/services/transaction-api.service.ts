@@ -43,21 +43,38 @@ export class TransactionApiService extends BaseApiService {
     );
   }
 
-  public patchTransaction(updateObj: TransactionUpdateData): Observable<Transaction> {
-    return this.put<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_ADMIN, updateObj);
+  public patchTransaction(
+    updateObj: TransactionUpdateData
+  ): Observable<Transaction> {
+    return this.put<Transaction>(
+      ApiEndpoints.TRANSACTIONS.TRANSACTIONS_ADMIN,
+      updateObj
+    );
   }
 
-  public confirmTransaction(externalId: string, provider: string): Observable<Transaction> {
+  public confirmTransaction(
+    externalId: string,
+    provider: string
+  ): Observable<Transaction> {
     return this.post<Transaction>(
-      ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider), {});
+      ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider),
+      {}
+    );
   }
 
-  public uploadTransaction(transactionData: TransactionCreationData): Observable<Transaction> {
-    return this.post<Transaction>(ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE, transactionData);
+  public uploadTransaction(
+    transactionData: TransactionCreationData
+  ): Observable<Transaction> {
+    return this.post<Transaction>(
+      ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE,
+      transactionData
+    );
   }
 
   public getAppliedTransactions(): Observable<AppliedTransactionsListResponse> {
-    return this.get<AppliedTransactionsListResponse>(ApiEndpoints.APPLIED_TRANSACTIONS.GETTING_URL);
+    return this.get<AppliedTransactionsListResponse>(
+      ApiEndpoints.APPLIED_TRANSACTIONS.GETTING_URL
+    );
   }
 
   public replenishServerData(

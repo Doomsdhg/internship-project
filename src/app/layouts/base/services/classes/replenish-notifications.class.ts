@@ -1,6 +1,6 @@
-import { NotificationDto, NotificationsListResponse } from '../../pages/components/notifications-dialog/notifications-dialog.interfaces';
+import { NotificationDto } from '../../pages/components/notifications-dialog/notifications-dialog.interfaces';
 
-export class NotificationsReplenishRequest implements NotificationsListResponse {
+export class NotificationsReplenishRequest {
 
     public notifications: NotificationDto[];
 
