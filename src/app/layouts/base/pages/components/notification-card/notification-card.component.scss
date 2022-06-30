@@ -4,21 +4,7 @@
     .notification-info-wrapper {
         padding: 1rem;
         display: flex;
-        .notification-user-image {
-            display: inline-flex;
-            background-color: teal;
-            width: 4rem;
-            min-width: 4rem;
-            height: 4rem;
-            font-size: 2rem;
-            justify-content: center;
-            align-items: center;
-        }
-        .notification-default-image {
-            width: 4rem;
-            min-width: 4rem;
-            height: 4rem;
-        }
+        
         .notification-info {
             margin-left: 2rem;
             width: 15rem;

@@ -1,0 +1,11 @@
+<div class="notification-image-wrapper">
+    <div class="notification-image-wrapper__user-avatar" 
+        *ngIf="nameIsValid">
+        <span>{{ userInitials }}</span>
+    </div>
+    <img
+        class="notification-image-wrapper__default-image"
+        src="/app/assets/jpg/notification_default_image.png"
+        *ngIf="!nameIsValid"
+    />
+</div>

@@ -2,14 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
-  OnInit,
-  Output,
+  Input, Output
 } from '@angular/core';
 import { NotificationConstants } from '../notifications-dialog/notification.constants';
 import {
   NotificationDto,
-  UserInfo,
+  UserInfo
 } from '../notifications-dialog/notifications-dialog.interfaces';
 
 interface NotificationDataRequiredForMessage {
@@ -23,13 +21,11 @@ interface NotificationDataRequiredForMessage {
   styleUrls: ['./notification-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotificationCardComponent implements OnInit {
+export class NotificationCardComponent {
   
   public messageToDisplay!: string;
 
-  public initials!: string;
-
-  public nameIsInvalid!: boolean;
+  public nameIsvalid!: boolean;
 
   @Input() notification!: NotificationDto;
 
@@ -40,13 +36,6 @@ export class NotificationCardComponent implements OnInit {
   @Output() readonly readNotificationEvent = new EventEmitter<number>();
 
   @Output() readonly deleteNotificationEvent = new EventEmitter<number>();
-
-  constructor() {}
-
-  ngOnInit(): void {
-    this.getInitials();
-    this.formMessageToDisplay();
-  }
 
   public get notificationReadAlready(): boolean {
     return this.notification.isRead === NotificationConstants.TRUTHY_VALUE;
@@ -64,19 +53,15 @@ export class NotificationCardComponent implements OnInit {
     this.deleteNotificationEvent.emit(this.index);
   }
 
-  private formMessageToDisplay(): void {
-    const { user, text }: NotificationDataRequiredForMessage = this.notification;
-    this.messageToDisplay = this.nameIsInvalid
-      ? text
-      : `**${user.firstName} ${user.secondName}** ${text}`;
+  public setUsernameValidity(value: any): void {
+    this.nameIsvalid = value;
+    this.formMessageToDisplay();
   }
 
-  private getInitials(): void {
-    try {
-      const { firstName, secondName }: UserInfo = this.notification.user;
-      this.initials = firstName.charAt(0).toUpperCase() + secondName.charAt(0).toUpperCase();
-    } catch {
-      this.nameIsInvalid = true;
-    }
+  private formMessageToDisplay(): void {
+    const { user, text }: NotificationDataRequiredForMessage = this.notification;
+    this.messageToDisplay = this.nameIsvalid
+      ? `**${user.firstName} ${user.secondName}** ${text}`
+      : text;
   }
 }

@@ -27,6 +27,7 @@ import { NotificationCardComponent } from './pages/components/notification-card/
 import { MatMenuModule } from '@angular/material/menu';
 import { MarkdownModule } from 'ngx-markdown';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { NotificationImageComponent } from './pages/components/notification-image/notification-image.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     TransactionCardComponent,
     IncreaseByOnePipe,
     NotificationsDialogComponent,
-    NotificationCardComponent
+    NotificationCardComponent,
+    NotificationImageComponent
   ],
   imports: [
     MatCardModule,

@@ -1,14 +1,9 @@
 <div class="notification-card-wrapper">
   <div class="notification-info-wrapper">
-    <div class="notification-user-image" 
-    *ngIf="!nameIsInvalid">
-      <span>{{ initials }}</span>
-    </div>
-    <img
-      class="notification-default-image"
-      src="/app/assets/jpg/notification_default_image.png"
-      *ngIf="nameIsInvalid"
-    />
+    <intr-notification-image 
+    [notificationData]="notification"
+    (initialsValidityChange)="setUsernameValidity($event)">
+    </intr-notification-image>
     <div class="notification-info">
       <markdown class="notification-info__message">{{ messageToDisplay }}
       </markdown>
