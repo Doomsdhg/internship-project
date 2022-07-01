@@ -18,6 +18,8 @@ export class HeaderComponent implements OnInit {
 
   public currentTheme!: Theme;
 
+  public unseenNotificationsAmount!: number;
+
   constructor(
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
@@ -30,12 +32,12 @@ export class HeaderComponent implements OnInit {
     return Boolean(this.localStorageManagerService.getAuthenticationInfo()?.authenticated);
   }
 
-  public get isLightTheme(): boolean {
-    return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
+  public get isDarkTheme(): boolean {
+    return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.DARK.name;
   }
 
-  public get themeIconName(): string {
-    return this.isLightTheme ? HeaderConstants.THEMES_ICONS.DARK : HeaderConstants.THEMES_ICONS.LIGHT;
+  public get isLightTheme(): boolean {
+    return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
   }
 
   public ngOnInit(): void {
@@ -49,12 +51,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-  public toggleTheme(): void {
-    this.changeTheme(
-      this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name
-      ? HeaderConstants.AVAILABLE_THEMES.DARK
-      : HeaderConstants.AVAILABLE_THEMES.LIGHT
-      );
+  public enableLightTheme(): void {
+    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.LIGHT);
+  }
+
+  public enableDarkTheme(): void {
+    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.DARK);
   }
 
   public logout(): void {
@@ -78,3 +80,4 @@ export class HeaderComponent implements OnInit {
     this.changeDetectorRef.markForCheck();
   }
 }
+
