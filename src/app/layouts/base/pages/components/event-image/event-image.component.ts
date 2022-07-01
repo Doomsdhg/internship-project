@@ -17,7 +17,7 @@ export class EventImageComponent implements OnInit {
   public nameIsValid!: boolean;
 
   ngOnInit(): void {
-    this.getUserInitials()
+    this.getUserInitials();
   }
 
   private getUserInitials(): void {

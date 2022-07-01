@@ -90,12 +90,12 @@ export class BaseHttpInterceptor implements HttpInterceptor {
     return [
       ApiEndpoints.AUTH_ENDPOINTS.LOGOUT,
       ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN
-    ]
+    ];
   }
 
   private get optimisticUpdateCaseUrls(): string[] {
     return [
       ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username)
-    ]
+    ];
   }
 }

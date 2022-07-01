@@ -22,7 +22,7 @@ interface NotificationDataRequiredForMessage {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationCardComponent {
-  
+
   public messageToDisplay!: string;
 
   public nameIsvalid!: boolean;
