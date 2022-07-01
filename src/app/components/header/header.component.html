@@ -3,8 +3,7 @@
     <button class="links-container__link"
       mat-button
       color="primary"
-      (click)="redirectTo('/')"
-    >
+      (click)="redirectTo('/')">
       <mat-icon id="home-icon" 
       aria-hidden="false"
       color="primary">
@@ -16,13 +15,13 @@
       mat-raised-button
       color="primary"
       *ngIf="isAuthenticated"
-      (click)="logout()"
-    >
+      (click)="logout()">
       {{ "buttons.logout" | translate }}
     </button>
   </div>
   <div class="clickables-container">
-    <intr-notifications-bell class="notifications-bell">
+    <intr-notifications-bell class="notifications-bell"
+    *ngIf="isAuthenticated">
     </intr-notifications-bell>
     <div class="managing-tools-container">
       <div class="managing-tools-container__item">

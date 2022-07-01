@@ -75,7 +75,7 @@ export class NotificationsDialogComponent implements OnInit {
     return item;
   }
 
-  public get notificationArrayIsEmpty(): boolean {
+  public get notificationsArrayIsEmpty(): boolean {
     return this.notificationsArray.length === 0;
   }
 
@@ -88,7 +88,7 @@ export class NotificationsDialogComponent implements OnInit {
   }
 
   private pushChangesToServer(): void {
-    this.notificationsApiService.updateNotificationsServerData(this.notificationsArray)
+    this.notificationsApiService.updateServerData(this.notificationsArray)
       .pipe(
         catchError((error: HttpErrorResponse): ObservableInput<HttpErrorResponse> => {
           this.notificationsArray = JSON.parse(JSON.stringify(this.notificationsArrayBackup));
