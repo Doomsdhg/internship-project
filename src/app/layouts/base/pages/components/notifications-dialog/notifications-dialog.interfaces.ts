@@ -10,7 +10,7 @@ export interface NotificationDto {
     isDeleted: string;
 }
 
-export interface NotificationAmountResponse {
+export interface NotificationsAmountResponse {
     amount: string;
 }
 

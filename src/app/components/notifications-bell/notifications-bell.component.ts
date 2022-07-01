@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationsDialogComponent } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.component';
-import { NotificationAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
+import { NotificationsAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
 import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
 
 @Component({
@@ -24,24 +24,24 @@ export class NotificationsBellComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getUnseenNotificationsAmount();
+    this.getUnseenAmount();
   }
 
   public handleBellClick(): void {
     this.openNotificationsDialog();
-    this.nullifyNotificationsAmount();
+    this.refreshNotificationsCount();
   }
 
-  public getUnseenNotificationsAmount(): void {
+  public getUnseenAmount(): void {
     this.notificationsApiService.getNotificationsAmount()
-    .subscribe((response: NotificationAmountResponse) => {
+    .subscribe((response: NotificationsAmountResponse) => {
       this.handleNotificationsAmountResponse(response);
     });
   }
 
-  private nullifyNotificationsAmount(): void {
+  private refreshNotificationsCount(): void {
     this.notificationsApiService.nullifyNotificationsAmount()
-    .subscribe((response: NotificationAmountResponse) => {
+    .subscribe((response: NotificationsAmountResponse) => {
       this.handleNotificationsAmountResponse(response);
     });
   }
@@ -53,7 +53,7 @@ export class NotificationsBellComponent implements OnInit {
     });
   }
 
-  private handleNotificationsAmountResponse(response: NotificationAmountResponse): void {
+  private handleNotificationsAmountResponse(response: NotificationsAmountResponse): void {
     this.unseenNotificationsAmount = +response.amount;
     this.changeDetectorRef.detectChanges();
   }
