@@ -21,27 +21,22 @@ export class BaseHttpInterceptor implements HttpInterceptor {
     private localStorageManagerService: LocalStorageManagerService,
     private spinnerService: SpinnerService,
     private router: Router
-  ) { }
+  ) {}
 
   private currentRequest!: HttpRequest<any>;
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const isNotificationsRequest = request.url === ApiEndpoints.NOTIFICATIONS.getListUrl(
-      this.localStorageManagerService.getAuthenticationInfo()?.username
-    );
-    if (isNotificationsRequest) {
-      return next.handle(request);
+    if (this.optimisticUpdateCaseUrls.includes(request.url)) {
+      return this.handleOptimisticUpdateCase(request, next);
     }
     this.spinnerService.displaySpinner();
     this.currentRequest = request;
-    const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
-    const isLogOutRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.LOGOUT;
-    const isRefreshRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN;
+    const isNotAuthenticated = !this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
     request = this.requestWithAuthHeader;
-    if (!isAuthenticated || isLogOutRequest || isRefreshRequest) {
+    if (this.defaultCaseUrls.includes(request.url) || isNotAuthenticated) {
       return this.handleDefaultCase(request, next);
     }
-    if (isAuthenticated && moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration)) {
+    if (moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration)) {
       this.authService.refreshToken();
     }
     return next.handle(request)
@@ -79,11 +74,28 @@ export class BaseHttpInterceptor implements HttpInterceptor {
       );
   }
 
+  private handleOptimisticUpdateCase(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<void>> {
+    return next.handle(request);
+  }
+
   private executeFinalProcedures(): void {
     this.spinnerService.hideSpinner();
   }
 
   private handleError(response: HttpErrorResponse): void {
     this.router.navigateByUrl(AppRoutes.getErrorPageRoute(response.status));
+  }
+
+  private get defaultCaseUrls(): string[] {
+    return [
+      ApiEndpoints.AUTH_ENDPOINTS.LOGOUT,
+      ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN
+    ]
+  }
+
+  private get optimisticUpdateCaseUrls(): string[] {
+    return [
+      ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username)
+    ]
   }
 }

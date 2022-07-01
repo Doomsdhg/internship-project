@@ -1,0 +1,7 @@
+.notifications-bell-wrapper {
+  display: flex;
+}
+.notifications-bell-wrapper .notifications-bell-wrapper__image {
+  margin: auto;
+  cursor: pointer;
+}

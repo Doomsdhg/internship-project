@@ -22,16 +22,9 @@
     </button>
   </div>
   <div class="clickables-container">
-    <div class="notifications-bell-container"
+    <intr-notifications-bell class="notification-bell"
     *ngIf="isAuthenticated">
-      <mat-icon
-        matBadge="{{unseenNotificationsAmount}}"
-        matBadgeHidden="{{!unseenNotificationsAmount}}"
-        matBadgeColor="warn"
-        class="notifications-bell-container__image"
-        (click)="handleBellClick()"
-        >notifications</mat-icon>
-    </div>
+    </intr-notifications-bell>
     <div class="managing-tools-container">
       <div class="managing-tools-container__item">
         <button mat-button  

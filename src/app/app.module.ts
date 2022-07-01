@@ -23,6 +23,7 @@ import { BaseLayoutModule } from './layouts/base/base-layout.module';
 import { ErrorLayoutModule } from './layouts/error/error-layout.module';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MarkdownModule } from 'ngx-markdown';
+import { NotificationsBellComponent } from './components/notifications-bell/notifications-bell.component';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, 'app/assets/i18n/', '.json');
@@ -34,6 +35,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     HeaderComponent,
     SelectLanguageComponent,
     SpinnerOverlayComponent,
+    NotificationsBellComponent,
   ],
   imports: [
     MatDialogModule,

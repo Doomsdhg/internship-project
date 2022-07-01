@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { catchError, ObservableInput } from 'rxjs';
-import { HeaderComponent } from 'src/app/components/header/header.component';
+import { NotificationsBellComponent } from 'src/app/components/notifications-bell/notifications-bell.component';
 import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
@@ -36,7 +36,7 @@ export class NotificationsDialogComponent implements OnInit {
     private notificationsApiService: NotificationsApiService,
     private changeDetectorRef: ChangeDetectorRef,
     private notifyService: NotifyService,
-    private matDialogRef: MatDialogRef<HeaderComponent>,
+    private matDialogRef: MatDialogRef<NotificationsBellComponent>,
     private overlay: OverlayContainer
   ) {}
 
@@ -88,7 +88,7 @@ export class NotificationsDialogComponent implements OnInit {
   }
 
   private pushChangesToServer(): void {
-    this.notificationsApiService.updateServerData(this.notificationsArray)
+    this.notificationsApiService.updateNotificationsServerData(this.notificationsArray)
       .pipe(
         catchError((error: HttpErrorResponse): ObservableInput<HttpErrorResponse> => {
           this.notificationsArray = JSON.parse(JSON.stringify(this.notificationsArrayBackup));

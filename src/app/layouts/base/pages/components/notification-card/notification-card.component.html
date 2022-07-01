@@ -1,9 +1,9 @@
 <div class="notification-card-wrapper">
   <div class="notification-info-wrapper">
-    <intr-notification-image 
-    [notificationData]="notification"
+    <intr-event-image 
+    [userInfo]="notification.user"
     (initialsValidityChange)="setUsernameValidity($event)">
-    </intr-notification-image>
+    </intr-event-image>
     <div class="notification-info">
       <markdown class="notification-info__message">{{ messageToDisplay }}
       </markdown>

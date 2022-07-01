@@ -1,10 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/layouts/auth/services/auth.service';
-import { NotificationsDialogComponent } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.component';
-import { NotificationAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
-import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
 import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 import { HeaderConstants } from './header.constants';
@@ -22,20 +18,12 @@ export class HeaderComponent implements OnInit {
 
   public currentTheme!: Theme;
 
-  public unseenNotificationsAmount!: number;
-
-  private readonly PANEL_CLASS = 'notifications-dialog';
-
-  private readonly BACKDROP_CLASS = 'notification-backdrop';
-
   constructor(
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef,
     private authService: AuthService,
     private localStorageManagerService: LocalStorageManagerService,
-    private themeManagerService: ThemeManagerService,
-    private matDialog: MatDialog,
-    private notificationsApiService: NotificationsApiService
+    private themeManagerService: ThemeManagerService
   ) { }
 
   public get isAuthenticated(): boolean {
@@ -55,7 +43,6 @@ export class HeaderComponent implements OnInit {
       this.setCurrentRoute();
     });
     this.setCurrentTheme();
-    this.getUnseenNotificationsAmount();
   }
 
   public redirectTo(route: string): void {
@@ -72,33 +59,6 @@ export class HeaderComponent implements OnInit {
 
   public logout(): void {
     this.authService.logout();
-  }
-
-  public handleBellClick(): void {
-    this.openNotificationsDialog();
-    this.nullifyUnseenNotificationsAmount();
-  }
-
-  public getUnseenNotificationsAmount(): void {
-    this.notificationsApiService.getNotificationsAmount()
-    .subscribe((response: NotificationAmountResponse) => {
-      this.unseenNotificationsAmount = +response.amount;
-    });
-  }
-
-  private nullifyUnseenNotificationsAmount(): void {
-    this.notificationsApiService.nullifyUnseenNotificationsAmount()
-    .subscribe((response: NotificationAmountResponse) => {
-      this.unseenNotificationsAmount = +response.amount;
-      this.changeDetectorRef.detectChanges();
-    });
-  }
-
-  private openNotificationsDialog(): void {
-    this.matDialog.open(NotificationsDialogComponent, {
-      panelClass: this.PANEL_CLASS,
-      backdropClass: this.BACKDROP_CLASS
-    });
   }
 
   private setCurrentTheme(): void {
