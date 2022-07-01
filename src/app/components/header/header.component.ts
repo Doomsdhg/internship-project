@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { AuthService } from 'src/app/layouts/auth/services/auth.service';
+import { LocalStorageManagerService } from 'src/app/services/local-storage-manager.service';
 import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 import { HeaderConstants } from './header.constants';
 import { Theme } from './theme.model';
@@ -30,12 +30,12 @@ export class HeaderComponent implements OnInit {
     return Boolean(this.localStorageManagerService.getAuthenticationInfo()?.authenticated);
   }
 
-  public get isDarkTheme(): boolean {
-    return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.DARK.name;
-  }
-
   public get isLightTheme(): boolean {
     return this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name;
+  }
+
+  public get themeIconName(): string {
+    return this.isLightTheme ? HeaderConstants.THEMES_ICONS.DARK : HeaderConstants.THEMES_ICONS.LIGHT;
   }
 
   public ngOnInit(): void {
@@ -49,12 +49,12 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([route]);
   }
 
-  public enableLightTheme(): void {
-    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.LIGHT);
-  }
-
-  public enableDarkTheme(): void {
-    this.changeTheme(HeaderConstants.AVAILABLE_THEMES.DARK);
+  public toggleTheme(): void {
+    this.changeTheme(
+      this.currentTheme.name === HeaderConstants.AVAILABLE_THEMES.LIGHT.name
+      ? HeaderConstants.AVAILABLE_THEMES.DARK
+      : HeaderConstants.AVAILABLE_THEMES.LIGHT
+      );
   }
 
   public logout(): void {
