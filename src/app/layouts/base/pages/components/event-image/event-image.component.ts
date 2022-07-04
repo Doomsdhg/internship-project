@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NotificationDto, UserInfo } from '../notifications-dialog/notifications-dialog.interfaces';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UserInfo } from '../notifications-dialog/notifications-dialog.interfaces';
 
 @Component({
   selector: 'intr-event-image',
   templateUrl: './event-image.component.html',
-  styleUrls: ['./event-image.component.scss']
+  styleUrls: ['./event-image.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventImageComponent implements OnInit {
 
@@ -12,12 +13,20 @@ export class EventImageComponent implements OnInit {
 
   @Output() readonly initialsValidityChange = new EventEmitter<boolean>();
 
-  public userInitials!: string;
-
   public nameIsValid!: boolean;
+
+  private initials!: string;
 
   ngOnInit(): void {
     this.getUserInitials();
+  }
+
+  public get userInitials(): string {
+    return this.initials;
+  }
+
+  public set userInitials(value: string) {
+    this.initials = value;
   }
 
   private getUserInitials(): void {

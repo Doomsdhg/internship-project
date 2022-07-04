@@ -52,10 +52,17 @@ class Forms {
     static readonly DEFAULT_VALUE = '';
 }
 
+class Boolean {
+
+    static readonly TRUE = 'true';
+    static readonly FALSE = 'false';
+}
+
 export class Constants {
 
     static readonly LOCAL_STORAGE = LocalStorage;
     static readonly PAGEABLE_DEFAULTS = PageableDefaults;
     static readonly SNACKBAR = Snackbar;
     static readonly FORMS = Forms;
+    static readonly BOOLEAN = Boolean;
 }

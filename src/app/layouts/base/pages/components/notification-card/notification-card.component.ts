@@ -4,7 +4,7 @@ import {
   EventEmitter,
   Input, Output
 } from '@angular/core';
-import { NotificationConstants } from '../notifications-dialog/notification.constants';
+import { Constants } from 'src/app/constants/constants';
 import {
   NotificationDto,
   UserInfo
@@ -23,10 +23,6 @@ interface NotificationDataRequiredForMessage {
 })
 export class NotificationCardComponent {
 
-  public messageToDisplay!: string;
-
-  public nameIsvalid!: boolean;
-
   @Input() notification!: NotificationDto;
 
   @Input() index!: number;
@@ -37,8 +33,20 @@ export class NotificationCardComponent {
 
   @Output() readonly deleteNotificationEvent = new EventEmitter<number>();
 
+  public messageToDisplay!: string;
+
+  private nameValidity!: boolean;
+
+  public get nameIsValid(): boolean {
+    return this.nameValidity;
+  }
+
+  public set nameIsValid(value: boolean) {
+    this.nameValidity = value;
+  }
+
   public get notificationReadAlready(): boolean {
-    return this.notification.isRead === NotificationConstants.TRUTHY_VALUE;
+    return this.notification.isRead === Constants.BOOLEAN.TRUE;
   }
 
   public unreadNotification(): void {
@@ -53,15 +61,14 @@ export class NotificationCardComponent {
     this.deleteNotificationEvent.emit(this.index);
   }
 
-  public setUsernameValidity(value: any): void {
-    this.nameIsvalid = value;
-    this.formMessageToDisplay();
+  public setUsernameValidity(value: boolean): void {
+    this.nameIsValid = value;
+    this.formMessageToDisplay(this.notification);
   }
 
-  private formMessageToDisplay(): void {
-    const { user, text }: NotificationDataRequiredForMessage = this.notification;
-    this.messageToDisplay = this.nameIsvalid
-      ? `**${user.firstName} ${user.secondName}** ${text}`
+  private formMessageToDisplay({ user, text }: NotificationDataRequiredForMessage): void {
+    this.messageToDisplay = this.nameIsValid
+      ? `**${user?.firstName} ${user?.secondName}** ${text}`
       : text;
   }
 }

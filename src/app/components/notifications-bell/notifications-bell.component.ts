@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NotificationsDialogComponent } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.component';
 import { NotificationsAmountResponse } from 'src/app/layouts/base/pages/components/notifications-dialog/notifications-dialog.interfaces';
@@ -7,7 +7,8 @@ import { NotificationsApiService } from 'src/app/layouts/base/services/notificat
 @Component({
   selector: 'intr-notifications-bell',
   templateUrl: './notifications-bell.component.html',
-  styleUrls: ['./notifications-bell.component.scss']
+  styleUrls: ['./notifications-bell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationsBellComponent implements OnInit {
 

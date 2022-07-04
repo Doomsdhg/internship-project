@@ -13,7 +13,6 @@ import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
 import { NotifyService } from 'src/app/services/notify.service';
-import { NotificationConstants } from './notification.constants';
 import {
   NotificationDto,
   NotificationsListResponse
@@ -43,14 +42,11 @@ export class NotificationsDialogComponent implements OnInit {
   ngOnInit(): void {
     this.addOverlayClass();
     this.loadNotifications();
-    this.matDialogRef.afterClosed()
-    .subscribe(() => {
-      this.removeOverlayClass();
-    });
+    this.removeClassAfterClose();
   }
 
   public checkIfNotificationIsRead(notification: NotificationDto): boolean {
-    return notification.isRead === NotificationConstants.TRUTHY_VALUE;
+    return notification.isRead === Constants.BOOLEAN.TRUE;
   }
 
   public deleteNotification(index: number): void {
@@ -61,13 +57,13 @@ export class NotificationsDialogComponent implements OnInit {
 
   public unreadNotification(index: number): void {
     this.createArrayBackup();
-    this.notificationsArray[index].isRead = NotificationConstants.FALSY_VALUE;
+    this.notificationsArray[index].isRead = Constants.BOOLEAN.FALSE;
     this.pushChangesToServer();
   }
 
   public readNotification(index: number): void {
     this.createArrayBackup();
-    this.notificationsArray[index].isRead = NotificationConstants.TRUTHY_VALUE;
+    this.notificationsArray[index].isRead = Constants.BOOLEAN.TRUE;
     this.pushChangesToServer();
   }
 
@@ -113,5 +109,12 @@ export class NotificationsDialogComponent implements OnInit {
 
   private removeOverlayClass(): void {
     this.overlay.getContainerElement().classList.remove(this.OVERLAY_CUSTOM_CLASS);
+  }
+
+  private removeClassAfterClose(): void {
+    this.matDialogRef.afterClosed()
+    .subscribe(() => {
+      this.removeOverlayClass();
+    });
   }
 }

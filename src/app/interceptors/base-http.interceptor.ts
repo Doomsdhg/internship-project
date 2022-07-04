@@ -16,6 +16,12 @@ import { HttpStatusCode } from '../enums/HttpStatusCode';
 @Injectable()
 export class BaseHttpInterceptor implements HttpInterceptor {
 
+  public excludedUrls: string[] = [
+    ApiEndpoints.AUTH_ENDPOINTS.LOGOUT,
+    ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN,
+    ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username)
+  ];
+
   constructor(
     private authService: AuthService,
     private localStorageManagerService: LocalStorageManagerService,
@@ -23,19 +29,16 @@ export class BaseHttpInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
 
-  private currentRequest!: HttpRequest<any>;
+  private currentRequest!: HttpRequest<unknown>;
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (this.optimisticUpdateCaseUrls.includes(request.url)) {
-      return this.handleOptimisticUpdateCase(request, next);
-    }
-    this.spinnerService.displaySpinner();
     this.currentRequest = request;
     const isNotAuthenticated = !this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
     request = this.requestWithAuthHeader;
-    if (this.defaultCaseUrls.includes(request.url) || isNotAuthenticated) {
-      return this.handleDefaultCase(request, next);
+    if (this.excludedUrls.includes(request.url) || isNotAuthenticated) {
+      return next.handle(request);
     }
+    this.spinnerService.displaySpinner();
     if (moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration)) {
       this.authService.refreshToken();
     }
@@ -61,21 +64,10 @@ export class BaseHttpInterceptor implements HttpInterceptor {
       );
   }
 
-  private get requestWithAuthHeader(): HttpRequest<any> {
+  private get requestWithAuthHeader(): HttpRequest<unknown> {
     return this.currentRequest.clone({
       headers: this.currentRequest.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
     });
-  }
-
-  private handleDefaultCase(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<void>> {
-    return next.handle(request)
-      .pipe(
-        finalize(() => this.executeFinalProcedures())
-      );
-  }
-
-  private handleOptimisticUpdateCase(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<void>> {
-    return next.handle(request);
   }
 
   private executeFinalProcedures(): void {
@@ -84,18 +76,5 @@ export class BaseHttpInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse): void {
     this.router.navigateByUrl(AppRoutes.getErrorPageRoute(response.status));
-  }
-
-  private get defaultCaseUrls(): string[] {
-    return [
-      ApiEndpoints.AUTH_ENDPOINTS.LOGOUT,
-      ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN
-    ];
-  }
-
-  private get optimisticUpdateCaseUrls(): string[] {
-    return [
-      ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username)
-    ];
   }
 }

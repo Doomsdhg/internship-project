@@ -6,13 +6,10 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import {
-  ApiTransactionResponse,
-  TransactionCreationData,
-  TransactionUpdateData
+  ApiTransactionResponse
 } from 'src/app/interfaces/transactions.interface';
-import { AppliedTransactionsListResponse } from '../pages/components/applied-transactions-list/applied-transactions-list.interfaces';
-import { ReplenishNotViewedAmountRequest } from './classes/replenish-notifications-amount.class';
-import { NotificationsReplenishRequest } from './classes/replenish-notifications.class';
+
+interface BaseRequestBody {}
 
 export abstract class BaseApiService {
   constructor(private httpClient: HttpClient) {}
@@ -28,7 +25,7 @@ export abstract class BaseApiService {
 
   public post<T>(
     url: string,
-    data: TransactionUpdateData | TransactionCreationData | {},
+    data: BaseRequestBody,
     headers?: HttpHeaders,
     params?: HttpParams
   ): Observable<T> {
@@ -38,7 +35,7 @@ export abstract class BaseApiService {
 
   public put<T>(
     url: string,
-    updateData: TransactionUpdateData | AppliedTransactionsListResponse | NotificationsReplenishRequest,
+    updateData: BaseRequestBody,
     headers?: HttpHeaders,
     params?: HttpParams
   ): Observable<T> {
@@ -48,7 +45,7 @@ export abstract class BaseApiService {
 
   public patch<T>(
     url: string,
-    updateData: ReplenishNotViewedAmountRequest,
+    updateData: BaseRequestBody,
     headers?: HttpHeaders,
     params?: HttpParams
   ): Observable<T> {
