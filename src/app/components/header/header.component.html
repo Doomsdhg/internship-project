@@ -25,15 +25,9 @@
     </intr-notifications-bell>
     <div class="managing-tools-container">
       <div class="managing-tools-container__item">
-        <button mat-button 
-        *ngIf="isDarkTheme" 
-        (click)="enableLightTheme()">
-          <span class="material-icons"> light_mode </span>
-        </button>
-        <button mat-button 
-        *ngIf="isLightTheme" 
-        (click)="enableDarkTheme()">
-          <span class="material-icons"> dark_mode </span>
+        <button mat-button  
+        (click)="toggleTheme()">
+          <span class="material-icons"> {{ themeIconName }} </span>
         </button>
       </div>
       <div class="managing-tools-container__item">
@@ -47,15 +41,9 @@
       </button>
       <mat-menu #menu="matMenu">
         <div class="managing-tools-mobile__item">
-          <button mat-button 
-          *ngIf="isDarkTheme" 
-          (click)="enableLightTheme()">
-            <span class="material-icons"> light_mode </span>
-          </button>
-          <button mat-button 
-          *ngIf="isLightTheme" 
-          (click)="enableDarkTheme()">
-            <span class="material-icons"> dark_mode </span>
+          <button mat-button  
+          (click)="toggleTheme()">
+            <span class="material-icons"> {{ themeIconName }} </span>
           </button>
         </div>
         <div class="managing-tools-mobile__item">
