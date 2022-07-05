@@ -13,15 +13,15 @@ import { ErrorPageConstants } from './error-page.constants';
 })
 export class ErrorPageComponent implements OnInit {
 
-  public errorCode!: number;
+  private _errorCode!: number;
 
-  public titleTranslationEndpoint!: string;
+  private _titleTranslationEndpoint!: string;
 
-  public messageTranslationEndpoint!: string;
+  private _messageTranslationEndpoint!: string;
 
-  public errorImageLink!: string;
+  private _errorImageLink!: string;
 
-  public errorImageClass!: string;
+  private _errorImageClass!: string;
 
   constructor(
     private redirectService: RedirectService,
@@ -34,6 +34,46 @@ export class ErrorPageComponent implements OnInit {
 
   public redirectToHomePage(): void {
     this.redirectService.goToHomePage();
+  }
+
+  public get errorCode(): number {
+    return this._errorCode;
+  }
+
+  public set errorCode(value: number) {
+    this._errorCode = value;
+  }
+
+  public get titleTranslationEndpoint(): string {
+    return this._titleTranslationEndpoint;
+  }
+
+  public set titleTranslationEndpoint(value: string) {
+    this._titleTranslationEndpoint = value;
+  }
+
+  public get messageTranslationEndpoint(): string {
+    return this._messageTranslationEndpoint;
+  }
+
+  public set messageTranslationEndpoint(value: string) {
+    this._messageTranslationEndpoint = value;
+  }
+
+  public get errorImageLink(): string {
+    return this._errorImageLink;
+  }
+
+  public set errorImageLink(value: string) {
+    this._errorImageLink = value;
+  }
+
+  public get errorImageClass(): string {
+    return this._errorImageClass;
+  }
+
+  public set errorImageClass(value: string) {
+    this._errorImageClass = value;
   }
 
   private getErrorInfo(): void {

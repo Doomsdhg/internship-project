@@ -24,15 +24,15 @@ export class TransactionsTableComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  public dataSource!: TransactionsDataSource;
+  private _dataSource!: TransactionsDataSource;
 
-  public transactionUpdateForm!: FormGroup;
+  private _transactionUpdateForm!: FormGroup;
 
-  public displayedColumns!: string[];
+  private _displayedColumns!: string[];
 
-  public sorted!: Sorted;
+  private _sorted!: Sorted;
 
-  public formsToggled = false;
+  private _formsToggled = false;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -127,6 +127,46 @@ export class TransactionsTableComponent implements OnInit {
 
   public get isFirstPage(): boolean {
     return this.dataSource.currentPageNumber === 0;
+  }
+
+  public get dataSource(): TransactionsDataSource {
+    return this._dataSource;
+  }
+
+  public set dataSource(value: TransactionsDataSource) {
+    this._dataSource = value;
+  }
+
+  public get transactionUpdateForm(): FormGroup {
+    return this._transactionUpdateForm;
+  }
+
+  public set transactionUpdateForm(value: FormGroup) {
+    this._transactionUpdateForm = value;
+  }
+
+  public get displayedColumns(): string[] {
+    return this._displayedColumns;
+  }
+
+  public set displayedColumns(value: string[]) {
+    this._displayedColumns = value;
+  }
+
+  public get sorted(): Sorted {
+    return this._sorted;
+  }
+
+  public set sorted(value: Sorted) {
+    this._sorted = value;
+  }
+
+  public get formsToggled(): boolean {
+    return this._formsToggled;
+  }
+
+  public set formsToggled(value: boolean) {
+    this._formsToggled = value;
   }
 
   private handleSuccessfulConfirmation(): void {

@@ -24,9 +24,9 @@ export class ManageTransactionsDialogComponent implements OnInit {
 
   public readonly TRANSACTION_INITIAL_STATUS = 'INITIAL';
 
-  public transactionForm!: FormGroup;
+  private _transactionForm!: FormGroup;
 
-  public operationType!: TransactionOperation;
+  private _operationType!: TransactionOperation;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -87,6 +87,22 @@ export class ManageTransactionsDialogComponent implements OnInit {
 
   public get formIsValid(): boolean {
     return this.transactionForm.valid;
+  }
+
+  public get transactionForm(): FormGroup {
+    return this.transactionForm;
+  }
+
+  public set transactionForm(value: FormGroup) {
+    this.transactionForm = value;
+  }
+
+  public get operationType(): TransactionOperation {
+    return this.operationType;
+  }
+
+  public set operationType(value: TransactionOperation) {
+    this.operationType = value;
   }
 
   private initFormGroup = (row?: Row): void => {

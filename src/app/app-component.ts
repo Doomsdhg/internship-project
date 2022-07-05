@@ -11,9 +11,9 @@ import { ThemeManagerService } from 'src/app/services/theme-manager.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  public title = 'internship-project';
+  private _title = 'internship-project';
 
-  public currentTheme!: string;
+  private _currentTheme!: string;
 
   private ngUnsubscribe = new Subject<void>();
 
@@ -28,6 +28,22 @@ export class AppComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  public get title(): string {
+    return this._title;
+  }
+
+  public set title(value: string) {
+    this._title = value;
+  }
+
+  public get currentTheme(): string {
+    return this._currentTheme;
+  }
+
+  public set currentTheme(value: string) {
+    this._currentTheme = value;
   }
 
   private subscribeToThemeChanges(): void {
