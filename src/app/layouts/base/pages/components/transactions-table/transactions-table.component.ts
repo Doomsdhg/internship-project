@@ -100,7 +100,8 @@ export class TransactionsTableComponent implements OnInit {
         operationType: TransactionOperationTypes.EDIT
       }
     })
-      .afterClosed().subscribe(() => {
+      .afterClosed()
+      .subscribe(() => {
         this.refreshTransactions();
       });
   }
@@ -111,7 +112,8 @@ export class TransactionsTableComponent implements OnInit {
         operationType: TransactionOperationTypes.CREATE
       }
     })
-      .afterClosed().subscribe(() => {
+      .afterClosed()
+      .subscribe(() => {
         this.refreshTransactions();
       });
   }
