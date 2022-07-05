@@ -33,7 +33,7 @@ export class NotificationCardComponent {
 
   @Output() readonly deleteNotificationEvent = new EventEmitter<number>();
 
-  public messageToDisplay!: string;
+  private _messageToDisplay!: string;
 
   private nameValidity!: boolean;
 
@@ -47,6 +47,14 @@ export class NotificationCardComponent {
 
   public get notificationReadAlready(): boolean {
     return this.notification.isRead === Constants.BOOLEAN.TRUE;
+  }
+
+  public get messageToDisplay(): string {
+    return this._messageToDisplay;
+  }
+
+  public set messageToDisplay(value: string) {
+    this._messageToDisplay = value;
   }
 
   public unreadNotification(): void {

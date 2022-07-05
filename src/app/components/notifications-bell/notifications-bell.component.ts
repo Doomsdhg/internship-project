@@ -12,11 +12,11 @@ import { NotificationsApiService } from 'src/app/layouts/base/services/notificat
 })
 export class NotificationsBellComponent implements OnInit {
 
-  public unseenNotificationsAmount!: number;
-
   private readonly PANEL_CLASS = 'notifications-dialog';
 
   private readonly BACKDROP_CLASS = 'notification-backdrop';
+  
+  private _unseenNotificationsAmount!: number;
 
   constructor(
     private matDialog: MatDialog,
@@ -38,6 +38,14 @@ export class NotificationsBellComponent implements OnInit {
     .subscribe((response: NotificationsAmountResponse) => {
       this.handleNotificationsAmountResponse(response);
     });
+  }
+
+  public get unseenNotificationsAmount(): number {
+    return this._unseenNotificationsAmount;
+  }
+
+  public set unseenNotificationsAmount(value: number) {
+    this._unseenNotificationsAmount = value;
   }
 
   private refreshNotificationsCount(): void {

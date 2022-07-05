@@ -9,9 +9,8 @@ import {
   ApiTransactionResponse
 } from 'src/app/interfaces/transactions.interface';
 
-interface BaseRequestBody {}
-
 export abstract class BaseApiService {
+
   constructor(private httpClient: HttpClient) {}
 
   public get<T>(
@@ -23,9 +22,9 @@ export abstract class BaseApiService {
     .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
-  public post<T>(
+  public post<T, RequestBodyType>(
     url: string,
-    data: BaseRequestBody,
+    data: RequestBodyType,
     headers?: HttpHeaders,
     params?: HttpParams
   ): Observable<T> {
@@ -33,9 +32,9 @@ export abstract class BaseApiService {
     .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
-  public put<T>(
+  public put<T, RequestBodyType>(
     url: string,
-    updateData: BaseRequestBody,
+    updateData: RequestBodyType,
     headers?: HttpHeaders,
     params?: HttpParams
   ): Observable<T> {
@@ -43,9 +42,9 @@ export abstract class BaseApiService {
     .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
-  public patch<T>(
+  public patch<T, RequestBodyType>(
     url: string,
-    updateData: BaseRequestBody,
+    updateData: RequestBodyType,
     headers?: HttpHeaders,
     params?: HttpParams
   ): Observable<T> {

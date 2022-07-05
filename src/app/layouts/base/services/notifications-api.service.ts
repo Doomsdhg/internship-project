@@ -30,14 +30,14 @@ export class NotificationsApiService extends BaseApiService {
   }
 
   public updateServerData(notificationArray: NotificationDto[]): Observable<NotificationsListResponse> {
-    return this.put<NotificationsListResponse>(
+    return this.put<NotificationsListResponse, NotificationsReplenishRequest>(
       ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username),
       new NotificationsReplenishRequest(notificationArray, this.localStorageManagerService.getAuthenticationInfo()?.username)
     );
   }
 
   public nullifyNotificationsAmount(): Observable<NotificationsAmountResponse> {
-    return this.patch<NotificationsAmountResponse>(
+    return this.patch<NotificationsAmountResponse, ReplenishNotViewedAmountRequest>(
       ApiEndpoints.NOTIFICATIONS.getUnseenAmountUrl(this.localStorageManagerService.getAuthenticationInfo()?.username),
       new ReplenishNotViewedAmountRequest(0)
     );

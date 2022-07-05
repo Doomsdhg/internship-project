@@ -13,7 +13,7 @@ export class EventImageComponent implements OnInit {
 
   @Output() readonly initialsValidityChange = new EventEmitter<boolean>();
 
-  public nameIsValid!: boolean;
+  private _nameIsValid!: boolean;
 
   private initials!: string;
 
@@ -27,6 +27,14 @@ export class EventImageComponent implements OnInit {
 
   public set userInitials(value: string) {
     this.initials = value;
+  }
+
+  public get nameIsValid(): boolean {
+    return this._nameIsValid;
+  }
+
+  public set nameIsValid(value: boolean) {
+    this._nameIsValid = value;
   }
 
   private getUserInitials(): void {
