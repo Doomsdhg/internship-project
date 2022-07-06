@@ -91,19 +91,19 @@ export class ManageTransactionsDialogComponent implements OnInit {
   }
 
   public get transactionForm(): FormGroup {
-    return this.transactionForm;
+    return this._transactionForm;
   }
 
   public set transactionForm(value: FormGroup) {
-    this.transactionForm = value;
+    this._transactionForm = value;
   }
 
   public get operationType(): TransactionOperation {
-    return this.operationType;
+    return this._operationType;
   }
 
   public set operationType(value: TransactionOperation) {
-    this.operationType = value;
+    this._operationType = value;
   }
 
   private initFormGroup = (row?: Row): void => {
