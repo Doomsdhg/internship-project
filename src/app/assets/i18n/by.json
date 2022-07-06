@@ -3,7 +3,7 @@
     "amount": "Сума",
     "currency": "Валюта",
     "titles": {
-        "notifications": "Апавяшчэнні",
+        "notifications": "Апавяшчэння",
         "transactions": "Транзакцыі",
         "currentTransactions": "Бягучыя транзакцыі",
         "createTransaction": "Стварэнне транзакцыі", 

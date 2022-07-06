@@ -3,7 +3,7 @@
     "amount": "Количество",
     "currency": "Валюта",
     "titles": {
-        "notifications": "Оповещения",
+        "notifications": "Уведомления",
         "transactions": "Транзакции",
         "currentTransactions": "Текущие транзакции",
         "createTransaction": "Создание транзакции",
