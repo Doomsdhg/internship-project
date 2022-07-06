@@ -29,7 +29,7 @@ export class NotificationsDialogComponent implements OnInit {
 
   private _notificationsArray: NotificationDto[] = [];
 
-  private notificationsArrayBackup!: NotificationDto[];
+  private _notificationsArrayBackup!: NotificationDto[];
 
   constructor(
     private notificationsApiService: NotificationsApiService,
@@ -81,6 +81,14 @@ export class NotificationsDialogComponent implements OnInit {
 
   public set notificationsArray(value: NotificationDto[]) {
     this._notificationsArray = value;
+  }
+
+  public get notificationsArrayBackup(): NotificationDto[] {
+    return this._notificationsArrayBackup;
+  }
+
+  public set notificationsArrayBackup(value: NotificationDto[]) {
+    this._notificationsArrayBackup = value;
   }
 
   private loadNotifications(): void {

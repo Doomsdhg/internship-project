@@ -15,7 +15,7 @@ export class NotificationsBellComponent implements OnInit {
   private readonly PANEL_CLASS = 'notifications-dialog';
 
   private readonly BACKDROP_CLASS = 'notification-backdrop';
-  
+
   private _unseenNotificationsAmount!: number;
 
   constructor(

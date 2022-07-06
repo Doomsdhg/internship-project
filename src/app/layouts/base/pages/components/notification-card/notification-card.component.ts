@@ -35,14 +35,14 @@ export class NotificationCardComponent {
 
   private _messageToDisplay!: string;
 
-  private nameValidity!: boolean;
+  private _nameIsValid!: boolean;
 
   public get nameIsValid(): boolean {
-    return this.nameValidity;
+    return this._nameIsValid;
   }
 
   public set nameIsValid(value: boolean) {
-    this.nameValidity = value;
+    this._nameIsValid = value;
   }
 
   public get notificationReadAlready(): boolean {

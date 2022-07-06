@@ -15,18 +15,18 @@ export class EventImageComponent implements OnInit {
 
   private _nameIsValid!: boolean;
 
-  private initials!: string;
+  private _userInitials!: string;
 
   ngOnInit(): void {
     this.getUserInitials();
   }
 
   public get userInitials(): string {
-    return this.initials;
+    return this._userInitials;
   }
 
   public set userInitials(value: string) {
-    this.initials = value;
+    this._userInitials = value;
   }
 
   public get nameIsValid(): boolean {
