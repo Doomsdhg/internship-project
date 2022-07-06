@@ -12,7 +12,8 @@ import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator'
 import { TranslationsEndpoints } from '../../../../../constants/translations-endpoints.constants';
 import { Validation } from '../transactions-table/transactions-table.constants';
 import { ControlName, Row, TransactionOperation } from '../transactions-table/transactions-table.interfaces';
-import { TransactionOperationTypes } from './../transactions-table/transactions-table.constants';
+import { TransactionOperationTypes } from '../transactions-table/transactions-table.constants';
+import { ManageTransactionRequiredData } from '../transactions-table/classes/ManageTransactionRequiredData.class';
 
 @Component({
   selector: 'intr-manage-transaction',
@@ -32,7 +33,7 @@ export class ManageTransactionsDialogComponent implements OnInit {
     private transactionApiService: TransactionApiService,
     private notifyService: NotifyService,
     private matDialogRef: MatDialogRef<TransactionsTableComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: ManageTransactionRequiredData
   ) { }
 
   public ngOnInit(): void {
@@ -144,7 +145,7 @@ export class ManageTransactionsDialogComponent implements OnInit {
 
   private buildUpdateData(): TransactionUpdateData {
     return {
-      id: this.data.rowData.id,
+      id: this.data.rowData!.id,
       externalId: this.transactionForm.value.externalId,
       user: this.transactionForm.value.user,
       status: this.transactionForm.value.status,

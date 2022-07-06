@@ -10,7 +10,8 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionDto } from '../../../classes/transaction-dto.class';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
-import { ManageTransactionsDialogComponent } from '../add-transaction/manage-transactions-dialog.component';
+import { ManageTransactionsDialogComponent } from '../manage-transaction/manage-transactions-dialog.component';
+import { ManageTransactionRequiredData } from './classes/ManageTransactionRequiredData.class';
 import { Columns, PossibleSortingDirections, TransactionOperationTypes } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
 
@@ -95,10 +96,7 @@ export class TransactionsTableComponent implements OnInit {
 
   public openTransactionEditingDialog(row: Row): void {
     this.matDialog.open(ManageTransactionsDialogComponent, {
-      data: {
-        rowData: row,
-        operationType: TransactionOperationTypes.EDIT
-      }
+      data: new ManageTransactionRequiredData(TransactionOperationTypes.EDIT, row)
     })
       .afterClosed()
       .subscribe(() => {
@@ -108,9 +106,7 @@ export class TransactionsTableComponent implements OnInit {
 
   public openTransactionAddingDialog(): void {
     this.matDialog.open(ManageTransactionsDialogComponent, {
-      data: {
-        operationType: TransactionOperationTypes.CREATE
-      }
+      data: new ManageTransactionRequiredData(TransactionOperationTypes.CREATE)
     })
       .afterClosed()
       .subscribe(() => {
