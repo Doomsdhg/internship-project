@@ -22,6 +22,13 @@ import { AppliedTransactionsListComponent } from './pages/components/applied-tra
 import { MatCardModule } from '@angular/material/card';
 import { TransactionCardComponent } from './pages/components/transaction-card/transaction-card.component';
 import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
+import { NotificationsDialogComponent } from './pages/components/notifications-dialog/notifications-dialog.component';
+import { NotificationCardComponent } from './pages/components/notification-card/notification-card.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MarkdownModule } from 'ngx-markdown';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { EventImageComponent } from './pages/components/event-image/event-image.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -32,7 +39,10 @@ import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
     ManageTransactionsDialogComponent,
     AppliedTransactionsListComponent,
     TransactionCardComponent,
-    IncreaseByOnePipe
+    IncreaseByOnePipe,
+    NotificationsDialogComponent,
+    NotificationCardComponent,
+    EventImageComponent
   ],
   imports: [
     MatCardModule,
@@ -50,7 +60,11 @@ import { IncreaseByOnePipe } from './pipes/increase-by-one.pipe';
     BrowserAnimationsModule,
     TranslateModule,
     NgxErrorsModule,
-    DragDropModule
+    DragDropModule,
+    MatMenuModule,
+    MarkdownModule,
+    OverlayModule,
+    MatProgressSpinnerModule
   ],
   bootstrap: [BaseLayoutComponent],
 })

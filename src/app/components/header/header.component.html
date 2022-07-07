@@ -20,6 +20,9 @@
     </button>
   </div>
   <div class="clickables-container">
+    <intr-notifications-bell class="notifications-bell"
+    *ngIf="isAuthenticated">
+    </intr-notifications-bell>
     <div class="managing-tools-container">
       <div class="managing-tools-container__item">
         <button mat-button  

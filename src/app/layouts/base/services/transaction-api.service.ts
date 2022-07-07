@@ -46,7 +46,7 @@ export class TransactionApiService extends BaseApiService {
   public patchTransaction(
     updateObj: TransactionUpdateData
   ): Observable<Transaction> {
-    return this.put<Transaction>(
+    return this.put<Transaction, TransactionUpdateData>(
       ApiEndpoints.TRANSACTIONS.TRANSACTIONS_ADMIN,
       updateObj
     );
@@ -56,7 +56,7 @@ export class TransactionApiService extends BaseApiService {
     externalId: string,
     provider: string
   ): Observable<Transaction> {
-    return this.post<Transaction>(
+    return this.post<Transaction, {}>(
       ApiEndpoints.TRANSACTIONS.getConfirmationUrl(externalId, provider),
       {}
     );
@@ -65,7 +65,7 @@ export class TransactionApiService extends BaseApiService {
   public uploadTransaction(
     transactionData: TransactionCreationData
   ): Observable<Transaction> {
-    return this.post<Transaction>(
+    return this.post<Transaction, TransactionCreationData>(
       ApiEndpoints.TRANSACTIONS.TRANSACTIONS_CORE,
       transactionData
     );
@@ -80,7 +80,7 @@ export class TransactionApiService extends BaseApiService {
   public replenishServerData(
     appliedTransactionsArray: Transaction[]
   ): Observable<Transaction[]> {
-    return this.put<Transaction[]>(
+    return this.put<Transaction[], AppliedTransactionsReplenishRequest>(
       ApiEndpoints.APPLIED_TRANSACTIONS.GETTING_URL,
       new AppliedTransactionsReplenishRequest(appliedTransactionsArray)
     );

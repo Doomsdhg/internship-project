@@ -3,6 +3,7 @@
     "amount": "Количество",
     "currency": "Валюта",
     "titles": {
+        "notifications": "Уведомления",
         "transactions": "Транзакции",
         "currentTransactions": "Текущие транзакции",
         "createTransaction": "Создание транзакции",
@@ -38,7 +39,9 @@
         "auth": "Авторизация",
         "login": "Войти",
         "logout": "Выйти",
-        "home": "домой"
+        "home": "домой",
+        "read": "Отметить как прочитанное",
+        "unread": "Отметить как непрочитанное"
     },
     "required": {
         "externalId": "Требуется ввести номер",
@@ -77,6 +80,7 @@
     },
     "transactionInfo": "Данные транзакции",
     "noData": "Нет данных",
+    "noNotifications": "Уведомления отсутствуют",
     "snackbar": {
         "inputIssues": "Одна или более ошибок допущены во введенных данных",
         "transactionUpdated": "Данные транзакции обновлены",
@@ -85,6 +89,7 @@
         "transactionDeleted": "Транзакция успешно удалена",
         "numbersOnlyError": "В это поле можно вводить только цифры",
         "transactionCompleted": "Транзакция завершена!",
+        "operationDidNotSucceed": "Произошла какая-то ошибка. Операция не может быть выполнена.",
         "numbersLimited": {
             "start": "Это поле ограничено",
             "middle": "Цифрами(ой) до запятой и",

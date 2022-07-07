@@ -94,3 +94,4 @@ export class HeaderComponent implements OnInit {
     this.changeDetectorRef.markForCheck();
   }
 }
+

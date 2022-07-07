@@ -10,6 +10,7 @@ class Snackbar {
     static readonly NUMBERS_LIMITED = `${this.SNACKBAR_TRANSLATIONS_CONTAINER}.numbersLimited`;
     static readonly UNIQUE = `${this.SNACKBAR_TRANSLATIONS_CONTAINER}.unique`;
     static readonly TRANSACTION_COMPLETED = `${this.SNACKBAR_TRANSLATIONS_CONTAINER}.transactionCompleted`;
+    static readonly OPERATION_DID_NOT_SUCCEED = `${this.SNACKBAR_TRANSLATIONS_CONTAINER}.operationDidNotSucceed`;
 }
 
 class ErrorPage {

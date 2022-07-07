@@ -1,0 +1,9 @@
+<div class="notifications-bell-wrapper">
+    <mat-icon class="notifications-bell-wrapper__image"
+        matBadge="{{unseenNotificationsAmount}}"
+        matBadgeHidden="{{!unseenNotificationsAmount}}"
+        matBadgeColor="warn"
+        (click)="handleBellClick()">
+        notifications
+    </mat-icon>
+</div>

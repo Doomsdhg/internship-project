@@ -67,3 +67,71 @@ body {
     background-color: grey;
     width: 80%;
 }
+
+.cdk-overlay-container.notifications-dialog-container {
+    .cdk-global-overlay-wrapper {
+        align-items: start !important;
+        justify-content: end !important;
+    }
+}
+
+.notification-actions-menu {
+    margin-top: -2rem;           
+    margin-left: -7rem;
+    .mat-menu-content {
+        display: flex;
+        flex-direction: column;
+        button {
+            width: 100%;
+            text-align: start;
+        }
+    }
+}
+
+.notifications-dialog {
+    margin-top: 4rem;
+    margin-right: 10rem;
+    padding: 0;
+    width: 30rem;
+    height: 30rem;
+    min-width: 30rem;
+    position: fixed;
+    
+    .mat-dialog-container {
+        height: fit-content;
+        width: 27rem;
+        overflow-x: hidden;
+        padding: 0;
+        intr-notifications-dialog {
+            .notifications-dialog-wrapper {
+                width: 100%;
+            }
+        }
+    }
+    
+    ::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+    
+    ::-webkit-scrollbar-track {
+        border-radius: 0.3rem;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        border-radius: 0.3rem;
+    }
+}
+
+@media all and (max-width: 44rem) {
+
+    .notifications-dialog {
+        width: 100%;
+        margin-right: 0;
+        margin-left: 2rem;
+        .mat-dialog-container {
+            width: fit-content;
+            margin-left: 2rem;
+            margin-right: 2rem;
+        }
+    }
+}

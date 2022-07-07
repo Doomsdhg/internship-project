@@ -24,9 +24,12 @@ $success-color: mat-color($success-palette);
 
 .light-theme {
     $header-border-color: #777;
-    $border-color: rgb(81, 81, 81);
+    $border-color: rgb(174, 174, 174);
     $shadow-color: #000;
+    $not-read-notification-color: rgb(241, 241, 241);
     $drop-placeholder-bg-color: rgb(237, 237, 237);
+    $scroll-bar-thumb: rgb(198, 198, 198);
+    $scroll-bar-hover: #e7e7e7;
     @include angular-material-theme($light-theme);
     
     .error-snackbar {
@@ -64,7 +67,7 @@ $success-color: mat-color($success-palette);
     }
 
     .transaction-card-wrapper {
-        border: 1px solid $border-color;
+        border: 0.01rem solid $border-color;
     }
 
     .drag-preview {
@@ -79,6 +82,34 @@ $success-color: mat-color($success-palette);
             background-color: $drop-placeholder-bg-color;
             height: 14.5rem;
             width: 100%;
+        }
+    }
+
+    .notifications-dialog-wrapper {
+        .notifications-list {
+            .notifications-list__item {
+                border-top: 0.01rem solid $border-color;
+                &.not-read-notification{
+                    background-color: $not-read-notification-color;
+                }
+            }
+        }
+    }
+
+    .notifications-dialog-wrapper {
+        .notifications-title {
+            border-bottom: 0.01rem solid $border-color;
+        }
+    }
+
+    .notifications-dialog {
+        
+        ::-webkit-scrollbar-thumb {
+            background: $scroll-bar-thumb; 
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: $scroll-bar-hover; 
         }
     }
 }

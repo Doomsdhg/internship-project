@@ -3,6 +3,7 @@
     "amount": "Сума",
     "currency": "Валюта",
     "titles": {
+        "notifications": "Апавяшчэння",
         "transactions": "Транзакцыі",
         "currentTransactions": "Бягучыя транзакцыі",
         "createTransaction": "Стварэнне транзакцыі", 
@@ -38,7 +39,9 @@
         "auth": "Аўтарызацыя",
         "login": "Увайсці",
         "logout": "Выйсці",
-        "home": "домой"
+        "home": "домой",
+        "read": "Адзначыць як прачытанае",
+        "unread": "Адзначыць як непрачытанае"
     },
     "required": {
         "externalId": "Патрабуецца ўвесці нумар",
@@ -77,6 +80,7 @@
     },
     "transactionInfo": "Дадзеныя транзакцыі",
     "noData": "Няма дадзеных",
+    "noNotifications": "Апавяшчэнні адсутнічаюць",
     "snackbar": {
         "inputIssues": "Адна ці больш памылак дапушчаныя ва ўведзеных дадзеных",
         "transactionUpdated": "Дадзеныя транзакцыі абноўлены",
@@ -85,6 +89,7 @@
         "transactionDeleted": "Транзакцыя паспяхова выдаленая",
         "numbersOnlyError": "У гэтае поле можна ўводзіць толькі лічбы",
         "transactionCompleted": "Транзакцыя завершана!",
+        "operationDidNotSucceed": "Адбылася нейкая памылка. Аперацыя не можа быць выканана.",
         "numbersLimited": {
             "start": "Гэтае поле абмежавана",
             "middle": "Лічбамі да коскі і",

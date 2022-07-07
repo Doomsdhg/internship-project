@@ -3,6 +3,7 @@
     "amount": "Amount",
     "currency": "Currency",
     "titles": {
+        "notifications": "Notifications",
         "transactions": "Transactions",
         "currentTransactions": "Current transactions",
         "createTransaction": "Transaction creation",
@@ -49,7 +50,9 @@
         "auth": "Authentication",
         "login": "Login",
         "logout": "Log out",
-        "home": "home"
+        "home": "home",
+        "read": "Mark as read",
+        "unread": "Mark as not read"
     },
     "placeholders": {
         "externalId": "E.g. '123'",
@@ -79,6 +82,7 @@
     },
     "transactionInfo": "Transaction info",
     "noData": "No data",
+    "noNotifications": "There are no notifications",
     "snackbar": {
         "inputIssues": "There is 1 or more mistakes about your inputs values.",
         "transactionUpdated": "Transaction data updated succesfully!",
@@ -87,6 +91,7 @@
         "transactionDeleted": "Transaction deleted successfully!",
         "numbersOnlyError": "This field is numbers only",
         "transactionCompleted": "Transaction completed!",
+        "operationDidNotSucceed": "Some error occured. Operation could not succeed.",
         "numbersLimited": {
             "start": "This field is limited to",
             "middle": "Digits before decimal point and",

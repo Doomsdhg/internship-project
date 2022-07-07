@@ -8,10 +8,12 @@
     "linterOptions": {
         "exclude": [
             "node_modules/**",
-            "**.json"
+            "**.json",
+            "**.spec.ts"
         ]
     },
     "rules": {
+        "no-any": true,
         "max-classes-per-file": [false],
         "component-class-suffix": true,
         "component-max-inline-declarations": true,

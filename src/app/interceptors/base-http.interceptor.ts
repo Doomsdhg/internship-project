@@ -18,7 +18,8 @@ export class BaseHttpInterceptor implements HttpInterceptor {
 
   public excludedUrls: string[] = [
     ApiEndpoints.AUTH_ENDPOINTS.LOGOUT,
-    ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN
+    ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN,
+    ApiEndpoints.NOTIFICATIONS.getListUrl(this.localStorageManagerService.getAuthenticationInfo()?.username)
   ];
 
   constructor(

@@ -286,5 +286,56 @@
       ],
       "id": "list"
     }
+  ],
+  "notifications_list": [
+    {
+      "notifications": [
+        {
+          "user": {
+            "firstName": "John",
+            "secondName": "Doe"
+          },
+          "text": "marked you at 16:27 AM on internal discussion dord",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "text": "Check out new feature on our website: **Notifications!**",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "text": "Happy birthday!",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "user": {
+            "firstName": "Big",
+            "secondName": "Brother"
+          },
+          "text": "is watching you",
+          "isRead": "true",
+          "isDeleted": "true"
+        },
+        {
+          "user": {
+            "firstName": "Anthony",
+            "secondName": "Soprano"
+          },
+          "text": "took over your business",
+          "isRead": "true",
+          "isDeleted": "true"
+        }
+      ],
+      "id": "admin"
+    }
+  ],
+  "unseen_notifications_amount": [
+    {
+      "id": "admin",
+      "amount": 0,
+      "notViewed": 3
+    }
   ]
 }

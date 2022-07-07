@@ -3,6 +3,7 @@
     "amount": "Сума",
     "currency": "Валюта",
     "titles": {
+        "notifications": "Повідомлення",
         "currentTransactions": "Поточні транзакції",
         "transactions": "Транзакції",
         "createTransaction": "Створення транзакції", 
@@ -38,7 +39,9 @@
         "auth": "Авторизація",
         "login": "Увійти",
         "logout": "Вийти",
-        "home": "домой"
+        "home": "домой",
+        "read": "Відзначити як прочитане",
+        "unread": "Відзначити як непрочитане"
     },
     "required": {
         "externalId": "Потрібно ввести номер",
@@ -77,6 +80,7 @@
     },
     "transactionInfo": "Дані транзакції",
     "noData": "Немає даних",
+    "noNotifications": "Відомості відсутні",
     "snackbar": {
         "inputIssues": "Одна або більше помилок допущені у введених даних",
         "transactionUpdated": "Дані транзакції оновлено",
@@ -85,6 +89,7 @@
         "transactionDeleted": "Транзакція успішно видалена",
         "numbersOnlyError": "У цьому полі можна вводити лише цифри",
         "transactionCompleted": "Транзакція завершена!",
+        "operationDidNotSucceed": "Яка помилка. Операція не може бути виконана.",
         "numbersLimited": {
             "start": "Це поле обмежене",
             "middle": "Цифрами до коми та",

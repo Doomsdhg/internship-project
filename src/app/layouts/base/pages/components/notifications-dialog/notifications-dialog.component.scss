@@ -1,0 +1,33 @@
+.notifications-dialog-wrapper {
+    width: fit-content;
+    &.half-opacity {
+        opacity: 0.5;
+    }
+
+    .notifications-list {
+        .no-notifications-text {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 4rem;
+            opacity: 0.5;
+        }
+    }
+    .progress-spinner {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    .notifications-title {
+        height: 3rem;
+        margin-top: 1rem;
+        margin-bottom: 0;
+        padding-left: 1rem;
+        text-align: left;
+        font-size: 1.3rem;
+    }
+}

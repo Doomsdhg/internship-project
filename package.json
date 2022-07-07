@@ -38,6 +38,7 @@
     "lodash": "4.17.21",
     "moment": "2.29.3",
     "ng-mocks": "13.4.2",
+    "ngx-markdown": "^13.0.0",
     "nodemon": "2.0.15",
     "path": "0.12.7",
     "rxjs": "7.5.0",
