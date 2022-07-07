@@ -13,7 +13,7 @@ import { TranslationsEndpoints } from '../../../../../constants/translations-end
 import { Validation } from '../transactions-table/transactions-table.constants';
 import { ControlName, Row, TransactionOperation } from '../transactions-table/transactions-table.interfaces';
 import { TransactionOperationTypes } from '../transactions-table/transactions-table.constants';
-import { ManageTransactionRequiredData } from '../transactions-table/classes/ManageTransactionRequiredData.class';
+import { ManageTransactionRequiredData } from '../transactions-table/dto/ManageTransactionRequiredData';
 
 @Component({
   selector: 'intr-manage-transaction',

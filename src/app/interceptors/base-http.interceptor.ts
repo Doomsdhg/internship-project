@@ -30,16 +30,13 @@ export class BaseHttpInterceptor implements HttpInterceptor {
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-    const tokenExpired = moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration);
-    const urlExcluded =  this.excludedUrls.includes(request.url);
-
     request = this.addAuthHeader(request);
 
     this.spinnerService.displaySpinner();
 
-    if (urlExcluded) {
+    if (this.isExcludedUrl(request.url)) {
       return next.handle(request);
-    } else if (tokenExpired) {
+    } else if (this.tokenIsExpired()) {
       this.authService.refreshToken();
     }
 
@@ -77,5 +74,13 @@ export class BaseHttpInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse): void {
     this.router.navigateByUrl(AppRoutes.getErrorPageRoute(response.status));
+  }
+
+  private isExcludedUrl(url: string): boolean {
+    return this.excludedUrls.includes(url);
+  }
+
+  private tokenIsExpired(): boolean {
+    return moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration);
   }
 }

@@ -11,7 +11,7 @@ import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionDto } from '../../../classes/transaction-dto.class';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
 import { ManageTransactionsDialogComponent } from '../manage-transaction/manage-transactions-dialog.component';
-import { ManageTransactionRequiredData } from './classes/ManageTransactionRequiredData.class';
+import { ManageTransactionRequiredData } from './dto/ManageTransactionRequiredData';
 import { Columns, PossibleSortingDirections, TransactionOperationTypes } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
 
