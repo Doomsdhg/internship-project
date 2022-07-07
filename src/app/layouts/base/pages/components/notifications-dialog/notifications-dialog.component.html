@@ -1,4 +1,6 @@
-<div class="notifications-dialog-wrapper" mat-input-container>
+<div class="notifications-dialog-wrapper" 
+mat-input-container
+[ngClass]="{'half-opacity': notificationsAreLoading}">
     <h1 class="notifications-title">
         {{'titles.notifications' | translate}}
     </h1>
@@ -6,6 +8,10 @@
         <div class="no-notifications-text"
         *ngIf="notificationsArrayIsEmpty">
         {{'noNotifications' | translate}}
+        </div>
+        <div class="progress-spinner"
+        *ngIf="notificationsAreLoading">
+            <mat-spinner></mat-spinner>
         </div>
         <div class="notifications-list__item"
         [ngClass]="{'not-read-notification': checkIfNotificationIsRead(notificationData)}"

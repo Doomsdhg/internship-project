@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnInit
 } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -13,6 +14,7 @@ import { Constants } from 'src/app/constants/constants';
 import { TranslationsEndpoints } from 'src/app/constants/translations-endpoints.constants';
 import { NotificationsApiService } from 'src/app/layouts/base/services/notifications-api.service';
 import { NotifyService } from 'src/app/services/notify.service';
+import { SpinnerService } from 'src/app/services/spinner.service';
 import {
   NotificationDto,
   NotificationsListResponse
@@ -30,6 +32,8 @@ export class NotificationsDialogComponent implements OnInit {
   private _notificationsArray: NotificationDto[] = [];
 
   private _notificationsArrayBackup!: NotificationDto[];
+
+  private _notificationsAreLoading!: boolean;
 
   constructor(
     private notificationsApiService: NotificationsApiService,
@@ -91,12 +95,30 @@ export class NotificationsDialogComponent implements OnInit {
     this._notificationsArrayBackup = value;
   }
 
+  public get notificationsAreLoading(): boolean {
+    return this._notificationsAreLoading;
+  }
+
+  public set notificationsAreLoading(value: boolean) {
+    this._notificationsAreLoading = value;
+  }
+
   private loadNotifications(): void {
+    this.displaySpinner();
     this.notificationsApiService.getNotifications()
       .subscribe((response: NotificationsListResponse) => {
         this.notificationsArray = response.notifications;
+        this.hideSpinner();
         this.changeDetectorRef.detectChanges();
       });
+  }
+
+  private displaySpinner(): void {
+    this.notificationsAreLoading = true;
+  }
+
+  private hideSpinner(): void {
+    this.notificationsAreLoading = false;
   }
 
   private pushChangesToServer(): void {

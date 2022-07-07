@@ -28,6 +28,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MarkdownModule } from 'ngx-markdown';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { EventImageComponent } from './pages/components/event-image/event-image.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { EventImageComponent } from './pages/components/event-image/event-image.
     DragDropModule,
     MatMenuModule,
     MarkdownModule,
-    OverlayModule
+    OverlayModule,
+    MatProgressSpinnerModule
   ],
   bootstrap: [BaseLayoutComponent],
 })

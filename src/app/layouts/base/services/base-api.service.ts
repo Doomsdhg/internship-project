@@ -22,33 +22,33 @@ export abstract class BaseApiService {
     .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
-  public post<ResponseType, RequestBodyType>(
+  public post<T, R>(
     url: string,
-    data: RequestBodyType,
+    data: R,
     headers?: HttpHeaders,
     params?: HttpParams
-  ): Observable<ResponseType> {
-    return this.httpClient.post<ResponseType>(url, data, { headers, params })
+  ): Observable<T> {
+    return this.httpClient.post<T>(url, data, { headers, params })
     .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
-  public put<ResponseType, RequestBodyType>(
+  public put<T, R>(
     url: string,
-    updateData: RequestBodyType,
+    updateData: R,
     headers?: HttpHeaders,
     params?: HttpParams
-  ): Observable<ResponseType> {
-    return this.httpClient.put<ResponseType>(url, updateData, { headers, params })
+  ): Observable<T> {
+    return this.httpClient.put<T>(url, updateData, { headers, params })
     .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
-  public patch<ResponseType, RequestBodyType>(
+  public patch<T, R>(
     url: string,
-    updateData: RequestBodyType,
+    updateData: R,
     headers?: HttpHeaders,
     params?: HttpParams
-  ): Observable<ResponseType> {
-    return this.httpClient.patch<ResponseType>(url, updateData, { headers, params })
+  ): Observable<T> {
+    return this.httpClient.patch<T>(url, updateData, { headers, params })
     .pipe(catchError((error: HttpErrorResponse) => this.handleError(error)));
   }
 
