@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Form, FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Constants } from 'src/app/constants/constants';
 import { environment } from 'src/environments/environment';
@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SelectLanguageComponent implements OnInit {
 
-  public selectLanguageForm!: FormControl;
+  private _selectLanguageForm!: FormControl;
 
   private currentLanguage!: string;
 
@@ -29,6 +29,14 @@ export class SelectLanguageComponent implements OnInit {
   public changeLanguage(): void {
     localStorage.setItem(Constants.LOCAL_STORAGE.ACCESSORS.LANGUAGE, this.selectLanguageForm.value);
     window.location.reload();
+  }
+
+  public get selectLanguageForm(): FormControl {
+    return this._selectLanguageForm;
+  }
+
+  public set selectLanguageForm(value: FormControl) {
+    this._selectLanguageForm = value;
   }
 
   private setCurrentLanguage(): void {

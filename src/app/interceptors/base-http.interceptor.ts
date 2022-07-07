@@ -29,19 +29,18 @@ export class BaseHttpInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
 
-  private currentRequest!: HttpRequest<unknown>;
-
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    this.currentRequest = request;
-    const isNotAuthenticated = !this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
-    request = this.requestWithAuthHeader;
-    if (this.excludedUrls.includes(request.url) || isNotAuthenticated) {
-      return next.handle(request);
-    }
+
+    request = this.addAuthHeader(request);
+
     this.spinnerService.displaySpinner();
-    if (moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration)) {
+
+    if (this.isExcludedUrl(request.url)) {
+      return next.handle(request);
+    } else if (this.tokenIsExpired()) {
       this.authService.refreshToken();
     }
+
     return next.handle(request)
       .pipe(
         catchError((errorResponse: HttpErrorResponse): ObservableInput<any> => {
@@ -64,9 +63,9 @@ export class BaseHttpInterceptor implements HttpInterceptor {
       );
   }
 
-  private get requestWithAuthHeader(): HttpRequest<unknown> {
-    return this.currentRequest.clone({
-      headers: this.currentRequest.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
+  private addAuthHeader(request: HttpRequest<unknown>): HttpRequest<unknown> {
+    return request.clone({
+      headers: request.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
     });
   }
 
@@ -76,5 +75,13 @@ export class BaseHttpInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse): void {
     this.router.navigateByUrl(AppRoutes.getErrorPageRoute(response.status));
+  }
+
+  private isExcludedUrl(url: string): boolean {
+    return this.excludedUrls.includes(url);
+  }
+
+  private tokenIsExpired(): boolean {
+    return moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration);
   }
 }

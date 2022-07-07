@@ -10,7 +10,8 @@ import { LocalStorageManagerService } from 'src/app/services/local-storage-manag
 import { NotifyService } from 'src/app/services/notify.service';
 import { TransactionDto } from '../../../classes/transaction-dto.class';
 import { TransactionsDataSource } from '../../../services/transactions-data-source.service';
-import { ManageTransactionsDialogComponent } from '../add-transaction/manage-transactions-dialog.component';
+import { ManageTransactionsDialogComponent } from '../manage-transaction/manage-transactions-dialog.component';
+import { ManageTransactionRequiredData } from './dto/ManageTransactionRequiredData';
 import { Columns, PossibleSortingDirections, TransactionOperationTypes } from './transactions-table.constants';
 import { Row, Sorted } from './transactions-table.interfaces';
 
@@ -24,15 +25,15 @@ export class TransactionsTableComponent implements OnInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  public dataSource!: TransactionsDataSource;
+  private _dataSource!: TransactionsDataSource;
 
-  public transactionUpdateForm!: FormGroup;
+  private _transactionUpdateForm!: FormGroup;
 
-  public displayedColumns!: string[];
+  private _displayedColumns!: string[];
 
-  public sorted!: Sorted;
+  private _sorted!: Sorted;
 
-  public formsToggled = false;
+  private _formsToggled = false;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -95,23 +96,20 @@ export class TransactionsTableComponent implements OnInit {
 
   public openTransactionEditingDialog(row: Row): void {
     this.matDialog.open(ManageTransactionsDialogComponent, {
-      data: {
-        rowData: row,
-        operationType: TransactionOperationTypes.EDIT
-      }
+      data: new ManageTransactionRequiredData(TransactionOperationTypes.EDIT, row)
     })
-      .afterClosed().subscribe(() => {
+      .afterClosed()
+      .subscribe(() => {
         this.refreshTransactions();
       });
   }
 
   public openTransactionAddingDialog(): void {
     this.matDialog.open(ManageTransactionsDialogComponent, {
-      data: {
-        operationType: TransactionOperationTypes.CREATE
-      }
+      data: new ManageTransactionRequiredData(TransactionOperationTypes.CREATE)
     })
-      .afterClosed().subscribe(() => {
+      .afterClosed()
+      .subscribe(() => {
         this.refreshTransactions();
       });
   }
@@ -125,6 +123,46 @@ export class TransactionsTableComponent implements OnInit {
 
   public get isFirstPage(): boolean {
     return this.dataSource.currentPageNumber === 0;
+  }
+
+  public get dataSource(): TransactionsDataSource {
+    return this._dataSource;
+  }
+
+  public set dataSource(value: TransactionsDataSource) {
+    this._dataSource = value;
+  }
+
+  public get transactionUpdateForm(): FormGroup {
+    return this._transactionUpdateForm;
+  }
+
+  public set transactionUpdateForm(value: FormGroup) {
+    this._transactionUpdateForm = value;
+  }
+
+  public get displayedColumns(): string[] {
+    return this._displayedColumns;
+  }
+
+  public set displayedColumns(value: string[]) {
+    this._displayedColumns = value;
+  }
+
+  public get sorted(): Sorted {
+    return this._sorted;
+  }
+
+  public set sorted(value: Sorted) {
+    this._sorted = value;
+  }
+
+  public get formsToggled(): boolean {
+    return this._formsToggled;
+  }
+
+  public set formsToggled(value: boolean) {
+    this._formsToggled = value;
   }
 
   private handleSuccessfulConfirmation(): void {

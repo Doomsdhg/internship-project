@@ -17,7 +17,7 @@ import { GuardDialogContentComponent } from 'src/app/layouts/base/pages/componen
 import { TransactionsTableComponent } from 'src/app/layouts/base/pages/components/transactions-table/transactions-table.component';
 import { TransactionsTablePageComponent } from 'src/app/layouts/base/pages/transactions-table-page/transactions-table-page.component';
 import { BaseLayoutComponent } from './base-layout.component';
-import { ManageTransactionsDialogComponent } from './pages/components/add-transaction/manage-transactions-dialog.component';
+import { ManageTransactionsDialogComponent } from './pages/components/manage-transaction/manage-transactions-dialog.component';
 import { AppliedTransactionsListComponent } from './pages/components/applied-transactions-list/applied-transactions-list.component';
 import { MatCardModule } from '@angular/material/card';
 import { TransactionCardComponent } from './pages/components/transaction-card/transaction-card.component';
