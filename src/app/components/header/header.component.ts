@@ -14,9 +14,9 @@ import { Theme } from './theme.model';
 })
 export class HeaderComponent implements OnInit {
 
-  public currentRoute!: string;
+  private _currentRoute!: string;
 
-  public currentTheme!: Theme;
+  private _currentTheme!: Theme;
 
   constructor(
     private router: Router,
@@ -36,6 +36,22 @@ export class HeaderComponent implements OnInit {
 
   public get themeIconName(): string {
     return this.isLightTheme ? HeaderConstants.THEMES_ICONS.DARK : HeaderConstants.THEMES_ICONS.LIGHT;
+  }
+
+  public get currentTheme(): Theme {
+    return this._currentTheme;
+  }
+
+  public set currentTheme(value: Theme) {
+    this._currentTheme = value;
+  }
+
+  public get currentRoute(): string {
+    return this._currentRoute;
+  }
+
+  public set currentRoute(value: string) {
+    this._currentRoute = value;
   }
 
   public ngOnInit(): void {

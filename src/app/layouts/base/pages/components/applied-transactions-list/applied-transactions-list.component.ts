@@ -20,9 +20,10 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppliedTransactionsListComponent implements OnInit {
-  public appliedTransactionsArray: Transaction[] = [];
 
-  public pointerIsOverDropList = false;
+  private _appliedTransactionsArray: Transaction[] = [];
+
+  private _pointerIsOverDropList = false;
 
   constructor(
     private transactionApiService: TransactionApiService,
@@ -86,6 +87,22 @@ export class AppliedTransactionsListComponent implements OnInit {
 
   public get listIsEmpty(): boolean {
     return this.appliedTransactionsArray.length === 0;
+  }
+
+  public get appliedTransactionsArray(): Transaction[] {
+    return this._appliedTransactionsArray;
+  }
+
+  public set appliedTransactionsArray(value: Transaction[]) {
+    this._appliedTransactionsArray = value;
+  }
+
+  public get pointerIsOverDropList(): boolean {
+    return this._pointerIsOverDropList;
+  }
+
+  public set pointerIsOverDropList(value: boolean) {
+    this._pointerIsOverDropList = value;
   }
 
   private deleteTransaction(index: number): void {

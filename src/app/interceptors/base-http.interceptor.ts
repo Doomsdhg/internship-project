@@ -1,4 +1,3 @@
-import { ErrorState } from './state.class';
 import {
   HttpErrorResponse, HttpEvent, HttpHandler,
   HttpInterceptor, HttpRequest
@@ -17,28 +16,30 @@ import { HttpStatusCode } from '../enums/HttpStatusCode';
 @Injectable()
 export class BaseHttpInterceptor implements HttpInterceptor {
 
+  public excludedUrls: string[] = [
+    ApiEndpoints.AUTH_ENDPOINTS.LOGOUT,
+    ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN
+  ];
+
   constructor(
     private authService: AuthService,
     private localStorageManagerService: LocalStorageManagerService,
     private spinnerService: SpinnerService,
     private router: Router
-  ) { }
-
-  private currentRequest!: HttpRequest<any>;
+  ) {}
 
   public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+
+    request = this.addAuthHeader(request);
+
     this.spinnerService.displaySpinner();
-    this.currentRequest = request;
-    const isAuthenticated = this.localStorageManagerService.getAuthenticationInfo()?.authenticated;
-    const isLogOutRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.LOGOUT;
-    const isRefreshRequest = request.url === ApiEndpoints.AUTH_ENDPOINTS.REFRESH_TOKEN;
-    request = this.requestWithAuthHeader;
-    if (!isAuthenticated || isLogOutRequest || isRefreshRequest) {
-      return this.handleDefaultCase(request, next);
-    }
-    if (isAuthenticated && moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration)) {
+
+    if (this.isExcludedUrl(request.url)) {
+      return next.handle(request);
+    } else if (this.tokenIsExpired()) {
       this.authService.refreshToken();
     }
+
     return next.handle(request)
       .pipe(
         catchError((errorResponse: HttpErrorResponse): ObservableInput<any> => {
@@ -61,17 +62,10 @@ export class BaseHttpInterceptor implements HttpInterceptor {
       );
   }
 
-  private get requestWithAuthHeader(): HttpRequest<any> {
-    return this.currentRequest.clone({
-      headers: this.currentRequest.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
+  private addAuthHeader(request: HttpRequest<unknown>): HttpRequest<unknown> {
+    return request.clone({
+      headers: request.headers.append('Authorization', `Bearer ${this.localStorageManagerService.getAuthenticationInfo()?.token}`)
     });
-  }
-
-  private handleDefaultCase(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<void>> {
-    return next.handle(request)
-      .pipe(
-        finalize(() => this.executeFinalProcedures())
-      );
   }
 
   private executeFinalProcedures(): void {
@@ -80,5 +74,13 @@ export class BaseHttpInterceptor implements HttpInterceptor {
 
   private handleError(response: HttpErrorResponse): void {
     this.router.navigateByUrl(AppRoutes.getErrorPageRoute(response.status));
+  }
+
+  private isExcludedUrl(url: string): boolean {
+    return this.excludedUrls.includes(url);
+  }
+
+  private tokenIsExpired(): boolean {
+    return moment() > moment(this.localStorageManagerService.getAuthenticationInfo()?.tokenExpiration);
   }
 }

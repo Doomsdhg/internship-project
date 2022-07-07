@@ -23,7 +23,8 @@ export class AuthService {
   ) { }
 
   public login(username: string, password: string): void {
-    this.sendLoginRequest(username, password).subscribe({
+    this.sendLoginRequest(username, password)
+    .subscribe({
       next: (response: AuthenticationResponse) => {
         this.executeLoginProcedures(response);
       },
@@ -34,7 +35,8 @@ export class AuthService {
   }
 
   public refreshToken(): void {
-    this.sendRefreshTokenRequest().subscribe({
+    this.sendRefreshTokenRequest()
+    .subscribe({
       next: (success: AuthenticationResponse) => {
         this.localStorageManagerService.refreshToken(success);
       },
@@ -48,7 +50,8 @@ export class AuthService {
   }
 
   public logout(): void {
-    this.sendLogoutRequest().subscribe({
+    this.sendLogoutRequest()
+    .subscribe({
       next: () => {
         this.executeLogoutProcedures();
       },

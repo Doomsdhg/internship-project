@@ -12,7 +12,8 @@ import { numbersOnlyValidator } from 'src/app/validators/numbers-only.validator'
 import { TranslationsEndpoints } from '../../../../../constants/translations-endpoints.constants';
 import { Validation } from '../transactions-table/transactions-table.constants';
 import { ControlName, Row, TransactionOperation } from '../transactions-table/transactions-table.interfaces';
-import { TransactionOperationTypes } from './../transactions-table/transactions-table.constants';
+import { TransactionOperationTypes } from '../transactions-table/transactions-table.constants';
+import { ManageTransactionRequiredData } from '../transactions-table/dto/ManageTransactionRequiredData';
 
 @Component({
   selector: 'intr-manage-transaction',
@@ -24,15 +25,15 @@ export class ManageTransactionsDialogComponent implements OnInit {
 
   public readonly TRANSACTION_INITIAL_STATUS = 'INITIAL';
 
-  public transactionForm!: FormGroup;
+  private _transactionForm!: FormGroup;
 
-  public operationType!: TransactionOperation;
+  private _operationType!: TransactionOperation;
 
   constructor(
     private transactionApiService: TransactionApiService,
     private notifyService: NotifyService,
     private matDialogRef: MatDialogRef<TransactionsTableComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: ManageTransactionRequiredData
   ) { }
 
   public ngOnInit(): void {
@@ -89,6 +90,22 @@ export class ManageTransactionsDialogComponent implements OnInit {
     return this.transactionForm.valid;
   }
 
+  public get transactionForm(): FormGroup {
+    return this._transactionForm;
+  }
+
+  public set transactionForm(value: FormGroup) {
+    this._transactionForm = value;
+  }
+
+  public get operationType(): TransactionOperation {
+    return this._operationType;
+  }
+
+  public set operationType(value: TransactionOperation) {
+    this._operationType = value;
+  }
+
   private initFormGroup = (row?: Row): void => {
     this.transactionForm = new FormGroup({
       provider: new FormControl(row?.provider || Constants.FORMS.DEFAULT_VALUE),
@@ -128,7 +145,7 @@ export class ManageTransactionsDialogComponent implements OnInit {
 
   private buildUpdateData(): TransactionUpdateData {
     return {
-      id: this.data.rowData.id,
+      id: this.data.rowData!.id,
       externalId: this.transactionForm.value.externalId,
       user: this.transactionForm.value.user,
       status: this.transactionForm.value.status,

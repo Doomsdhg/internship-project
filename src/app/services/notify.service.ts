@@ -14,7 +14,8 @@ export class NotifyService {
     private translateService: TranslateService) { }
 
   public showTranslatedMessage(messageAccessor: string, messageType: MessageType): void {
-    this.translateService.get(messageAccessor).subscribe((msg: string) => {
+    this.translateService.get(messageAccessor)
+    .subscribe((msg: string) => {
       this.showMessage(msg, messageType);
     });
   }

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { Constants } from 'src/app/constants/constants';
 import { Transaction, TransactionCrudResponseError } from 'src/app/interfaces/transactions.interface';
 import { NotifyService } from 'src/app/services/notify.service';
@@ -9,8 +9,7 @@ import { TransactionApiService } from 'src/app/layouts/base/services/transaction
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionsDataSource extends
-  MatTableDataSource<Transaction> {
+export class TransactionsDataSource extends MatTableDataSource<Transaction> implements OnDestroy {
 
   emptyTransaction!: Transaction;
 
@@ -32,15 +31,24 @@ export class TransactionsDataSource extends
 
   private transactionsSubject = new BehaviorSubject<Transaction[]>([this.emptyTransaction]);
 
+  private ngUnsubscribe = new Subject<void>();
+
+  public ngOnDestroy(): void {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   public loadTransactions(pageNumber = this.currentPageNumber): void {
     this.currentPageNumber = pageNumber;
     this.transactionApiService.getTransactions(this.currentPageNumber, this.selectedPageSize, this.sortColumn, this.sortOrder)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe({
         next: (transactions: Transaction[]) => {
           this.transactionsSubject.next(transactions);
-          this.transactionsSubject.asObservable().subscribe((success: Transaction[]) => {
+          this.transactionsSubject.asObservable()
+          .subscribe((success: Transaction[]) => {
             this.data = success;
-          });
+          })
         },
         error: (error: TransactionCrudResponseError) => {
           this.notifyService.showMessage(error.error, Constants.SNACKBAR.ERROR_TYPE);

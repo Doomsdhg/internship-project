@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/layouts/auth/services/auth.service';
 })
 export class AuthFormComponent implements OnInit {
 
-  public authForms!: FormGroup;
+  private _authForms!: FormGroup;
 
   constructor(
     private authService: AuthService
@@ -24,6 +24,14 @@ export class AuthFormComponent implements OnInit {
     const loginInputValue = this.authForms.controls['login'].value;
     const passwordInputValue = this.authForms.controls['password'].value;
     this.authService.login(loginInputValue, passwordInputValue);
+  }
+
+  public get authForms(): FormGroup {
+    return this._authForms;
+  }
+
+  public set authForms(value: FormGroup) {
+    this._authForms = value;
   }
 
   private buildAuthForms(): void {
